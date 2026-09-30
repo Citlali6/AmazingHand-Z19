@@ -1,0 +1,20 @@
+# 仓库规范化：换行符与二进制文件
+* text=auto eol=lf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# 二进制
+*.stl binary
+*.step binary
+*.STEP binary
+*.jpg binary
+*.png binary
+*.mp4 binary
+*.pdf binary
+*.bit binary
+*.xsa binary
+*.hwh binary
+*.ltx binary
+*.onnx binary
+*.ncnn.bin binary
+*.ncnn.param binary
