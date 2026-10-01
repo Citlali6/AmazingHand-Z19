@@ -88,15 +88,18 @@
 
 ## 6. 单总线时隙调度（v0.2 新增）
 
-1kHz 控制周期（1ms）内的总线事务预算 @1Mbps（10bit/字节）：
+1kHz 控制周期（1ms）内的总线事务预算 @1Mbps（10bit/字节）。
+帧长推导以 `host/app/control/scs_protocol.py`（golden model）实现为权威：
 
 | 时隙 | 事务 | 帧长 | 耗时 |
 |---|---|---|---|
-| t0 | SYNC_WRITE(0x83) 一次下发 8 舵机 目标位置+速度 | ≈41B | ≈410µs |
-| t1 | READ 舵机 #i（Present Pos 2B + Load 2B + Temp 1B） | 8B 请求 + 13B 响应 | ≈210µs |
-| t2 | READ 舵机 #j（同上） | 同上 | ≈210µs |
-| — | 换向/保护余量 | — | ≈170µs |
-| 合计 | | | **≈1000µs** ✓ |
+| t0 | SYNC_WRITE(0x83) 一次下发 8 舵机（目标位置 2B + 目标速度 2B） | 48B（params 42 + 头 6） | ≈480µs |
+| t1 | READ 舵机 #i 连读 0x3A~0x41（pos/speed/load/volt/temp 共 8B） | 7B 请求 + 13B 响应 | ≈250µs 含换向 |
+| t2 | READ 舵机 #j（同上） | 同上 | ≈250µs |
+| 合计 | | | **≈980µs** ✓ |
+
+推导：SYNC_WRITE params = addr(1)+len(1)+8×(id 1+data 4) = 42B，Length = 44，帧总长 48B；
+READ 响应 LEN = err(1)+8+cs(1) = 10，帧长 13B，请求 7B（FF FF ID 04 02 addr len CS）。
 
 - 回读调度：i、j 轮转扫过 8 个 ID → **每舵机回读 250Hz**，下发 1kHz。
 - 闭合阶段（FSM_STATE=CLOSING）可切换为"关键舵机模式"：只轮询负载监视通道（默认 4 个），回读提至 500Hz。
