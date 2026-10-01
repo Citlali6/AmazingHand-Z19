@@ -231,17 +231,37 @@ def test_broadcast_write_no_response() -> None:
 
 
 def test_reg_write_action_pair() -> None:
-    """REG_WRITE 暂存、ACTION 广播统一触发。"""
+    """REG_WRITE 暂存不生效、ACTION 广播统一触发（用非默认值严格验证）。"""
     bus = _fresh_bus()
     bus.transact(_torque_on(1))
     bus.transact(
-        sp.build_reg_write(2, sp.Reg.GOAL_POSITION[0], bytes([0x00, 0x08]))
+        sp.build_reg_write(2, sp.Reg.GOAL_POSITION[0], bytes([0xB8, 0x0B]))  # 3000
     )
     assert bus.state(2).registered
-    assert bus.state(2).goal_raw == 2048  # ACTION 前不生效
+    assert bus.state(2).goal_raw == 2048  # ACTION 前不生效（默认值未被改写）
     bus.transact(sp.build_action())
     assert not bus.state(2).registered
-    assert bus.state(2).goal_raw == 2048
+    assert bus.state(2).goal_raw == 3000  # ACTION 后生效
+
+
+def test_truncated_header_frame_no_crash() -> None:
+    """半帧到达（UART 常见）：任何长度不足的帧头帧都安全丢弃，不抛异常。"""
+    bus = _fresh_bus()
+    for bad in (b"\xff\xff", b"\xff\xff\x01", b"\xff\xff\x01\x05", b"\xff\xff\x01\x05\x03"):
+        assert bus.transact(bad) is None, f"should drop {bad!r}"
+
+
+def test_broadcast_reset_all() -> None:
+    """广播 RESET：全部舵机恢复出厂态（力矩断开、目标回中位），无响应。"""
+    bus = _fresh_bus()
+    bus.transact(_torque_on(1))
+    bus.transact(_w2(2, sp.Reg.GOAL_POSITION, 3000))
+    frame = sp._frame(sp.BROADCAST_ID, sp.INS_RESET, b"")
+    assert bus.transact(frame) is None
+    for sid in bus.servo_ids:
+        s = bus.state(sid)
+        assert s.goal_raw == scs_sim.DEFAULT_POSITION_RAW, f"servo {sid} goal not reset"
+        assert not s.torque_on, f"servo {sid} torque not released"
 
 
 def test_bad_checksum_frame_dropped() -> None:
