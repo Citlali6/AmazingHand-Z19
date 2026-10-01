@@ -62,6 +62,7 @@ class ServoState:
     voltage_x10: int = 74  # 7.4V
     torque_on: bool = False
     goal_raw: int = DEFAULT_POSITION_RAW
+    goal_time_raw: int = 0  # 到达时间（0 = 不限时间，用速度限制）
     goal_speed_raw: int = 0  # 0 = 全速（真实语义：0 表示最大速度）
     max_temperature_limit_c: float = 70.0
     torque_limit_raw: int = DEFAULT_TORQUE_LIMIT_RAW
@@ -194,6 +195,8 @@ class VirtualServoBus:
         start = sp.locate_frame(frame)
         if start < 0:
             return None  # 垃圾字节：真实从机同样不响应
+        if len(frame) - start < 5:
+            return None  # 半帧到达（仅帧头/ID/LEN 不全）：本帧丢弃，主机侧重试
         servo_id = frame[start + 2]
         length = frame[start + 3]
         end = start + 4 + length
@@ -229,6 +232,11 @@ class VirtualServoBus:
             return None
 
         if is_broadcast:
+            if instruction == sp.INS_RESET:
+                # 广播复位：全部舵机恢复出厂态（真实从机语义），不响应
+                for s in self._servos.values():
+                    self._reset(s)
+                return None
             # 广播 WRITE / REG_WRITE：执行但不响应（避免总线碰撞）
             if instruction == sp.INS_WRITE and params:
                 for s in self._servos.values():
@@ -288,6 +296,7 @@ class VirtualServoBus:
         v[sp.Reg.STATUS_RETURN_LEVEL[0]] = s.status_return_level
         v[sp.Reg.TORQUE_SWITCH[0]] = 1 if s.torque_on else 0
         put(*sp.Reg.GOAL_POSITION, s.goal_raw)
+        put(*sp.Reg.GOAL_TIME, s.goal_time_raw)
         put(*sp.Reg.RUNNING_SPEED, s.goal_speed_raw)
         put(*sp.Reg.TORQUE_LIMIT, s.torque_limit_raw)
         put(*sp.Reg.PRESENT_POSITION, s.position_raw)
@@ -312,6 +321,13 @@ class VirtualServoBus:
             return
         if addr == sp.Reg.GOAL_POSITION[0]:
             s.goal_raw = (data[0] | (data[1] << 8)) & sp.POSITION_STEPS
+            # 连写视图：0x2A 起 6B = 位置(2B) + Goal_Time(2B) + 速度(2B)
+            if len(data) >= 6:
+                s.goal_time_raw = data[2] | (data[3] << 8)
+                s.goal_speed_raw = data[4] | (data[5] << 8)
+            return
+        if addr == sp.Reg.GOAL_TIME[0]:
+            s.goal_time_raw = data[0] | (data[1] << 8)
             return
         if addr == sp.Reg.RUNNING_SPEED[0]:
             s.goal_speed_raw = data[0] | (data[1] << 8)
