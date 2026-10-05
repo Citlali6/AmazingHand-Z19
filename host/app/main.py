@@ -291,25 +291,8 @@ def build_backend(name: str, settings: dict) -> ServoBackend:
     raise ValueError(f"unknown backend: {name}")
 
 
-# 简单中文命令词 → 结构化指令（正式 Vosk 链路见 app/voice/kws.py，第 4 步）
-_ZH_OBJECTS = {
-    "香蕉": "banana", "苹果": "apple", "瓶子": "bottle", "杯": "cup", "鼠标": "mouse",
-}
-
-
-def parse_zh_command(text: str) -> Command | None:
-    if "抓" in text or "拿" in text:
-        for zh, en in _ZH_OBJECTS.items():
-            if zh in text:
-                return Command("grasp", en)
-        return Command("grasp", "")
-    if "放" in text or "松" in text:
-        return Command("release")
-    if "停" in text:
-        return Command("stop")
-    if "复位" in text or "重置" in text:
-        return Command("reset")
-    return None
+# 命令词解析已收敛到 app/voice/kws.py（语音正式链路），此处复用
+from app.voice.kws import parse_zh_command  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
