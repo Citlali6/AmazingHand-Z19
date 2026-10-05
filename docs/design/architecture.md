@@ -56,13 +56,18 @@ host/
 │   │   ├── grasp_selector.py    # (类别,尺寸,朝向) → 抓取参数
 │   │   └── grasp_table.json     # 参数表：标定+MuJoCo 验证的结果，带来源标注
 │   ├── control/
+│   │   ├── scs_protocol.py      # SCS 协议 golden model（组包/解包/校验和/寄存器表）
+│   │   ├── scs_sim.py           # 虚拟舵机总线（帧进帧出 + 确定性 step，故障注入）
 │   │   ├── servo_base.py        # 抽象基类：上层只认接口
+│   │   ├── backend_sim.py       # 模拟后端（挂 scs_sim，PC 全链路空转）
 │   │   ├── backend_serial.py    # 软件环后端（USB-TTL，对比基准）
 │   │   └── backend_fpga.py      # RTL 环后端（AXI 寄存器读写）
 │   └── ui/
 │       └── guide_display.py     # 引导显示（方向/距离/就位状态）
 ├── config/
 │   └── settings.yaml            # 串口/相机/阈值/类别表/后端选择
+├── tests/
+│   └── smoke_test_control.py    # 控制链路冒烟测试（无第三方依赖，pytest 兼容）
 └── scripts/
     ├── setup_z19.sh             # 板端环境一键安装（复现性关键）
     └── run_app.sh               # 应用启动
