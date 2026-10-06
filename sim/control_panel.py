@@ -95,7 +95,11 @@ def main() -> int:
     def on_mouse(event, x, y, flags, _p):
         ix, iy = to_img(x, y)
         if event == cv2.EVENT_LBUTTONDOWN:
-            if iy >= VIEW_H:  # 控制区：命中滑块
+            if iy >= VIEW_H:  # 控制区
+                # 复位按钮命中
+                if BTN_RESET[0] <= ix <= BTN_RESET[2] and BTN_RESET[1] <= iy <= BTN_RESET[3]:
+                    st["do_reset"] = True
+                    return
                 for i in range(N):
                     col, sy = slider_geom(i)
                     if abs(iy - sy) <= 26 and col["x0"] - 16 <= ix <= col["x1"] + 16:
@@ -137,8 +141,21 @@ def main() -> int:
         mujoco.mj_step(model, data)
     speed_dps = 40.0
     stress = 0.0  # 机构应力（equality 残差归一）
+    warn = {"active": False, "msg": "", "pen": 0.0, "ncon": 0}
     last = time.perf_counter()
-    print("滑块控制 | C 复制JSON | S 保存 | 1-5 预设 | F 限速 | Q/ESC 退出")
+    print("滑块控制 | C 复制JSON | S 保存 | 1-5 预设 | F 限速 | R/按钮=复位 | Q/ESC 退出")
+
+    # 复位按钮几何（图像坐标）
+    BTN_RESET = (1080, VIEW_H + 8, 1256, VIEW_H + 54)
+
+    def do_reset() -> None:
+        """全部复位：目标归零（张开工位），180°/s 快速回归，清除警告。"""
+        nonlocal speed_dps
+        target[:] = 0.0
+        speed_dps = 180.0
+        warn["active"] = False
+        warn["msg"] = ""
+        print("已复位 → 张开工位（180°/s 回归中，F 可切回 40°/s）")
 
     while True:
         # 点 X 关闭窗口 → 退出（修复：关窗不死进程）
@@ -149,11 +166,29 @@ def main() -> int:
         dt = min(now - last, 0.05)
         last = now
 
+        if st.get("do_reset"):
+            st["do_reset"] = False
+            do_reset()
+
         delta = np.clip(target - current, -speed_dps * dt, speed_dps * dt)
         current += delta
         data.ctrl[:] = np.radians(current)
         for _ in range(8):
             mujoco.mj_step(model, data)
+
+        # ---- 穿透/接触监测（警告机制）----
+        max_pen, ncon = 0.0, data.ncon
+        for c in range(ncon):
+            max_pen = max(max_pen, -float(data.contact[c].dist))
+        if max_pen > 0.002 or stress > 0.9:  # 穿透 >2mm 或应力拉满
+            if not warn["active"]:
+                print(f"⚠ 警告：接触穿透 {max_pen * 1000:.1f}mm / 应力 {stress:.0%} —— 请复位")
+            warn["active"] = True
+            warn["msg"] = f"接触穿透 {max_pen * 1000:.1f}mm · 应力 {stress:.0%} · 请复位"
+            warn["pen"] = max_pen
+        elif warn["active"] and max_pen < 0.0005:
+            warn["active"] = False  # 恢复正常即解除
+        warn["ncon"] = ncon
 
         # 机构应力：equality 约束残差归一（>0.3 警告，>1 严重）
         raw = 0.0
@@ -174,7 +209,7 @@ def main() -> int:
         img.paste(Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)), (0, 0))
         draw = ImageDraw.Draw(img, "RGBA")
 
-        # 控制区标题 + 机构应力灯
+        # 控制区标题 + 机构应力灯 + 接触信息
         draw.text((24, VIEW_H + 12), "8 自由度控制", font=f_big, fill=(235, 240, 250))
         bar_x, bar_y, bar_w = 320, VIEW_H + 26, 320
         draw.text((bar_x - 6, bar_y - 4), "机构应力", font=f_sm, fill=(170, 185, 210))
@@ -190,9 +225,28 @@ def main() -> int:
             "接近连杆极限" if stress < 0.7 else "⚠ 超出机构可行域（真实手无法到达）")
         draw.text((bar_x + 70 + bar_w + 14, bar_y - 3), state_txt,
                   font=f_sm, fill=scolor)
-        draw.text((24, VIEW_H + 46),
-                  "碰撞体 v2 已启用（按壳体包围盒：近节 r6.5 / 远节 r4.3mm 胶囊×8）——指间交叉被物理阻挡",
-                  font=f_sm, fill=(140, 220, 160))
+        contact_txt = (f"接触 {warn['ncon']} 对 · 最大穿透 {warn['pen'] * 1000:.1f}mm"
+                       if warn["ncon"] else "无接触")
+        draw.text((24, VIEW_H + 46), contact_txt, font=f_sm,
+                  fill=(255, 170, 120) if warn["pen"] > 2 else (140, 220, 160))
+        draw.text((24, VIEW_H + 72),
+                  "碰撞体 v2（壳体包围盒胶囊×8）——指间交叉被物理阻挡",
+                  font=f_sm, fill=(120, 135, 160))
+
+        # ---- 复位按钮（右上）----
+        bx0, by0, bx1, by1 = BTN_RESET
+        draw.rounded_rectangle([bx0, by0, bx1, by1], radius=10,
+                               fill=(30, 120, 80) if not warn["active"] else (170, 60, 50))
+        draw.text((bx0 + 18, by0 + 8), "⟳ 全部复位 (R)", font=f_mid,
+                  fill=(255, 255, 255))
+
+        # ---- 警告横幅（3D 顶部，闪烁）----
+        if warn["active"]:
+            blink = int(time.perf_counter() * 2) % 2 == 0
+            alpha = 220 if blink else 150
+            draw.rectangle([0, 0, W, 64], fill=(190, 40, 30, alpha))
+            draw.text((24, 10), f"⚠ {warn['msg']} —— 点击复位按钮或按 R",
+                      font=f_mid, fill=(255, 255, 255))
 
         # 滑块（对齐网格）
         for i in range(N):
@@ -219,7 +273,7 @@ def main() -> int:
 
         draw.text((24, H - 30),
                   "限速 [F]40/180°/s · [C]复制JSON [S]保存 [1-5]预设 · "
-                  "3D区左键旋转 滚轮缩放 · [Q]退出",
+                  "3D区左键旋转 滚轮缩放 · [R]/按钮=复位 · [Q]退出",
                   font=f_sm, fill=(150, 165, 190))
 
         disp = cv2.cvtColor(np.array(img.convert("RGB")), cv2.COLOR_RGB2BGR)
@@ -248,6 +302,8 @@ def main() -> int:
             OUT_JSON.write_text(json.dumps(book, ensure_ascii=False, indent=2),
                                 encoding="utf-8")
             print(f"已保存 → {OUT_JSON} [{name}]")
+        elif key == ord("r") or key == ord("R"):
+            do_reset()
         elif 32 <= key < 127 and chr(key) in PRESETS:
             pname, pangles = PRESETS[chr(key)]
             target[:] = np.array(pangles)
