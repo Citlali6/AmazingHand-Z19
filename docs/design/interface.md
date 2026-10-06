@@ -19,7 +19,7 @@
 
 ## 1. 总体
 
-- 通道：AXI4-Lite 从接口，32 位数据，基地址由 Vivado 地址编辑器分配（`0x4000_0000` 起，默认）。
+- 通道：AXI4-Lite 从接口，32 位数据，基地址 `0x8000_0000`（Zynq UltraScale+ LPD M_AXI_HPM0 窗口；0x4000_0000 是 Zynq-7000 的，US+ 不适用——10-06 修正，与 build_system.tcl 地址分配一致）。
 - PL 侧模块 `axi_lite_regs.sv` 实现，host 侧 `backend_fpga.py` 使用 `/dev/mem` mmap 访问。
 - 既有时钟候选：板上差分200MHz `PL_CLK0`（H24/G25）→MMCM→100MHz控制+200MHz UART。CDC必须显式设计，不会因寄存器存在而自动同步。
 - 第一版另提单100MHz方案以减少CDC，尚待评审；具体来源/复位/AXI跨域须按Z19参考BD核验，见FPGA技术设计。
