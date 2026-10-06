@@ -42,7 +42,9 @@ REG_TEMP = 0xD0
 REG_ERR_BITMAP = 0xE0
 REG_TIMESTAMP = 0xF0
 
-DEFAULT_AXI_BASE = 0x4000_0000
+# Zynq UltraScale+ LPD M_AXI_HPM0（GP0）窗口基址——与 fpga/scripts/build_system.tcl
+# 的 assign_bd_address 一致。注意：0x4000_0000 是 Zynq-7000 的 GP 地址，US+ 不是。
+DEFAULT_AXI_BASE = 0x8000_0000
 _PAGE_SIZE = 4096
 
 

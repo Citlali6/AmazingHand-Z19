@@ -18,7 +18,7 @@ module top (
     inout  wire        servo_data,
     // 状态指示
     output wire        heartbeat,     // 1Hz 心跳（PL_LED1=B3）
-    // AXI4-Lite（BD 内 Zynq PS M_AXI_HPM0 直连，地址 0x4000_0000）
+    // AXI4-Lite（BD 内 Zynq PS M_AXI_HPM0 直连，地址 0x8000_0000）
     input  wire [31:0] s_axi_awaddr,
     input  wire        s_axi_awvalid,
     output wire        s_axi_awready,
@@ -36,7 +36,9 @@ module top (
     output wire [1:0]  s_axi_rresp,
     output wire        s_axi_rvalid,
     input  wire        s_axi_rready,
-    output wire        irq
+    output wire        irq,
+    // AXI 时钟导出：PS GP 口 aclk 与本模块同源（clk_100），保证单时钟域
+    output wire        clk_axi
 );
     // ---- 时钟/复位（200MHz 差分 → IBUFDS → MMCM 100MHz）----
     wire clk_200;
@@ -67,6 +69,7 @@ module top (
         else              rst_ff <= {rst_ff[2:0], 1'b1};
     end
     assign rst_n_sync = rst_ff[3];
+    assign clk_axi = clk_100;  // AXI 与控制环同域：GP 口 aclk 由本模块供出
 
     // ---- 心跳（25bit 计数器 @100MHz ≈ 0.34s 翻转，肉眼可见闪烁）----
     logic [24:0] hb_cnt;
