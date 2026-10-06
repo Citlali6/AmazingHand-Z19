@@ -64,7 +64,9 @@ def slider_geom(i: int) -> tuple[dict, int]:
 
 
 def main() -> int:
-    model = mujoco.MjModel.from_xml_path(str(DEFAULT_MODEL))
+    from collision_model import build_collision_model  # 碰撞简化体（防穿模）
+
+    model = build_collision_model()
     for g in range(model.ngeom):  # 隐藏上游 mocap 调试球
         bid = model.geom_bodyid[g]
         if bid >= 0 and model.body_mocapid[bid] >= 0:
@@ -183,6 +185,9 @@ def main() -> int:
             "接近连杆极限" if stress < 0.7 else "⚠ 超出机构可行域（真实手无法到达）")
         draw.text((bar_x + 70 + bar_w + 14, bar_y - 3), state_txt,
                   font=f_sm, fill=scolor)
+        draw.text((24, VIEW_H + 46),
+                  "碰撞简化体已启用（4 指胶囊 + 手掌盒）：手指互碰/碰掌心会被物理挡住",
+                  font=f_sm, fill=(140, 220, 160))
 
         # 滑块（对齐网格）
         for i in range(N):
