@@ -128,8 +128,13 @@ def main() -> int:
     f_mid = ImageFont.truetype(FONT_PATH, 21)
     f_sm = ImageFont.truetype(FONT_PATH, 18)
 
-    current = np.zeros(N)
-    target = np.zeros(N)
+    # 初始姿态 = 张开（碰撞体生效后手指与掌有初始接触，必须从张开工位
+    # 起步并先稳定沉降，否则初始接触力会把手推成蜷缩）
+    current = np.array(PRESETS["1"][1], dtype=float)
+    target = current.copy()
+    data.ctrl[:] = np.radians(current)
+    for _ in range(800):  # 0.8s 预稳定：接触沉降到平衡
+        mujoco.mj_step(model, data)
     speed_dps = 40.0
     stress = 0.0  # 机构应力（equality 残差归一）
     last = time.perf_counter()
