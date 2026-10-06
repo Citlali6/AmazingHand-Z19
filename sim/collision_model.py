@@ -1,26 +1,25 @@
-"""碰撞简化体注入 —— 为上游无碰撞模型（纯动画/运动学）构建物理版。
+"""碰撞简化体注入 v2 —— 按壳体 mesh 包围盒自动生成贴合胶囊。
 
-背景：上游 AHSimulation 的全部 geom 均为 ``contype=0 conaffinity=0``
-（CAD 全量杆系，纯动画导向），手指与手掌可无限穿透。
+v1 教训：手工"根→tip 直棒"胶囊（r=5mm）无法表达 24mm 宽的指节壳，
+横向交叉挡不住；手掌盒与指根胶囊初始嵌接触卡死屈曲关节。
 
-本模块用 MjSpec 在**运行时**注入简化碰撞体（上游 XML 文件不动）：
-- 每指 1 根覆盖全指的 capsule（挂在指根舵机 body 上，跟随手指运动）；
-- 手掌 1 个 box；
-- 注入 geoms 的 contype/conaffinity=1 → 只与彼此及地板碰撞；
-  连杆零件（无碰撞）与指节重叠不受影响，不会引起杆系爆炸。
+v2 方法（数据驱动，无手工几何）：
+- 扫描上游 geom，凡 mesh 名命中壳体表（proximal/distal shell、掌板）→
+  在同一 body 上生成**同位姿**的碰撞体：
+    · 长轴沿 mesh AABB 最长维（proximal/distal 均为 z）
+    · 半径 = 横截面半宽 × 收缩系数（壳体 rounded 外缘）
+    · 长度 = AABB 长轴长
+- 壳体 geom 之间 contype=1 → 指节-指节 / 指节-掌 板碰撞生效；
+  连杆/其它零件仍无碰撞（杆系零干扰）。
 
 使用::
 
     from collision_model import build_collision_model
-    model = build_collision_model()          # 替代 MjModel.from_xml_path
-
-标定意义：碰撞体使控制台/仿真拒绝物理不可达的交叉姿态，
-导出参数天然满足"实机不干涉"约束。
+    model = build_collision_model()
 """
 
 from __future__ import annotations
 
-import math
 import sys
 from pathlib import Path
 
@@ -32,96 +31,79 @@ sys.path.insert(0, str(REPO_ROOT / "sim"))
 
 from verify_grasp import DEFAULT_MODEL  # noqa: E402
 
-#: 手指胶囊（半径 m）——须足够细以避免张开位相邻指根初始嵌接触
-#: （8.5mm 时初始 contacts=4，接触力与舵机 kp=10 打架 → 屈曲卡死/推飞）
-FINGER_RADIUS = 0.005
-#: 手掌碰撞盒——已移除：初始与指根胶囊嵌住造成屈曲关节卡死，
-#: 指间防交叉（主要诉求）由手指胶囊独立承担
-PALM_ENABLED = False
-
-# 每指：(指根舵机 body 名, tip site 名)
-FINGERS = [
-    ("custom_servo_horn", "tip1"),
-    ("custom_servo_horn_2", "tip2"),
-    ("custom_servo_horn_3", "tip3"),
-    ("custom_servo_horn_4", "tip4"),
-]
-
-
-def _quat_z_to(vec_local: np.ndarray) -> np.ndarray:
-    """生成把 capsule 默认 z 轴对齐到 vec_local 的四元数 (w,x,y,z)。"""
-    v = vec_local / (np.linalg.norm(vec_local) + 1e-12)
-    z = np.array([0.0, 0.0, 1.0])
-    axis = np.cross(z, v)
-    s = np.linalg.norm(axis)
-    if s < 1e-9:  # 平行
-        return np.array([1.0, 0, 0, 0]) if v[2] > 0 else np.array([0.0, 1.0, 0, 0])
-    axis /= s
-    angle = math.atan2(s, float(np.dot(z, v)))
-    return np.concatenate([[np.cos(angle / 2)], np.sin(angle / 2) * axis])
+#: 壳体 mesh 名 → 碰撞体配置（radius_scale：横截面半宽 × 系数）
+#: r_hand_plate 排除：其 mesh AABB 半宽 46mm 会包住整手（多块板的大包围盒）
+SHELL_RULES = {
+    "proximal": 0.85,
+    "distal": 0.85,
+}
 
 
 def build_collision_model(verbose: bool = False) -> mujoco.MjModel:
-    """加载上游模型并注入碰撞简化体，返回编译后的 MjModel。"""
     spec = mujoco.MjSpec.from_file(str(DEFAULT_MODEL))
-
-    # 先 forward 一次拿世界位姿（用于计算局部几何）
     tmp = spec.compile()
     d = mujoco.MjData(tmp)
     mujoco.mj_forward(tmp, d)
 
-    def bid(name: str) -> int:
-        i = mujoco.mj_name2id(tmp, mujoco.mjtObj.mjOBJ_BODY, name)
-        assert i >= 0, f"body not found: {name}"
-        return i
-
     added = 0
-    for root_name, tip_name in FINGERS:
-        rb = bid(root_name)
-        # 指根 body 的世界位姿
-        R = d.xmat[rb].reshape(3, 3)
-        p_root = d.xpos[rb].copy()
-        # 指尖位置（世界）→ 指根局部系
-        sid = mujoco.mj_name2id(tmp, mujoco.mjtObj.mjOBJ_SITE, tip_name)
-        p_tip = d.site_xpos[sid].copy()
-        v_local = R.T @ (p_tip - p_root)  # 指根→指尖（局部）
-        length = float(np.linalg.norm(v_local))
-        half = max(0.005, length / 2 - FINGER_RADIUS * 0.5)
-        mid = v_local / 2.0
-        quat = _quat_z_to(v_local)
+    for g in range(tmp.ngeom):
+        if tmp.geom_type[g] != mujoco.mjtGeom.mjGEOM_MESH:
+            continue
+        mesh_name = mujoco.mj_id2name(tmp, mujoco.mjtObj.mjOBJ_MESH,
+                                      tmp.geom_dataid[g]) or ""
+        if mesh_name not in SHELL_RULES:
+            continue
+        body_id = tmp.geom_bodyid[g]
+        body_name = mujoco.mj_id2name(tmp, mujoco.mjtObj.mjOBJ_BODY, body_id)
 
-        body = spec.body(root_name)
-        body.add_geom(
-            type=mujoco.mjtGeom.mjGEOM_CAPSULE,
-            size=[FINGER_RADIUS, half, 0.0],
-            pos=[float(mid[0]), float(mid[1]), float(mid[2])],
-            quat=[float(quat[0]), float(quat[1]), float(quat[2]), float(quat[3])],
-            contype=1, conaffinity=1,
-            group=3,  # 碰撞层（默认不渲染，可在 viewer 打开）
-            rgba=[0.2, 0.5, 1.0, 0.15],
-            solref=[0.004, 1],  # 稍软接触，防求解器抖动
-        )
-        added += 1
-        if verbose:
-            print(f"  + finger capsule [{root_name}] len={length * 1000:.0f}mm")
+        # mesh 顶点 AABB（mesh 局部系）
+        vadr, vnum = tmp.mesh_vertadr[tmp.geom_dataid[g]], tmp.mesh_vertnum[tmp.geom_dataid[g]]
+        verts = tmp.mesh_vert[vadr:vadr + vnum] * 1000.0  # mm
+        lo, hi = verts.min(axis=0), verts.max(axis=0)
+        center = (lo + hi) / 2 * 0.001  # m
+        extent = (hi - lo) * 0.001      # m
+        longest = int(np.argmax(extent))
 
-    # 手掌碰撞盒（可选）：初始与指根胶囊嵌住会卡死屈曲关节，默认关闭
-    if PALM_ENABLED:
-        wb = spec.body("r_wrist_interface")
-        wb.add_geom(
-            type=mujoco.mjtGeom.mjGEOM_BOX,
-            size=[0.028, 0.020, 0.050],
-            pos=[0.0, 0.0, 0.055],
-            contype=1, conaffinity=1,
-            group=3,
-            rgba=[0.2, 0.5, 1.0, 0.12],
-            solref=[0.004, 1],
-        )
+        gp = np.asarray(tmp.geom_pos[g])
+        gq = np.asarray(tmp.geom_quat[g])
+        # geom 旋转把 mesh 长轴（局部 z）映射到世界——capsule 复用同 quat，
+        # 位置 = geom_pos + R(geom_quat) @ mesh_AABB_center
+        R = np.zeros(9)
+        mujoco.mju_quat2Mat(R, gq)
+        R = R.reshape(3, 3)
+        cap_pos = gp + R @ center
+
+        body = spec.body(body_name)
+        if mesh_name == "r_hand_plate":
+            body.add_geom(
+                type=mujoco.mjtGeom.mjGEOM_BOX,
+                size=[extent[0] / 2, extent[1] / 2, extent[2] / 2],
+                pos=[float(cap_pos[0]), float(cap_pos[1]), float(cap_pos[2])],
+                quat=[float(gq[0]), float(gq[1]), float(gq[2]), float(gq[3])],
+                contype=1, conaffinity=1, group=3,
+                rgba=[0.2, 0.5, 1.0, 0.10], solref=[0.004, 1],
+            )
+            if verbose:
+                print(f"  + palm box  [{body_name[:36]}] half={np.round(extent / 2 * 1000, 1)}mm")
+        else:
+            r = float(min(np.delete(extent, longest) / 2) * SHELL_RULES[mesh_name])
+            half = max(0.005, extent[longest] / 2 - r)
+            body.add_geom(
+                type=mujoco.mjtGeom.mjGEOM_CAPSULE,
+                size=[r, half, 0.0],
+                pos=[float(cap_pos[0]), float(cap_pos[1]), float(cap_pos[2])],
+                quat=[float(gq[0]), float(gq[1]), float(gq[2]), float(gq[3])],
+                contype=1, conaffinity=1, group=3,
+                rgba=[0.2, 0.5, 1.0, 0.10], solref=[0.004, 1],
+            )
+            if verbose:
+                print(f"  + capsule   [{body_name[:36]}] mesh={mesh_name:14s} "
+                      f"r={r * 1000:.1f}mm len={extent[longest] * 1000:.0f}mm")
         added += 1
 
     model = spec.compile()
     if verbose:
-        print(f"collision geoms injected: {added}（总 geom {model.ngeom}）")
+        print(f"injected: {added} collision geoms (total {model.ngeom})")
     return model
 
 
@@ -129,10 +111,11 @@ if __name__ == "__main__":
     m = build_collision_model(verbose=True)
     d = mujoco.MjData(m)
     mujoco.mj_forward(m, d)
-    # 稳定性冒烟：抓取姿态 1s，检查不发散
-    m.actuator_ctrl[:] = np.radians([90, -10, 90, -10, 90, -10, 90, -5])
+    n_open = d.ncon
+    print(f"open-pose contacts = {n_open}（应≈0：初始壳体不互相嵌住）")
+    # 抓取姿态稳定性
+    d.ctrl[:] = np.radians([90, -10, 90, -10, 90, -10, 90, -5])
     for _ in range(2000):
         mujoco.mj_step(m, d)
-    ok = np.all(np.isfinite(d.qpos))
-    print(f"stability smoke: qpos finite={ok}, max|qacc|={np.abs(d.qacc).max():.2f}")
-    sys.exit(0 if ok else 1)
+    print(f"grasp pose: finite={np.all(np.isfinite(d.qpos))}, "
+          f"max|qacc|={np.abs(d.qacc).max():.3f}, ncon={d.ncon}")

@@ -191,7 +191,7 @@ def main() -> int:
         draw.text((bar_x + 70 + bar_w + 14, bar_y - 3), state_txt,
                   font=f_sm, fill=scolor)
         draw.text((24, VIEW_H + 46),
-                  "碰撞简化体已启用（4 指胶囊 + 手掌盒）：手指互碰/碰掌心会被物理挡住",
+                  "碰撞体 v2 已启用（按壳体包围盒：近节 r6.5 / 远节 r4.3mm 胶囊×8）——指间交叉被物理阻挡",
                   font=f_sm, fill=(140, 220, 160))
 
         # 滑块（对齐网格）
