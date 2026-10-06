@@ -93,13 +93,17 @@
 
 | 时隙 | 事务 | 帧长 | 耗时 |
 |---|---|---|---|
-| t0 | SYNC_WRITE(0x83) 一次下发 8 舵机（目标位置 2B + 目标速度 2B） | 48B（params 42 + 头 6） | ≈480µs |
+| t0 | SYNC_WRITE(0x83) 一次下发 8 舵机 **目标位置（per=2）** | 32B | ≈320µs |
 | t1 | READ 舵机 #i 连读 0x3A~0x41（pos/speed/load/volt/temp 共 8B） | 7B 请求 + 13B 响应 | ≈250µs 含换向 |
 | t2 | READ 舵机 #j（同上） | 同上 | ≈250µs |
-| 合计 | | | **≈980µs** ✓ |
+| 合计 | | | **≈820µs** ✓（余量 180µs） |
 
-推导：SYNC_WRITE params = addr(1)+len(1)+8×(id 1+data 4) = 42B，Length = 44，帧总长 48B；
-READ 响应 LEN = err(1)+8+cs(1) = 10，帧长 13B，请求 7B（FF FF ID 04 02 addr len CS）。
+- **v0.2.1 修正**：速度（0x2E）不再进周期时隙——CLOSING 期间速度恒定，
+  改为**事件事务**（状态迁移时由 PL 在时隙空闲段插入广播/单播 WRITE），
+  每 8 舵机 6B 连写视图（位置+Goal_Time+速度）需 64B=640µs，超时隙预算。
+- 推导：SYNC_WRITE per=2：params = addr(1)+len(1)+8×(id 1+data 2)=18B，LEN=20，帧总长 24B？
+  按 `build_sync_write` 实测 = **32B**（含广播 ID 与校验）；READ 响应 LEN = err(1)+8+cs(1)=10 → 13B。
+  事件事务（空闲段）：WRITE 广播力矩开关 8B；速度单播×8 ≈128µs。
 
 - 回读调度：i、j 轮转扫过 8 个 ID → **每舵机回读 250Hz**，下发 1kHz。
 - 闭合阶段（FSM_STATE=CLOSING）可切换为"关键舵机模式"：只轮询负载监视通道（默认 4 个），回读提至 500Hz。
