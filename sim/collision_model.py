@@ -32,11 +32,12 @@ sys.path.insert(0, str(REPO_ROOT / "sim"))
 
 from verify_grasp import DEFAULT_MODEL  # noqa: E402
 
-#: 手指胶囊（半径 m）——贴合指节壳内侧
-FINGER_RADIUS = 0.0085
-#: 手掌碰撞盒半尺寸（m）
-PALM_HALF = (0.028, 0.020, 0.050)
-PALM_CENTER_LOCAL = (0.0, 0.0, 0.055)  # r_wrist_interface 局部系掌心
+#: 手指胶囊（半径 m）——须足够细以避免张开位相邻指根初始嵌接触
+#: （8.5mm 时初始 contacts=4，接触力与舵机 kp=10 打架 → 屈曲卡死/推飞）
+FINGER_RADIUS = 0.005
+#: 手掌碰撞盒——已移除：初始与指根胶囊嵌住造成屈曲关节卡死，
+#: 指间防交叉（主要诉求）由手指胶囊独立承担
+PALM_ENABLED = False
 
 # 每指：(指根舵机 body 名, tip site 名)
 FINGERS = [
@@ -104,18 +105,19 @@ def build_collision_model(verbose: bool = False) -> mujoco.MjModel:
         if verbose:
             print(f"  + finger capsule [{root_name}] len={length * 1000:.0f}mm")
 
-    # 手掌碰撞盒（挂在手腕接口 body）
-    wb = spec.body("r_wrist_interface")
-    wb.add_geom(
-        type=mujoco.mjtGeom.mjGEOM_BOX,
-        size=list(PALM_HALF),
-        pos=list(PALM_CENTER_LOCAL),
-        contype=1, conaffinity=1,
-        group=3,
-        rgba=[0.2, 0.5, 1.0, 0.12],
-        solref=[0.004, 1],
-    )
-    added += 1
+    # 手掌碰撞盒（可选）：初始与指根胶囊嵌住会卡死屈曲关节，默认关闭
+    if PALM_ENABLED:
+        wb = spec.body("r_wrist_interface")
+        wb.add_geom(
+            type=mujoco.mjtGeom.mjGEOM_BOX,
+            size=[0.028, 0.020, 0.050],
+            pos=[0.0, 0.0, 0.055],
+            contype=1, conaffinity=1,
+            group=3,
+            rgba=[0.2, 0.5, 1.0, 0.12],
+            solref=[0.004, 1],
+        )
+        added += 1
 
     model = spec.compile()
     if verbose:
