@@ -72,6 +72,12 @@ host/
     ├── setup_z19.sh             # 板端环境一键安装（复现性关键）
     └── run_app.sh               # 应用启动
 
+firmware/stm32/                   # STM32F103C8T6 宿舍测试台透传固件（无 Z19 环境）
+├── Core/Src/main.c               # 字节泵：PC 帧长前缀协议 ↔ SCS 总线（PA9 半双工 1Mbps）
+├── CMakeLists.txt + cmake/       # CMake 构建（arm-none-eabi-gcc，继承四杆 HIL 工程模板）
+└── Drivers/                      # ST HAL/CMSIS vendor（仅此而已，协议语义在 PC 端）
+└── README.md                     # 构建/烧录/接线/故障排查
+
 tools/                           # PC 上跑，板子没好也不阻塞
 ├── calibrate_servo.py           # 8 舵机校准（基于官方脚本改）→ 输出 calibration/
 ├── calibrate_camera.py          # 相机 mm/pixel 标定 → 输出 calibration/
