@@ -129,7 +129,9 @@ module grasp_fsm #(
             torque_on <= 1'b0;
             timeout_flag <= 1'b0;
             load_hit_q <= 1'b0;
+            evt_torque_valid <= 1'b0; evt_torque_arg <= '0;
         end else begin
+            evt_torque_valid <= 1'b0;
             if (st != st_next) t_10ms <= '0;
             else if (tick_10ms) t_10ms <= t_10ms + 1'b1;
             st <= st_next;

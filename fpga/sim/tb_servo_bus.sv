@@ -93,6 +93,14 @@ module tb_servo_bus;
     int unsigned cap_len;
     int unsigned cap_cnt;
     logic        cap_on;
+    int unsigned read_count = 0;
+    always @(posedge clk) begin
+        if (rst_n && p_tx_start && p_tx_type == scs_pkg::F_READ_FB) begin
+            assert (p_tx_read_id == (read_count % 8))
+                else $fatal(1, "poll order: request %0d index %0d", read_count, p_tx_read_id);
+            read_count <= read_count + 1;
+        end
+    end
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             cap_len <= 0; cap_cnt <= 0; cap_on <= 0;
@@ -117,6 +125,7 @@ module tb_servo_bus;
 
     initial begin
         for (int i = 0; i < 8; i++) load_inject[i] = '0;
+        load_inject[2] = 16'd500;
         repeat (10) @(posedge clk); rst_n = 1;
         // 等第一个 SYNC_WRITE 帧（时隙 0 触发）
         wait (p_tx_done == 1'b1); @(posedge clk);
@@ -134,6 +143,7 @@ module tb_servo_bus;
             expect_byte(9 + 3*s,     8'h08, "sync");   // high 0x08
         end
         expect_byte(31, 8'hD2, "sync");  // 手工锚点 CS
+        assert (cap_len == 32) else $fatal(1, "SYNC frame length %0d", cap_len);
         $display("T1 PASS: SYNC_WRITE frame (32B, CS=0xD2)");
 
         // ---- 等 READ #1 帧 ----
@@ -147,6 +157,7 @@ module tb_servo_bus;
         expect_byte(5, 8'h3A, "read1");
         expect_byte(6, 8'h08, "read1");
         expect_byte(7, 8'hB6, "read1");  // CS = ~0x49（01+04+02+3A+08）
+        assert (cap_len == 8) else $fatal(1, "READ frame length %0d", cap_len);
         $display("T2 PASS: READ #1 frame");
         // slave 响应 → 回读更新
         repeat (200) @(posedge clk);
@@ -155,17 +166,22 @@ module tb_servo_bus;
 
         // ---- 掉线注入：舵机 1 静默 → READ 超时清 online（保持注入期间断言）----
         drop_mask = 8'b0000_0001;
-        repeat (6_000) @(posedge clk);   // 数个时隙，超时生效
+        repeat (10_000) @(posedge clk);   // 至少完整8路轮询一次
         assert (online_bitmap[0] == 1'b0) else $error("T4: servo1 offline expected, bitmap=%02X", online_bitmap);
         $display("T4 PASS: drop injection -> offline bit");
         drop_mask = 8'h00;
-        repeat (4_000) @(posedge clk);   // 恢复在线
+        repeat (10_000) @(posedge clk);   // 恢复后至少完整8路轮询一次
         assert (online_bitmap[0] == 1'b1) else $error("T4b: servo1 back online");
+        assert (online_bitmap == 8'hFF && read_count >= 16)
+            else $fatal(1, "all eight servos must be polled and confirmed online");
+        assert (meas_load[2] == 500 && meas_temp[2] == 25)
+            else $fatal(1, "feedback fields mismatch");
 
         // ---- 事件帧：速度事件 → 广播 WRITE 0x2E ----
         speed_event <= 1'b1;
         @(posedge clk); speed_event <= 1'b0;
-        repeat (4_000) @(posedge clk);
+        wait (p_tx_start && p_tx_type == scs_pkg::F_BC_SPEED);
+        @(posedge p_tx_done); @(negedge clk);
         // 最近捕获帧应为广播速度帧 8B：FF FF FE 04 03 2E 03 CS
         expect_byte(0, 8'hFF, "evt");
         expect_byte(1, 8'hFF, "evt");
@@ -177,13 +193,37 @@ module tb_servo_bus;
         expect_byte(7, 8'hC9, "evt");    // CS = ~(FE+04+03+2E+03) = ~0x36 = 0xC9（golden 锚点）
         $display("T5 PASS: speed event frame");
 
+        // 力矩端口必须实际产生广播帧；模型只在力矩开启后追踪目标。
+        @(negedge clk); evt_torque_arg = 1; evt_torque_valid = 1;
+        @(negedge clk); evt_torque_valid = 0;
+        wait (p_tx_start && p_tx_type == scs_pkg::F_BC_TORQUE);
+        @(posedge p_tx_done); @(negedge clk);
+        assert (cap_len == 8) else $fatal(1, "Torque frame length");
+        expect_byte(5, 8'h28, "torque");
+        expect_byte(6, 8'h01, "torque");
+        expect_byte(7, 8'hD1, "torque");
+        target_pos = {8{12'd2050}};
+        repeat (10_000) @(negedge clk);
+        for (int i = 0; i < 8; i++)
+            assert (meas_pos[i] == 2050) else $fatal(1, "Torque-on broadcast did not enable model servo %0d", i+1);
+        evt_torque_arg = 0; evt_torque_valid = 1;
+        @(negedge clk); evt_torque_valid = 0;
+        wait (p_tx_start && p_tx_type == scs_pkg::F_BC_TORQUE);
+        @(posedge p_tx_done); @(negedge clk);
+        expect_byte(6, 8'h00, "torque-off");
+        expect_byte(7, 8'hD2, "torque-off");
+        target_pos = {8{12'd2060}};
+        repeat (10_000) @(negedge clk);
+        for (int i = 0; i < 8; i++)
+            assert (meas_pos[i] == 2050) else $fatal(1, "Torque-off model servo %0d moved", i+1);
+        $display("T6 PASS: torque events and eight-servo model behavior");
+
         $display("tb_servo_bus: ALL PASS");
         $finish;
     end
 
     initial begin
         #2_000_000;  // 2ms 仿真看门狗
-        $error("watchdog timeout");
-        $finish;
+        $fatal(1, "watchdog timeout");
     end
 endmodule

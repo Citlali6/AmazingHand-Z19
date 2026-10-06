@@ -56,6 +56,12 @@ module tb_grasp_fsm;
     localparam [2:0] S_IDLE = 0, S_PREGRASP = 1, S_CLOSING = 2,
                      S_HOLD = 3, S_RELEASING = 4, S_PROTECT = 5;
 
+    int torque_events = 0, speed_events = 0;
+    always @(posedge clk) begin
+        if (rst_n && evt_torque_valid) torque_events <= torque_events + 1;
+        if (rst_n && speed_event) speed_events <= speed_events + 1;
+    end
+
     task automatic do_cmd(input [7:0] id, input [7:0] arg);
         @(posedge clk); cmd_valid <= 1; cmd_id <= id; cmd_arg <= arg;
         @(posedge clk); cmd_valid <= 0;
@@ -78,11 +84,11 @@ module tb_grasp_fsm;
         do_cmd(8'h01, 8'h00);                    // 启动
         repeat (10) @(posedge clk);
         assert (fsm_state == S_PREGRASP) else $error("S1: expect PREGRASP, got %0d", fsm_state);
-        assert (evt_torque_valid && evt_torque_arg == 8'd1) else $error("S1: torque-on event missing");
+        assert (torque_events == 1 && torque_on) else $fatal(1, "S1: torque-on event missing or duplicated");
         // PREGRASP 0.35ms（>0.3ms 阈值）
         repeat (35_000) @(posedge clk);
         assert (fsm_state == S_CLOSING) else $error("S2: expect CLOSING, got %0d", fsm_state);
-        assert (speed_event) else $error("S2: speed event missing");
+        assert (speed_events == 1) else $fatal(1, "S2: speed event missing or duplicated");
 
         // 注入负载 500 ≥ 阈值 384 → 力控 HOLD
         for (int i = 0; i < 8; i++) meas_load[i] = 16'd500;
@@ -102,12 +108,12 @@ module tb_grasp_fsm;
         assert (fsm_state == S_HOLD) else $error("S4: expect HOLD, got %0d", fsm_state);
         assert (timeout_flag && !grasped) else $error("S4: timeout=%b grasped=%b", timeout_flag, grasped);
         do_cmd(8'h02, 8'h00);
-        repeat (600_000) @(posedge clk);
+        repeat (60_000) @(posedge clk);
 
         // ---- 场景 5：HOLD 掉线 → PROTECT → 手动复位 ----
         do_cmd(8'h01, 8'h00);
         for (int i = 0; i < 8; i++) meas_load[i] = 16'd500;
-        repeat (1000) @(posedge clk);
+        repeat (35_000) @(posedge clk); // 先经过 PREGRASP，才可能触力 HOLD
         assert (fsm_state == S_HOLD) else $error("S5a");
         online_bitmap = 8'b1011_1111;  // 舵机 6 掉线
         repeat (100) @(posedge clk);
@@ -130,8 +136,7 @@ module tb_grasp_fsm;
     end
 
     initial begin
-        #5_000_000;  // 5ms 仿真看门狗（超时场景 3.4ms）
-        $error("watchdog timeout");
-        $finish;
+        #8_000_000;  // 覆盖全部场景的累计时间
+        $fatal(1, "watchdog timeout");
     end
 endmodule

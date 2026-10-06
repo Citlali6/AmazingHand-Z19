@@ -1,52 +1,60 @@
 # ============================================================================
-# build_project.tcl — Vivado 一键构建（复现性关键，评分 15 分项）
+# build_project.tcl — Vivado 2020.1 可复现的模块级仿真入口
 #
-# 用法（Vivado 2023.2+ Tcl Console 或命令行）：
-#   vivado -mode batch -source build_project.tcl
-#   vivado -mode batch -source build_project.tcl -tclargs sim   # 仅编译仿真
+# 用法：vivado -mode batch -source build_project.tcl -tclargs sim [输出目录]
 #
-# 流程：建工程 → 添加 RTL/XDC → synth → impl → bit/xsa（+ 可选 xsim）
-# BD 说明：AXI4-Lite 由 PS（Zynq UltraScale+）M_AXI_HPM0 经 AXI Interconnect
-# 接 axi_lite_regs（RTL module 以 Add Module 方式进 BD）；本脚本自动完成
-# PS 配置（UART1 MIO48/49 调试、DDR4 默认、HPM0 使能）。
+# 仿真按顺序运行协议、总线调度、抓取状态机，检查断言和完成标记。
+# 当前尚无 PS/AXI BD、官方 DDR preset 和已核验整板约束，不能生成可加载 XSA。
+# 不覆盖已存在的工程目录；未指定目录时放在 fpga/build/out/<时间戳>。
 # ============================================================================
-if { $argc >= 1 && [lindex $argv 0] eq "sim" } {
-    set RUN_SIM 1
-} else {
-    set RUN_SIM 0
+if {$argc < 1 || [lindex $argv 0] ne "sim" || $argc > 2} {
+    puts stderr {Only module simulation is available: -tclargs sim [output_dir]. Board build requires PS/AXI BD and verified constraints.}
+    exit 1
 }
 set PRJ   "amazinghand_z19"
-set PART  "xczu19eg-ffvc1760-2-e"
+set PART  "xczu19eg-ffvc1760-2-i"
 set ROOT  [file normalize [file join [file dirname [info script]] ..]]
-
-create_project $PRJ [file join $ROOT build $PRJ] -part $PART -force
-
-# ---- 源文件 ----
-add_files -fileset sources_1 [glob [file join $ROOT rtl *.sv]]
-add_files -fileset sim_1     [glob [file join $ROOT sim *.sv]]
-add_files -fileset constrs_1 [file join $ROOT constr z19.xdc]
-set_property top top [current_fileset]
-set_property top tb_servo_bus [get_filesets sim_1]
-set_property -name {xsim.simulate.runtime} -value {3ms} -objects [get_filesets sim_1]
-
-# ---- 综合 + 实现 + 产物 ----
-if {!$RUN_SIM} {
-    launch_runs synth_1 -jobs 8
-    wait_on_run synth_1
-    launch_runs impl_1 -to_step write_bitstream -jobs 8
-    wait_on_run impl_1
-    # XSA（板端 Vitis/PetaLinux 用）
-    write_hw_platform -fixed -include_bit -force [file join $ROOT build amazinghand_z19.xsa]
-    puts "bit/xsa -> $ROOT/build"
-    # 关键报告摘要
-    puts [report_utilization -return_string]
+if {$argc == 2} {
+    set OUT [file normalize [lindex $argv 1]]
+} else {
+    set OUT [file join $ROOT build out [clock format [clock seconds] -format "%Y%m%d-%H%M%S"]]
 }
-
-# ---- 仿真（RTL 验证入口，对照 golden_vectors.txt）----
-if {$RUN_SIM} {
-    launch_runs sim_1 -jobs 4
-    wait_on_run sim_1
-    open_run sim_1
+if {[file exists $OUT]} {
+    puts stderr "Output directory already exists; choose a new directory: $OUT"
+    exit 1
 }
-
-puts "BUILD DONE (sim=$RUN_SIM)"
+if {[catch {
+    create_project $PRJ $OUT -part $PART
+    # 尚未验证的整板顶层/AXI/UART不混入字节级模块测试。
+    foreach src {scs_protocol.sv servo_bus_ctrl.sv grasp_fsm.sv} {
+        add_files -fileset sources_1 [file join $ROOT rtl $src]
+    }
+    add_files -fileset sim_1 [glob [file join $ROOT sim *.sv]]
+    set_property top servo_bus_ctrl [get_filesets sources_1]
+    set_property -name xsim.elaborate.xelab.more_options -value {--timescale 1ns/1ps} -objects [get_filesets sim_1]
+    set_property xsim.elaborate.debug_level off [get_filesets sim_1]
+    set_property xsim.simulate.runtime all [get_filesets sim_1]
+    set_property xsim.simulate.log_all_signals false [get_filesets sim_1]
+    foreach tb {tb_scs_protocol tb_servo_bus tb_grasp_fsm} {
+        set_property top $tb [get_filesets sim_1]
+        update_compile_order -fileset sim_1
+        launch_simulation -simset sim_1 -mode behavioral
+        close_sim
+        set logfile [file join $OUT ${PRJ}.sim sim_1 behav xsim simulate.log]
+        set fh [open $logfile r]
+        set result [read $fh]
+        close $fh
+        # XSim遇到$error可能仍返回0，必须同时检查日志和完成标记。
+        if {[regexp -line {^(Error:|Fatal:|ERROR:|FATAL:)} $result] ||
+            [string first "$tb: ALL PASS" $result] < 0} {
+            error "Simulation failed or did not complete: $tb (see $logfile)"
+        }
+        file copy $logfile [file join $OUT ${tb}.log]
+        puts "VERIFIED: $tb"
+    }
+    close_project
+} failure]} {
+    puts stderr $failure
+    exit 1
+}
+puts "SIMULATION ALL PASS -> $OUT"
