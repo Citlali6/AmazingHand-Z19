@@ -10,7 +10,9 @@ pyserial==3.5
 ncnn==1.0.20240410
 # 加速后端：DPU xmodel 由 Vitis AI 运行时加载（vart-*, 板端随镜像安装，不进 pip）
 
-# PC 侧 tools/ 额外依赖（模型导出与验证）
-# ultralytics==8.2.0
+# PC 侧 tools/sim 依赖（模型导出、验证与数字孪生，Windows 已验证）
+mujoco==3.15.0      # sim/ 数字孪生（verify_grasp / render_compare）
+pillow==12.2.0      # 渲染 PNG 输出
+# ultralytics==8.2.0  # YOLO 导出链（第 4 步，按需安装，含 torch 体积大）
 # onnx==1.16.0
-# mujoco==3.1.6      # sim/ 数字孪生（PC 运行）
+# vosk==0.3.45       # 语音（板端 host 段已列；PC 测试同用）

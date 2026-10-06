@@ -13,6 +13,13 @@ webtalk/
 .vivado.begin*
 .vivado.end*
 .Pynq*
+
+# ===== 模型权重与导出产物（tools/ 脚本可重建，不入库）=====
+*.pt
+yolov8n_ncnn_model/
+yolov8n.onnx
+host/models/
+data/render/
 *.backup.*
 *.bak
 *.orig

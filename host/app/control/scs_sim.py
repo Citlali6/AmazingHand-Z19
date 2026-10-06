@@ -320,20 +320,21 @@ class VirtualServoBus:
                 s.torque_on = False  # 过温切断状态下拒绝重新使能
             return
         if addr == sp.Reg.GOAL_POSITION[0]:
-            s.goal_raw = (data[0] | (data[1] << 8)) & sp.POSITION_STEPS
+            # 部分写支持：单字节写 = 只改低字节（真实舵机行为）
+            s.goal_raw = (s.goal_raw & 0x0F00) | data[0] if len(data) < 2 else (data[0] | (data[1] << 8)) & sp.POSITION_STEPS
             # 连写视图：0x2A 起 6B = 位置(2B) + Goal_Time(2B) + 速度(2B)
             if len(data) >= 6:
                 s.goal_time_raw = data[2] | (data[3] << 8)
                 s.goal_speed_raw = data[4] | (data[5] << 8)
             return
         if addr == sp.Reg.GOAL_TIME[0]:
-            s.goal_time_raw = data[0] | (data[1] << 8)
+            s.goal_time_raw = data[0] | ((data[1] << 8) if len(data) >= 2 else 0)
             return
         if addr == sp.Reg.RUNNING_SPEED[0]:
-            s.goal_speed_raw = data[0] | (data[1] << 8)
+            s.goal_speed_raw = data[0] | ((data[1] << 8) if len(data) >= 2 else 0)
             return
         if addr == sp.Reg.TORQUE_LIMIT[0]:
-            s.torque_limit_raw = data[0] | (data[1] << 8)
+            s.torque_limit_raw = data[0] | ((data[1] << 8) if len(data) >= 2 else 0)
             return
         if addr == sp.Reg.MAX_TEMPERATURE_LIMIT[0]:
             s.max_temperature_limit_c = float(data[0])
