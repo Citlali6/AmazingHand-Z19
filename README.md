@@ -10,11 +10,15 @@
 
 ```
 PS (Linux / Cortex-A53)：语音命令词识别 → YOLO 检测 + 单目尺寸估计 → 抓取策略查表 → ArUco 就位引导
-PL (RTL)：舵机总线控制器（8路, 1kHz 回读） + 力控抓握状态机（堵转/超温保护）
+PL (RTL，待实现)：单条半双工总线控制 8 个舵机 + 基于负载反馈的抓握监督与保护状态机
 执行器：8 × Feetech SCS0009 → AmazingHand（pollen-robotics 开源灵巧手）
 ```
 
 详细设计见 [docs/design/architecture.md](docs/design/architecture.md)。
+
+FPGA工作计划、技术设计、施工步骤与验收见 [FPGA开发文档入口](docs/fpga/README.md)。
+第一版要求在 **2026-10-15 前完成真实灵巧手抓取**；建议10-14验收交付。
+当前无FPGA RTL/工程，500Hz下发与两路轮询是待实测的首版候选，不能写成已实现指标。
 
 ## 目录结构
 
@@ -31,7 +35,9 @@ report/  设计报告（比赛交付）
 
 ## 快速开始（复现步骤）
 
-> 完整复现说明整理中，决赛版将包含从零到演示的每一步。
+> 下列是规划流程。`host/scripts/`、`fpga/scripts/`、`tools/` 当前尚未实现，不能直接执行这些计划入口。
+> 已有PC模拟链路可运行 `python host/tests/smoke_test_control.py`、`python host/tests/smoke_test_backend.py`，
+> 或 `python host/app/main.py --mock-voice "抓起香蕉,放下"`；通过不代表真实抓取或协议已实机核验。
 
 1. **硬件**：ALINX Z19 + AmazingHand（8×SCS0009，串行总线）+ USB 相机 + USB 麦克风
 2. **板端系统**：ALINX Ubuntu 镜像烧写（见 `docs/refer/course_s2`）
@@ -43,7 +49,8 @@ report/  设计报告（比赛交付）
 ## 开发状态
 
 - [x] 方案定稿与系统设计
-- [x] AmazingHand 机械组装与舵机接线
+- [x] Python协议参考模型与Host骨架（模拟测试通过，协议实物参数待复核）
+- [ ] AmazingHand实物可用性与标定交接（历史日志记录已组装，本轮尚未核实）
 - [ ] Z19 环境部署 / PC 工具链
 - [ ] RTL 舵机总线控制器与力控状态机
 - [ ] 视觉与语音链路
