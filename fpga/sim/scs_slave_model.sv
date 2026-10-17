@@ -35,7 +35,7 @@ module scs_slave_model (
     logic [7:0]  temp_q  [8];
 
     // ---- 接收解析（从机视角帧解析）----
-    typedef enum logic [2:0] {W_H1, W_H2, W_ID, W_LEN, W_INS, W_PADDR, W_PDLEN, W_PARAMS, W_CS} wst_e;
+    typedef enum logic [3:0] {W_H1, W_H2, W_ID, W_LEN, W_INS, W_PARAMS, W_CS} wst_e;
     wst_e wst;
     logic [7:0] w_id, w_len, w_ins, w_addr, w_dlen;
     int unsigned p_idx;
@@ -52,7 +52,7 @@ module scs_slave_model (
             resp_pending <= 1'b0; resp_len <= 0; resp_i <= 0;
             for (int i = 0; i < 8; i++) begin
                 goal[i] <= 12'd2048; pos[i] <= 12'd2048;
-                torque[i] <= '0; load_q[i] <= '0; temp_q[i] <= 8'd25;
+                torque[i] <= '0; temp_q[i] <= 8'd25;
             end
         end else begin
             rx_byte_valid <= 1'b0;
@@ -126,12 +126,13 @@ module scs_slave_model (
                                         end
                                     end
                                     8'h03: begin  // WRITE（单播/广播）
-                                        if (w_addr == 8'h28) torque[uid-1] <= param_q[1];
-                                        else if (w_addr == 8'h2A) begin
-                                            goal[uid-1] <= {param_q[2][3:0], param_q[1]};
-                                            if (w_len >= 7) goal[uid-1] <= {param_q[2][3:0], param_q[1]};
+                                        for (int s = 0; s < 8; s++) begin
+                                            if ((broadcast || uid == s + 1) && !drop_mask[s]) begin
+                                                if (w_addr == 8'h28) torque[s] <= param_q[1];
+                                                else if (w_addr == 8'h2A && w_len >= 5)
+                                                    goal[s] <= {param_q[2][3:0], param_q[1]};
+                                            end
                                         end
-                                        else if (w_addr == 8'h2E) ;
                                         // 广播 WRITE 不响应；单播 ACK（status_return_level=2）
                                         if (!broadcast) begin
                                             resp_q[0] <= 8'hFF; resp_q[1] <= 8'hFF;

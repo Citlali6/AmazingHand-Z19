@@ -103,20 +103,27 @@ module grasp_fsm #(
         unique case (st)
             S_IDLE:      if (cmd_valid && cmd_id == 8'h01 && enable && !estop)
                              st_next = S_PREGRASP;
-            S_PREGRASP:  if (tick_10ms && t_10ms >= PREGRASP_T[15:0]) st_next = S_CLOSING;
-            S_CLOSING:   if (load_hit_c ||
+                         else if (cmd_valid && cmd_id == 8'h05 && enable && !estop)
+                             st_next = S_HOLD;
+            S_PREGRASP:  if (cmd_valid && cmd_id == 8'h05) st_next = S_HOLD;
+                         else if (tick_10ms && t_10ms >= PREGRASP_T[15:0]) st_next = S_CLOSING;
+            S_CLOSING:   if ((cmd_valid && cmd_id == 8'h05) || load_hit_c ||
                              (tick_10ms && t_10ms >= CLOSING_T[15:0])) st_next = S_HOLD;
             S_HOLD: begin
                 if (online_bitmap != 8'hFF)              st_next = S_PROTECT;
                 else if (cmd_valid && cmd_id == 8'h02)   st_next = S_RELEASING;
             end
             S_RELEASING: if (tick_10ms && t_10ms >= RELEASING_T[15:0]) st_next = S_IDLE;
-            S_PROTECT:   if (cmd_valid && cmd_id == 8'h04 && cmd_arg == 8'd1)
+            S_PROTECT:   if (cmd_valid && cmd_id == 8'h04 && cmd_arg == 8'd1 &&
+                            enable && !estop && online_bitmap == 8'hFF)
                              st_next = S_IDLE;
             default: st_next = S_IDLE;
         endcase
-        // estop 任意态急停（IDLE 除外——无动作可停）
-        if (estop && st != S_IDLE && st != S_PROTECT) st_next = S_PROTECT;
+        // Explicit release is accepted in every non-protected state.
+        if (cmd_valid && cmd_id == 8'h02 && st != S_PROTECT)
+            st_next = S_RELEASING;
+        if (estop || ((st != S_IDLE && st != S_PROTECT) &&
+                      (!enable || online_bitmap != 8'hFF))) st_next = S_PROTECT;
     end
 
     // ---- 状态寄存 + 副作用 ----
@@ -129,15 +136,17 @@ module grasp_fsm #(
             torque_on <= 1'b0;
             timeout_flag <= 1'b0;
             load_hit_q <= 1'b0;
+            evt_torque_valid <= 1'b0; evt_torque_arg <= '0;
         end else begin
+            evt_torque_valid <= 1'b0;
             if (st != st_next) t_10ms <= '0;
             else if (tick_10ms) t_10ms <= t_10ms + 1'b1;
             st <= st_next;
 
             // 迁移瞬间采样（区分 grasped/timeout）
-            if (st == S_CLOSING && st_next == S_HOLD) begin
+            if (st != S_HOLD && st_next == S_HOLD) begin
                 load_hit_q <= load_hit_c;
-                timeout_flag <= !load_hit_c;   // 无触力 → 超时保持
+                timeout_flag <= !load_hit_c && !(cmd_valid && cmd_id == 8'h05);
                 // 锁存回读位置为 HOLD 目标（对照 Python _closing_hold_raw）
                 hold_snap <= {meas_pos[7][11:0], meas_pos[6][11:0],
                               meas_pos[5][11:0], meas_pos[4][11:0],
@@ -152,7 +161,8 @@ module grasp_fsm #(
             end
 
             // 副作用：力矩事件
-            if (st_next == S_PREGRASP && !torque_on) begin
+            if ((st_next == S_PREGRASP || st_next == S_HOLD || st_next == S_RELEASING) &&
+                !torque_on && !estop && enable) begin
                 torque_on <= 1'b1;
                 evt_torque_valid <= 1'b1;
                 evt_torque_arg <= 8'd1;
@@ -163,7 +173,7 @@ module grasp_fsm #(
                 evt_torque_arg <= 8'd0;
             end
             // CMD04 手动力矩（IDLE 下）
-            if (cmd_valid && cmd_id == 8'h04 && st == S_IDLE) begin
+            if (cmd_valid && cmd_id == 8'h04 && st == S_IDLE && !estop && enable) begin
                 if (cmd_arg == 8'd1 && !torque_on) begin
                     torque_on <= 1'b1;
                     evt_torque_valid <= 1'b1; evt_torque_arg <= 8'd1;

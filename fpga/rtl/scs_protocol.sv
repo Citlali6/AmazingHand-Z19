@@ -6,7 +6,7 @@
 //   * 帧结构  FF FF ID LEN INS PARAM..CS，LEN=len(PARAM)+2
 //   * CS      = ~(ID+LEN+INS+PARAM...) & 0xFF
 //   * 时隙帧  T0: SYNC_WRITE(0x83, addr=0x2A, per=2, 8 舵机)  — 32B
-//             T1/T2: READ(0x02, addr=0x3A, n=8) 单播          — 7B 请求
+//             T1/T2: READ(0x02, addr=0x3A, n=8) 单播          — 8B 请求
 //   * 事件帧  广播 WRITE(0x03, addr=0x28/0x2E) 力矩/速度       — 8B
 //   * 响应解析 FF FF ID LEN ERR D0..D7 CS（LEN=10）
 //
@@ -34,7 +34,7 @@ package scs_pkg;
     // ---- 帧类型（tx 请求编码）----
     typedef enum logic [2:0] {
         F_SYNC_WRITE_POS = 3'd0,  // 32B：8×(id,pos_l,pos_h)
-        F_READ_FB        = 3'd1,  // 7B：读指定舵机 0x3A 起 8B
+        F_READ_FB        = 3'd1,  // 8B：读指定舵机 0x3A 起 8B
         F_BC_TORQUE      = 3'd2,  // 8B：广播写 0x28，arg=arg_field
         F_BC_SPEED       = 3'd3   // 8B：广播写 0x2E，arg=arg_field（速度 raw 低 8 位）
     } frame_type_e;
@@ -55,8 +55,8 @@ module scs_protocol_tx (
     input  wire rst_n,
     // 请求（脉冲式，start 期间字段保持）
     input  wire        start,
-    input  scs_pkg::frame_type_e frame_type,
-    input  wire [2:0]  read_id,     // F_READ_FB：目标舵机 ID (1..8)
+    input  wire scs_pkg::frame_type_e frame_type,
+    input  wire [2:0]  read_id,     // F_READ_FB：舵机索引 (0..7)，线上 ID=索引+1
     input  wire [7:0]  arg_field,   // F_BC_*：写值
     input  wire [95:0] pos_raw,     // 8×12bit 位置 raw（ch0 在 LSB），F_SYNC_WRITE_POS
     // 字节流输出（接 half_duplex_uart tx）
@@ -65,11 +65,11 @@ module scs_protocol_tx (
     input  wire        byte_ready,
     output logic       done
 );
-    // 帧长度：SYNC=32, READ=7, BC=8
+    // 帧长度：SYNC=32, READ=8, BC=8
     function automatic int unsigned frame_len(scs_pkg::frame_type_e t);
         case (t)
             scs_pkg::F_SYNC_WRITE_POS: return 32;
-            scs_pkg::F_READ_FB:        return 7;
+            scs_pkg::F_READ_FB:        return 8;
             default:                   return 8;
         endcase
     endfunction
@@ -126,7 +126,7 @@ module scs_protocol_tx (
                             // 0:FF 1:FF 2:ID(=read_id+1) 3:04 4:02 5:3A 6:08 7:CS
                             unique case (idx)
                                 0: byte_data <= scs_pkg::HDR1;
-                                1: byte_data <= byte'(read_id + 3'd1); // 舵机 ID 1..8
+                                1: byte_data <= {5'd0, read_id} + 8'd1; // 舵机 ID 1..8
                                 2: begin byte_data <= 8'h04; chk <= byte'(8'h04 + read_id + 3'd1); end
                                 3: begin byte_data <= scs_pkg::INS_READ; chk <= chk + scs_pkg::INS_READ; end
                                 4: begin byte_data <= scs_pkg::REG_FB_ADDR; chk <= chk + scs_pkg::REG_FB_ADDR; end
@@ -158,7 +158,7 @@ module scs_protocol_tx (
 endmodule
 
 // ---------------------------------------------------------------------------
-// 帧解析器：uart 收到的字节流 → 响应帧事件（READ 响应 13B）
+// 帧解析器：uart 收到的字节流 → 响应帧事件（READ 响应 14B）
 //   帧外垃圾字节自动跳过（与 scs_sim.transact/parse_response 容错一致）
 // ---------------------------------------------------------------------------
 module scs_protocol_rx (
@@ -197,8 +197,8 @@ module scs_protocol_rx (
                         st      <= S_LEN;
                     end
                     S_LEN: begin
-                        if (byte_data < 2 || byte_data > 12) begin
-                            st <= S_H1;                 // 非法长度（本模块只解析 ≤10B 响应）
+                        if (byte_data < 2 || byte_data > 10) begin
+                            st <= S_H1; frame_err <= 1'b1; // 最多 8B 数据，LEN最多10
                         end else begin
                             len_cnt <= byte_data; chk <= chk + byte_data;
                             data_idx <= 0; shifter <= '0;
@@ -210,10 +210,10 @@ module scs_protocol_rx (
                         st <= (len_cnt == 2) ? S_CS : S_DATA;
                     end
                     S_DATA: begin
-                        shifter <= {byte_data, shifter[63:8]};  // D0 先到 → D0 在低字节
+                        shifter[data_idx*8 +: 8] <= byte_data;
                         chk <= chk + byte_data;
                         data_idx <= data_idx + 1;
-                        st <= (data_idx + 2 >= len_cnt) ? S_CS : S_DATA;
+                        st <= (data_idx + 3 >= len_cnt) ? S_CS : S_DATA;
                     end
                     S_CS: begin
                         if (byte_data == ~chk) begin
