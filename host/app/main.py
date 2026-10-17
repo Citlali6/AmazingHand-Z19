@@ -296,7 +296,15 @@ from app.voice.kws import parse_zh_command  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
+    arguments = list(sys.argv[1:] if argv is None else argv)
+    if "--mujoco" in arguments:
+        arguments.remove("--mujoco")
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+        from sim.host_demo import main as run_mujoco
+
+        return run_mujoco(arguments)
     parser = argparse.ArgumentParser(description="AmazingHand AI host 主程序")
+    parser.add_argument("--mujoco", action="store_true", help="实时交互 MuJoCo；其余选项见 --mujoco --help")
     parser.add_argument("--backend", choices=["sim", "serial", "fpga"], default=None)
     parser.add_argument("--mock-voice", default=None,
                         help='mock 语音脚本，逗号分隔，如 "抓起香蕉,放下"')

@@ -1,0 +1,3 @@
+[submodule "AmazingHand"]
+	path = AmazingHand
+	url = https://github.com/pollen-robotics/AmazingHand.git
