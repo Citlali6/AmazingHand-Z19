@@ -8,7 +8,7 @@ PS Python 仅复制命令和反馈，不生成运动轨迹。没有板卡时不�
 
 Vivado 2020.1、器件 `xczu19eg-ffvc1760-2-i`，重用仓库 ALINX PS preset。
 Vivado 2020.1 的 BD module-reference 需要 Verilog shell，核心仍为 SystemVerilog。
-PS `M_AXI_HPM0_LPD` 经 SmartConnect 接 4 KiB HIL 寄存器，基地址 `0x80000000`。
+默认 `standalone` 配置：PS `M_AXI_HPM0_LPD` 经 SmartConnect 接 4 KiB HIL 寄存器，基地址 `0x80000000`。
 使用 PS `pl_clk0` 同一时钟域和 `proc_sys_reset`，没有外部 PL 时钟/IO约束。
 preset 请求 100 MHz、工具实际生成 **96.968727 MHz**；脚本据此设置核心时基、500 ms 看门狗。
 
@@ -34,7 +34,59 @@ python -m unittest discover -s fpga/hand_control/tests -v
 
 ## 启动
 
-先完成 [单份现场操作清单](FIELD_CHECKLIST.md)。只有匹配的新 PS/PL 平台已运行，才能执行：
+### 复用已验收的相机 Linux（linux-sd 配置）
+
+本机已有 SSH 和网线直连，无需重新登录串口、改 SW1、重启或重新制作 SD。
+新增配置复用相同核心，改接 **128-bit M_AXI_HPM0_FPD → SmartConnect → 32-bit AXI-Lite**，
+地址 **0xA1000000**，时基采用板端实测 **200703980 Hz**。PS IP 的名义时钟与运行中 FSBL
+设置有差异，构建后按实测周期重新检查时序；**XSA 的 psu_init/FSBL 不用于这个 Linux 热加载流程**。
+这是一套依赖已初始化 PS 的 PL 加载包，不是新的独立 SD 启动镜像。
+
+```powershell
+& F:/Xilinx/Vivado/2020.1/bin/vivado.bat -mode batch -source fpga/hand_control/build.tcl -tclargs F:/ah-hil-linux-new impl linux-sd
+python fpga/hand_control/package_linux.py --build F:/ah-hil-linux-new --output F:/amazinghand-hil-new --bootgen F:/Xilinx/Vitis/2020.1/bin/bootgen.bat
+```
+
+输出 bit/XSA、Bootgen 转换的 `.bin`、文件哈希 manifest、板端服务和仅含运行文件的 `.tar`。
+输出目录/归档必须不存在。保留 bit/XSA 在 PC；将 tar 通过已经验证主机身份的 SSH/SCP 传到板端 `/run`，
+在 `/run` 解包为 `/run/amazinghand-hil-*`。本机沿用 `tmp/z19-ssh-rsa-config-20261010` 的
+`z19-direct` 别名（密钥不入库，其他成员使用自己的连接配置），旧 Dropbear 的 SCP 使用 `scp -O`。
+
+```sh
+# Z19，解包目录名须与包一致；每一步失败都应停止。
+cd /run/amazinghand-hil-new
+sh hil-service.sh preflight
+sh hil-service.sh load
+sh hil-service.sh start --bind 192.28.14.153 --port 8765
+sh hil-service.sh status
+# 先关 PC 程序，再停止；不会自动复位并恢复旧动作。
+sh hil-service.sh stop
+# 需要恢复相机 PL 时（不会自动启动相机驱动/预览）：
+sh hil-service.sh restore-camera
+```
+
+`preflight` 拒绝不匹配内核/时钟/HPM 位宽、活动相机/PL 驱动、地址冲突、文件哈希异常和
+缺失相机恢复镜像。`load` 通过 FPGA Manager 全量替换当前 PL，成功后核验 AHIL MAGIC/schema，
+锁存 STOP；此期间相机 PL 功能不可同时使用。所有新增文件、PID、日志和状态留在 `/run` tmpfs，
+固件搜索路径临时改为包目录并恢复，不写 `/lib/firmware`、启动分区或 `/opt`。
+启动入口是适用于当前 SysV Linux 的手动服务脚本，不会安装开机自启。
+掉电后 RAM 包失效，沿用原 SD 启动，然后重新上传/加载；不要直接启动旧地址的裸服务。
+
+PC 使用 PR #12 原代码，不需要合并两个工作树：
+
+```powershell
+& F:/Amazing_Hand/.venv/Scripts/python.exe F:/Amazing_Hand/host/app/main.py --mujoco --hil 192.28.14.153:8765
+# 一次联合启动/动作/反馈/停止检查，保留 JSON 和 GUI 截图：
+& F:/Amazing_Hand/.venv/Scripts/python.exe fpga/hand_control/check_hil.py --host-tree F:/Amazing_Hand --address 192.28.14.153:8765 --output F:/ah-hil-check-new --gui
+```
+
+按 E/reset 再 O/open、G/grasp、H/hold、R/release；S/stop。真实验证结果以当日开发日志和
+新增部署证据为准；之前的 `evidence/2026-10-17` 是 standalone 工具证据，不可混作本配置证据。
+
+### 原 standalone 配置
+
+原 LPD/约97 MHz bit 需要另一套匹配 PS 初始化，不能加载到上述相机 Linux。
+先完成 [现场操作清单](FIELD_CHECKLIST.md)。只有匹配的新 PS/PL 平台已运行，才能执行：
 
 ```sh
 # Z19 Linux，Python 3.7+，仅标准库。选择该板实际可信LAN地址；默认仅127.0.0.1。
@@ -71,7 +123,7 @@ hello 只读，不刷新心跳、不清故障。每个普通请求把完整 8 �
 ```
 
 状态为 IDLE/PREGRASP/CLOSING/HOLD/RELEASING/PROTECT。
-`pl_tick` 是按实际时钟递增的 uint32 周期计数（约44.3秒回卷），不是毫秒。
+`pl_tick` 是按实际时钟递增的 uint32 周期计数（standalone约44.3秒、linux-sd约21.4秒回卷），不是毫秒。
 `command_count` 是 PL 接收非 tick 动作的计数（reset/stop独立处理，不计入），
 `feedback_count` 是完整有效序号提交计数；两者模2³²。
 它们和目标/反馈快照用于证明 PL 参与；仅连上 TCP 不代表通过 HIL 验收。
