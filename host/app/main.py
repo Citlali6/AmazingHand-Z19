@@ -19,6 +19,8 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
+import signal
 import sys
 from dataclasses import dataclass, field
 from enum import Enum
@@ -295,7 +297,32 @@ def build_backend(name: str, settings: dict) -> ServoBackend:
 from app.voice.kws import parse_zh_command  # noqa: E402
 
 
-def main(argv: list[str] | None = None) -> int:
+@contextmanager
+def shutdown_signals():
+    """CLI on the main thread: unwind SIGINT/SIGTERM through backend cleanup.
+
+    Ignore repeats while unwinding so a second signal cannot interrupt close().
+    Restore the embedding process's original handlers on every exit.
+    """
+    previous = {}
+
+    def stop(signum, _frame):
+        for installed in previous:
+            signal.signal(installed, signal.SIG_IGN)
+        if signum == signal.SIGINT:
+            raise KeyboardInterrupt
+        raise SystemExit(128 + signum)
+
+    try:
+        for signum in (signal.SIGINT, signal.SIGTERM):
+            previous[signum] = signal.signal(signum, stop)
+        yield
+    finally:
+        for signum, handler in previous.items():
+            signal.signal(signum, handler)
+
+
+def _main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="AmazingHand AI host 主程序")
     parser.add_argument("--backend", choices=["sim", "serial", "fpga"], default=None)
     parser.add_argument("--mock-voice", default=None,
@@ -328,6 +355,18 @@ def main(argv: list[str] | None = None) -> int:
         history = run(deps, max_ticks=200_000)
     print("state history:", " → ".join(history))
     return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    try:
+        with shutdown_signals():
+            return _main(argv)
+    except KeyboardInterrupt:
+        print("interrupted: backend shutdown attempted", file=sys.stderr)
+        return 130
+    except Exception as exc:
+        print(f"host failed: {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":

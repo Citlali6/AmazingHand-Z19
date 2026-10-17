@@ -19,6 +19,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import IntEnum
+import logging
 
 #: 关节数：4 指 × (屈曲, 外展)，舵机 ID 1..8 官方映射
 N_JOINTS = 8
@@ -137,8 +138,28 @@ class ServoBackend(ABC):
         """时间推进钩子：仅 sim 后端有实际行为（确定性动力学），其余为空。"""
 
     def __enter__(self) -> "ServoBackend":
-        self.open()
+        try:
+            self.open()
+        except BaseException:
+            # __exit__ is not called when __enter__ fails. Release partial opens.
+            try:
+                self.close()
+            except BaseException:
+                logging.getLogger(__name__).exception("backend cleanup after open failure failed")
+            raise
         return self
 
     def __exit__(self, *exc) -> None:
-        self.close()
+        # A failed stop must not skip close or hide the original application error.
+        errors = []
+        for name, action in (("emergency_stop", self.emergency_stop), ("close", self.close)):
+            try:
+                action()
+            except BaseException as error:
+                errors.append(error)
+                logging.getLogger(__name__).exception("backend %s failed during shutdown", name)
+        if errors and exc[0] is None:
+            for error in errors:
+                if not isinstance(error, Exception):
+                    raise error  # Preserve an interrupt arriving during shutdown.
+            raise RuntimeError("backend shutdown failed; hardware stop is unconfirmed") from errors[0]

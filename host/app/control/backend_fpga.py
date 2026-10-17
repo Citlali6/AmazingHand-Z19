@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import math
+import logging
 from typing import Iterable
 
 from app.control.servo_base import (
@@ -63,18 +64,27 @@ class AxilRegs:
         self._fd = os.open("/dev/mem", os.O_RDWR | os.O_SYNC)
         page = self._base & ~(_PAGE_SIZE - 1)
         offset = self._base - page
-        self._map = mmap.mmap(self._fd, _PAGE_SIZE, mmap.MAP_SHARED,
-                              mmap.PROT_READ | mmap.PROT_WRITE, offset=offset)
+        try:
+            self._map = mmap.mmap(self._fd, _PAGE_SIZE, mmap.MAP_SHARED,
+                                  mmap.PROT_READ | mmap.PROT_WRITE, offset=offset)
+        except BaseException:
+            try:
+                self.close()
+            except BaseException:
+                logging.getLogger(__name__).exception("register cleanup after mmap failure failed")
+            raise
 
     def close(self) -> None:
-        if self._map is not None:
-            self._map.close()
-            self._map = None
-        if self._fd is not None:
-            import os
+        mapping, self._map = self._map, None
+        fd, self._fd = self._fd, None
+        try:
+            if mapping is not None:
+                mapping.close()
+        finally:
+            if fd is not None:
+                import os
 
-            os.close(self._fd)
-            self._fd = None
+                os.close(fd)
 
     def read32(self, offset: int) -> int:
         assert self._map is not None, "call open() first"
@@ -111,15 +121,21 @@ class FpgaBackend(ServoBackend):
         self._regs = AxilRegs(axi_base)
         self._ids = tuple(servo_ids)
         self._poll_units = poll_period_units
+        self._opened = False
 
     def open(self) -> None:
         self._regs.open()
+        self._opened = True
         # TIMING：轮询周期 1kHz 默认；闭合速度由 GraspPlan 逐次下发
         self._regs.write32(REG_TIMING, (self._poll_units & 0xFF) << 8)
 
     def close(self) -> None:
-        self.emergency_stop()
-        self._regs.close()
+        try:
+            if self._opened:
+                self.emergency_stop()
+        finally:
+            self._opened = False
+            self._regs.close()
 
     # -- ServoBackend 接口 ----------------------------------------------
 

@@ -58,15 +58,16 @@ class SerialBackend(ServoBackend):
             import serial  # pyserial：仅真实后端需要
         except ImportError as exc:  # pragma: no cover
             raise RuntimeError("backend_serial 需要 pyserial（pip install pyserial）") from exc
-        self._ser = serial.Serial(self._port_cfg, self._baud, timeout=self._timeout_s)
+        self._ser = serial.Serial(self._port_cfg, self._baud, timeout=self._timeout_s,
+                                  write_timeout=self._timeout_s)
 
     def close(self) -> None:
         if self._ser is not None:
             try:
                 self.set_torque(False)
             finally:
-                self._ser.close()
-                self._ser = None
+                serial_port, self._ser = self._ser, None
+                serial_port.close()
 
     def _transact(self, frame: bytes, expect_reply: bool) -> sp.Response | None:
         """写请求帧，读一帧响应（半双工：发完才收）。"""
