@@ -19,6 +19,7 @@ import time
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app.vision.camera import CameraUnavailable, DuplicateFrame, PreviewCamera
 from app.vision.detector import COCO_TO_ITEM, build_detector
+from app.vision.diagnostic import describe_native, named_rows
 
 # Display-only COCO labels. car never enters the hand grasp strategy/table.
 DISPLAY_CLASSES = dict(COCO_TO_ITEM)
@@ -164,14 +165,22 @@ class LiveVision:
                               native_timings_ms=getattr(self.detector, 'native_timings_ms', {}),
                               bridge_timings_ms=getattr(self.detector, 'bridge_timings_ms', {}),
                               bridge_input_bytes=getattr(self.detector, 'bridge_input_bytes', None))
+                raw_diagnostic = getattr(self.detector, 'diagnostic', None)
+                if raw_diagnostic is not None:
+                    result['diagnostic'] = dict(native=describe_native(raw_diagnostic),
+                        before_display=named_rows([[cid,p]+list(box) for cid,p,box in detections[:raw_diagnostic['top_k']]]),
+                        after_display=selected[:raw_diagnostic['top_k']], allowed_categories=sorted(self.categories),
+                        jpeg_sha256=result['jpeg_sha256'])
                 if result['age_ms'] > self.result_max_age_ms:
                     result.update(state='STALE', error='inference result expired', detections=[])
                     result.pop('jpeg_base64', None)
+                    result.pop('diagnostic', None)
                 with self.lock:
                     if self.source_error or packet.session != self.source_session:
                         result.update(state='CAMERA_ERROR', error=self.source_error or 'camera restarted',
                                       detections=[])
                         result.pop('jpeg_base64', None)
+                        result.pop('diagnostic', None)
                     self.result = (result, packet)
                 print(json.dumps({k:v for k,v in result.items() if k != 'jpeg_base64'}), flush=True)
             except CameraUnavailable as error:
@@ -197,6 +206,7 @@ class LiveVision:
             if packet.age_ms() > self.result_max_age_ms:
                 value.update(state='STALE', error='inference result expired', detections=[])
                 value.pop('jpeg_base64', None)
+                value.pop('diagnostic', None)
             return value
 
     def close(self):
@@ -220,6 +230,8 @@ def main():
     parser.add_argument('--threads', type=int, default=2)
     parser.add_argument('--input-transport', choices=('bmp','jpeg'), default='jpeg')
     parser.add_argument('--capture-interval-ms', type=float, default=200)
+    parser.add_argument('--diagnostic-frames', type=int, default=0, help='off by default; at most20 finite results')
+    parser.add_argument('--diagnostic-top-k', type=int, default=10)
     parser.add_argument('--conf', type=float, default=.35)
     parser.add_argument('--categories', nargs='+', default=['apple','banana','bottle','car'])
     parser.add_argument('--source-max-age-ms', type=float, default=800)
@@ -229,12 +241,16 @@ def main():
     args = parser.parse_args()
     if not 20 <= args.capture_interval_ms <= 500:
         parser.error('capture interval must be between 20 and 500 ms')
+    if not 0 <= args.diagnostic_frames <= 20 or not 1 <= args.diagnostic_top_k <= 20:
+        parser.error('diagnostics limited to 0..20 frames and 1..20 candidates')
     if platform.machine() != 'aarch64':
         parser.error('this demonstration must run on the Z19 ARM64 board')
     manifest = verify_model(args.model_dir, args.input_size)
     detector = build_detector({'vision':{'backend':'ncnn_cpp','conf_threshold':args.conf,
                               'ncnn':dict(model_dir=str(args.model_dir), executable=args.bridge,
-                                          input_size=args.input_size, num_threads=args.threads)}})
+                                          input_size=args.input_size, num_threads=args.threads,
+                                          diagnostic_frames=args.diagnostic_frames,
+                                          diagnostic_top_k=args.diagnostic_top_k)}})
     pipeline = LiveVision(PreviewCamera(args.camera_url, args.source_max_age_ms,
                                        decode_bgr=args.input_transport != 'jpeg'), detector,
                           args.result_max_age_ms, args.categories, args.input_transport,

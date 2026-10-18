@@ -1,0 +1,1169 @@
+{
+  "state": "NO_TARGET",
+  "frame_seq": 24,
+  "camera_session": "camera0-preview-20261010-153244-3",
+  "capture_monotonic": 14636.188615,
+  "age_ms": 1025.198319999316,
+  "inference_ms": 711.9018499997765,
+  "native_inference_ms": 405.24831,
+  "backend": "ncnn_cpp_aarch64",
+  "inference_host": "zu19eg_mipi",
+  "architecture": "aarch64",
+  "pid": 18684,
+  "detections": [],
+  "autonomous_grasp_allowed": false,
+  "processed": 1,
+  "dropped_waiting": 2,
+  "fps": 1.2970824892201376,
+  "jpeg_sha256": "9a0802c56be506b51e7445d96fd4b6bf0f48a752e0e0d6198f2b767cc2752dbf",
+  "service_and_bridge_rss_kib": 153804,
+  "service_and_bridge_cpu_seconds": 2.49,
+  "bridge_pid": 18797,
+  "input_transport": "jpeg",
+  "source_timings_ms": {
+    "status_http": 9.06560000112222,
+    "jpeg_http": 27.395109998906264,
+    "camera_copy": 18.475,
+    "camera_encode": 45.867,
+    "bgr_decode": 0.004659999831346795
+  },
+  "native_timings_ms": {
+    "decode": 65.45798,
+    "preprocess": 13.75546,
+    "forward": 380.15876,
+    "postprocess": 11.33409,
+    "total": 470.70629
+  },
+  "bridge_timings_ms": {
+    "write": 0.9765300001163268,
+    "roundtrip": 710.7686700001068
+  },
+  "bridge_input_bytes": 132756,
+  "diagnostic": {
+    "native": {
+      "top_k": 10,
+      "conf": 0.34999999,
+      "iou": 0.44999999,
+      "input_size": 416,
+      "source_size": [
+        1920,
+        1080
+      ],
+      "resized": [
+        416,
+        234
+      ],
+      "padding_ltrb": [
+        0,
+        91,
+        0,
+        91
+      ],
+      "scale": 0.21666667,
+      "pixel_order": "RGB",
+      "normalization": "1/255 FP32",
+      "padded_rgb_fnv1a64": "6cdf9df2c7a3f63b",
+      "padded_rgb_channel_sums": [
+        20240724,
+        20485286,
+        19730776
+      ],
+      "output_shape_wh": [
+        3549,
+        84
+      ],
+      "anchors": 3549,
+      "pre_nms_count": 8,
+      "post_nms_count": 1,
+      "class_maxima": [
+        {
+          "coco_id": 0,
+          "label": "person",
+          "confidence": 0.046593219
+        },
+        {
+          "coco_id": 1,
+          "label": "bicycle",
+          "confidence": 8.8148874e-05
+        },
+        {
+          "coco_id": 2,
+          "label": "car",
+          "confidence": 0.0065019806
+        },
+        {
+          "coco_id": 3,
+          "label": "motorcycle",
+          "confidence": 2.4345429e-05
+        },
+        {
+          "coco_id": 4,
+          "label": "airplane",
+          "confidence": 0.00028625768
+        },
+        {
+          "coco_id": 5,
+          "label": "bus",
+          "confidence": 0.00029859916
+        },
+        {
+          "coco_id": 6,
+          "label": "train",
+          "confidence": 0.000394198
+        },
+        {
+          "coco_id": 7,
+          "label": "truck",
+          "confidence": 0.00017299414
+        },
+        {
+          "coco_id": 8,
+          "label": "boat",
+          "confidence": 0.00023153803
+        },
+        {
+          "coco_id": 9,
+          "label": "traffic light",
+          "confidence": 6.1652012e-05
+        },
+        {
+          "coco_id": 10,
+          "label": "fire hydrant",
+          "confidence": 8.90099e-06
+        },
+        {
+          "coco_id": 11,
+          "label": "stop sign",
+          "confidence": 8.3080813e-05
+        },
+        {
+          "coco_id": 12,
+          "label": "parking meter",
+          "confidence": 3.6642443e-05
+        },
+        {
+          "coco_id": 13,
+          "label": "bench",
+          "confidence": 0.0016132618
+        },
+        {
+          "coco_id": 14,
+          "label": "bird",
+          "confidence": 0.00078414567
+        },
+        {
+          "coco_id": 15,
+          "label": "cat",
+          "confidence": 0.0079677636
+        },
+        {
+          "coco_id": 16,
+          "label": "dog",
+          "confidence": 0.0015894006
+        },
+        {
+          "coco_id": 17,
+          "label": "horse",
+          "confidence": 0.00011413697
+        },
+        {
+          "coco_id": 18,
+          "label": "sheep",
+          "confidence": 0.0010074736
+        },
+        {
+          "coco_id": 19,
+          "label": "cow",
+          "confidence": 4.3876778e-05
+        },
+        {
+          "coco_id": 20,
+          "label": "elephant",
+          "confidence": 4.3040145e-05
+        },
+        {
+          "coco_id": 21,
+          "label": "bear",
+          "confidence": 3.4960984e-05
+        },
+        {
+          "coco_id": 22,
+          "label": "zebra",
+          "confidence": 4.7733698e-05
+        },
+        {
+          "coco_id": 23,
+          "label": "giraffe",
+          "confidence": 5.4621145e-05
+        },
+        {
+          "coco_id": 24,
+          "label": "backpack",
+          "confidence": 0.0002010264
+        },
+        {
+          "coco_id": 25,
+          "label": "umbrella",
+          "confidence": 0.0015389608
+        },
+        {
+          "coco_id": 26,
+          "label": "handbag",
+          "confidence": 0.00051818916
+        },
+        {
+          "coco_id": 27,
+          "label": "tie",
+          "confidence": 0.00016217008
+        },
+        {
+          "coco_id": 28,
+          "label": "suitcase",
+          "confidence": 0.00057854183
+        },
+        {
+          "coco_id": 29,
+          "label": "frisbee",
+          "confidence": 0.00022863352
+        },
+        {
+          "coco_id": 30,
+          "label": "skis",
+          "confidence": 4.7917263e-05
+        },
+        {
+          "coco_id": 31,
+          "label": "snowboard",
+          "confidence": 2.5556399e-05
+        },
+        {
+          "coco_id": 32,
+          "label": "sports ball",
+          "confidence": 0.0043047313
+        },
+        {
+          "coco_id": 33,
+          "label": "kite",
+          "confidence": 4.8667131e-05
+        },
+        {
+          "coco_id": 34,
+          "label": "baseball bat",
+          "confidence": 1.8483759e-05
+        },
+        {
+          "coco_id": 35,
+          "label": "baseball glove",
+          "confidence": 6.4789406e-06
+        },
+        {
+          "coco_id": 36,
+          "label": "skateboard",
+          "confidence": 6.3035579e-05
+        },
+        {
+          "coco_id": 37,
+          "label": "surfboard",
+          "confidence": 0.00036342602
+        },
+        {
+          "coco_id": 38,
+          "label": "tennis racket",
+          "confidence": 3.8810194e-05
+        },
+        {
+          "coco_id": 39,
+          "label": "bottle",
+          "confidence": 0.0095123583
+        },
+        {
+          "coco_id": 40,
+          "label": "wine glass",
+          "confidence": 0.0031195164
+        },
+        {
+          "coco_id": 41,
+          "label": "cup",
+          "confidence": 0.021228084
+        },
+        {
+          "coco_id": 42,
+          "label": "fork",
+          "confidence": 0.00041112571
+        },
+        {
+          "coco_id": 43,
+          "label": "knife",
+          "confidence": 0.00048547229
+        },
+        {
+          "coco_id": 44,
+          "label": "spoon",
+          "confidence": 0.00053889479
+        },
+        {
+          "coco_id": 45,
+          "label": "bowl",
+          "confidence": 0.0076766559
+        },
+        {
+          "coco_id": 46,
+          "label": "banana",
+          "confidence": 0.00099820551
+        },
+        {
+          "coco_id": 47,
+          "label": "apple",
+          "confidence": 0.089797467
+        },
+        {
+          "coco_id": 48,
+          "label": "sandwich",
+          "confidence": 0.00037602996
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.54038018
+        },
+        {
+          "coco_id": 50,
+          "label": "broccoli",
+          "confidence": 9.2388793e-05
+        },
+        {
+          "coco_id": 51,
+          "label": "carrot",
+          "confidence": 0.00043591365
+        },
+        {
+          "coco_id": 52,
+          "label": "hot dog",
+          "confidence": 0.00014752627
+        },
+        {
+          "coco_id": 53,
+          "label": "pizza",
+          "confidence": 0.00030756649
+        },
+        {
+          "coco_id": 54,
+          "label": "donut",
+          "confidence": 0.0025916437
+        },
+        {
+          "coco_id": 55,
+          "label": "cake",
+          "confidence": 0.00028269607
+        },
+        {
+          "coco_id": 56,
+          "label": "chair",
+          "confidence": 0.033785038
+        },
+        {
+          "coco_id": 57,
+          "label": "couch",
+          "confidence": 0.0079494333
+        },
+        {
+          "coco_id": 58,
+          "label": "potted plant",
+          "confidence": 0.0015841866
+        },
+        {
+          "coco_id": 59,
+          "label": "bed",
+          "confidence": 0.023005471
+        },
+        {
+          "coco_id": 60,
+          "label": "dining table",
+          "confidence": 0.28866282
+        },
+        {
+          "coco_id": 61,
+          "label": "toilet",
+          "confidence": 0.001117451
+        },
+        {
+          "coco_id": 62,
+          "label": "tv",
+          "confidence": 0.15510666
+        },
+        {
+          "coco_id": 63,
+          "label": "laptop",
+          "confidence": 0.040472522
+        },
+        {
+          "coco_id": 64,
+          "label": "mouse",
+          "confidence": 0.00018187672
+        },
+        {
+          "coco_id": 65,
+          "label": "remote",
+          "confidence": 0.00071681041
+        },
+        {
+          "coco_id": 66,
+          "label": "keyboard",
+          "confidence": 0.0096632363
+        },
+        {
+          "coco_id": 67,
+          "label": "cell phone",
+          "confidence": 0.00037392555
+        },
+        {
+          "coco_id": 68,
+          "label": "microwave",
+          "confidence": 0.092810981
+        },
+        {
+          "coco_id": 69,
+          "label": "oven",
+          "confidence": 0.011755935
+        },
+        {
+          "coco_id": 70,
+          "label": "toaster",
+          "confidence": 0.0006058485
+        },
+        {
+          "coco_id": 71,
+          "label": "sink",
+          "confidence": 0.014534248
+        },
+        {
+          "coco_id": 72,
+          "label": "refrigerator",
+          "confidence": 0.026037525
+        },
+        {
+          "coco_id": 73,
+          "label": "book",
+          "confidence": 0.0044522462
+        },
+        {
+          "coco_id": 74,
+          "label": "clock",
+          "confidence": 0.00079488201
+        },
+        {
+          "coco_id": 75,
+          "label": "vase",
+          "confidence": 0.0046911803
+        },
+        {
+          "coco_id": 76,
+          "label": "scissors",
+          "confidence": 0.00018037473
+        },
+        {
+          "coco_id": 77,
+          "label": "teddy bear",
+          "confidence": 0.00098140095
+        },
+        {
+          "coco_id": 78,
+          "label": "hair drier",
+          "confidence": 5.4232609e-05
+        },
+        {
+          "coco_id": 79,
+          "label": "toothbrush",
+          "confidence": 0.00029142035
+        }
+      ],
+      "raw_top": [
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.54038018,
+          "bbox_xyxy": [
+            723.3728,
+            572.45428,
+            1047.9731,
+            874.00842
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.51619703,
+          "bbox_xyxy": [
+            722.89777,
+            572.67365,
+            1047.8444,
+            875.57526
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.50829393,
+          "bbox_xyxy": [
+            722.86237,
+            573.41351,
+            1049.0948,
+            875.53668
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.47429609,
+          "bbox_xyxy": [
+            723.52887,
+            573.08136,
+            1047.7545,
+            875.19232
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.47188994,
+          "bbox_xyxy": [
+            724.47437,
+            573.07544,
+            1050.442,
+            875.27948
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.45738366,
+          "bbox_xyxy": [
+            723.54578,
+            572.43854,
+            1049.2411,
+            874.68677
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.44826302,
+          "bbox_xyxy": [
+            722.55133,
+            572.67828,
+            1047.1172,
+            874.73621
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.42730713,
+          "bbox_xyxy": [
+            724.11066,
+            572.82379,
+            1050.6195,
+            875.15594
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.30490938,
+          "bbox_xyxy": [
+            722.02612,
+            573.41602,
+            1048.5227,
+            876.26392
+          ]
+        },
+        {
+          "coco_id": 60,
+          "label": "dining table",
+          "confidence": 0.28866282,
+          "bbox_xyxy": [
+            0,
+            793.10413,
+            1759.9954,
+            1067.0514
+          ]
+        }
+      ],
+      "target_class_top": [
+        [
+          {
+            "coco_id": 2,
+            "label": "car",
+            "confidence": 0.0065019806,
+            "bbox_xyxy": [
+              626.41425,
+              624.77313,
+              740.33881,
+              707.75568
+            ]
+          },
+          {
+            "coco_id": 2,
+            "label": "car",
+            "confidence": 0.0060206479,
+            "bbox_xyxy": [
+              624.98151,
+              613.53522,
+              742.09125,
+              700.66187
+            ]
+          },
+          {
+            "coco_id": 2,
+            "label": "car",
+            "confidence": 0.0030854093,
+            "bbox_xyxy": [
+              625.99927,
+              614.34686,
+              742.70917,
+              699.20752
+            ]
+          },
+          {
+            "coco_id": 2,
+            "label": "car",
+            "confidence": 0.0025569194,
+            "bbox_xyxy": [
+              629.1723,
+              629.79816,
+              738.86163,
+              698.80664
+            ]
+          },
+          {
+            "coco_id": 2,
+            "label": "car",
+            "confidence": 0.0018361442,
+            "bbox_xyxy": [
+              625.01349,
+              626.63409,
+              735.42944,
+              700.70178
+            ]
+          },
+          {
+            "coco_id": 2,
+            "label": "car",
+            "confidence": 0.0010686554,
+            "bbox_xyxy": [
+              627.19312,
+              630.25098,
+              736.94318,
+              715.87463
+            ]
+          },
+          {
+            "coco_id": 2,
+            "label": "car",
+            "confidence": 0.00093899143,
+            "bbox_xyxy": [
+              625.47815,
+              615.58887,
+              735.99579,
+              691.40582
+            ]
+          },
+          {
+            "coco_id": 2,
+            "label": "car",
+            "confidence": 0.00049065298,
+            "bbox_xyxy": [
+              626.35468,
+              631.22949,
+              733.76361,
+              715.95184
+            ]
+          },
+          {
+            "coco_id": 2,
+            "label": "car",
+            "confidence": 0.00046136638,
+            "bbox_xyxy": [
+              624.39856,
+              625.33514,
+              738.39301,
+              717.34485
+            ]
+          },
+          {
+            "coco_id": 2,
+            "label": "car",
+            "confidence": 0.00028189641,
+            "bbox_xyxy": [
+              0.1328571,
+              440.03033,
+              375.32455,
+              815.72949
+            ]
+          }
+        ],
+        [
+          {
+            "coco_id": 39,
+            "label": "bottle",
+            "confidence": 0.0095123583,
+            "bbox_xyxy": [
+              1170.5527,
+              248.54123,
+              1250.1895,
+              349.88391
+            ]
+          },
+          {
+            "coco_id": 39,
+            "label": "bottle",
+            "confidence": 0.0075075855,
+            "bbox_xyxy": [
+              1262.1481,
+              223.72255,
+              1353.0175,
+              340.76526
+            ]
+          },
+          {
+            "coco_id": 39,
+            "label": "bottle",
+            "confidence": 0.0060496433,
+            "bbox_xyxy": [
+              1262.046,
+              222.62259,
+              1352.7483,
+              340.07178
+            ]
+          },
+          {
+            "coco_id": 39,
+            "label": "bottle",
+            "confidence": 0.0047614165,
+            "bbox_xyxy": [
+              1175.136,
+              251.7627,
+              1261.7781,
+              351.64615
+            ]
+          },
+          {
+            "coco_id": 39,
+            "label": "bottle",
+            "confidence": 0.0046163048,
+            "bbox_xyxy": [
+              1171.3824,
+              250.42715,
+              1250.0745,
+              351.00162
+            ]
+          },
+          {
+            "coco_id": 39,
+            "label": "bottle",
+            "confidence": 0.0042257267,
+            "bbox_xyxy": [
+              1171.7352,
+              244.69017,
+              1253.1572,
+              348.81747
+            ]
+          },
+          {
+            "coco_id": 39,
+            "label": "bottle",
+            "confidence": 0.0027916022,
+            "bbox_xyxy": [
+              1175.6693,
+              260.40823,
+              1259.7877,
+              355.09067
+            ]
+          },
+          {
+            "coco_id": 39,
+            "label": "bottle",
+            "confidence": 0.0023739294,
+            "bbox_xyxy": [
+              1252.9659,
+              228.84479,
+              1357.1864,
+              342.18933
+            ]
+          },
+          {
+            "coco_id": 39,
+            "label": "bottle",
+            "confidence": 0.0023292303,
+            "bbox_xyxy": [
+              1266.3057,
+              526.78595,
+              1319.1406,
+              612.81061
+            ]
+          },
+          {
+            "coco_id": 39,
+            "label": "bottle",
+            "confidence": 0.0017962243,
+            "bbox_xyxy": [
+              1251.687,
+              223.687,
+              1354.0057,
+              344.24588
+            ]
+          }
+        ],
+        [
+          {
+            "coco_id": 47,
+            "label": "apple",
+            "confidence": 0.089797467,
+            "bbox_xyxy": [
+              723.3728,
+              572.45428,
+              1047.9731,
+              874.00842
+            ]
+          },
+          {
+            "coco_id": 47,
+            "label": "apple",
+            "confidence": 0.085103169,
+            "bbox_xyxy": [
+              724.11066,
+              572.82379,
+              1050.6195,
+              875.15594
+            ]
+          },
+          {
+            "coco_id": 47,
+            "label": "apple",
+            "confidence": 0.07179071,
+            "bbox_xyxy": [
+              722.89777,
+              572.67365,
+              1047.8444,
+              875.57526
+            ]
+          },
+          {
+            "coco_id": 47,
+            "label": "apple",
+            "confidence": 0.071020767,
+            "bbox_xyxy": [
+              724.47437,
+              573.07544,
+              1050.442,
+              875.27948
+            ]
+          },
+          {
+            "coco_id": 47,
+            "label": "apple",
+            "confidence": 0.064632192,
+            "bbox_xyxy": [
+              722.86237,
+              573.41351,
+              1049.0948,
+              875.53668
+            ]
+          },
+          {
+            "coco_id": 47,
+            "label": "apple",
+            "confidence": 0.063846812,
+            "bbox_xyxy": [
+              722.02612,
+              573.41602,
+              1048.5227,
+              876.26392
+            ]
+          },
+          {
+            "coco_id": 47,
+            "label": "apple",
+            "confidence": 0.059249241,
+            "bbox_xyxy": [
+              724.61414,
+              571.43188,
+              1051.7676,
+              874.2644
+            ]
+          },
+          {
+            "coco_id": 47,
+            "label": "apple",
+            "confidence": 0.059140235,
+            "bbox_xyxy": [
+              723.54578,
+              572.43854,
+              1049.2411,
+              874.68677
+            ]
+          },
+          {
+            "coco_id": 47,
+            "label": "apple",
+            "confidence": 0.052719291,
+            "bbox_xyxy": [
+              723.52887,
+              573.08136,
+              1047.7545,
+              875.19232
+            ]
+          },
+          {
+            "coco_id": 47,
+            "label": "apple",
+            "confidence": 0.045715056,
+            "bbox_xyxy": [
+              722.55133,
+              572.67828,
+              1047.1172,
+              874.73621
+            ]
+          }
+        ],
+        [
+          {
+            "coco_id": 49,
+            "label": "orange",
+            "confidence": 0.54038018,
+            "bbox_xyxy": [
+              723.3728,
+              572.45428,
+              1047.9731,
+              874.00842
+            ]
+          },
+          {
+            "coco_id": 49,
+            "label": "orange",
+            "confidence": 0.51619703,
+            "bbox_xyxy": [
+              722.89777,
+              572.67365,
+              1047.8444,
+              875.57526
+            ]
+          },
+          {
+            "coco_id": 49,
+            "label": "orange",
+            "confidence": 0.50829393,
+            "bbox_xyxy": [
+              722.86237,
+              573.41351,
+              1049.0948,
+              875.53668
+            ]
+          },
+          {
+            "coco_id": 49,
+            "label": "orange",
+            "confidence": 0.47429609,
+            "bbox_xyxy": [
+              723.52887,
+              573.08136,
+              1047.7545,
+              875.19232
+            ]
+          },
+          {
+            "coco_id": 49,
+            "label": "orange",
+            "confidence": 0.47188994,
+            "bbox_xyxy": [
+              724.47437,
+              573.07544,
+              1050.442,
+              875.27948
+            ]
+          },
+          {
+            "coco_id": 49,
+            "label": "orange",
+            "confidence": 0.45738366,
+            "bbox_xyxy": [
+              723.54578,
+              572.43854,
+              1049.2411,
+              874.68677
+            ]
+          },
+          {
+            "coco_id": 49,
+            "label": "orange",
+            "confidence": 0.44826302,
+            "bbox_xyxy": [
+              722.55133,
+              572.67828,
+              1047.1172,
+              874.73621
+            ]
+          },
+          {
+            "coco_id": 49,
+            "label": "orange",
+            "confidence": 0.42730713,
+            "bbox_xyxy": [
+              724.11066,
+              572.82379,
+              1050.6195,
+              875.15594
+            ]
+          },
+          {
+            "coco_id": 49,
+            "label": "orange",
+            "confidence": 0.30490938,
+            "bbox_xyxy": [
+              722.02612,
+              573.41602,
+              1048.5227,
+              876.26392
+            ]
+          },
+          {
+            "coco_id": 49,
+            "label": "orange",
+            "confidence": 0.25129473,
+            "bbox_xyxy": [
+              724.61414,
+              571.43188,
+              1051.7676,
+              874.2644
+            ]
+          }
+        ]
+      ],
+      "pre_nms_top": [
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.54038018,
+          "bbox_xyxy": [
+            723.3728,
+            572.45428,
+            1047.9731,
+            874.00842
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.51619703,
+          "bbox_xyxy": [
+            722.89777,
+            572.67365,
+            1047.8444,
+            875.57526
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.50829393,
+          "bbox_xyxy": [
+            722.86237,
+            573.41351,
+            1049.0948,
+            875.53668
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.47429609,
+          "bbox_xyxy": [
+            723.52887,
+            573.08136,
+            1047.7545,
+            875.19232
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.47188994,
+          "bbox_xyxy": [
+            724.47437,
+            573.07544,
+            1050.442,
+            875.27948
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.45738366,
+          "bbox_xyxy": [
+            723.54578,
+            572.43854,
+            1049.2411,
+            874.68677
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.44826302,
+          "bbox_xyxy": [
+            722.55133,
+            572.67828,
+            1047.1172,
+            874.73621
+          ]
+        },
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.42730713,
+          "bbox_xyxy": [
+            724.11066,
+            572.82379,
+            1050.6195,
+            875.15594
+          ]
+        }
+      ],
+      "post_nms_top": [
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.54038018,
+          "bbox_xyxy": [
+            723.3728,
+            572.45428,
+            1047.9731,
+            874.00842
+          ]
+        }
+      ]
+    },
+    "before_display": [
+      {
+        "coco_id": 49,
+        "label": "orange",
+        "confidence": 0.54038018,
+        "bbox_xyxy": [
+          723.3728,
+          572.45428,
+          1047.9731,
+          874.00842
+        ]
+      }
+    ],
+    "after_display": [],
+    "allowed_categories": [
+      "apple",
+      "banana",
+      "bottle",
+      "car"
+    ],
+    "jpeg_sha256": "9a0802c56be506b51e7445d96fd4b6bf0f48a752e0e0d6198f2b767cc2752dbf"
+  },
+  "result_max_age_ms": 1600
+}

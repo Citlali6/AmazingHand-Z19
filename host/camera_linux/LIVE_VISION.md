@@ -11,7 +11,8 @@ red model car. `car` is a demo-only COCO mapping; no grasp-table entry is added.
 For team code review, begin with [the short review guide](REVIEW.md): minimum
 read-only reproduction, exact measurement scope, dependency licenses, object
 acceptance status and integration boundaries. Historical performance evidence
-belongs to deployed HEAD `b996ac5`; a later UI-only fix is identified separately.
+belongs to deployed HEAD `b996ac5`; see [the later P0 diagnostic deployment](DIAGNOSTICS.md)
+for current source/ELF fingerprints, model failure evidence and the reference-shape correction.
 
 ## Data and failure contract
 

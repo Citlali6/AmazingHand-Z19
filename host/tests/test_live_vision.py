@@ -15,6 +15,7 @@ from app.vision.backends.ncnn_det import decode_yolov8, letterbox
 from app.vision.camera import CameraFrame
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'camera_linux'))
 from live_vision import LiveVision
+from app.vision.diagnostic import COCO_NAMES,describe_native,named_rows
 
 
 class Response(io.BytesIO):
@@ -108,7 +109,7 @@ class PublicationContract(unittest.TestCase):
         self.pipeline.source_error=None
         self.pipeline.source_session='a'
         self.pipeline.result=({'state':'LIVE','detections':[{'category':'car'}],
-                               'jpeg_base64':'same-frame'},self.packet)
+                               'jpeg_base64':'same-frame','diagnostic':{'raw':'same-frame'}},self.packet)
 
     def test_expiry_clears_boxes_and_image(self):
         with patch.object(CameraFrame,'age_ms',return_value=101):
@@ -116,6 +117,7 @@ class PublicationContract(unittest.TestCase):
         self.assertEqual(value['state'],'STALE')
         self.assertEqual(value['detections'],[])
         self.assertNotIn('jpeg_base64',value)
+        self.assertNotIn('diagnostic',value)
         self.assertFalse(value['autonomous_grasp_allowed'])
 
     def test_camera_loss_or_restart_suppresses_old_detection(self):
@@ -124,6 +126,19 @@ class PublicationContract(unittest.TestCase):
         self.pipeline.source_error=None
         self.pipeline.source_session='b'
         self.assertEqual(self.pipeline.snapshot()['state'],'CAMERA_RESTARTED')
+
+
+class DiagnosticContract(unittest.TestCase):
+    def test_labels_preserve_apple_orange_and_nms_stages(self):
+        self.assertEqual(len(COCO_NAMES),80)
+        self.assertEqual([COCO_NAMES[c] for c in (2,39,47,49)],['car','bottle','apple','orange'])
+        row=[49,.7,1,2,3,4]
+        value=describe_native(dict(raw_top=[row],pre_nms_top=[row],post_nms_top=[row],
+                                    target_class_top=[[row]],class_maxima=[0]*80))
+        self.assertEqual(value['post_nms_top'][0]['label'],'orange')
+        self.assertEqual(value['class_maxima'][47]['label'],'apple')
+        for row in ([-1,.1,1,2,3,4],[80,.1,1,2,3,4],[47,float('nan'),1,2,3,4]):
+            with self.assertRaises(ValueError):named_rows([row])
 
 
 if __name__ == '__main__': unittest.main()

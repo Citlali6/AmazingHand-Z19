@@ -18,17 +18,22 @@ class NcnnCppDetector(BaseDetector):
     name = 'ncnn_cpp_aarch64'
 
     def __init__(self, model_dir, executable, input_size=416, num_threads=3,
-                 conf=.35, iou=.45, timeout=20):
+                 conf=.35, iou=.45, timeout=20, diagnostic_frames=0, diagnostic_top_k=10):
         super().__init__(conf, iou)
         self.timeout = timeout
         self.inference_ms = None
         self.native_timings_ms = {}
         self.bridge_timings_ms = {}
         self.bridge_input_bytes = None
+        self.diagnostic = None
+        if not 0 <= diagnostic_frames <= 20 or not 1 <= diagnostic_top_k <= 20:
+            raise ValueError('diagnostics limited to 0..20 frames and 1..20 candidates')
         self.temp = tempfile.TemporaryDirectory(prefix='ah-vision-', dir='/run')
         self.image = Path(self.temp.name) / 'input.bmp'
-        self.proc = subprocess.Popen([str(executable), str(model_dir), str(input_size),
-                                      str(num_threads), str(conf), str(iou)],
+        command = [str(executable), str(model_dir), str(input_size), str(num_threads), str(conf), str(iou)]
+        if diagnostic_frames:
+            command += [str(diagnostic_frames), str(diagnostic_top_k)]
+        self.proc = subprocess.Popen(command,
                                      stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                      universal_newlines=True, bufsize=1)
 
@@ -60,6 +65,7 @@ class NcnnCppDetector(BaseDetector):
             self.proc.kill()
             raise RuntimeError('NCNN bridge inference timeout')
         reply = json.loads(self.proc.stdout.readline())
+        self.diagnostic = reply.get('diagnostic')
         if reply.get('error'):
             if reply.get('error_code') == 'STALE_INPUT':
                 raise CameraUnavailable('source expired before native forward')

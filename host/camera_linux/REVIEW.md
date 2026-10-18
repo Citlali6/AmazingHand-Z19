@@ -4,6 +4,10 @@
 PC浏览器同图画框。没有将结果接入主状态机、PL控制或MuJoCo；自主抓取始终禁止。
 此材料供团队Review，不代表其他队员Approve或合并许可。
 
+**最新P0结论见[同图诊断](DIAGNOSTICS.md)**：已部署默认关闭的限量native/Python
+诊断和此前UI小修；6张同图的固定输入NCNN/PC一致。苹果/保温瓶属于当前模型失败，
+不是已修好的映射bug。下文P1及b996数据保留为历史，最新runtime/ELF/性能以P0记录为准。
+
 ## 最简复现与代码入口
 
 当前已运行环境可只读打开 `http://127.0.0.1:8768/`，或查看
@@ -73,8 +77,8 @@ python tools/collect_live_vision.py --seconds 2 --output tmp/review-read-new
 前端以请求开始时的本地performance时钟计算保守过期deadline，并在解码后及
 50ms watchdog检查；网络失败/过期清框。本P1小修让统计区同时变为
 CONNECTION_ERROR/STALE、清detections及图像身份，避免画布空了却保留旧LIVE。
-该小修通过两项离线内联JS检查，**未部署到当前服务、未声称实板验证新UI**。
-原实板源码/ELF指纹和历史证据保持原样；新PR HEAD包含这项源代码小修。
+该小修在P1时只通过两项离线内联JS检查；本P0已随private副本部署，具体源码/ELF
+及当前PID见DIAGNOSTICS.md。原实板指纹和历史证据保持原样，不把旧截图当新UI验证。
 
 ## 依赖、权重与许可证
 
@@ -110,5 +114,5 @@ Codex A段与其Codex B段都保留，不用一方覆盖另一方；当前不吸
 主程序的旧Python/AXI示例问题不由视觉演示证明已修复，不在本P1扩大改动。
 
 待团队审查：同图/过期/失败契约、模型及分发许可范围、相机/HIL共享板卡边界、
-实际未识别的保温瓶/苹果及未验收的香蕉、同日日志人工合并，以及新UI小修未来部署验证。
+实际未识别的保温瓶/苹果及未验收的香蕉/真实橙子负例、同日日志人工合并和当前模型能力阻断。
 PR继续Draft；未发review request、未替队友Approve、未合并/关闭Issue，也未启动Issue #20。

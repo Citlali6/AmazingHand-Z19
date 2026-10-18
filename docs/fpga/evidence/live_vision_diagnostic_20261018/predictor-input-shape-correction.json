@@ -1,0 +1,16 @@
+{
+  "actual_predictor_rgb_shape": [
+    256,
+    416,
+    3
+  ],
+  "requested_imgsz": 416,
+  "requested_rect": false,
+  "expected_ncnn_rgb_shape": [
+    416,
+    416,
+    3
+  ],
+  "finding": "Installed Ultralytics8.3.6 pre_transform uses auto=same_shapes and self.model.pt; rect=False does not force fixed square for a single path image. Old .657752 score is not a fixed-square416 comparison.",
+  "source": "ultralytics/engine/predictor.py pre_transform lines154-155"
+}

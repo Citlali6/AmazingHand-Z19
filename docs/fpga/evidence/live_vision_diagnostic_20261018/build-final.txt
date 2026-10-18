@@ -1,0 +1,7 @@
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/root/ah-vision-diagnostic-20261018/native
+Scanning dependencies of target ah_ncnn_bridge
+[ 50%] Building CXX object CMakeFiles/ah_ncnn_bridge.dir/main.cpp.o
+[100%] Linking CXX executable ah_ncnn_bridge
+[100%] Built target ah_ncnn_bridge

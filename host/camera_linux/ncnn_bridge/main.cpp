@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include <ctime>
+#include <cstdint>
 
 struct Box { int id; float score, x1, y1, x2, y2; };
 double monotonic_now() {
@@ -26,9 +27,12 @@ float overlap(const Box& a, const Box& b) {
                                   (b.x2-b.x1)*(b.y2-b.y1)-intersection);
 }
 int main(int argc, char** argv) {
-    if (argc != 6) { std::cerr << "MODEL_DIR SIZE THREADS CONF IOU\n"; return 2; }
+    if (argc != 6 && argc != 8) { std::cerr << "MODEL_DIR SIZE THREADS CONF IOU [DIAGNOSTIC_FRAMES TOP_K]\n"; return 2; }
     const int size = std::stoi(argv[2]), threads = std::stoi(argv[3]);
     const float conf = std::stof(argv[4]), iou = std::stof(argv[5]);
+    int diagnostic_frames = argc==8 ? std::stoi(argv[6]) : 0;
+    const int top_k = argc==8 ? std::stoi(argv[7]) : 10;
+    if (diagnostic_frames<0 || diagnostic_frames>20 || top_k<1 || top_k>20) return 2;
     if (size < 32 || size % 32 || threads < 1 || threads > 4 || conf <= 0 || conf > 1 || iou <= 0 || iou > 1)
         return 2;
     // These helpers are created indirectly by Mat/convolution, outside .param.
@@ -75,6 +79,8 @@ int main(int argc, char** argv) {
             if (path.empty() || path[0] != '/')
                 throw std::runtime_error("invalid image path");
             const auto request_start = std::chrono::steady_clock::now();
+            const bool diagnostic = diagnostic_frames>0;
+            if (diagnostic) --diagnostic_frames;
             cv::Mat image = cv::imread(path, cv::IMREAD_COLOR);
             if (image.empty()) throw std::runtime_error("image decode failed");
             if (expected_width && (image.cols!=expected_width || image.rows!=expected_height))
@@ -106,20 +112,40 @@ int main(int argc, char** argv) {
                 return rows ? out.row(anchor)[field] : out.row(field)[anchor];
             };
             std::vector<Box> boxes;
+            std::vector<Box> raw_top;
+            const int target_ids[4]={2,39,47,49};
+            std::vector<Box> target_top[4];
+            std::vector<float> class_maxima(diagnostic ? 80 : 0,0.f);
             for (int n=0; n<count; n++) {
                 float score=0; int id=-1;
                 for (int c=0;c<80;c++) {
                     float p=value(n,c+4);
                     if (!std::isfinite(p)) throw std::runtime_error("nonfinite class output");
+                    if (diagnostic) class_maxima[c]=std::max(class_maxima[c],p);
                     if (p>score) { score=p; id=c; }
                 }
-                if (score < conf) continue;
+                if (!diagnostic && score < conf) continue;
+                if (id<0) continue; // All-zero anchor has no class to diagnose.
                 float x=value(n,0),y=value(n,1),w=value(n,2),h=value(n,3);
                 if (!std::isfinite(x+y+w+h)) throw std::runtime_error("nonfinite box output");
                 Box b{id,score,std::max(0.f,(x-w/2-left)/scale),std::max(0.f,(y-h/2-top)/scale),
                       std::min(float(image.cols),(x+w/2-left)/scale),
                       std::min(float(image.rows),(y+h/2-top)/scale)};
-                if (b.x2>b.x1 && b.y2>b.y1) boxes.push_back(b);
+                if (b.x2>b.x1 && b.y2>b.y1) {
+                    if (diagnostic) {
+                        raw_top.push_back(b);
+                        std::sort(raw_top.begin(),raw_top.end(),[](const Box& a,const Box& b){return a.score>b.score;});
+                        if (int(raw_top.size())>top_k) raw_top.pop_back();
+                        for(int t=0;t<4;++t) {
+                            Box target=b;target.id=target_ids[t];target.score=value(n,target_ids[t]+4);
+                            auto& candidates=target_top[t];
+                            candidates.push_back(target);
+                            std::sort(candidates.begin(),candidates.end(),[](const Box& a,const Box& b){return a.score>b.score;});
+                            if(int(candidates.size())>top_k) candidates.pop_back();
+                        }
+                    }
+                    if (score>=conf) boxes.push_back(b);
+                }
             }
             std::sort(boxes.begin(), boxes.end(), [](const Box& a,const Box& b){return a.score>b.score;});
             std::vector<Box> kept;
@@ -143,7 +169,46 @@ int main(int argc, char** argv) {
                 first=false;
                 std::cout << '[' << b.id << ',' << b.score << ',' << b.x1 << ',' << b.y1 << ',' << b.x2 << ',' << b.y2 << ']';
             }
-            std::cout << "]}" << std::endl;
+            std::cout << ']';
+            if (diagnostic) {
+                auto emit = [&](const std::vector<Box>& values) {
+                    std::cout << '[';
+                    for (int k=0;k<std::min(top_k,int(values.size()));++k) {
+                        if(k) std::cout << ',';
+                        const auto& b=values[k];
+                        std::cout << '[' << b.id << ',' << b.score << ',' << b.x1 << ',' << b.y1 << ',' << b.x2 << ',' << b.y2 << ']';
+                    }
+                    std::cout << ']';
+                };
+                uint64_t rgb_hash=14695981039346656037ull;
+                uint64_t channel_sums[3]={0,0,0};
+                for(int y=0;y<padded.rows;++y) for(int x=0;x<padded.cols;++x) {
+                    const auto p=padded.at<cv::Vec3b>(y,x);
+                    for(int c=0;c<3;++c) {
+                        unsigned char value=p[2-c];
+                        rgb_hash=(rgb_hash^value)*1099511628211ull;
+                        channel_sums[c]+=value;
+                    }
+                }
+                std::cout << ",\"diagnostic\":{\"top_k\":" << top_k << ",\"conf\":" << conf << ",\"iou\":" << iou
+                          << ",\"input_size\":" << size << ",\"source_size\":[" << image.cols << ',' << image.rows
+                          << "],\"resized\":[" << nw << ',' << nh << "],\"padding_ltrb\":[" << left << ',' << top << ',' << size-nw-left << ',' << size-nh-top
+                          << "],\"scale\":" << scale << ",\"pixel_order\":\"RGB\",\"normalization\":\"1/255 FP32\""
+                          << ",\"padded_rgb_fnv1a64\":\"" << std::hex << rgb_hash << std::dec
+                          << "\",\"padded_rgb_channel_sums\":[" << channel_sums[0] << ',' << channel_sums[1] << ',' << channel_sums[2]
+                          << "],\"output_shape_wh\":[" << out.w << ',' << out.h << "],\"anchors\":" << count
+                          << ",\"pre_nms_count\":" << boxes.size() << ",\"post_nms_count\":" << kept.size()
+                          << ",\"class_maxima\":[";
+                for(int c=0;c<80;++c) {if(c)std::cout << ',';std::cout << class_maxima[c];}
+                std::cout << "],\"raw_top\":";emit(raw_top);
+                std::cout << ",\"target_class_top\":[";
+                for(int t=0;t<4;++t) {if(t)std::cout<<',';emit(target_top[t]);}
+                std::cout << ']';
+                std::cout << ",\"pre_nms_top\":";emit(boxes);
+                std::cout << ",\"post_nms_top\":";emit(kept);
+                std::cout << '}';
+            }
+            std::cout << '}' << std::endl;
         } catch(const std::exception& error) {
             std::cerr << "NCNN_ERROR " << error.what() << '\n';
             std::cout << "{\"error\":\"native inference failed; see bridge diagnostics\",\"error_code\":\""

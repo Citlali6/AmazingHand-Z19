@@ -1,0 +1,10 @@
+{
+  "service": {
+    "pid": 10126,
+    "start_ticks": "1487199",
+    "log": "/home/root/ah-vision-diagnostic-20261018/logs/vision-20261010T153642Z.jsonl",
+    "service": "/home/root/ah-vision-diagnostic-20261018/host/camera_linux/live_vision.py"
+  },
+  "diagnostic_budget_exhausted": true,
+  "latest_state": "NO_TARGET"
+}

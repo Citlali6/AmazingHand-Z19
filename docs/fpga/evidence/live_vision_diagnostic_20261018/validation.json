@@ -1,0 +1,552 @@
+{
+  "client_date": "2026-10-18",
+  "comment": "https://github.com/Tom-mr33/AmazingHand-based-on-FPGA/issues/16#issuecomment-6247655300",
+  "parent_source_head": "b726968359d4a676ed440a8516eb8817894e8f0f",
+  "main_read_only": "6b1c90094e9979d1729a331896954a12821c7ae2",
+  "conclusions": {
+    "pipeline": "For the tested exact JPEGs: fixed-square RGB bytes match, COCO80 scores/NMS agree within recorded tolerance. No label/export/NMS bug explaining the misses was found.",
+    "recognition": "Model capability blocker: real apple predicted orange, real thermos below bottle threshold, known hand false apple remains. Only prior car accepted; no reliable apple/bottle acceptance.",
+    "minimal_fix": "Correct PC comparison method: installed Ultralytics8.3.6 image-path predictor ignored rect=False and produced256x416, so old .657752 score was not a square416 comparison. Added explicit fixed-square reference and bounded raw diagnostics; no relabeling/model/threshold change."
+  },
+  "comparisons": {
+    "apple": {
+      "jpeg_sha256": "3877145efa1d8ce28468c79d9063d4872ca40e21e176da58ffaaca714c25cae1",
+      "rgb_fnv1a64": "d64328a8587305d",
+      "same_rgb_bytes": true,
+      "class80_max_absdiff": 2.743864746079794e-06,
+      "target_maxima": {
+        "car": {
+          "z19": 0.016241286,
+          "pc": 0.016241438686847687
+        },
+        "bottle": {
+          "z19": 0.016219921,
+          "pc": 0.01622006669640541
+        },
+        "apple": {
+          "z19": 0.10522264,
+          "pc": 0.10522158443927765
+        },
+        "orange": {
+          "z19": 0.50937039,
+          "pc": 0.5093705654144287
+        }
+      },
+      "thresholds": {
+        "0.35": {
+          "pre_nms_count": 25,
+          "post_nms_count": 4,
+          "max_top_conf_absdiff": 2.743864746079794e-06,
+          "max_top_box_pixel_absdiff": 0.00048767578130082256
+        },
+        "0.01": {
+          "pre_nms_count": 159,
+          "post_nms_count": 27,
+          "max_top_conf_absdiff": 2.743864746079794e-06,
+          "max_top_box_pixel_absdiff": 0.00048767578130082256
+        }
+      }
+    },
+    "thermos": {
+      "jpeg_sha256": "2e325090cff690996c8773d15925ddec5576c2f90beba084b38bbab043254b2b",
+      "rgb_fnv1a64": "69c626875875094c",
+      "same_rgb_bytes": true,
+      "class80_max_absdiff": 1.0280312595367658e-06,
+      "target_maxima": {
+        "car": {
+          "z19": 0.033652183,
+          "pc": 0.0336514376103878
+        },
+        "bottle": {
+          "z19": 0.0049102032,
+          "pc": 0.004910284653306007
+        },
+        "apple": {
+          "z19": 0.00045797552,
+          "pc": 0.00045796617632731795
+        },
+        "orange": {
+          "z19": 2.7078315e-05,
+          "pc": 2.7078674975200556e-05
+        }
+      },
+      "thresholds": {
+        "0.35": {
+          "pre_nms_count": 0,
+          "post_nms_count": 0,
+          "max_top_conf_absdiff": 0,
+          "max_top_box_pixel_absdiff": 0
+        },
+        "0.01": {
+          "pre_nms_count": 117,
+          "post_nms_count": 20,
+          "max_top_conf_absdiff": 1.7561748695410495e-06,
+          "max_top_box_pixel_absdiff": 0.0010344335937588767
+        }
+      }
+    },
+    "car": {
+      "jpeg_sha256": "1fd2cc18bb7c8efcce4ac034d372d035c6a54d495b6b10fdca4596a5fa7110ed",
+      "rgb_fnv1a64": "cf8c03d83ba33eb0",
+      "same_rgb_bytes": true,
+      "class80_max_absdiff": 2.7003586673679525e-07,
+      "target_maxima": {
+        "car": {
+          "z19": 0.92927957,
+          "pc": 0.9292795062065125
+        },
+        "bottle": {
+          "z19": 0.0083768964,
+          "pc": 0.008376793004572392
+        },
+        "apple": {
+          "z19": 4.0093273e-05,
+          "pc": 4.009273834526539e-05
+        },
+        "orange": {
+          "z19": 8.1743667e-05,
+          "pc": 8.174234244506806e-05
+        }
+      },
+      "thresholds": {
+        "0.35": {
+          "pre_nms_count": 7,
+          "post_nms_count": 1,
+          "max_top_conf_absdiff": 6.37934876035473e-08,
+          "max_top_box_pixel_absdiff": 0.0001226562499141437
+        },
+        "0.01": {
+          "pre_nms_count": 84,
+          "post_nms_count": 14,
+          "max_top_conf_absdiff": 5.882043190019726e-07,
+          "max_top_box_pixel_absdiff": 0.002994941406200269
+        }
+      }
+    },
+    "hand": {
+      "jpeg_sha256": "2d1e04c235ee5f9c6881efe62c9ec35b98d965c580a49a6ff8b3336765e764c7",
+      "rgb_fnv1a64": "d85bf7ee868a3ebf",
+      "same_rgb_bytes": true,
+      "class80_max_absdiff": 3.7566528320320813e-06,
+      "target_maxima": {
+        "car": {
+          "z19": 0.29815775,
+          "pc": 0.29816150665283203
+        },
+        "bottle": {
+          "z19": 0.0018407616,
+          "pc": 0.0018407948082312942
+        },
+        "apple": {
+          "z19": 0.36183506,
+          "pc": 0.3618338406085968
+        },
+        "orange": {
+          "z19": 0.022103371,
+          "pc": 0.02210312895476818
+        }
+      },
+      "thresholds": {
+        "0.35": {
+          "pre_nms_count": 1,
+          "post_nms_count": 1,
+          "max_top_conf_absdiff": 1.2193914031843889e-06,
+          "max_top_box_pixel_absdiff": 0.00018154296878947207
+        },
+        "0.01": {
+          "pre_nms_count": 83,
+          "post_nms_count": 15,
+          "max_top_conf_absdiff": 3.7566528320320813e-06,
+          "max_top_box_pixel_absdiff": 0.0015595605468661233
+        }
+      }
+    },
+    "live-apple": {
+      "jpeg_sha256": "9a0802c56be506b51e7445d96fd4b6bf0f48a752e0e0d6198f2b767cc2752dbf",
+      "native_before_display": [
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.54038018,
+          "bbox_xyxy": [
+            723.3728,
+            572.45428,
+            1047.9731,
+            874.00842
+          ]
+        }
+      ],
+      "native_after_display": [],
+      "unique_results": 21,
+      "diagnostic_unique_results": 5,
+      "last_diagnostic_present": false,
+      "states": {
+        "NO_TARGET": 21
+      },
+      "same_rgb_bytes": true,
+      "class80_max_absdiff": 3.635765380871625e-06
+    },
+    "live-thermos": {
+      "jpeg_sha256": "86ddf46c3e3145241358c4cd80ade9440e5897c9b216e447594e13188f18a2b6",
+      "native_before_display": [],
+      "native_after_display": [],
+      "unique_results": 21,
+      "diagnostic_unique_results": 5,
+      "last_diagnostic_present": false,
+      "states": {
+        "NO_TARGET": 21
+      },
+      "same_rgb_bytes": true,
+      "class80_max_absdiff": 5.872238006576769e-06
+    }
+  },
+  "method": {
+    "archival": "Old JPEG files sent unchanged to Z19 ARM64; OFFLINE_DIAGNOSTIC, no live/TTL acceptance claimed. Same model hashes in raw logs.",
+    "production_threshold": 0.35,
+    "debug_threshold": 0.01,
+    "iou": 0.45,
+    "top_k": 10,
+    "limit": "native/Python default0 diagnostic frames, max20 frames/top20; actual live5 then auto-off",
+    "score": "each anchor COCO80 argmax; also all80 per-class maxima and four target per-class preNMS ranks",
+    "preprocessor": "BGR OpenCV decode, linear resize416x234, pad91/91 RGB114, BGR\u2192RGB then1/255 FP32, output84x3549",
+    "rounding": "C++std::round vs Python ties-to-even can differ at .5 for other sizes; all tested fixed1920x1080 pixels proved identical by FNV. No generic shape parity claimed.",
+    "hashes": "SHA256 binds original JPEG/model/source/ELF; FNV1a64 is only an intermediate RGB byte comparison, not a cryptographic provenance claim."
+  },
+  "deployment": "New private /home/root/ah-vision-diagnostic-20261018, only owned AI replaced, original camera preview reused /start after normal STOPPED. Old /opt package retained. UI stats fix now deployed; source fingerprints match files, final commit reported in PR.",
+  "performance": {
+    "duration_s": 30.03024473000005,
+    "samples": 56,
+    "preview_fps": {
+      "median": 15.443496334903362,
+      "p95": 17.801146206432634,
+      "min": 9.49352886550609,
+      "max": 18.52203019090939
+    },
+    "camera_copy_ms": {
+      "median": 26.365000000000002,
+      "p95": 28.971,
+      "min": 18.846,
+      "max": 29.866
+    },
+    "camera_encode_ms": {
+      "median": 46.08,
+      "p95": 61.501,
+      "min": 40.312,
+      "max": 65.177
+    },
+    "per_core_cpu_percent": {
+      "cpu": {
+        "median": 88.0184331797235,
+        "p95": 90.47619047619048,
+        "min": 83.65384615384616,
+        "max": 91.1214953271028
+      },
+      "cpu0": {
+        "median": 87.03703703703704,
+        "p95": 92.5925925925926,
+        "min": 78.84615384615384,
+        "max": 96.22641509433963
+      },
+      "cpu1": {
+        "median": 88.88888888888889,
+        "p95": 96.22641509433963,
+        "min": 75.47169811320755,
+        "max": 96.2962962962963
+      },
+      "cpu2": {
+        "median": 88.88888888888889,
+        "p95": 96.15384615384616,
+        "min": 76.92307692307692,
+        "max": 100.0
+      },
+      "cpu3": {
+        "median": 88.46153846153845,
+        "p95": 94.33962264150944,
+        "min": 75.47169811320755,
+        "max": 96.22641509433963
+      }
+    },
+    "rss_kib": {
+      "preview": {
+        "median": 17872.0,
+        "p95": 17872,
+        "min": 17872,
+        "max": 17872
+      },
+      "capture": {
+        "median": 13544.0,
+        "p95": 13804,
+        "min": 13544,
+        "max": 13804
+      },
+      "vision": {
+        "median": 70364.0,
+        "p95": 70376,
+        "min": 70360,
+        "max": 70376
+      },
+      "native": {
+        "median": 100216.0,
+        "p95": 100216,
+        "min": 100216,
+        "max": 100216
+      }
+    },
+    "errors": [],
+    "process_cpu_percent": {
+      "preview": {
+        "median": 3.6995291276340874,
+        "p95": 5.681849927006603,
+        "min": 1.823826395072166,
+        "max": 5.746667694156848
+      },
+      "capture": {
+        "median": 178.446886967719,
+        "p95": 191.99013035160038,
+        "min": 160.49672276635062,
+        "max": 199.14917403579506
+      },
+      "vision": {
+        "median": 7.313090078391486,
+        "p95": 7.663795866203858,
+        "min": 3.7766306513963794,
+        "max": 9.398449424995201
+      },
+      "native": {
+        "median": 143.10581243788312,
+        "p95": 151.46933491054816,
+        "min": 130.07677335564276,
+        "max": 153.91785062255357
+      }
+    },
+    "camera_counter_delta": {
+      "sequence": 453,
+      "copy_discards": 220,
+      "busy_skips": 135,
+      "obsolete_discards": 2
+    },
+    "unique_results_observed": 56,
+    "valid_observed_fps": 1.8647866676909333,
+    "vision_states": {
+      "NO_TARGET": 56
+    },
+    "inference_fps": 2.135060100174481,
+    "inference_ms": {
+      "median": 464.55340000011347,
+      "p95": 514.6195800007263,
+      "min": 428.30019000030006,
+      "max": 540.4693099990254
+    },
+    "native_inference_ms": {
+      "median": 399.264225,
+      "p95": 451.42891,
+      "min": 360.81658,
+      "max": 478.11599
+    },
+    "age_ms": {
+      "median": 933.7276499999309,
+      "p95": 1201.6439600001904,
+      "min": 568.27137000079,
+      "max": 1283.4843800006454
+    },
+    "bridge_input_bytes": {
+      "median": 133180.0,
+      "p95": 136115,
+      "min": 129938,
+      "max": 136363
+    },
+    "native_timings_ms": {
+      "decode": {
+        "median": 61.045095,
+        "p95": 70.02283,
+        "min": 56.64753,
+        "max": 78.77927
+      },
+      "preprocess": {
+        "median": 11.387699999999999,
+        "p95": 18.56768,
+        "min": 10.82404,
+        "max": 20.01866
+      },
+      "forward": {
+        "median": 381.06268,
+        "p95": 431.12155,
+        "min": 343.79286,
+        "max": 460.3371
+      },
+      "total": {
+        "median": 462.99258499999996,
+        "p95": 513.08741,
+        "min": 426.85699,
+        "max": 538.81968
+      },
+      "postprocess": {
+        "median": 5.943705,
+        "p95": 8.62052,
+        "min": 5.73497,
+        "max": 13.82675
+      }
+    },
+    "bridge_timings_ms": {
+      "write": {
+        "median": 0.748004999877594,
+        "p95": 0.8235700006480329,
+        "min": 0.5765900004917057,
+        "max": 9.364769999592681
+      },
+      "roundtrip": {
+        "median": 463.69114000026457,
+        "p95": 513.7575600001583,
+        "min": 427.50386000079743,
+        "max": 539.5165399986581
+      }
+    },
+    "source_timings_ms": {
+      "camera_copy": {
+        "median": 26.747,
+        "p95": 29.662,
+        "min": 20.442,
+        "max": 29.999
+      },
+      "bgr_decode": {
+        "median": 0.004470000021683518,
+        "p95": 0.0054299998737405986,
+        "min": 0.0038599991967203096,
+        "max": 0.007579999873996712
+      },
+      "status_http": {
+        "median": 10.184055000536318,
+        "p95": 19.286789998659515,
+        "min": 6.205769999723998,
+        "max": 27.739150000343216
+      },
+      "camera_encode": {
+        "median": 52.2795,
+        "p95": 66.927,
+        "min": 40.343,
+        "max": 78.683
+      },
+      "jpeg_http": {
+        "median": 11.988259999270667,
+        "p95": 23.66342999994231,
+        "min": 7.936590000099386,
+        "max": 26.40388999861898
+      }
+    }
+  },
+  "limitations": [
+    "No true orange available; cannot establish apple-vs-orange specificity. No banana acceptance.",
+    "No new model training/download/export or production ROI. One PC central70%width ROI probe failed to fix both targets, not adopted.",
+    "Hand negative includes car also in scene but apple label covers hand; known false-positive, not a successful apple.",
+    "Full scene JPEGs remain local, no generated/corrected boxes. JSON logs finite and no base64 image data.",
+    "No PL reload/driver/system dependency/SD/clock or Issue20 changes; autonomous_grasp_allowed alwaysfalse.",
+    "Preview near15FPS has observed dips; processed and observed FPS remain distinct. Live diagnostic5 frames cost extra latency, performance profile is after budget auto-off."
+  ],
+  "next_decision": "Keep strict NO_TARGET/human confirmation only. Proposed pilot30-50 independent annotated views each apple/orange/actual thermos, plus30-50 hand/empty/other negatives across>=3 sessions; hold out separate sessions, report per-class recall/false positives and Z19 latency. This is a starting experiment, not a sufficient-data guarantee. Any new model/download/training or architecture change requires separate approval.",
+  "checks": {
+    "default_no_diagnostic": true,
+    "finite_budget_auto_off": true,
+    "top_k_bound": true,
+    "same_detections_diagnostic_on_off": true,
+    "invalid_budget_rejected": true,
+    "expired_before_forward_rejected": true,
+    "expired_response": {
+      "error": "native inference failed; see bridge diagnostics",
+      "error_code": "STALE_INPUT"
+    },
+    "bridge_command": [
+      "/home/root/ah-vision-diagnostic-20261018/native/ah_ncnn_bridge",
+      "/opt/amazinghand/live-vision-20261018/models",
+      "416",
+      "2",
+      ".35",
+      ".45"
+    ],
+    "python_contract_tests": "13 passed on PC existing venv and board Python3.7/OpenCV3.4; invalid class/nonfinite diagnostic rows fail",
+    "javascript_tests": "2 expiry/network inline UI checks passed; current deployed HTML includes prior stats clearing fix"
+  },
+  "artifact_sha256": {
+    "bounded-checks.json": "3c3bf3a3797ece95445c7223c5e51ecf41d6a1dbeaaff83d4a216b6d64d01161",
+    "build-final.txt": "26a34ea5f36b5bbb4e40e97ccddd0854d092b7995d3eac291069bb29e8bedf33",
+    "deployment.json": "472f44e89e0ff3c542cd63350d141b005d332bfd9a91bb95d059f23a3f005805",
+    "final-service.json": "e585670da7fa9a15603f679ef109f43ce71124cfbdc809f2300da3172a0c946f",
+    "pc-roi-feasibility.json": "918c75446fa412e21d9c00951f25b29ce8cbff54deeb2db60efd982a6887b9ef",
+    "pc_roi_feasibility_once.py": "23b2572b7839b8d69bd48905b458104438202ce63877c247ae0d566531611153",
+    "predictor-input-shape-correction.json": "9f990f0e7d09c6679eb6c5c7b8d8e0ec835e6da09706649f9dea0b8cb53ae2ab",
+    "archival/pc-apple.json": "99865ac93193b673426e40873c06aa57fd19e5cec2b79b9f97cd15a421b10176",
+    "archival/pc-car.json": "fed958411b89af2d1527596c63fade5ca2ae15cf66eec47ad08b342a7d050a0e",
+    "archival/pc-hand.json": "c94a256e8e81443d5122ccc091ab4428fb70eb577a657053d2dcf625df6ee745",
+    "archival/pc-thermos.json": "340d91d46486ee945ee7a21b605baaa6b3a922a56a46771caa45f435116c562c",
+    "archival/z19-apple.json": "b1c59604757d6b78656c8b04312c55a752519d800655fd39649142bb776c8e75",
+    "archival/z19-car.json": "ea9630672529d6f859540077fc205020e9e910acc008c495e565286d4c2005e3",
+    "archival/z19-hand.json": "e84f7dd6d2e7cc0ed23a3b0f27019097b0fde08087995e36f77a4d33d663aa38",
+    "archival/z19-thermos.json": "10c8e82717d4336b495e5230f06b99366bb45257f4b17adec442448e57327088",
+    "default-off-profile/samples.jsonl": "4a999d703baf08a081233b976a159920a2a58d7f859ac8ee64e30e0b33bef84b",
+    "default-off-profile/summary.json": "a3777cea95c2d3996d7188ad48778d9ed9fe051ecd1ff29ffda901a8d78579c0",
+    "live-apple/pc-reference.json": "7faeea8b69300ccc752f5f96427166fb8ba4817a6f116e7f5f5281540a8ab925",
+    "live-apple/same-frame.json": "20bd936580f45089c014c4e10739af4064ed04b9c79edb4dd66488662c489bff",
+    "live-apple/samples.jsonl": "ab5a300303bc55c8687cc0a294aa372d982b1ee0892d3fbabe87a8f7e6624bda",
+    "live-empty/same-frame.json": "cd77286abe4b3e9508dcb263583017367179c6ca3509ad8f60454fc19fdd5bdd",
+    "live-empty/samples.jsonl": "09bd35b7d18fc9cacd38d8abe4a9dd22f78af3467aef50856ec9c6714c89e5d5",
+    "live-thermos/pc-reference.json": "49d5487102a89566557eef6d0d662a7cb71358f2988197be86f49e75f4d91d2f",
+    "live-thermos/same-frame.json": "dd425518b5ff525b2137c81df0638fc83dc0c2f2e98d928a6deff3600e1d52da",
+    "live-thermos/samples.jsonl": "0c1b071c627d83c0a239edc6c20a0799124af272d6536a5cbb4a320d30d00370"
+  },
+  "foreground_empty_negative": {
+    "unique_results": 20,
+    "state": "NO_TARGET",
+    "all_jpeg_hashes_checked": true,
+    "first_frame": {
+      "state": "NO_TARGET",
+      "frame_seq": 8075,
+      "camera_session": "camera0-preview-20261010-153244-3",
+      "capture_monotonic": 15149.572988,
+      "age_ms": 1049.751890000296,
+      "inference_ms": 506.2118499990902,
+      "native_inference_ms": 446.49843,
+      "backend": "ncnn_cpp_aarch64",
+      "inference_host": "zu19eg_mipi",
+      "architecture": "aarch64",
+      "pid": 10126,
+      "detections": [],
+      "autonomous_grasp_allowed": false,
+      "processed": 597,
+      "dropped_waiting": 627,
+      "fps": 2.1556789886279173,
+      "jpeg_sha256": "283d8a6a154962214ca90c896b8fd1187205afb41905c73f0598ccfc61e53dfd",
+      "service_and_bridge_rss_kib": 170992,
+      "service_and_bridge_cpu_seconds": 415.58,
+      "bridge_pid": 10269,
+      "input_transport": "jpeg",
+      "source_timings_ms": {
+        "status_http": 5.975780000881059,
+        "jpeg_http": 10.535499999605236,
+        "camera_copy": 26.743,
+        "camera_encode": 50.2,
+        "bgr_decode": 0.004779998562298715
+      },
+      "native_timings_ms": {
+        "decode": 57.9328,
+        "preprocess": 14.90506,
+        "forward": 421.14774,
+        "postprocess": 10.44563,
+        "total": 504.43123
+      },
+      "bridge_timings_ms": {
+        "write": 0.8533000000170432,
+        "roundtrip": 505.2061500009586
+      },
+      "bridge_input_bytes": 136767,
+      "result_max_age_ms": 1600
+    },
+    "actual_jpeg_local_sha256": "283d8a6a154962214ca90c896b8fd1187205afb41905c73f0598ccfc61e53dfd",
+    "visual_check": "Foregound cleared of apple/thermos; small car remains in background by keyboard. Not a completely object-free scene."
+  },
+  "raw_build_final_sha256": "26a34ea5f36b5bbb4e40e97ccddd0854d092b7995d3eac291069bb29e8bedf33",
+  "build_log_note": "Whitespace-normalized display copy; original raw build log/hash retained locally/on board. Clock skew warnings retained; system clock unchanged.",
+  "pc_display": {
+    "url": "http://127.0.0.1:8768/",
+    "ssh_tunnel_pid": 53600,
+    "check": "GET result returned NO_TARGET, current board servicePID10126/aarch64, no diagnostic"
+  }
+}

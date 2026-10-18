@@ -1,0 +1,207 @@
+{
+  "role": "PC CPU feasibility only; neither live nor board acceptance",
+  "policy": "One fixed central70%-width full-height ROI for all four existing real images",
+  "weights_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+  "limitations": "Four convenience archival images, no orange/empty-background dataset; ROI may crop peripheral objects; no recall claim; no production changes",
+  "samples": [
+    {
+      "sample": "apple",
+      "source_local": "F:\\Amazing_Hand\\tmp\\vision-review-20261018\\apple-resumed\\first-result.jpg",
+      "source_jpeg_sha256": "3877145efa1d8ce28468c79d9063d4872ca40e21e176da58ffaaca714c25cae1",
+      "source_size": [
+        1920,
+        1080
+      ],
+      "roi_xyxy": [
+        288,
+        0,
+        1632,
+        1080
+      ],
+      "input_size": [
+        416,
+        416
+      ],
+      "resized": [
+        416,
+        334
+      ],
+      "padding_ltrb": [
+        0,
+        41,
+        0,
+        41
+      ],
+      "conf": 0.35,
+      "iou": 0.45,
+      "class_maxima": {
+        "car": 0.06623861938714981,
+        "bottle": 0.04335598647594452,
+        "apple": 0.07652578502893448,
+        "orange": 0.6133320927619934
+      },
+      "detections": [
+        {
+          "coco_id": 49,
+          "label": "orange",
+          "confidence": 0.6133320927619934,
+          "bbox_xyxy_original": [
+            697.4120483398438,
+            553.6292114257812,
+            1092.7877807617188,
+            919.7694702148438
+          ]
+        },
+        {
+          "coco_id": 60,
+          "label": "dining table",
+          "confidence": 0.5696377158164978,
+          "bbox_xyxy_original": [
+            288.0,
+            752.2754516601562,
+            1606.087890625,
+            1065.8741455078125
+          ]
+        }
+      ]
+    },
+    {
+      "sample": "thermos",
+      "source_local": "F:\\Amazing_Hand\\tmp\\vision-review-20261018\\adjusted\\first-result.jpg",
+      "source_jpeg_sha256": "e7935a609f379e093888d87e4e49831f661e37f67da13b254fb4812822bedb79",
+      "source_size": [
+        1920,
+        1080
+      ],
+      "roi_xyxy": [
+        288,
+        0,
+        1632,
+        1080
+      ],
+      "input_size": [
+        416,
+        416
+      ],
+      "resized": [
+        416,
+        334
+      ],
+      "padding_ltrb": [
+        0,
+        41,
+        0,
+        41
+      ],
+      "conf": 0.35,
+      "iou": 0.45,
+      "class_maxima": {
+        "car": 0.03622540831565857,
+        "bottle": 0.19259510934352875,
+        "apple": 0.00027172965928912163,
+        "orange": 0.0002135171089321375
+      },
+      "detections": [
+        {
+          "coco_id": 0,
+          "label": "person",
+          "confidence": 0.7057419419288635,
+          "bbox_xyxy_original": [
+            983.9262084960938,
+            15.130722999572754,
+            1630.5526123046875,
+            1066.9610595703125
+          ]
+        }
+      ]
+    },
+    {
+      "sample": "car",
+      "source_local": "F:\\Amazing_Hand\\tmp\\vision-20261018\\arm-car-steady\\same-frame.jpg",
+      "source_jpeg_sha256": "1fd2cc18bb7c8efcce4ac034d372d035c6a54d495b6b10fdca4596a5fa7110ed",
+      "source_size": [
+        1920,
+        1080
+      ],
+      "roi_xyxy": [
+        288,
+        0,
+        1632,
+        1080
+      ],
+      "input_size": [
+        416,
+        416
+      ],
+      "resized": [
+        416,
+        334
+      ],
+      "padding_ltrb": [
+        0,
+        41,
+        0,
+        41
+      ],
+      "conf": 0.35,
+      "iou": 0.45,
+      "class_maxima": {
+        "car": 0.8663915991783142,
+        "bottle": 0.03426177054643631,
+        "apple": 8.076189988059923e-05,
+        "orange": 3.1590596336172894e-05
+      },
+      "detections": [
+        {
+          "coco_id": 2,
+          "label": "car",
+          "confidence": 0.8663915991783142,
+          "bbox_xyxy_original": [
+            288.0,
+            589.0203247070312,
+            1120.766845703125,
+            901.5051879882812
+          ]
+        }
+      ]
+    },
+    {
+      "sample": "hand",
+      "source_local": "F:\\Amazing_Hand\\tmp\\vision-20261018\\camera-first.jpg",
+      "source_jpeg_sha256": "b8c9042f7f51400f8fb786d6411306bd8dbdfa981d7c11c93dcc1625097db401",
+      "source_size": [
+        1920,
+        1080
+      ],
+      "roi_xyxy": [
+        288,
+        0,
+        1632,
+        1080
+      ],
+      "input_size": [
+        416,
+        416
+      ],
+      "resized": [
+        416,
+        334
+      ],
+      "padding_ltrb": [
+        0,
+        41,
+        0,
+        41
+      ],
+      "conf": 0.35,
+      "iou": 0.45,
+      "class_maxima": {
+        "car": 0.001282743294723332,
+        "bottle": 0.00025084023945964873,
+        "apple": 0.000516614643856883,
+        "orange": 6.276535714277998e-05
+      },
+      "detections": []
+    }
+  ]
+}

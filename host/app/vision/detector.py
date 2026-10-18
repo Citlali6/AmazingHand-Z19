@@ -87,6 +87,8 @@ def build_detector(settings: dict) -> BaseDetector:
         return NcnnCppDetector(vs['ncnn']['model_dir'], vs['ncnn']['executable'],
                                input_size=int(vs['ncnn'].get('input_size', 416)),
                                num_threads=int(vs['ncnn'].get('num_threads', 3)),
+                               diagnostic_frames=int(vs['ncnn'].get('diagnostic_frames', 0)),
+                               diagnostic_top_k=int(vs['ncnn'].get('diagnostic_top_k', 10)),
                                conf=conf, iou=iou)
     if backend == "ncnn":
         from app.vision.backends.ncnn_det import NcnnDetector

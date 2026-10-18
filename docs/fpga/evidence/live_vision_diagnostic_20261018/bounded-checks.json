@@ -1,0 +1,20 @@
+{
+  "default_no_diagnostic": true,
+  "finite_budget_auto_off": true,
+  "top_k_bound": true,
+  "same_detections_diagnostic_on_off": true,
+  "invalid_budget_rejected": true,
+  "expired_before_forward_rejected": true,
+  "expired_response": {
+    "error": "native inference failed; see bridge diagnostics",
+    "error_code": "STALE_INPUT"
+  },
+  "bridge_command": [
+    "/home/root/ah-vision-diagnostic-20261018/native/ah_ncnn_bridge",
+    "/opt/amazinghand/live-vision-20261018/models",
+    "416",
+    "2",
+    ".35",
+    ".45"
+  ]
+}

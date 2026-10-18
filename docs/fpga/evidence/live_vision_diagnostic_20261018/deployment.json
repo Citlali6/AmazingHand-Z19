@@ -1,0 +1,24 @@
+{
+  "before": {
+    "state": "STOPPED",
+    "message": "\u76f8\u673a\u5df2\u505c\u6b62",
+    "focus": 300
+  },
+  "capture_resume": {
+    "message": "\u76f8\u673a\u6b63\u5728\u542f\u52a8\uff0c\u8bf7\u7b49\u5f85\u753b\u9762"
+  },
+  "new_service": {
+    "pid": 18684,
+    "start_ticks": "1463489",
+    "log": "/home/root/ah-vision-diagnostic-20261018/logs/vision-20261010T153245Z.jsonl",
+    "service": "/home/root/ah-vision-diagnostic-20261018/host/camera_linux/live_vision.py"
+  },
+  "bridge_sha256": "b176841a20772a230272499e9f6b195d07377a552021b8cb08307c9fe506cbed",
+  "source_sha256": {
+    "host/camera_linux/live_vision.py": "db180d41fcf32cca8bec378f034f620518fdb533e083324e67698bd04dce312e",
+    "host/app/vision/diagnostic.py": "cecc8ec025809badc4de63806b86a864930dc5f2f9a65c3301efa46bb9c2615b",
+    "host/app/vision/backends/ncnn_cpp.py": "a392145b1a34e3053c6ac6c8ecc91af78f57425d573839e3d43a77fde88fcd50",
+    "host/app/vision/detector.py": "e67198116747dadd432b3a34837ad29e4decb2047f21100241a632dcb39524bd",
+    "host/camera_linux/ncnn_bridge/main.cpp": "493055cc898b2d23cc7891c1e9919cffe41f8b267e1196ba85572169e24bb678"
+  }
+}
