@@ -49,6 +49,9 @@ report/  设计报告（比赛交付）
 
 ## 快速开始
 
+微雪 USB TO AUDIO 的语音基础入口、离线资料与到货步骤见 [USB麦克风说明](docs/voice/USB_MICROPHONE.md)。当前已补采音/识别源码，真实麦克风验收及语音→PL接入待完成。
+含中文模型和板端依赖的完整离线包见 [麦克风部署包下载](deliverables/voice_usb/README.md)。
+
 相机实机操作从 [相机快速操作](docs/fpga/camera_quickstart.md) 开始。
 当前硬件为 **Z19 + FL0214/IMX214 MIPI 第一通道**，板端使用 Linux 5.4/PetaLinux 2020.2 基线。
 Git 中包含源码、平台与已验证相机二进制；SD 系统镜像、登录密码/SSH 私钥和现场录像留在本机。

@@ -4,9 +4,10 @@
 
     python host/app/main.py --mock-voice "抓起香蕉,放下"
 
-真实链路（板端）::
+语音基础入口（真实输入仅接sim，视觉仍为Mock；不是PL/MuJoCo验收）::
 
-    python host/app/main.py            # 读 settings.yaml，voice/vision 模块接入后生效
+    python -m app.main --backend sim --mic
+    python -m app.voice listen         # 板端独立识别输出，不连接控制
 
 设计要点：
 - 依赖全部经构造注入（``Deps``）：voice/vision 用 :class:`VoiceSource` /
@@ -20,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+import time
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
@@ -91,6 +93,8 @@ class Deps:
     recognize_timeout_s: float = 5.0
     guide_timeout_s: float = 30.0
     log: Callable[[str], None] = print
+    realtime: bool = False
+    poll_every_tick: bool = False
 
 
 # ------------------------------------------------------------------
@@ -152,12 +156,26 @@ def run(deps: Deps, max_ticks: int = 100_000) -> list[str]:
         deps.log(f"[{next_state.value}] {note}")
         history.append(next_state.value + (f"({note})" if note else ""))
 
+    next_tick = time.monotonic()
     for _ in range(max_ticks):
+        if deps.realtime:
+            time.sleep(max(0, next_tick - time.monotonic()))
+            next_tick = max(next_tick + deps.tick_s, time.monotonic())
         deps.backend.tick(deps.tick_s)
         state_t += deps.tick_s
+        live_cmd = deps.voice.poll_command() if deps.poll_every_tick else None
+        if live_cmd is not None and live_cmd.action == 'stop':
+            deps.backend.emergency_stop()
+            goto(AppState.FAULT, 'voice: stop')
+            continue
+        if (live_cmd is not None and live_cmd.action == 'release'
+                and state in (AppState.RECOGNIZING, AppState.GUIDING, AppState.GRASPING, AppState.HOLDING)):
+            deps.backend.release()
+            goto(AppState.RELEASING, 'voice: release')
+            continue
 
         if state == AppState.IDLE:
-            cmd = deps.voice.poll_command()
+            cmd = live_cmd if deps.poll_every_tick else deps.voice.poll_command()
             if cmd is None:
                 continue
             if cmd.action == "grasp":
@@ -175,6 +193,8 @@ def run(deps: Deps, max_ticks: int = 100_000) -> list[str]:
                 continue
             det = deps.vision.detect_target()
             if det is None:
+                continue
+            if target and det.category != target:
                 continue
             plan = deps.selector.select(det.category, det.size_mm, det.yaw_deg)
             goto(AppState.GUIDING, f"plan={plan.label} mode={plan.mode}")
@@ -206,7 +226,7 @@ def run(deps: Deps, max_ticks: int = 100_000) -> list[str]:
                 goto(AppState.HOLDING, "closing timeout (held at obstacle)")
 
         elif state == AppState.HOLDING:
-            cmd = deps.voice.poll_command()
+            cmd = live_cmd if deps.poll_every_tick else deps.voice.poll_command()
             if cmd is None:
                 continue
             if cmd.action == "release":
@@ -223,7 +243,7 @@ def run(deps: Deps, max_ticks: int = 100_000) -> list[str]:
                 goto(AppState.IDLE, "released")
 
         elif state == AppState.FAULT:
-            cmd = deps.voice.poll_command()
+            cmd = live_cmd if deps.poll_every_tick else deps.voice.poll_command()
             if cmd is not None and cmd.action == "reset":
                 deps.backend.set_torque(True)
                 goto(AppState.IDLE, "manual reset")
@@ -306,34 +326,61 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="AmazingHand AI host 主程序")
     parser.add_argument("--mujoco", action="store_true", help="实时交互 MuJoCo；其余选项见 --mujoco --help")
     parser.add_argument("--backend", choices=["sim", "serial", "fpga"], default=None)
-    parser.add_argument("--mock-voice", default=None,
+    voice_inputs = parser.add_mutually_exclusive_group()
+    voice_inputs.add_argument("--mock-voice", default=None,
                         help='mock 语音脚本，逗号分隔，如 "抓起香蕉,放下"')
+    voice_inputs.add_argument('--mic', action='store_true', help='Linux USB麦克风输入（本阶段仅sim后端）')
+    voice_inputs.add_argument('--voice-wav', type=Path, help='单条命令WAV回放（本阶段仅sim后端）')
+    parser.add_argument('--voice-config', type=Path, help='voice_usb.json路径')
+    parser.add_argument('--voice-device', help='ALSA plughw录音设备名')
+    parser.add_argument('--voice-model', type=Path, help='Vosk中文模型目录')
+    parser.add_argument('--seconds', type=float, default=60, help='真实语音输入的运行时长，秒')
     parser.add_argument("--config", default=None, help="settings.yaml 路径")
     args = parser.parse_args(argv)
 
     settings = load_settings(Path(args.config) if args.config else None)
     backend_name = args.backend or settings["backend"]
-    backend = build_backend(backend_name, settings)
+    real_voice = args.mic or args.voice_wav is not None
+    if real_voice and backend_name != 'sim':
+        parser.error('语音基础阶段仅允许 --backend sim；MJC1需通过现有控制进程接入，不能直接使用旧fpga后端。')
+    if real_voice and not 0 < args.seconds <= 3600:
+        parser.error('--seconds must be >0 and <=3600')
     selector = GraspSelector(DEFAULT_TABLE)
 
     if args.mock_voice is not None:
         cmds = [c for c in (parse_zh_command(t.strip()) for t in args.mock_voice.split(",")) if c]
         voice: VoiceSource = MockVoice(cmds)
+    elif real_voice:
+        from app.voice.__main__ import DEFAULT_CONFIG, configuration, microphone, recognizer
+        config = configuration(args.voice_config or DEFAULT_CONFIG)
+        if args.mic:
+            voice = microphone(config, args.voice_model, args.voice_device)
+        else:
+            command = recognizer(config, args.voice_model).command_from_wav(args.voice_wav)
+            if command is None:
+                raise SystemExit('录音没有通过命令词/置信度检查，未执行动作。')
+            voice = MockVoice([command])
     else:
-        raise SystemExit("正式语音链路未接入（第 4 步 kws.py）；PC 演示请用 --mock-voice")
+        raise SystemExit('请选择 --mock-voice、--mic 或 --voice-wav；仅识别输出请运行 python -m app.voice。')
 
-    app_cfg = settings["app"]
-    deps = Deps(
-        backend=backend,
-        voice=voice,
-        vision=MockVision(),
-        selector=selector,
-        tick_s=1.0 / float(app_cfg["tick_hz"]),
-        recognize_timeout_s=float(app_cfg["recognize_timeout_s"]),
-        guide_timeout_s=float(app_cfg["guide_timeout_s"]),
-    )
-    with backend:
-        history = run(deps, max_ticks=200_000)
+    try:
+        app_cfg = settings["app"]
+        backend = build_backend(backend_name, settings)
+        tick_s = 1.0 / float(app_cfg['tick_hz'])
+        deps = Deps(
+            backend=backend, voice=voice, vision=MockVision(), selector=selector,
+            tick_s=tick_s, recognize_timeout_s=float(app_cfg['recognize_timeout_s']),
+            guide_timeout_s=float(app_cfg['guide_timeout_s']),
+            realtime=args.mic, poll_every_tick=real_voice)
+        with backend:
+            try:
+                history = run(deps, max_ticks=max(1, int(args.seconds / tick_s)) if real_voice else 200_000)
+            finally:
+                if real_voice:
+                    backend.emergency_stop()
+    finally:
+        if hasattr(voice, 'close'):
+            voice.close()
     print("state history:", " → ".join(history))
     return 0
 

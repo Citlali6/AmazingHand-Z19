@@ -1,24 +1,27 @@
 """离线中文命令词识别 —— Vosk 小模型 + 语法限词表（project_framework F1）。
 
 设计：
-- **语法限词**：Vosk ``SetGrammar`` 把识别空间限制到命令词表内
-  （抓/放/停/复位 + 15 类物品中文名），显著提升短命令词召回——
-  这是"命令词识别"而非"自由转写"的正确用法；
+- 默认使用中文模型解码，再按完整命令白名单与词置信度过滤。
+  可选SetGrammar保留，默认关闭；中文分词/词表尚未在真实语音上验证，
+  避免把未知语句强制解码成命令。
 - 输出结构化指令 :class:`Command`（action + target），对齐
   ``main.VoiceSource`` 协议——``main.py`` 的 MockVoice 换成本类即接入真实语音；
 - ``transcribe_wav``：文件驱动入口（PC 无麦克风时的测试/演示路径）。
 
-模型：vosk-model-small-cn-0.22（42MB，A53 实测可用），下载脚本
+模型：vosk-model-small-cn-0.22（约42MB；本板真实语音验收待麦克风到货），下载脚本
 ``tools/download_vosk_model.py``，存放 ``host/models/``（不入 Git）。
 
-命令词表验收（F1）：词表内识别可靠、端到端 ≤2s——端到端延迟含
-音频分片（0.1s 级）+ 推理（A53 上小模型 ~0.3×RT）+ 解析（µs 级）。
+命令词表验收目标（F1）：词表内识别可靠、端到端 ≤2s；尚无本板实测数据。
 """
 
 from __future__ import annotations
 
 import json
-import wave
+import collections
+import math
+import re
+import threading
+import time
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -54,32 +57,49 @@ def grammar_words() -> list[str]:
     words += list(ZH_OBJECTS)
     # 常见填充音节，防止误吞字
     words += ["个", "把", "起", "来", "下", "那个", "这个"]
-    return words
+    return list(dict.fromkeys(words + ['[unk]']))
 
 
 def parse_zh_command(text: str) -> Command | None:
-    """识别文本 → 结构化指令。动作取最先命中的动作词，目标取物品词。"""
-    action = None
-    for w, a in ZH_ACTIONS.items():
-        if w in text:
-            action = a
-            break
-    if action is None:
-        return None
-    target = ""
-    if action == "grasp":
-        for w, item in ZH_OBJECTS.items():
-            if w in text:
-                target = item
-                break
-    return Command(action, target)
+    """Accept complete, unambiguous whitelist commands, not substrings.
+
+    e.g. '不要抓香蕉' and '打开音乐' must not become movement commands.
+    This is a conservative command parser, not general Chinese understanding.
+    """
+    text = re.sub(r'[\s，。！？、,.!?]+', '', text)
+    if text in ("停", "停下", "停止", "停止动作", "急停"):
+        return Command('stop')
+    if text in ("放", "放下", "释放", "松开", "松手", "张开"):
+        return Command('release')
+    if text in ("复位", "重置"):
+        return Command('reset')
+    names = '|'.join(re.escape(name) for name in sorted(ZH_OBJECTS, key=len, reverse=True))
+    match = re.fullmatch(r'(?:抓起|抓住|抓|拿起|拿|捡起|捡)(?:那个|这个|一个|个|把)?(' + names + ')', text)
+    return Command('grasp', ZH_OBJECTS[match.group(1)]) if match else None
+
+
+@dataclass(frozen=True)
+class RecognitionEvent:
+    text: str
+    command: Command | None
+    confidence: float | None
+    reason: str
+    created: float
+
+    def as_dict(self):
+        return dict(schema='amazinghand.voice/1', text=self.text,
+                    accepted=self.command is not None, confidence=self.confidence,
+                    reason=self.reason,
+                    command=None if self.command is None else dict(
+                        action=self.command.action, target=self.command.target))
 
 
 class ZhCommandKws:
     """Vosk 命令词识别器（VoiceSource 协议实现）。"""
 
     def __init__(self, model_dir: Path | str = DEFAULT_MODEL_DIR,
-                 sample_rate: int = 16000, use_grammar: bool = True):
+                 sample_rate: int = 16000, use_grammar: bool = False,
+                 min_confidence: float = 0.65):
         from vosk import Model, KaldiRecognizer  # 延迟导入：mock 模式无需 vosk
 
         model_dir = Path(model_dir)
@@ -89,6 +109,10 @@ class ZhCommandKws:
             )
         self._model = Model(str(model_dir))
         self._rate = sample_rate
+        if sample_rate != 16000 or not 0 <= min_confidence <= 1:
+            raise ValueError('Voice profile requires 16000 Hz and confidence in 0..1')
+        self.min_confidence = min_confidence
+        self.last_event = None
         self._grammar = json.dumps(grammar_words(), ensure_ascii=False)
         self._use_grammar = use_grammar
         self._rec: object | None = None
@@ -99,6 +123,7 @@ class ZhCommandKws:
         from vosk import KaldiRecognizer
 
         self._rec = KaldiRecognizer(self._model, self._rate)
+        self._rec.SetWords(True)
         if self._use_grammar:
             self._rec.SetGrammar(self._grammar)
 
@@ -127,68 +152,151 @@ class ZhCommandKws:
     # ------------------------------------------------------------------
 
     def transcribe_wav(self, wav_path: Path | str) -> str:
-        """整段 wav（16k mono int16）→ 识别文本（测试/演示用）。"""
-        with wave.open(str(wav_path), "rb") as wf:
-            if wf.getframerate() != self._rate or wf.getnchannels() != 1:
-                raise ValueError(f"wav must be {self._rate}Hz mono int16")
-            self.reset()
-            while True:
-                chunk = wf.readframes(4000)
-                if not chunk:
-                    break
-                self._rec.AcceptWaveform(chunk)
-            return json.loads(self._rec.FinalResult()).get("text", "")
+        """Single utterance WAV → text; use voice CLI for multi-command files."""
+        from .audio import wav_pcm
+        self.reset()
+        results = []
+        for chunk in wav_pcm(wav_path):
+            if self._rec.AcceptWaveform(chunk):
+                results.append(json.loads(self._rec.Result()))
+        results.append(json.loads(self._rec.FinalResult()))
+        utterances = [item for item in results if (item.get('text') or '').strip()]
+        if len(utterances) > 1:
+            text = ' / '.join(item['text'] for item in utterances)
+            self.last_event = RecognitionEvent(text, None, None, 'multiple_utterances', time.monotonic())
+            return text
+        result = utterances[0] if utterances else {}
+        self._parse_final(result)
+        return result.get('text', '')
 
     def command_from_wav(self, wav_path: Path | str) -> Command | None:
         """wav → 结构化指令（语音→命令端到端）。"""
-        return parse_zh_command(self.transcribe_wav(wav_path))
+        self.transcribe_wav(wav_path)
+        return self.last_event.command
 
     # ------------------------------------------------------------------
 
     def _parse_final(self, result: dict) -> Command | None:
         text = (result.get("text") or "").replace(" ", "")
-        return parse_zh_command(text) if text else None
+        words = result.get('result') or []
+        confidence = min(float(word['conf']) for word in words) if words else None
+        command = parse_zh_command(text)
+        if not text:
+            reason = 'empty'
+        elif '[unk]' in text:
+            reason = 'unknown_words'
+        elif command is None:
+            reason = 'not_whitelisted'
+        elif confidence is None or not math.isfinite(confidence) or not self.min_confidence <= confidence <= 1:
+            reason = 'low_confidence'
+        else:
+            reason = 'accepted'
+        if reason != 'accepted':
+            command = None
+        self.last_event = RecognitionEvent(text, command, confidence, reason, time.monotonic())
+        return command
+
+    def take_event(self):
+        event, self.last_event = self.last_event, None
+        return event
 
 
 class MicVoiceSource:
-    """麦克风 → Kws → 命令队列（main.VoiceSource 协议实现，板端 run_app.sh 使用）。
+    """Linux ALSA → Vosk → bounded, expiring command queue.
 
-    依赖 pyaudio（板端 setup_z19.sh 安装）；PC 无麦克风/依赖时构造报错，
-    PC 演示请用 main.MockVoice。
+    Capture errors propagate to the consumer instead of silently killing a
+    background thread. Only this object owns its arecord child.
     """
-
-    def __init__(self, kws: ZhCommandKws, rate: int = 16000, chunk_ms: int = 100):
-        import queue
-        import threading
-
+    def __init__(self, kws: ZhCommandKws, rate: int = 16000, chunk_ms: int = 100,
+                 device=None, max_age_s=2.0, repeat_s=1.0):
+        from .audio import AlsaCapture
+        if rate != 16000 or max_age_s <= 0 or repeat_s < 0:
+            raise ValueError('Invalid voice capture profile')
         self._kws = kws
-        self._rate = rate
-        self._chunk = rate * chunk_ms // 1000
-        self._q: queue.Queue = queue.Queue()
+        self._capture = AlsaCapture(device, chunk_ms)
+        self._q = collections.deque(maxlen=32)
+        self._lock = threading.Lock()
+        self._ready = threading.Event()
+        self._error = None
+        self._max_age = max_age_s
+        self._repeat = repeat_s
+        self._last_command = None
+        self._last_command_at = 0.0
+        self._stopped = False
+        self._pending_stop = None
         self._stop = threading.Event()
         self._thread = threading.Thread(target=self._worker, daemon=True)
         self._thread.start()
+        try:
+            if not self._ready.wait(timeout=5):
+                raise RuntimeError('No audio received within 5 seconds; check device/USB driver')
+            self._check_error()
+        except BaseException:
+            self.close()
+            raise
 
     def _worker(self) -> None:  # pragma: no cover —— 板端运行路径
-        import pyaudio
+        try:
+            self._capture.start()
+            while not self._stop.is_set():
+                pcm = self._capture.read()
+                self._ready.set()
+                self._kws.feed(pcm)
+                event = self._kws.take_event()
+                if event is None or not event.text:
+                    continue
+                now = time.monotonic()
+                if (event.command is not None and event.command.action != 'stop'
+                        and event.command == self._last_command
+                        and now - self._last_command_at < self._repeat):
+                    continue
+                if event.command:
+                    self._last_command, self._last_command_at = event.command, now
+                with self._lock:
+                    if event.command and event.command.action == 'stop':
+                        self._q.clear()
+                        self._stopped = True
+                        self._pending_stop = event
+                    elif self._stopped and event.command and event.command.action in ('grasp', 'release'):
+                        self._q.append(RecognitionEvent(event.text, None, event.confidence,
+                                                        'stop_latched', event.created))
+                    else:
+                        if event.command and event.command.action == 'reset':
+                            self._stopped = False
+                        self._q.append(event)
+        except Exception as exc:
+            if not self._stop.is_set():
+                self._error = exc
+        finally:
+            self._ready.set()
+            self._capture.close()
 
-        pa = pyaudio.PyAudio()
-        stream = pa.open(self._rate, 1, pyaudio.paInt16, input=True,
-                         frames_per_buffer=self._chunk)
-        while not self._stop.is_set():
-            pcm = stream.read(self._chunk, exception_on_overflow=False)
-            cmd = self._kws.feed(pcm)
-            if cmd is not None:
-                self._q.put(cmd)
-        stream.close()
-        pa.terminate()
+    def _check_error(self):
+        if self._error is not None:
+            raise RuntimeError('Voice capture/recognition failed: ' + str(self._error)) from self._error
+
+    def poll_event(self):
+        self._check_error()
+        with self._lock:
+            if self._pending_stop is not None:
+                event, self._pending_stop = self._pending_stop, None
+                return event
+            while self._q:
+                event = self._q.popleft()
+                if time.monotonic() - event.created <= self._max_age:
+                    return event
+        return None
 
     def poll_command(self) -> Command | None:
-        try:
-            return self._q.get_nowait()
-        except Exception:  # noqa: BLE001 —— queue.Empty
-            return None
+        while True:
+            event = self.poll_event()
+            if event is None or event.command:
+                return None if event is None else event.command
 
     def close(self) -> None:
         self._stop.set()
-        self._thread.join(timeout=2.0)
+        self._capture.close()
+        self._thread.join(timeout=3)
+        if self._thread.is_alive():
+            raise RuntimeError('Voice worker did not stop; do not start a second capture')
+        self._capture.release_pipes()
