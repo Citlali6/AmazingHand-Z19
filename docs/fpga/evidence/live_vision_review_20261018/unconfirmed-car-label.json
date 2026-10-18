@@ -1,0 +1,54 @@
+{
+  "state": "LIVE",
+  "frame_seq": 48319,
+  "camera_session": "camera0-preview-20261010-125418-1",
+  "capture_monotonic": 8221.957948,
+  "age_ms": 830.9867600013769,
+  "inference_ms": 502.3802699997759,
+  "native_inference_ms": 437.51533,
+  "backend": "ncnn_cpp_aarch64",
+  "inference_host": "zu19eg_mipi",
+  "architecture": "aarch64",
+  "pid": 21822,
+  "detections": [
+    {
+      "category": "car",
+      "confidence": 0.35413787,
+      "bbox_xyxy": [
+        620.0752,
+        625.71729,
+        750.65265,
+        757.04138
+      ]
+    }
+  ],
+  "autonomous_grasp_allowed": false,
+  "processed": 6110,
+  "dropped_waiting": 6487,
+  "fps": 2.146078694455223,
+  "jpeg_sha256": "6e43ee7bf2d5c7b4cc575e028af6eb21970d6605362a781e0cd0e9743c9d0e88",
+  "service_and_bridge_rss_kib": 171532,
+  "service_and_bridge_cpu_seconds": 4256.94,
+  "bridge_pid": 21969,
+  "input_transport": "jpeg",
+  "source_timings_ms": {
+    "status_http": 14.787979998800438,
+    "jpeg_http": 9.034540000357083,
+    "camera_copy": 25.341,
+    "camera_encode": 50.492,
+    "bgr_decode": 0.005399999281507917
+  },
+  "native_timings_ms": {
+    "decode": 63.25353,
+    "preprocess": 11.22124,
+    "forward": 420.5921,
+    "postprocess": 5.70199,
+    "total": 500.76886
+  },
+  "bridge_timings_ms": {
+    "write": 0.7963999996718485,
+    "roundtrip": 501.4409199993679
+  },
+  "bridge_input_bytes": 136687,
+  "result_max_age_ms": 1600
+}

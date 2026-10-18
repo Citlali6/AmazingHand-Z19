@@ -1,0 +1,16 @@
+{
+  "source_sha256": {
+    "host/camera_linux/live_vision.py": "c53be8f07c6cb7f62b8c41b293c02c5ecb135a5983eeb66f98eeee23f2392b8b",
+    "host/app/vision/camera.py": "7bfadcb0318714e4079d9dce96bba966db9f6ae376172eeda246d58670aae632",
+    "host/app/vision/backends/ncnn_cpp.py": "c0303a052ce1482b2c9212eca374748796a410b96cf4c242b02f48347ad65bd6",
+    "host/camera_linux/preview_server.py": "1d9c0d1eeb4293bad6c9ac427dfcb63bf030ca3b73de40425ac77b36a7a21c16",
+    "native/ah_ncnn_bridge": "1d70f69efe909f1c7c96efe9057250c39a69df5e37b486dbf9b034cd63e4262d"
+  },
+  "service_state": {
+    "pid": 21822,
+    "start_ticks": "537415",
+    "log": "/var/lib/amazinghand/log/vision-opt-20261018/vision-20261010T125824Z.jsonl",
+    "service": "/opt/amazinghand/live-vision-opt-20261018/host/camera_linux/live_vision.py"
+  },
+  "cmdline": "/usr/bin/python3 /opt/amazinghand/live-vision-opt-20261018/host/camera_linux/live_vision.py --model-dir /opt/amazinghand/live-vision-20261018/models --bridge /opt/amazinghand/live-vision-opt-20261018/native/ah_ncnn_bridge --threads 2 --input-transport jpeg --capture-interval-ms 200 "
+}

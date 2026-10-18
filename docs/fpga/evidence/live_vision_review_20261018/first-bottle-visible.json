@@ -1,0 +1,43 @@
+{
+  "state": "NO_TARGET",
+  "frame_seq": 46101,
+  "camera_session": "camera0-preview-20261010-125418-1",
+  "capture_monotonic": 8079.685986,
+  "age_ms": 758.4783099997009,
+  "inference_ms": 463.2637899994734,
+  "native_inference_ms": 393.42714,
+  "backend": "ncnn_cpp_aarch64",
+  "inference_host": "zu19eg_mipi",
+  "architecture": "aarch64",
+  "pid": 21822,
+  "detections": [],
+  "autonomous_grasp_allowed": false,
+  "processed": 5804,
+  "dropped_waiting": 6163,
+  "fps": 2.145780155280921,
+  "jpeg_sha256": "2e325090cff690996c8773d15925ddec5576c2f90beba084b38bbab043254b2b",
+  "service_and_bridge_rss_kib": 171160,
+  "service_and_bridge_cpu_seconds": 4043.9900000000002,
+  "bridge_pid": 21969,
+  "input_transport": "jpeg",
+  "source_timings_ms": {
+    "status_http": 17.07368999996106,
+    "jpeg_http": 15.748550000353134,
+    "camera_copy": 24.955,
+    "camera_encode": 50.716,
+    "bgr_decode": 0.004159999662078917
+  },
+  "native_timings_ms": {
+    "decode": 66.62626,
+    "preprocess": 10.98071,
+    "forward": 376.14309,
+    "postprocess": 6.30334,
+    "total": 460.0534
+  },
+  "bridge_timings_ms": {
+    "write": 0.7263999996212078,
+    "roundtrip": 462.39355000034266
+  },
+  "bridge_input_bytes": 137697,
+  "result_max_age_ms": 1600
+}

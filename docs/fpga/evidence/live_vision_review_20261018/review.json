@@ -1,0 +1,72 @@
+{
+  "client_date": "2026-10-18",
+  "recorded_utc": "2026-10-18T07:05:10.875168+00:00",
+  "issue_comment": "https://github.com/Tom-mr33/AmazingHand-based-on-FPGA/issues/16#issuecomment-6246789500",
+  "pr": "https://github.com/Tom-mr33/AmazingHand-based-on-FPGA/pull/19",
+  "runtime_head": "b996ac5de444e0c158546b2f7ca95bcee91f0f76",
+  "main_read_only": "6b1c90094e9979d1729a331896954a12821c7ae2",
+  "path_intersection_with_main": [],
+  "object_acceptance": {
+    "car": "VERIFIED: previous real red model car, browser same-frame proof at deployed runtime HEAD",
+    "apple": "NOT VERIFIED: no actual apple available; previous hand apple=.3618 was false positive",
+    "banana": "NOT VERIFIED: no actual banana available",
+    "bottle": "NOT VERIFIED: visible white thermos, before/after one owner adjustment, zero bottle detections"
+  },
+  "bottle_authorization": "Owner explicitly authorized use of current service, then one second observation after adjustment; no service restart/environment change",
+  "bottle_observation_windows": {
+    "before": {
+      "raw_samples": 19,
+      "unique_results": 19,
+      "duration_s": 9.800582899999426,
+      "states": {
+        "NO_TARGET": 15,
+        "LIVE": 4
+      },
+      "bottle_detections": 0,
+      "all_jpeg_hashes_matched": true,
+      "observed_age_ms": {
+        "min": 620.3639499994323,
+        "max": 1134.741840000441
+      }
+    },
+    "adjusted": {
+      "raw_samples": 19,
+      "unique_results": 19,
+      "duration_s": 9.823056700000961,
+      "states": {
+        "NO_TARGET": 17,
+        "LIVE": 2
+      },
+      "bottle_detections": 0,
+      "all_jpeg_hashes_matched": true,
+      "observed_age_ms": {
+        "min": 659.2126900001471,
+        "max": 1184.4098100011788
+      }
+    }
+  },
+  "interpretation": "Miss observations in this specific scene; not a labeled dataset recall metric. car labels during bottle observation are unconfirmed, never substitute for bottle acceptance.",
+  "local_only_jpeg_sha256": {
+    "first-result.jpg": "2e325090cff690996c8773d15925ddec5576c2f90beba084b38bbab043254b2b",
+    "adjusted/first-result.jpg": "e7935a609f379e093888d87e4e49831f661e37f67da13b254fb4812822bedb79",
+    "adjusted/car-sample.jpg": "6e43ee7bf2d5c7b4cc575e028af6eb21970d6605362a781e0cd0e9743c9d0e88"
+  },
+  "privacy": "No new full images published; face-containing originals retained locally. Existing reviewed car ROI remains in prior evidence.",
+  "ui_patch": {
+    "deployed": false,
+    "live_vision_source_sha256": "04af45970d9b220d077aa5ba6e641ba1ba201226a0a29e43c10c0b15f1ba749c",
+    "scope": "Only HTML: clear stats/detections/image identities alongside canvas on expiry/network failure; no inference/native/TTL/camera changes",
+    "offline_checks": "node host/tests/test_live_vision_ui.js: 2 passed; Python focused contracts:12 passed in existing venv",
+    "board_checks": "not rerun for UI patch; current board still serves unchanged runtime HEAD"
+  },
+  "unchanged": "800ms source /1600ms result, conf.35, 416FP32/JPEG/2T/poll200; no PL load/driver unload/system install/model export/Issue20",
+  "review_status": "Draft/REVIEW_REQUIRED, reviews=[], reviewRequests=[], autoMergeRequest=null; no human approval claimed",
+  "artifact_sha256": {
+    "adjusted-bottle-visible.json": "a96f723a60ca0963a5c2cfc8c14b6446c7aef214d5f7460c12acaac03a62413d",
+    "bottle-adjusted.jsonl": "2e711588c6473e26638c53f4c643a0eeeb391076e1b1d38a123319aabba2edb6",
+    "bottle-before.jsonl": "a92412e3b03523b37bb2519f7401e4f333e6fb3fd4a8fa313e8d03e7d58b481a",
+    "first-bottle-visible.json": "0fe7e97080ce6fea216e3fcf352999d5db24f7ec3a68560ac1b83d55f365bf77",
+    "runtime.json": "f849915978dffcee843f91bddae020f8af979471ada03e9dbb0192c30959ca33",
+    "unconfirmed-car-label.json": "e3b975ac9243049bf077cccb42d1463d18bd57908f6fa7bb1731992a097a37cc"
+  }
+}

@@ -8,6 +8,11 @@ hand-control commands. `autonomous_grasp_allowed` is always false.
 Display classes: `apple`, `banana`, `bottle`, plus `car` for the user's available
 red model car. `car` is a demo-only COCO mapping; no grasp-table entry is added.
 
+For team code review, begin with [the short review guide](REVIEW.md): minimum
+read-only reproduction, exact measurement scope, dependency licenses, object
+acceptance status and integration boundaries. Historical performance evidence
+belongs to deployed HEAD `b996ac5`; a later UI-only fix is identified separately.
+
 ## Data and failure contract
 
 `PreviewCamera` reads the existing `/status.json` and `/frame.jpg`. New additive

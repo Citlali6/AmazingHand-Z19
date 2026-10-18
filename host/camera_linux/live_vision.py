@@ -33,23 +33,24 @@ canvas{max-width:100%;background:#000}pre{white-space:pre-wrap}#state{color:#ffc
 let busy=false,deadline=0; const canvas=document.getElementById('view'),ctx=canvas.getContext('2d');
 function clearImage(){ctx.clearRect(0,0,canvas.width,canvas.height);canvas.dataset.frameSeq='';canvas.dataset.jpegSha256='';}
 function showStats(r){document.getElementById('stats').textContent=JSON.stringify({...r,jpeg_base64:undefined},null,2);}
+function showUnavailable(state,error=''){clearImage();showStats({state,error,detections:[],autonomous_grasp_allowed:false});document.getElementById('state').textContent=state+' · 自主抓取禁止 · '+error;}
 async function update(){if(busy)return;busy=true;try{
  let started=performance.now(),controller=new AbortController(),timer=setTimeout(()=>controller.abort(),2000);
  let response,r;try{response=await fetch('/result.json',{cache:'no-store',signal:controller.signal});r=await response.json();}finally{clearTimeout(timer);}
  document.getElementById('state').textContent=r.state+' · 自主抓取禁止 · '+(r.error||'');
- if(!r.jpeg_base64){showStats(r);clearImage();return;}
+ if(!r.jpeg_base64){showUnavailable(r.state,r.error||'');return;}
  let im=new Image();im.src='data:image/jpeg;base64,'+r.jpeg_base64;await im.decode();
  deadline=started+r.result_max_age_ms-r.age_ms;
- if(performance.now()>deadline){clearImage();r.state='STALE';showStats(r);document.getElementById('state').textContent='STALE · 自主抓取禁止';return;}
+ if(performance.now()>deadline){showUnavailable('STALE','inference result expired');return;}
  canvas.width=im.width;canvas.height=im.height;ctx.drawImage(im,0,0);
  for(let d of r.detections){let [x1,y1,x2,y2]=d.bbox_xyxy;ctx.strokeStyle='#63f9ac';ctx.lineWidth=5;
  ctx.strokeRect(x1,y1,x2-x1,y2-y1);ctx.font='28px system-ui';ctx.fillStyle='#63f9ac';
  ctx.fillText(d.category+' '+d.confidence.toFixed(2),x1,Math.max(30,y1-8));}
  canvas.dataset.frameSeq=String(r.frame_seq);canvas.dataset.jpegSha256=r.jpeg_sha256;
  showStats(r);
- }catch(e){document.getElementById('state').textContent='连接中断 · 自主抓取禁止';clearImage();}
+ }catch(e){showUnavailable('CONNECTION_ERROR','连接中断');}
  finally{busy=false;}}
-setInterval(()=>{if(canvas.dataset.frameSeq&&performance.now()>deadline){clearImage();document.getElementById('state').textContent='STALE · 自主抓取禁止';}},50);
+setInterval(()=>{if(canvas.dataset.frameSeq&&performance.now()>deadline){showUnavailable('STALE','inference result expired');}},50);
 setInterval(update,200);update();</script>'''
 
 

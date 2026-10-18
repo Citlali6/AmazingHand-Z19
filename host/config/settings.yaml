@@ -3,7 +3,9 @@
 
 backend: sim          # sim | serial | fpga（PC 冒烟用 sim；板端 serial/fpga）
 
-# Standalone board demo: host/camera_linux/live_vision.py (never starts hand control).
+# BGR factory compatibility profile retained from round 1. The optimized standalone
+# host/camera_linux/live_vision.py uses its own CLI defaults, not this YAML.
+# It never starts hand control; settings here do not connect vision to the FSM.
 camera:
   type: preview_http
   url: http://127.0.0.1:9000
