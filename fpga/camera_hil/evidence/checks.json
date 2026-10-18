@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-18",
+  "base": "ee52f09ae78d7163067d627eeae0d627ea92855c",
+  "branch": "feature/citlali6-camera-hil-unified-20261018",
+  "build": {
+    "command": "F:/Xilinx/Vivado/2020.1/bin/vivado.bat -mode batch -nojournal -nolog -source F:/Amazing_Hand_unified_20261018/fpga/camera_hil/build.tcl -tclargs F:/ah-camera-hil-build-20261018-attempt01 impl",
+    "exit_code": 1,
+    "output_directory_created": false,
+    "reason": "Vivado 2020.2 unavailable; version guard refused 2020.1"
+  },
+  "package": {
+    "exit_code": 1,
+    "output_created": false,
+    "reason": "No generated unified BD/build exists"
+  },
+  "checks": {
+    "camera_hashes": 117,
+    "inherited_hashes": 4,
+    "safety_tests": 7,
+    "python_compile": true,
+    "python37_runtime_grammar": true,
+    "tcl_info_complete": true,
+    "custom_ip_declared_file_references": 35,
+    "custom_ip_missing_files": 0
+  },
+  "unperformed": [
+    "Vivado2020.2 BD generation/validation",
+    "synthesis",
+    "implementation/timing/DRC",
+    "Bootgen/package creation",
+    "board load/rollback",
+    "simultaneous video/HIL",
+    "STOP/watchdog under camera/model load"
+  ],
+  "original_camera_modified": false,
+  "sd_modified": false,
+  "board_accessed": false,
+  "sha256": {
+    "audit.py": "b9df32fbee02a2a388dcb88dedcca8600ac467724e9de9dc40d73ef41489fc0f",
+    "build.tcl": "20c5ffc555a110ae28d39560510372ac17bb52aac93142c1f74b5b59a5427534",
+    "package_linux.py": "ab82e51784aa0bbe56fab6ce896edda55da842f4b308e8e6ec0204e31eaef25b",
+    "provenance.json": "6a866b597656d344deab20e76de8d076af8d9f0ed550ba1acd6ed6fd75f3fc7b",
+    "README.md": "8d9e9dc2db9325a7f2ee2cf628ae60f431ae4fb1e99631baf0699b1756388e08",
+    "test_safety.py": "fe82dda1637c40b6c27f5680393a8e17a7c08909dc1ca86da6ba022b4bf8474c",
+    "evidence/.gitattributes": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9",
+    "evidence/package-refused.txt": "efeb51b400fdbd13da25eab5a19b29501516549bf80291e73899bccabee7028f",
+    "evidence/safety-tests.txt": "f015b101dad230b86157ebc587b204461085f4e99307f14b314c14442423ee9b",
+    "evidence/source-audit.json": "2549f297cc1631a81a51d31f561636dd26d1f0cc6bcb2db24391acd5b0d1c50e",
+    "evidence/vivado-2020.1-refused.txt": "fb888d0e58a2ce3f686308f53d6ec51623d58e4d58045a5020759600303c3233",
+    "ps/hil_server.py": "54c799424dd4296115df72570c37b909d5b248c58bd3313bfeaa03f643d4c73a",
+    "ps/unified.py": "72453e1dd621637df3f1a13bd9c991d0ec42cbd27dfa13152814ac99732b17e4",
+    "rtl/grasp_fsm.sv": "25a47f8697fe0e53ae34ab9db551a53f83a24edc386258aae370be8526702777",
+    "rtl/hand_hil_axi.sv": "4e3d4d7d24c1526f87bee40e830a62d0d4fa13da982680e50241e3e50ceeaef0",
+    "rtl/hand_hil_shell.v": "0a7c26528cde2e907592269a978a3b801d6731aedf032d5f5b362158f4243baf"
+  },
+  "evidence_text_newlines": "LF; console text preserved with normalized line endings before hashing"
+}

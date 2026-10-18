@@ -1,0 +1,18 @@
+
+****** Vivado v2020.1 (64-bit)
+  **** SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+  **** IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source F:/Amazing_Hand_unified_20261018/fpga/camera_hil/build.tcl
+# if {[version -short] ne "2020.2"} {
+#     error "Unified camera/HIL requires Vivado 2020.2 (camera original: 2020.2_AR75986). No downgrade/upgrade is permitted."
+# }
+Unified camera/HIL requires Vivado 2020.2 (camera original: 2020.2_AR75986). No downgrade/upgrade is permitted.
+    while executing
+"error "Unified camera/HIL requires Vivado 2020.2 (camera original: 2020.2_AR75986). No downgrade/upgrade is permitted.""
+    invoked from within
+"if {[version -short] ne "2020.2"} {
+    error "Unified camera/HIL requires Vivado 2020.2 (camera original: 2020.2_AR75986). No downgrade/upgrade is pe..."
+    (file "F:/Amazing_Hand_unified_20261018/fpga/camera_hil/build.tcl" line 3)
+INFO: [Common 17-206] Exiting Vivado at Sun Oct 18 12:07:16 2026...

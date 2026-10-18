@@ -1,0 +1,26 @@
+{
+  "pr": 13,
+  "commit": "caa84a5ddb541cd60ebd2e07869b83671ca8a1e2",
+  "files": [
+    {
+      "source": "fpga/hand_control/rtl/hand_hil_axi.sv",
+      "target": "rtl/hand_hil_axi.sv",
+      "sha256": "4e3d4d7d24c1526f87bee40e830a62d0d4fa13da982680e50241e3e50ceeaef0"
+    },
+    {
+      "source": "fpga/hand_control/rtl/hand_hil_shell.v",
+      "target": "rtl/hand_hil_shell.v",
+      "sha256": "0a7c26528cde2e907592269a978a3b801d6731aedf032d5f5b362158f4243baf"
+    },
+    {
+      "source": "fpga/rtl/grasp_fsm.sv",
+      "target": "rtl/grasp_fsm.sv",
+      "sha256": "25a47f8697fe0e53ae34ab9db551a53f83a24edc386258aae370be8526702777"
+    },
+    {
+      "source": "fpga/hand_control/ps/hil_server.py",
+      "target": "ps/hil_server.py",
+      "sha256": "54c799424dd4296115df72570c37b909d5b248c58bd3313bfeaa03f643d4c73a"
+    }
+  ]
+}
