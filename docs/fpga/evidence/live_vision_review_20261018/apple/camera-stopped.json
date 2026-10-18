@@ -1,0 +1,24 @@
+{
+  "status": {
+    "state": "STOPPED",
+    "message": "\u76f8\u673a\u5df2\u505c\u6b62",
+    "focus": 300
+  },
+  "device_exists": true,
+  "preview": {
+    "exists": true,
+    "cmdline": "python3 /opt/amazinghand/live-vision-opt-20261018/host/camera_linux/preview_server.py --capture /opt/amazinghand/camera0-linux-hd-20261010/capture_camera0 --bind 0.0.0.0 --log-dir /var/lib/amazinghand/log/vision-opt-20261018 "
+  },
+  "capture": {
+    "exists": false,
+    "cmdline": null
+  },
+  "vision": {
+    "exists": true,
+    "cmdline": "/usr/bin/python3 /opt/amazinghand/live-vision-opt-20261018/host/camera_linux/live_vision.py --model-dir /opt/amazinghand/live-vision-20261018/models --bridge /opt/amazinghand/live-vision-opt-20261018/native/ah_ncnn_bridge --threads 2 --input-transport jpeg --capture-interval-ms 200 "
+  },
+  "native": {
+    "exists": true,
+    "cmdline": "/opt/amazinghand/live-vision-opt-20261018/native/ah_ncnn_bridge /opt/amazinghand/live-vision-20261018/models 416 2 0.35 0.45 "
+  }
+}

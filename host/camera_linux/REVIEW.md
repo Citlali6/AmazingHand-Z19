@@ -11,6 +11,9 @@ PC浏览器同图画框。没有将结果接入主状态机、PL控制或MuJoCo�
 `inference_host=zu19eg_mipi`、`input_transport=jpeg`、
 `autonomous_grasp_allowed=false` 和状态/帧号/会话/JPEG SHA。
 地址和服务存活需当场核实；入口关闭不意味着可以自动加载PL或重启服务。
+原capture每次采集3600秒，到期正常STOPPED。在已有相机使用授权且设备/进程身份
+核实无误时，可用现preview的`POST /start {}`恢复正常采集，不必重启AI或加载PL；
+如果设备/身份不符或需额外系统操作，应先报告并取得相应许可。
 
 PC无推理的同图校验入口（使用一个全新本地输出目录）：
 
@@ -43,13 +46,21 @@ python tools/collect_live_vision.py --seconds 2 --output tmp/review-read-new
 | 目标 | 实物结论 | 证据/限制 |
 | --- | --- | --- |
 | 红车模 `car` | VERIFIED（既有实板同图演示） | [真实浏览器JSON](../../docs/fpga/evidence/live_vision_opt_20261018/z19-opt-fresh-browser-proof.json)，置信度0.9262；car仅演示映射，未加入抓取表 |
-| `apple` | NOT VERIFIED | 无对应实物；旧手部apple0.3618是误检 |
+| `apple` | NOT VERIFIED（实物补验未识别） | [真实红苹果短观察](../../docs/fpga/evidence/live_vision_review_20261018/apple/validation.json)：17个不同有效结果均NO_TARGET；旧手部apple0.3618仍是误检 |
 | `banana` | NOT VERIFIED | 无对应实物 |
 | `bottle` | NOT VERIFIED（已补验、未识别） | 本轮白色保温瓶两次约10秒观察各19个不同结果，无bottle；包括NO_TARGET和其他标签，非召回率基准 |
 
 瓶子补验使用现运行模型/阈值.35/TTL，不调参、不重启。用户调整一次后仍未检出，
 如实记录漏检，不以car框、热水瓶外形推断或空场景代替有效bottle检测。
 [本轮无图原始记录及运行指纹](../../docs/fpga/evidence/live_vision_review_20261018/review.json)。
+之后用户换成真实苹果；原采集一小时正常到期，仅现服务`/start`恢复采集后，
+已view确认红苹果完整入镜，但约10秒17个不同有效结果均未检出。两类都不记通过；
+没有进一步调模型/阈值、循环摆位或重新跑性能bench。
+对同一JPEG做一次PC CPU离线排错（同weights、FP32、416×416/rect=False，
+仅诊断阈值.01）时，原YOLO在苹果位置给出orange0.6578，post-NMS列表无apple。
+这提示模型/图像的类别混淆；PC输出不能证明板端未过滤前的确切类别，
+更不能算板端apple通过。当前演示不显示orange，未因此改标签/服务阈值。
+导入Ultralytics前已设私有新YOLO_CONFIG_DIR，未导出或触碰全局设置。
 
 既有性能结果属于部署版本 `b996ac5de444e0c158546b2f7ca95bcee91f0f76`：
 预览中位7.38→14.89FPS，最终最低10.93；约15FPS，不保证持续≥15。
@@ -99,5 +110,5 @@ Codex A段与其Codex B段都保留，不用一方覆盖另一方；当前不吸
 主程序的旧Python/AXI示例问题不由视觉演示证明已修复，不在本P1扩大改动。
 
 待团队审查：同图/过期/失败契约、模型及分发许可范围、相机/HIL共享板卡边界、
-实际未识别的保温瓶及未验收的苹果/香蕉、同日日志人工合并，以及新UI小修未来部署验证。
+实际未识别的保温瓶/苹果及未验收的香蕉、同日日志人工合并，以及新UI小修未来部署验证。
 PR继续Draft；未发review request、未替队友Approve、未合并/关闭Issue，也未启动Issue #20。

@@ -1,0 +1,91 @@
+{
+  "client_date": "2026-10-18",
+  "trigger": "Owner: \u6211\u73b0\u5728\u5df2\u7ecf\u628a\u6c34\u676f\u6362\u6210\u4e86\u82f9\u679c\uff0c\u4f60\u770b\u770b\u5462",
+  "reviewed_source_head": "a363718261c54df1b67eb0c42ec2597d79a2ac68",
+  "runtime_head": "b996ac5de444e0c158546b2f7ca95bcee91f0f76",
+  "runtime_fingerprints": "../runtime.json; original service/native retained, not restarted or redeployed",
+  "authorization_scope": "Current camera service use for real apple observation; one existing /start resumes normal 3600s capture after verified normal completion. No new PL/driver/system operation.",
+  "initial_state": "20 read-only HTTP observations CAMERA_ERROR/camera state STOPPED, no JPEG; not counted as object inference observations",
+  "recovery": "Original capture finished at seconds3599.977 with CAPTURE_COMPLETE; /dev/ah_camera0 and owned preview/AI/native still present. POST/start once; no AI/preview restart, no PL load or driver operation.",
+  "result": "NOT VERIFIED: real red apple visible in inspected same-frame JPEG, but no apple detections in the short valid observation window",
+  "unique_valid_results": 17,
+  "raw_samples": 19,
+  "all_valid_jpeg_hashes_matched": true,
+  "states": {
+    "CAMERA_ERROR": 1,
+    "CAMERA_RESTARTED": 1,
+    "NO_TARGET": 17
+  },
+  "valid_states": {
+    "NO_TARGET": 17
+  },
+  "observed_age_ms": {
+    "min": 576.9229300006898,
+    "max": 1187.4771900010371
+  },
+  "first_frame": {
+    "state": "NO_TARGET",
+    "frame_seq": 9,
+    "camera_session": "camera0-preview-20261010-135701-2",
+    "capture_monotonic": 8893.089975,
+    "age_ms": 576.9229300006898,
+    "inference_ms": 452.6846000007936,
+    "native_inference_ms": 393.84902,
+    "backend": "ncnn_cpp_aarch64",
+    "inference_host": "zu19eg_mipi",
+    "architecture": "aarch64",
+    "pid": 21822,
+    "detections": [],
+    "autonomous_grasp_allowed": false,
+    "processed": 7206,
+    "dropped_waiting": 7643,
+    "fps": 2.0482735944357904,
+    "jpeg_sha256": "3877145efa1d8ce28468c79d9063d4872ca40e21e176da58ffaaca714c25cae1",
+    "service_and_bridge_rss_kib": 171532,
+    "service_and_bridge_cpu_seconds": 5019.16,
+    "bridge_pid": 21969,
+    "input_transport": "jpeg",
+    "source_timings_ms": {
+      "status_http": 7.9402900009881705,
+      "jpeg_http": 10.314330000255723,
+      "camera_copy": 27.89,
+      "camera_encode": 53.814,
+      "bgr_decode": 0.004239998816046864
+    },
+    "native_timings_ms": {
+      "decode": 57.09542,
+      "preprocess": 10.7872,
+      "forward": 377.24641,
+      "postprocess": 5.81541,
+      "total": 450.94444
+    },
+    "bridge_timings_ms": {
+      "write": 0.7532599993282929,
+      "roundtrip": 451.76521000030334
+    },
+    "bridge_input_bytes": 138060,
+    "result_max_age_ms": 1600
+  },
+  "actual_jpeg_local_sha256": "3877145efa1d8ce28468c79d9063d4872ca40e21e176da58ffaaca714c25cae1",
+  "unchanged": "416 FP32/JPEG/2T/poll200, conf.35, 800ms source/1600ms result, autonomous=false; UI patch remains undeployed",
+  "limitation": "One short scene observation, not labeled recall benchmarking; visible apple is not evidence of model success. Previous hand apple=.3618 remains false positive. White thermos bottle still NOT VERIFIED; no banana test.",
+  "privacy": "No new image published; original JPEG remains local. No generated/corrected detection boxes or screenshots.",
+  "artifact_sha256": {
+    "before-resume.jsonl": "51d440ff65bfcaf83ef3c08e5caeae198af7f452656c56a263e133970c493e9f",
+    "camera-stopped.json": "8826018de66eb2dc49ab1e57285d7e9a888b275c80530f1fc322ed1f4000d222",
+    "capture-resume.json": "74c37c9e6e1ead9164c127de5ecb2b10896b64743d74e430bafe5251eb49a578",
+    "first-result.json": "91b84a28643db99500bd77f65caed7d816ddeb3421774ad32fd145dc26aaea5f",
+    "observations.jsonl": "556b05f6e659f61f42d0659a6961751c2efd257e217591d2c1b7a51b1613fd8b",
+    "original-capture-complete.txt": "df588ca5648c3f4e50b0f0d2aa5166fac9805363d7e47dc642a256ecf7267943",
+    "pc-reference-debug.json": "21461c72ec1a590dc65415ab671862d986f29376e27ed35b187530cc593d4e07"
+  },
+  "pc_offline_diagnosis": {
+    "artifact": "pc-reference-debug.json",
+    "role": "debug only; not board acceptance",
+    "image_sha256": "3877145efa1d8ce28468c79d9063d4872ca40e21e176da58ffaaca714c25cae1",
+    "configuration": "same weights hash, FP32/imgsz416/rect=False/devicecpu/conf.01/iou.45; private YOLO_CONFIG_DIR set before import",
+    "findings": "At the real apple location, PC reference post-NMS predicted orange49 confidence.6577524. No apple in post-NMS list at diagnostic conf.01.",
+    "interpretation": "Consistent with a model/image class confusion rather than proof of missing apple47 mapping. Live service excludes orange; PC output cannot establish the exact unfiltered native board classes.",
+    "unchanged": "No re-export/training/new model/system package/service setting change. PC timings are not Z19 metrics. Global Ultralytics profile not used."
+  }
+}

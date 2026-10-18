@@ -1,0 +1,11 @@
+{
+  "before": {
+    "state": "STOPPED",
+    "message": "\u76f8\u673a\u5df2\u505c\u6b62",
+    "focus": 300
+  },
+  "action": "POST existing owned preview /start only",
+  "reply": {
+    "message": "\u76f8\u673a\u6b63\u5728\u542f\u52a8\uff0c\u8bf7\u7b49\u5f85\u753b\u9762"
+  }
+}

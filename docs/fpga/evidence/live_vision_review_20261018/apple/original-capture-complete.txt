@@ -1,0 +1,16 @@
+{"seconds":3587.793,"observed_transitions":183381,"interval_transitions":51,"write_index":1,"seen_mask":7,"status":69632,"sample_hash":280483883,"nonzero_samples":1240}
+{"seconds":3588.795,"observed_transitions":183434,"interval_transitions":53,"write_index":2,"seen_mask":7,"status":69632,"sample_hash":308763771,"nonzero_samples":1240}
+{"seconds":3589.823,"observed_transitions":183486,"interval_transitions":52,"write_index":2,"seen_mask":7,"status":69632,"sample_hash":2053191180,"nonzero_samples":1240}
+{"seconds":3590.861,"observed_transitions":183536,"interval_transitions":50,"write_index":2,"seen_mask":7,"status":69632,"sample_hash":241879579,"nonzero_samples":1240}
+{"seconds":3591.862,"observed_transitions":183583,"interval_transitions":47,"write_index":2,"seen_mask":7,"status":69632,"sample_hash":3191974855,"nonzero_samples":1240}
+{"seconds":3592.865,"observed_transitions":183633,"interval_transitions":50,"write_index":0,"seen_mask":7,"status":69632,"sample_hash":2713999370,"nonzero_samples":1240}
+{"seconds":3593.866,"observed_transitions":183685,"interval_transitions":52,"write_index":0,"seen_mask":7,"status":69632,"sample_hash":793015012,"nonzero_samples":1240}
+{"seconds":3594.897,"observed_transitions":183738,"interval_transitions":53,"write_index":2,"seen_mask":7,"status":69632,"sample_hash":1129023748,"nonzero_samples":1240}
+{"seconds":3595.899,"observed_transitions":183792,"interval_transitions":54,"write_index":2,"seen_mask":7,"status":69632,"sample_hash":3382652535,"nonzero_samples":1240}
+{"seconds":3596.925,"observed_transitions":183844,"interval_transitions":52,"write_index":0,"seen_mask":7,"status":69632,"sample_hash":109910365,"nonzero_samples":1240}
+{"seconds":3597.926,"observed_transitions":183893,"interval_transitions":49,"write_index":0,"seen_mask":7,"status":69632,"sample_hash":2054970029,"nonzero_samples":1240}
+{"seconds":3598.945,"observed_transitions":183940,"interval_transitions":47,"write_index":2,"seen_mask":7,"status":69632,"sample_hash":323459350,"nonzero_samples":1240}
+{"seconds":3599.977,"observed_transitions":183992,"interval_transitions":52,"write_index":2,"seen_mask":7,"status":69632,"sample_hash":3984104488,"nonzero_samples":1240}
+DMA_HALTED
+CAPTURE_COMPLETE transitions=183994 seen_mask=7 bytes=6220800 saved=/var/lib/amazinghand/log/vision-opt-20261018/camera0-preview-20261010-125418-1.raw
+PREVIEW_HD published=56308 copy_discards=26243 busy_skips=15992 obsolete_discards=0
