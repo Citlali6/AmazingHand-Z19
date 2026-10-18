@@ -33,6 +33,8 @@ module servo_bus_ctrl #(
     input  wire [7:0]  speed_raw,      // TIMING 低 8 位
     input  wire        torque_on,      // 期望力矩态（fsm 维护）
     input  wire        speed_event,    // 速度事件脉冲（fsm 触发）
+    input  wire        evt_torque_valid,
+    input  wire [7:0]  evt_torque_arg,
     // 状态输出
     output logic [15:0] meas_pos   [8],
     output logic [15:0] meas_load  [8],
@@ -58,6 +60,7 @@ module servo_bus_ctrl #(
     st_e st;
     logic [2:0] poll_i, poll_j;      // 回读轮转指针（0..7 → 舵机 ID+1）
     logic       wait_resp;           // 等响应中
+    logic       read_sending;        // 请求尚未发完，不计入响应超时
     int unsigned resp_cnt;
     logic [2:0] cur_read;            // 当前 READ 的舵机索引
 
@@ -71,11 +74,10 @@ module servo_bus_ctrl #(
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             st <= ST_IDLE_SLOT; poll_i <= 0; poll_j <= 1;
-            wait_resp <= 1'b0; resp_cnt <= 0; cur_read <= 0;
+            wait_resp <= 1'b0; read_sending <= 1'b0; resp_cnt <= 0; cur_read <= 0;
             tx_start_q <= 1'b0; tx_type <= scs_pkg::F_SYNC_WRITE_POS;
             tx_read_id <= '0; tx_arg <= '0; tx_pos <= '0;
-            evt_pending <= 1'b0; evt_type <= scs_pkg::F_BC_TORQUE; evt_arg <= '0;
-            online_bitmap <= 8'hFF;
+            online_bitmap <= 8'h00; // 回包证实在线，复位不凭空认定8路在线
         end else begin
             tx_start_q <= 1'b0;
             unique case (st)
@@ -90,7 +92,6 @@ module servo_bus_ctrl #(
                         // 空闲余量：事件事务（速度/力矩广播）
                         tx_type   <= evt_type;
                         tx_arg    <= evt_arg;
-                        evt_pending <= 1'b0;
                         tx_start_q  <= 1'b1;
                         st <= ST_EVENT;
                     end
@@ -99,10 +100,11 @@ module servo_bus_ctrl #(
                     tx_type <= scs_pkg::F_READ_FB;
                     tx_read_id <= poll_i;
                     tx_start_q <= 1'b1;
-                    wait_resp <= 1'b1; resp_cnt <= 0; cur_read <= poll_i;
+                    wait_resp <= 1'b1; read_sending <= 1'b1; resp_cnt <= 0; cur_read <= poll_i;
                     st <= ST_T1_READ;
                 end
                 ST_T1_READ, ST_T2_READ: begin
+                    if (tx_done) read_sending <= 1'b0;
                     if (rx_frame_done && rx_resp_id == byte'(cur_read + 1)) begin
                         // 回读写寄存器（下方独立 always 块）+ 清掉线位
                         online_bitmap[cur_read] <= 1'b1;
@@ -111,58 +113,51 @@ module servo_bus_ctrl #(
                             tx_type <= scs_pkg::F_READ_FB;
                             tx_read_id <= poll_j;
                             tx_start_q <= 1'b1;
-                            wait_resp <= 1'b1; resp_cnt <= 0; cur_read <= poll_j;
+                            wait_resp <= 1'b1; read_sending <= 1'b1; resp_cnt <= 0; cur_read <= poll_j;
                             st <= ST_T2_READ;
                         end else begin
                             // 轮转推进：每舵机 250Hz
-                            poll_i <= (poll_i == 7) ? 3'd0 : poll_i + 2'd2;
-                            poll_j <= (poll_j == 7) ? 3'd0 : poll_j + 2'd2;
+                            poll_i <= poll_i + 3'd2;
+                            poll_j <= poll_j + 3'd2; // 3bit模8，7应回到1
                             st <= ST_IDLE_SLOT;
                         end
-                    end else if (wait_resp && resp_cnt == READ_TIMEOUT_CYC - 1) begin
+                    end else if (wait_resp && !read_sending && resp_cnt == READ_TIMEOUT_CYC - 1) begin
                         online_bitmap[cur_read] <= 1'b0;  // 掉线
                         wait_resp <= 1'b0;
                         if (st == ST_T1_READ) begin
                             tx_read_id <= poll_j; tx_type <= scs_pkg::F_READ_FB;
                             tx_start_q <= 1'b1;
-                            wait_resp <= 1'b1; resp_cnt <= 0; cur_read <= poll_j;
+                            wait_resp <= 1'b1; read_sending <= 1'b1; resp_cnt <= 0; cur_read <= poll_j;
                             st <= ST_T2_READ;
                         end else begin
-                            poll_i <= (poll_i == 7) ? 3'd0 : poll_i + 2'd2;
-                            poll_j <= (poll_j == 7) ? 3'd0 : poll_j + 2'd2;
+                            poll_i <= poll_i + 3'd2;
+                            poll_j <= poll_j + 3'd2;
                             st <= ST_IDLE_SLOT;
                         end
-                    end else if (wait_resp) resp_cnt <= resp_cnt + 1;
+                    end else if (wait_resp && !read_sending) resp_cnt <= resp_cnt + 1;
                 end
                 ST_EVENT: if (tx_done) st <= ST_IDLE_SLOT;
             endcase
         end
     end
 
-    // 事件请求（来自 fsm / 寄存器副作用）：单槽覆写（最新优先）
+    // 事件槽仅由此块写入；力矩事件优先于速度，消费与新事件同拍时保留新事件。
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            evt_pending <= 1'b0;
+            evt_pending <= 1'b0; evt_type <= scs_pkg::F_BC_TORQUE; evt_arg <= '0;
         end else begin
+            if (st == ST_IDLE_SLOT && slot_cnt != 0 && evt_pending)
+                evt_pending <= 1'b0;
             if (speed_event) begin
                 evt_pending <= 1'b1;
                 evt_type    <= scs_pkg::F_BC_SPEED;
                 evt_arg     <= speed_raw;
             end
-        end
-    end
-    // 力矩开关事件（fsm 直接驱动 pending——优先级高于速度）
-    // （实现见 grasp_fsm：经 evt_torque 口传入；此处用组合覆盖）
-    logic        evt_torque_valid;
-    logic [7:0]  evt_torque_arg;
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            evt_torque_valid <= 1'b0; evt_torque_arg <= '0;
-        end else if (evt_torque_valid) begin
-            evt_pending <= 1'b1;
-            evt_type    <= scs_pkg::F_BC_TORQUE;
-            evt_arg     <= evt_torque_arg;
-            evt_torque_valid <= 1'b0;
+            if (evt_torque_valid) begin
+                evt_pending <= 1'b1;
+                evt_type <= scs_pkg::F_BC_TORQUE;
+                evt_arg <= evt_torque_arg;
+            end
         end
     end
 
