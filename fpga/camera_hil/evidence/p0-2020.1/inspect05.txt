@@ -1,0 +1,151 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Sun Oct 18 15:11:55 2026
+# Process ID: 28520
+# Current directory: F:/Amazing_Hand_unified_20261018
+# Command line: vivado.exe -mode batch -nojournal -log F:/ah-camera-hil-p0-inspect05.log -source fpga/camera_hil/experimental_2020_1/inspect_dcp.tcl -tclargs F:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.runs/impl_1/design_1_wrapper_routed.dcp F:/ah-camera-hil-p0-inspect05 F:/Amazing_Hand_unified_20261018/fpga/camera_hil/experimental_2020_1/fix_netlist.tcl
+# Log file: F:/ah-camera-hil-p0-inspect05.log
+# Journal file:
+#-----------------------------------------------------------
+source fpga/camera_hil/experimental_2020_1/inspect_dcp.tcl
+# if {[llength $argv] < 2 || [llength $argv] > 3} {error "usage: inspect_dcp.tcl routed.dcp NEW_RESULT ?netlist_hook?"}
+# lassign $argv dcp out hook
+# if {[file exists $out]} {error "result already exists"}
+# file mkdir $out
+# open_checkpoint $dcp
+Command: open_checkpoint F:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.runs/impl_1/design_1_wrapper_routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.030 . Memory (MB): peak = 1015.004 ; gain = 0.000
+INFO: [Device 21-403] Loading part xczu19eg-ffvc1760-2-i
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.978 . Memory (MB): peak = 1518.648 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 2689 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2020.1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2243.867 ; gain = 42.684
+Restored from archive | CPU: 4.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2243.867 ; gain = 42.684
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 2243.867 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 341 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRL16E, SRLC32E): 180 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 20 instances
+  IOBUF => IOBUF (IBUFCTRL, INBUF, OBUFT): 8 instances
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 4 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 129 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2020.1 (64-bit) build 2902540
+open_checkpoint: Time (s): cpu = 00:00:25 ; elapsed = 00:00:30 . Memory (MB): peak = 2243.867 ; gain = 1228.863
+# set f [open [file join $out primitives.txt] w]
+# foreach c [get_cells -hier -filter {REF_NAME =~ URAM288*}] {
+#     puts $f "URAM $c A=[get_property CASCADE_ORDER_A $c] B=[get_property CASCADE_ORDER_B $c]"
+#     foreach p [get_pins -of_objects $c -filter {DIRECTION == IN && REF_PIN_NAME =~ CAS_IN_*}] {
+#         set n [get_nets -quiet -of_objects $p]
+#         set drivers [get_pins -quiet -of_objects $n -filter {DIRECTION == OUT}]
+#         puts $f "$p NET=$n DRIVER=$drivers"
+#     }
+# }
+get_nets: Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 2309.438 ; gain = 65.570
+# foreach n [get_nets -hier -filter {ROUTE_STATUS == NOLOADS}] {
+#     puts $f "NOLOAD $n PINS=[get_pins -of_objects $n] PORTS=[get_ports -quiet -of_objects $n]"
+# }
+# close $f
+# check_timing -verbose -file [file join $out coverage.rpt]
+check_timing: Time (s): cpu = 00:00:23 ; elapsed = 00:00:17 . Memory (MB): peak = 2862.574 ; gain = 553.137
+# report_clock_networks -file [file join $out clock_networks.rpt]
+# report_drc -checks RTSTAT-10 -file [file join $out noload_drc.rpt]
+Command: report_drc -checks RTSTAT-10 -file F:/ah-camera-hil-p0-inspect05/noload_drc.rpt
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Coretcl 2-168] The results of DRC are in file F:/ah-camera-hil-p0-inspect05/noload_drc.rpt.
+report_drc completed successfully
+# set df [open [file join $out noload_objects.txt] w]
+# foreach v [get_drc_violations] {
+#     report_property -all $v -file [file join $out violation_properties.txt] -append
+#     puts $df "$v NETS=[get_nets -quiet -of_objects $v]"
+# }
+# close $df
+# if {$hook ne ""} {
+#     cd $out
+#     source $hook
+#     report_drc -file [file join $out repaired_drc.rpt]
+# }
+## set log [open [file join [pwd] netlist_repair.txt] a]
+## set urams [get_cells -hier -filter {REF_NAME =~ URAM288*}]
+## if {[llength $urams] != 4} {error "Expected exactly four archived VDMA URAMs"}
+## set gnd [get_nets -quiet ah_unused_cascade_gnd]
+## if {![llength $gnd]} {
+##     create_cell -reference GND ah_unused_cascade_gnd_driver
+##     create_net ah_unused_cascade_gnd
+##     set gnd [get_nets ah_unused_cascade_gnd]
+##     connect_net -net $gnd -objects [get_pins ah_unused_cascade_gnd_driver/G]
+## }
+## set tied 0
+## foreach c $urams {
+##     if {![regexp {^design_1_i/axi_vdma_[0-3]/U0/.*mem_reg_uram_0$} $c] ||
+##         [get_property CASCADE_ORDER_A $c] ne "NONE" ||
+##         [get_property CASCADE_ORDER_B $c] ne "NONE"} {error "Unexpected URAM mode/path: $c"}
+##     foreach p [get_pins -of_objects $c -filter {DIRECTION == IN && REF_PIN_NAME =~ CAS_IN_*}] {
+##         set old [get_nets -quiet -of_objects $p]
+##         if {![llength $old]} {
+##             connect_net -hier -net $gnd -objects $p
+##             if {![llength [get_nets -quiet -of_objects $p]]} {error "Cascade tie failed: $p"}
+##             incr tied
+##         } elseif {$old ne $gnd} {
+##             set drivers [get_pins -quiet -leaf -of_objects [get_nets -segments $old] -filter {DIRECTION == OUT}]
+##             set cells [get_cells -quiet -of_objects $drivers]
+##             if {[llength $cells] != 1 || [get_property REF_NAME $cells] ne "GND"} {
+##                 error "Refusing driven non-GND cascade input $p: $old ($drivers)"
+##             }
+##         }
+##     }
+## }
+## puts $log "URAM_NONE_UNDRIVEN_CASCADE_INPUTS_TIED_LOW=$tied"
+## set removed 0
+## foreach n [get_nets -hier -filter {ROUTE_STATUS == NOLOADS}] {
+##     # Limit to the proved unused FIFO status outputs named in actual RTSTAT-10.
+##     # Do not edit encrypted debug internals, macro sub-pins, buses, or resets.
+##     if {![regexp {/(overflow|underflow|aempty_fwft_i|ram_empty_i)$} $n]} {continue}
+##     if {![llength [get_nets -quiet $n]]} {continue}
+##     set segments [get_nets -quiet -segments $n]
+##     set protected 0
+##     foreach flag [get_property DONT_TOUCH $segments] {
+##         if {$flag eq "1" || [string equal -nocase $flag true]} {set protected 1}
+##     }
+##     if {$protected} {puts $log "RETAINED_PROTECTED_NOLOAD_NET=$n"; continue}
+##     set leaf [get_pins -quiet -leaf -of_objects $segments]
+##     set inputs [filter $leaf {DIRECTION == IN}]
+##     set outputs [filter $leaf {DIRECTION == OUT}]
+##     set ports [get_ports -quiet -of_objects $segments]
+##     if {[llength $inputs] == 0 && [llength $outputs] == 1 && [llength $ports] == 0} {
+##         remove_net $segments
+##         if {[llength [get_nets -quiet $n]]} {
+##             puts $log "RETAINED_NOLOAD_NET_AFTER_NATIVE_REMOVE=$n DRIVER=$outputs"
+##         } else {
+##             puts $log "REMOVED_UNUSED_NET=$n DRIVER=$outputs INPUTS=0 PORTS=0"
+##             incr removed
+##         }
+##     } else {puts $log "RETAINED_NOLOAD_NET=$n OUTPUTS=$outputs INPUTS=$inputs PORTS=$ports"}
+## }
+## puts $log "UNUSED_OUTPUT_NETS_REMOVED=$removed"
+## close $log
+Command: report_drc -file F:/ah-camera-hil-p0-inspect05/repaired_drc.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'F:/Xilinx/Vivado/2020.1/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Coretcl 2-168] The results of DRC are in file F:/ah-camera-hil-p0-inspect05/repaired_drc.rpt.
+report_drc completed successfully
+report_drc: Time (s): cpu = 00:00:12 ; elapsed = 00:00:06 . Memory (MB): peak = 3002.770 ; gain = 113.703
+# exit
+INFO: [Common 17-206] Exiting Vivado at Sun Oct 18 15:13:07 2026...

@@ -1,0 +1,928 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
+| Date         : Sun Oct 18 15:42:22 2026
+| Host         : LAPTOP-M6FJ5JKT running 64-bit major release  (build 9200)
+| Command      : report_methodology -file F:/ah-camera-hil-2020.1-p0-run04/methodology_impl.rpt
+| Design       : design_1_wrapper
+| Device       : xczu19eg-ffvc1760-2-i
+| Speed File   : -2
+| Design State : Fully Routed
+------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: impl_1
+      Design limits: <entire design considered>
+             Max violations: <unlimited>
+             Violations found: 145
++-----------+------------------+--------------------------------------------------------+------------+
+| Rule      | Severity         | Description                                            | Violations |
++-----------+------------------+--------------------------------------------------------+------------+
+| TIMING-6  | Critical Warning | No common primary clock between related clocks         | 16         |
+| TIMING-7  | Critical Warning | No common node between related clocks                  | 16         |
+| TIMING-8  | Critical Warning | No common period between related clocks                | 16         |
+| LUTAR-1   | Warning          | LUT drives async reset alert                           | 43         |
+| TIMING-16 | Warning          | Large setup violation                                  | 8          |
+| TIMING-18 | Warning          | Missing input or output delay                          | 40         |
+| XDCC-1    | Warning          | Scoped Clock constraint overwritten with the same name | 2          |
+| XDCC-7    | Warning          | Scoped Clock constraint overwritten on the same source | 2          |
+| CLKC-30   | Advisory         | MMCME4 not driven by IO has BUFG in feedback loop      | 1          |
+| CLKC-56   | Advisory         | MMCME4 with global clock driver has no LOC             | 1          |
++-----------+------------------+--------------------------------------------------------+------------+
+
+2. REPORT DETAILS
+-----------------
+TIMING-6#1 Critical Warning
+No common primary clock between related clocks
+The clocks byte_clock_out and clk_pl_0 are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks byte_clock_out] -to [get_clocks clk_pl_0]
+Related violations: <none>
+
+TIMING-6#2 Critical Warning
+No common primary clock between related clocks
+The clocks byte_clock_out_1 and clk_pl_0 are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks byte_clock_out_1] -to [get_clocks clk_pl_0]
+Related violations: <none>
+
+TIMING-6#3 Critical Warning
+No common primary clock between related clocks
+The clocks byte_clock_out_2 and clk_pl_0 are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks byte_clock_out_2] -to [get_clocks clk_pl_0]
+Related violations: <none>
+
+TIMING-6#4 Critical Warning
+No common primary clock between related clocks
+The clocks byte_clock_out_3 and clk_pl_0 are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks byte_clock_out_3] -to [get_clocks clk_pl_0]
+Related violations: <none>
+
+TIMING-6#5 Critical Warning
+No common primary clock between related clocks
+The clocks clk_pl_0 and byte_clock_out are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks byte_clock_out]
+Related violations: <none>
+
+TIMING-6#6 Critical Warning
+No common primary clock between related clocks
+The clocks clk_pl_0 and byte_clock_out_1 are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks byte_clock_out_1]
+Related violations: <none>
+
+TIMING-6#7 Critical Warning
+No common primary clock between related clocks
+The clocks clk_pl_0 and byte_clock_out_2 are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks byte_clock_out_2]
+Related violations: <none>
+
+TIMING-6#8 Critical Warning
+No common primary clock between related clocks
+The clocks clk_pl_0 and byte_clock_out_3 are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks byte_clock_out_3]
+Related violations: <none>
+
+TIMING-6#9 Critical Warning
+No common primary clock between related clocks
+The clocks clk_pl_0 and csi0_hs_nominal are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks csi0_hs_nominal]
+Related violations: <none>
+
+TIMING-6#10 Critical Warning
+No common primary clock between related clocks
+The clocks clk_pl_0 and csi1_hs_nominal are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks csi1_hs_nominal]
+Related violations: <none>
+
+TIMING-6#11 Critical Warning
+No common primary clock between related clocks
+The clocks clk_pl_0 and csi2_hs_nominal are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks csi2_hs_nominal]
+Related violations: <none>
+
+TIMING-6#12 Critical Warning
+No common primary clock between related clocks
+The clocks clk_pl_0 and csi3_hs_nominal are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks csi3_hs_nominal]
+Related violations: <none>
+
+TIMING-6#13 Critical Warning
+No common primary clock between related clocks
+The clocks ref_raw and byte_clock_out are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks ref_raw] -to [get_clocks byte_clock_out]
+Related violations: <none>
+
+TIMING-6#14 Critical Warning
+No common primary clock between related clocks
+The clocks ref_raw and byte_clock_out_1 are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks ref_raw] -to [get_clocks byte_clock_out_1]
+Related violations: <none>
+
+TIMING-6#15 Critical Warning
+No common primary clock between related clocks
+The clocks ref_raw and byte_clock_out_2 are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks ref_raw] -to [get_clocks byte_clock_out_2]
+Related violations: <none>
+
+TIMING-6#16 Critical Warning
+No common primary clock between related clocks
+The clocks ref_raw and byte_clock_out_3 are related (timed together) but they have no common primary clock. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks ref_raw] -to [get_clocks byte_clock_out_3]
+Related violations: <none>
+
+TIMING-7#1 Critical Warning
+No common node between related clocks
+The clocks byte_clock_out and clk_pl_0 are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks byte_clock_out] -to [get_clocks clk_pl_0]
+Related violations: <none>
+
+TIMING-7#2 Critical Warning
+No common node between related clocks
+The clocks byte_clock_out_1 and clk_pl_0 are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks byte_clock_out_1] -to [get_clocks clk_pl_0]
+Related violations: <none>
+
+TIMING-7#3 Critical Warning
+No common node between related clocks
+The clocks byte_clock_out_2 and clk_pl_0 are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks byte_clock_out_2] -to [get_clocks clk_pl_0]
+Related violations: <none>
+
+TIMING-7#4 Critical Warning
+No common node between related clocks
+The clocks byte_clock_out_3 and clk_pl_0 are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks byte_clock_out_3] -to [get_clocks clk_pl_0]
+Related violations: <none>
+
+TIMING-7#5 Critical Warning
+No common node between related clocks
+The clocks clk_pl_0 and byte_clock_out are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks byte_clock_out]
+Related violations: <none>
+
+TIMING-7#6 Critical Warning
+No common node between related clocks
+The clocks clk_pl_0 and byte_clock_out_1 are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks byte_clock_out_1]
+Related violations: <none>
+
+TIMING-7#7 Critical Warning
+No common node between related clocks
+The clocks clk_pl_0 and byte_clock_out_2 are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks byte_clock_out_2]
+Related violations: <none>
+
+TIMING-7#8 Critical Warning
+No common node between related clocks
+The clocks clk_pl_0 and byte_clock_out_3 are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks byte_clock_out_3]
+Related violations: <none>
+
+TIMING-7#9 Critical Warning
+No common node between related clocks
+The clocks clk_pl_0 and csi0_hs_nominal are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks csi0_hs_nominal]
+Related violations: <none>
+
+TIMING-7#10 Critical Warning
+No common node between related clocks
+The clocks clk_pl_0 and csi1_hs_nominal are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks csi1_hs_nominal]
+Related violations: <none>
+
+TIMING-7#11 Critical Warning
+No common node between related clocks
+The clocks clk_pl_0 and csi2_hs_nominal are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks csi2_hs_nominal]
+Related violations: <none>
+
+TIMING-7#12 Critical Warning
+No common node between related clocks
+The clocks clk_pl_0 and csi3_hs_nominal are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks clk_pl_0] -to [get_clocks csi3_hs_nominal]
+Related violations: <none>
+
+TIMING-7#13 Critical Warning
+No common node between related clocks
+The clocks ref_raw and byte_clock_out are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks ref_raw] -to [get_clocks byte_clock_out]
+Related violations: <none>
+
+TIMING-7#14 Critical Warning
+No common node between related clocks
+The clocks ref_raw and byte_clock_out_1 are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks ref_raw] -to [get_clocks byte_clock_out_1]
+Related violations: <none>
+
+TIMING-7#15 Critical Warning
+No common node between related clocks
+The clocks ref_raw and byte_clock_out_2 are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks ref_raw] -to [get_clocks byte_clock_out_2]
+Related violations: <none>
+
+TIMING-7#16 Critical Warning
+No common node between related clocks
+The clocks ref_raw and byte_clock_out_3 are related (timed together) but they have no common node. The design could fail in hardware. To find a timing path between these clocks, run the following command: report_timing -from [get_clocks ref_raw] -to [get_clocks byte_clock_out_3]
+Related violations: <none>
+
+TIMING-8#1 Critical Warning
+No common period between related clocks
+The clocks byte_clock_out and clk_pl_0 are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#2 Critical Warning
+No common period between related clocks
+The clocks byte_clock_out_1 and clk_pl_0 are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#3 Critical Warning
+No common period between related clocks
+The clocks byte_clock_out_2 and clk_pl_0 are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#4 Critical Warning
+No common period between related clocks
+The clocks byte_clock_out_3 and clk_pl_0 are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#5 Critical Warning
+No common period between related clocks
+The clocks clk_pl_0 and byte_clock_out are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#6 Critical Warning
+No common period between related clocks
+The clocks clk_pl_0 and byte_clock_out_1 are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#7 Critical Warning
+No common period between related clocks
+The clocks clk_pl_0 and byte_clock_out_2 are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#8 Critical Warning
+No common period between related clocks
+The clocks clk_pl_0 and byte_clock_out_3 are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#9 Critical Warning
+No common period between related clocks
+The clocks clk_pl_0 and csi0_hs_nominal are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#10 Critical Warning
+No common period between related clocks
+The clocks clk_pl_0 and csi1_hs_nominal are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#11 Critical Warning
+No common period between related clocks
+The clocks clk_pl_0 and csi2_hs_nominal are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#12 Critical Warning
+No common period between related clocks
+The clocks clk_pl_0 and csi3_hs_nominal are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#13 Critical Warning
+No common period between related clocks
+The clocks ref_raw and byte_clock_out are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#14 Critical Warning
+No common period between related clocks
+The clocks ref_raw and byte_clock_out_1 are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#15 Critical Warning
+No common period between related clocks
+The clocks ref_raw and byte_clock_out_2 are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+TIMING-8#16 Critical Warning
+No common period between related clocks
+The clocks ref_raw and byte_clock_out_3 are found related (timed together) but have no common (expandable) period
+Related violations: <none>
+
+LUTAR-1#1 Warning
+LUT drives async reset alert
+LUT cell dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_RD/U_RD_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_rdfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gwrrd_rst_sync_stage[2].rrst_inst/ngwrdrst.grst.g7serrst.rd_rst_reg[2]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_RD/U_RD_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_rdfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.rd_rst_reg_reg[0]/PRE,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_RD/U_RD_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_rdfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.rd_rst_reg_reg[1]/PRE,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_RD/U_RD_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_rdfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.rd_rst_reg_reg[2]/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#2 Warning
+LUT drives async reset alert
+LUT cell dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_RD/U_RD_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_rdfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gwrrd_rst_sync_stage[2].wrst_inst/ngwrdrst.grst.g7serrst.wr_rst_reg[2]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_RD/U_RD_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_rdfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.wr_rst_reg_reg[0]/PRE,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_RD/U_RD_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_rdfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.wr_rst_reg_reg[1]/PRE,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_RD/U_RD_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_rdfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.wr_rst_reg_reg[2]/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#3 Warning
+LUT drives async reset alert
+LUT cell dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_WR/U_WR_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_wrfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gwrrd_rst_sync_stage[2].rrst_inst/ngwrdrst.grst.g7serrst.rd_rst_reg[2]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_WR/U_WR_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_wrfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.rd_rst_reg_reg[0]/PRE,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_WR/U_WR_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_wrfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.rd_rst_reg_reg[1]/PRE,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_WR/U_WR_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_wrfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.rd_rst_reg_reg[2]/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#4 Warning
+LUT drives async reset alert
+LUT cell dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_WR/U_WR_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_wrfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gwrrd_rst_sync_stage[2].wrst_inst/ngwrdrst.grst.g7serrst.wr_rst_reg[2]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_WR/U_WR_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_wrfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.wr_rst_reg_reg[0]/PRE,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_WR/U_WR_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_wrfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.wr_rst_reg_reg[1]/PRE,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_WR/U_WR_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_wrfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.wr_rst_reg_reg[2]/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#5 Warning
+LUT drives async reset alert
+LUT cell dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_switch/m_bscan_sel[0]_INST_0, with 2 or more inputs, drives asynchronous preset/clear pin(s) dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.U_ICON/U_CMD/iTARGET_reg[10]/CLR,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.U_ICON/U_CMD/iTARGET_reg[11]/CLR,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.U_ICON/U_CMD/iTARGET_reg[12]/CLR,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.U_ICON/U_CMD/iTARGET_reg[13]/CLR,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.U_ICON/U_CMD/iTARGET_reg[14]/CLR,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.U_ICON/U_CMD/iTARGET_reg[15]/CLR,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.U_ICON/U_CMD/iTARGET_reg[6]/CLR,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.U_ICON/U_CMD/iTARGET_reg[7]/CLR,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.U_ICON/U_CMD/iTARGET_reg[8]/CLR,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.U_ICON/U_CMD/iTARGET_reg[9]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#6 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkdet/count_value[1]_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[0]/CLR,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[1]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#7 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkdet/reset_sync[1]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[1]/PRE,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d1phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d1phy/reset_sync_reg[1]/PRE,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[1]/PRE,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d3phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d3phy/reset_sync_reg[1]/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#8 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#9 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#10 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser_i_1__0, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#11 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser_i_1__1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#12 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_byte[1]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_byte_reg[1]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#13 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count[6]_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/application_ready_reg/CLR,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[0]/CLR,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[1]/CLR,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[2]/CLR,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[3]/CLR,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[4]/CLR,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[5]/CLR,
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[6]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#14 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/count_value[1]_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[0]/CLR,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[1]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#15 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/reset_sync[1]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[1]/PRE,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d1phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d1phy/reset_sync_reg[1]/PRE,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[1]/PRE,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d3phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d3phy/reset_sync_reg[1]/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#16 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#17 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#18 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser_i_1__0, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#19 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser_i_1__1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#20 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_byte[1]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_byte_reg[1]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#21 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count[6]_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/application_ready_reg/CLR,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[0]/CLR,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[1]/CLR,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[2]/CLR,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[3]/CLR,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[4]/CLR,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[5]/CLR,
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[6]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#22 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkdet/count_value[1]_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[0]/CLR,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[1]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#23 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkdet/reset_sync[1]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[1]/PRE,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d1phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d1phy/reset_sync_reg[1]/PRE,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[1]/PRE,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d3phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d3phy/reset_sync_reg[1]/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#24 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#25 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#26 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser_i_1__0, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#27 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser_i_1__1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#28 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_byte[1]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_byte_reg[1]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#29 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count[6]_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/application_ready_reg/CLR,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[0]/CLR,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[1]/CLR,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[2]/CLR,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[3]/CLR,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[4]/CLR,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[5]/CLR,
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[6]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#30 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkdet/count_value[1]_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[0]/CLR,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[1]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#31 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkdet/reset_sync[1]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[1]/PRE,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d1phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d1phy/reset_sync_reg[1]/PRE,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[1]/PRE,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d3phy/reset_sync_reg[0]/PRE,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d3phy/reset_sync_reg[1]/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#32 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#33 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#34 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser_i_1__0, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#35 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser_i_1__1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser/RST. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#36 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_byte[1]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_byte_reg[1]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#37 Warning
+LUT drives async reset alert
+LUT cell design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count[6]_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/application_ready_reg/CLR,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[0]/CLR,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[1]/CLR,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[2]/CLR,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[3]/CLR,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[4]/CLR,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[5]/CLR,
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[6]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#38 Warning
+LUT drives async reset alert
+LUT cell design_1_i/delay_reference/inst/ready_assert, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/delay_reference/inst/ready_release_reg[0]/CLR,
+design_1_i/delay_reference/inst/ready_release_reg[1]/CLR,
+design_1_i/delay_reference/inst/ready_release_reg[2]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#39 Warning
+LUT drives async reset alert
+LUT cell design_1_i/delay_reference/inst/reset_hold[7]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/delay_reference/inst/lock_release_reg[0]/CLR,
+design_1_i/delay_reference/inst/lock_release_reg[1]/CLR,
+design_1_i/delay_reference/inst/lock_release_reg[2]/CLR,
+design_1_i/delay_reference/inst/reset_hold_reg[0]/PRE,
+design_1_i/delay_reference/inst/reset_hold_reg[10]/PRE,
+design_1_i/delay_reference/inst/reset_hold_reg[11]/PRE,
+design_1_i/delay_reference/inst/reset_hold_reg[12]/PRE,
+design_1_i/delay_reference/inst/reset_hold_reg[13]/PRE,
+design_1_i/delay_reference/inst/reset_hold_reg[14]/PRE,
+design_1_i/delay_reference/inst/reset_hold_reg[15]/PRE,
+design_1_i/delay_reference/inst/reset_hold_reg[16]/PRE,
+design_1_i/delay_reference/inst/reset_hold_reg[17]/PRE,
+design_1_i/delay_reference/inst/reset_hold_reg[18]/PRE,
+design_1_i/delay_reference/inst/reset_hold_reg[19]/PRE,
+design_1_i/delay_reference/inst/reset_hold_reg[1]/PRE (the first 15 of 43 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#40 Warning
+LUT drives async reset alert
+LUT cell design_1_i/hil/inst/core/u_fsm/st[2]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/hil/inst/core/u_fsm/hold_snap_reg[0]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[10]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[11]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[12]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[13]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[14]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[15]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[16]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[17]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[18]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[19]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[1]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[20]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[21]/CLR,
+design_1_i/hil/inst/core/u_fsm/hold_snap_reg[22]/CLR (the first 15 of 238 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#41 Warning
+LUT drives async reset alert
+LUT cell design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/gc0.count_d1[4]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i_reg/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i_reg/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[0]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[1]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[2]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[3]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[4]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[1]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[2]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[3]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[4]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[0]/PRE,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[0]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[1]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[2]/CLR (the first 15 of 32 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#42 Warning
+LUT drives async reset alert
+LUT cell design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/gc0.count_d1[4]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i_reg/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i_reg/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[0]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[1]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[2]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[3]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[4]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[1]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[2]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[3]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[4]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[0]/PRE,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[0]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[1]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[2]/CLR (the first 15 of 32 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#43 Warning
+LUT drives async reset alert
+LUT cell design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/gc0.count_d1[4]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i_reg/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i_reg/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[0]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[1]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[2]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[3]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[4]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[1]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[2]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[3]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[4]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[0]/PRE,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[0]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[1]/CLR,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[2]/CLR (the first 15 of 32 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+TIMING-16#1 Warning
+Large setup violation
+There is a large setup violation of -1.131 ns between design_1_i/csi_4lane_raw10_1/inst/fifo_ready_reg/C (clocked by byte_clock_out_1) and design_1_i/csi_4lane_raw10_1/inst/fifo_ready_maxis_reg/D (clocked by clk_pl_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#2 Warning
+Large setup violation
+There is a large setup violation of -1.186 ns between design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O (clocked by byte_clock_out_1) and design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/ext_clk_lat_reg/D (clocked by clk_pl_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#3 Warning
+Large setup violation
+There is a large setup violation of -1.634 ns between design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O (clocked by byte_clock_out_3) and design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkdet/ext_clk_lat_reg/D (clocked by clk_pl_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#4 Warning
+Large setup violation
+There is a large setup violation of -1.684 ns between design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O (clocked by byte_clock_out_2) and design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkdet/ext_clk_lat_reg/D (clocked by clk_pl_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#5 Warning
+Large setup violation
+There is a large setup violation of -1.716 ns between design_1_i/csi_4lane_raw10_3/inst/fifo_ready_reg/C (clocked by byte_clock_out_3) and design_1_i/csi_4lane_raw10_3/inst/fifo_ready_maxis_reg/D (clocked by clk_pl_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#6 Warning
+Large setup violation
+There is a large setup violation of -1.768 ns between design_1_i/csi_4lane_raw10_0/inst/fifo_ready_reg/C (clocked by byte_clock_out) and design_1_i/csi_4lane_raw10_0/inst/fifo_ready_maxis_reg/D (clocked by clk_pl_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#7 Warning
+Large setup violation
+There is a large setup violation of -1.775 ns between design_1_i/csi_4lane_raw10_2/inst/fifo_ready_reg/C (clocked by byte_clock_out_2) and design_1_i/csi_4lane_raw10_2/inst/fifo_ready_maxis_reg/D (clocked by clk_pl_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-16#8 Warning
+Large setup violation
+There is a large setup violation of -1.788 ns between design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O (clocked by byte_clock_out) and design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkdet/ext_clk_lat_reg/D (clocked by clk_pl_0). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+Related violations: <none>
+
+TIMING-18#1 Warning
+Missing input or output delay
+An input delay is missing on csi_i2c2_scl_io relative to clock(s) clk_pl_0
+Related violations: <none>
+
+TIMING-18#2 Warning
+Missing input or output delay
+An input delay is missing on csi_i2c2_sda_io relative to clock(s) clk_pl_0
+Related violations: <none>
+
+TIMING-18#3 Warning
+Missing input or output delay
+An input delay is missing on csi_i2c3_scl_io relative to clock(s) clk_pl_0
+Related violations: <none>
+
+TIMING-18#4 Warning
+Missing input or output delay
+An input delay is missing on csi_i2c3_sda_io relative to clock(s) clk_pl_0
+Related violations: <none>
+
+TIMING-18#5 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_0_data_hs_n[0] relative to clock(s) csi0_hs_nominal
+Related violations: <none>
+
+TIMING-18#6 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_0_data_hs_n[1] relative to clock(s) csi0_hs_nominal
+Related violations: <none>
+
+TIMING-18#7 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_0_data_hs_n[2] relative to clock(s) csi0_hs_nominal
+Related violations: <none>
+
+TIMING-18#8 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_0_data_hs_n[3] relative to clock(s) csi0_hs_nominal
+Related violations: <none>
+
+TIMING-18#9 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_0_data_hs_p[0] relative to clock(s) csi0_hs_nominal
+Related violations: <none>
+
+TIMING-18#10 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_0_data_hs_p[1] relative to clock(s) csi0_hs_nominal
+Related violations: <none>
+
+TIMING-18#11 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_0_data_hs_p[2] relative to clock(s) csi0_hs_nominal
+Related violations: <none>
+
+TIMING-18#12 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_0_data_hs_p[3] relative to clock(s) csi0_hs_nominal
+Related violations: <none>
+
+TIMING-18#13 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_1_data_hs_n[0] relative to clock(s) csi1_hs_nominal
+Related violations: <none>
+
+TIMING-18#14 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_1_data_hs_n[1] relative to clock(s) csi1_hs_nominal
+Related violations: <none>
+
+TIMING-18#15 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_1_data_hs_n[2] relative to clock(s) csi1_hs_nominal
+Related violations: <none>
+
+TIMING-18#16 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_1_data_hs_n[3] relative to clock(s) csi1_hs_nominal
+Related violations: <none>
+
+TIMING-18#17 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_1_data_hs_p[0] relative to clock(s) csi1_hs_nominal
+Related violations: <none>
+
+TIMING-18#18 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_1_data_hs_p[1] relative to clock(s) csi1_hs_nominal
+Related violations: <none>
+
+TIMING-18#19 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_1_data_hs_p[2] relative to clock(s) csi1_hs_nominal
+Related violations: <none>
+
+TIMING-18#20 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_1_data_hs_p[3] relative to clock(s) csi1_hs_nominal
+Related violations: <none>
+
+TIMING-18#21 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_2_data_hs_n[0] relative to clock(s) csi2_hs_nominal
+Related violations: <none>
+
+TIMING-18#22 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_2_data_hs_n[1] relative to clock(s) csi2_hs_nominal
+Related violations: <none>
+
+TIMING-18#23 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_2_data_hs_n[2] relative to clock(s) csi2_hs_nominal
+Related violations: <none>
+
+TIMING-18#24 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_2_data_hs_n[3] relative to clock(s) csi2_hs_nominal
+Related violations: <none>
+
+TIMING-18#25 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_2_data_hs_p[0] relative to clock(s) csi2_hs_nominal
+Related violations: <none>
+
+TIMING-18#26 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_2_data_hs_p[1] relative to clock(s) csi2_hs_nominal
+Related violations: <none>
+
+TIMING-18#27 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_2_data_hs_p[2] relative to clock(s) csi2_hs_nominal
+Related violations: <none>
+
+TIMING-18#28 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_2_data_hs_p[3] relative to clock(s) csi2_hs_nominal
+Related violations: <none>
+
+TIMING-18#29 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_3_data_hs_n[0] relative to clock(s) csi3_hs_nominal
+Related violations: <none>
+
+TIMING-18#30 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_3_data_hs_n[1] relative to clock(s) csi3_hs_nominal
+Related violations: <none>
+
+TIMING-18#31 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_3_data_hs_n[2] relative to clock(s) csi3_hs_nominal
+Related violations: <none>
+
+TIMING-18#32 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_3_data_hs_n[3] relative to clock(s) csi3_hs_nominal
+Related violations: <none>
+
+TIMING-18#33 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_3_data_hs_p[0] relative to clock(s) csi3_hs_nominal
+Related violations: <none>
+
+TIMING-18#34 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_3_data_hs_p[1] relative to clock(s) csi3_hs_nominal
+Related violations: <none>
+
+TIMING-18#35 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_3_data_hs_p[2] relative to clock(s) csi3_hs_nominal
+Related violations: <none>
+
+TIMING-18#36 Warning
+Missing input or output delay
+An input delay is missing on mipi_phy_if_3_data_hs_p[3] relative to clock(s) csi3_hs_nominal
+Related violations: <none>
+
+TIMING-18#37 Warning
+Missing input or output delay
+An output delay is missing on csi_rstn_tri_o[0] relative to clock(s) clk_pl_0
+Related violations: <none>
+
+TIMING-18#38 Warning
+Missing input or output delay
+An output delay is missing on csi_rstn_tri_o[1] relative to clock(s) clk_pl_0
+Related violations: <none>
+
+TIMING-18#39 Warning
+Missing input or output delay
+An output delay is missing on csi_rstn_tri_o[2] relative to clock(s) clk_pl_0
+Related violations: <none>
+
+TIMING-18#40 Warning
+Missing input or output delay
+An output delay is missing on csi_rstn_tri_o[3] relative to clock(s) clk_pl_0
+Related violations: <none>
+
+XDCC-1#1 Warning
+Scoped Clock constraint overwritten with the same name
+A new clock constraint create_clock overrides a previous scoped clock constraint with the same name. It is not recommended to override a scoped (typically an IP) clock constraint and could result in unexpected behaviors.
+New: create_clock -period 4.982 -name clk_pl_0 design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0] (Source: F:/ah-camera-hil-2020.1-p0-run04/live_clock.xdc (Line: 1))
+Previous: create_clock -period 5.000 -name clk_pl_0 [get_pins {PS8_i/PLCLK[0]}] (Source: F:/ah-camera-hil-2020.1-p0-run04/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0/design_1_zynq_ultra_ps_e_0_0.xdc (Line: 21))
+Related violations: <none>
+
+XDCC-1#2 Warning
+Scoped Clock constraint overwritten with the same name
+A new clock constraint create_clock overrides a previous scoped clock constraint with the same name. It is not recommended to override a scoped (typically an IP) clock constraint and could result in unexpected behaviors.
+New: create_clock -period 9.965 -name clk_pl_1 design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[1] (Source: F:/ah-camera-hil-2020.1-p0-run04/live_clock.xdc (Line: 2))
+Previous: create_clock -period 10.000 -name clk_pl_1 [get_pins {PS8_i/PLCLK[1]}] (Source: F:/ah-camera-hil-2020.1-p0-run04/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0/design_1_zynq_ultra_ps_e_0_0.xdc (Line: 22))
+Related violations: <none>
+
+XDCC-7#1 Warning
+Scoped Clock constraint overwritten on the same source
+A new clock constraint create_clock overrides a previous scoped clock constraint defined on the same source. It is not recommended to override a scoped (typically an IP) clock constraint and could result in unexpected behaviors.
+New: create_clock -period 4.982 -name clk_pl_0 design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0] (Source: F:/ah-camera-hil-2020.1-p0-run04/live_clock.xdc (Line: 1))
+Previous: create_clock -period 5.000 -name clk_pl_0 [get_pins {PS8_i/PLCLK[0]}] (Source: F:/ah-camera-hil-2020.1-p0-run04/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0/design_1_zynq_ultra_ps_e_0_0.xdc (Line: 21))
+Related violations: <none>
+
+XDCC-7#2 Warning
+Scoped Clock constraint overwritten on the same source
+A new clock constraint create_clock overrides a previous scoped clock constraint defined on the same source. It is not recommended to override a scoped (typically an IP) clock constraint and could result in unexpected behaviors.
+New: create_clock -period 9.965 -name clk_pl_1 design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[1] (Source: F:/ah-camera-hil-2020.1-p0-run04/live_clock.xdc (Line: 2))
+Previous: create_clock -period 10.000 -name clk_pl_1 [get_pins {PS8_i/PLCLK[1]}] (Source: F:/ah-camera-hil-2020.1-p0-run04/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0/design_1_zynq_ultra_ps_e_0_0.xdc (Line: 22))
+Related violations: <none>
+
+CLKC-30#1 Advisory
+MMCME4 not driven by IO has BUFG in feedback loop
+The MMCME4 cell design_1_i/delay_reference/inst/ref_mmcm has a BUFGCE design_1_i/delay_reference/inst/feedback_buf clock buffer in the feedback loop, but the clock input is not directly driven by an I/O to create a Zero Delay Buffer Clock (a common use for having a buffer in the feedback loop). If there is no specific need for this buffer in the feedback loop (e.g. no timing paths between CLKINx/CLKOUTx domains or low latency requirement), then it is suggested to remove that BUFG* from the feedback path. This will allow for a lower power solution and free the clock resource for other purposes.
+Related violations: <none>
+
+CLKC-56#1 Advisory
+MMCME4 with global clock driver has no LOC
+The MMCME4_ADV cell design_1_i/delay_reference/inst/ref_mmcm CLKIN1 or CLKIN2 pin is driven by global Clock buffer(s) design_1_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG and does not have a LOC constraint. It is recommended to LOC the MMCM and use the CLOCK_DEDICATED_ROUTE constraint on the net(s) driven by the global Clock buffer(s).
+Related violations: <none>

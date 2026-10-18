@@ -1,0 +1,100 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Sun Oct 18 15:40:07 2026
+# Process ID: 43500
+# Current directory: F:/Amazing_Hand_unified_20261018
+# Command line: vivado.exe -mode batch -nojournal -log F:/ah-camera-hil-2020.1-p0-review01.log -source fpga/camera_hil/experimental_2020_1/review_impl.tcl -tclargs F:/ah-camera-hil-2020.1-p0-run04/vivado/mipi_dp.runs/impl_1/design_1_wrapper_routed.dcp F:/ah-camera-hil-2020.1-p0-review01
+# Log file: F:/ah-camera-hil-2020.1-p0-review01.log
+# Journal file:
+#-----------------------------------------------------------
+source fpga/camera_hil/experimental_2020_1/review_impl.tcl
+# if {[llength $argv] != 2} {error "usage: review_impl.tcl routed.dcp NEW_RESULT"}
+# lassign $argv dcp out
+# if {[file exists $out]} {error "result already exists"}
+# file mkdir $out
+# open_checkpoint $dcp
+Command: open_checkpoint F:/ah-camera-hil-2020.1-p0-run04/vivado/mipi_dp.runs/impl_1/design_1_wrapper_routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.034 . Memory (MB): peak = 1015.457 ; gain = 0.000
+INFO: [Device 21-403] Loading part xczu19eg-ffvc1760-2-i
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1520.055 ; gain = 0.059
+INFO: [Netlist 29-17] Analyzing 2690 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2020.1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2244.020 ; gain = 48.000
+Restored from archive | CPU: 5.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2244.020 ; gain = 48.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 2244.020 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 341 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRL16E, SRLC32E): 180 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 20 instances
+  IOBUF => IOBUF (IBUFCTRL, INBUF, OBUFT): 8 instances
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 4 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 129 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2020.1 (64-bit) build 2902540
+open_checkpoint: Time (s): cpu = 00:00:31 ; elapsed = 00:00:38 . Memory (MB): peak = 2244.020 ; gain = 1228.562
+# set f [open [file join $out physical_reference.txt] w]
+# set m [get_cells -hier -filter {REF_NAME =~ MMCME4*}]
+# if {[llength $m] != 1 || ![string match *delay_reference* $m]} {error "Expected one shared MMCM"}
+# puts $f "MMCM=$m M=[get_property CLKFBOUT_MULT_F $m] D=[get_property DIVCLK_DIVIDE $m] O=[get_property CLKOUT0_DIVIDE_F $m] LOC=[get_property LOC $m]"
+# set controls [get_cells -hier -filter {REF_NAME == IDELAYCTRL}]
+# set clocks {}
+# foreach c $controls {
+#     set clk [get_clocks -of_objects [get_pins $c/REFCLK]]
+#     if {[llength $clk] != 1} {error "Controller has ambiguous/no reference clock: $c"}
+#     lappend clocks $clk
+#     set reset [get_nets -segments -of_objects [get_pins $c/RST]]
+#     set driver [get_pins -leaf -of_objects $reset -filter {DIRECTION == OUT}]
+#     puts $f "CTRL=$c LOC=[get_property LOC $c] CLOCK=$clk PERIOD=[get_property PERIOD $clk] RST_DRIVER=$driver"
+# }
+# if {[llength [lsort -unique $clocks]] != 1} {error "Controllers do not share one actual reference clock"}
+# foreach c [get_cells -hier -filter {REF_NAME == IDELAYE3}] {
+#     set reset [get_nets -segments -of_objects [get_pins $c/RST]]
+#     set driver [get_pins -leaf -of_objects $reset -filter {DIRECTION == OUT}]
+#     puts $f "DELAY=$c LOC=[get_property LOC $c] FORMAT=[get_property DELAY_FORMAT $c] REFCLK_MHZ=[get_property REFCLK_FREQUENCY $c] VALUE=[get_property DELAY_VALUE $c] RST_DRIVER=$driver"
+# }
+# puts $f "CONTROLLER_COUNT=[llength $controls]"
+# foreach i {0 1 2 3} {
+#     set pin [get_pins design_1_i/delay_reference/inst/ready$i]
+#     set drivers [get_pins -leaf -of_objects [get_nets -segments -of_objects $pin] -filter {DIRECTION == OUT}]
+#     puts $f "CSI_RDY_RETURN_$i=$drivers"
+#     puts $f "CSI_RDY_STARTPOINTS_$i=[all_fanin -flat -startpoints_only -to $pin]"
+# }
+# close $f
+# report_clock_interaction -file [file join $out clock_interaction.rpt]
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Temperature grade: I, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+WARNING: [Timing 38-164] This design has multiple clocks. Inter clock paths are considered valid unless explicitly excluded by timing constraints such as set_clock_groups or set_false_path.
+WARNING: [Timing 38-127] No common period was found between clocks clk_pl_0 {rise@0ns fall@2.491ns period=4.982ns} and csi0_hs_nominal {rise@0ns fall@2.909ns period=5.818ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks clk_pl_0 {rise@0ns fall@2.491ns period=4.982ns} and csi1_hs_nominal {rise@0ns fall@2.909ns period=5.818ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks clk_pl_0 {rise@0ns fall@2.491ns period=4.982ns} and csi2_hs_nominal {rise@0ns fall@2.909ns period=5.818ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks clk_pl_0 {rise@0ns fall@2.491ns period=4.982ns} and csi3_hs_nominal {rise@0ns fall@2.909ns period=5.818ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks clk_pl_0 {rise@0ns fall@2.491ns period=4.982ns} and byte_clock_out {rise@0ns fall@11.636ns period=23.272ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks clk_pl_0 {rise@0ns fall@2.491ns period=4.982ns} and byte_clock_out_1 {rise@0ns fall@11.636ns period=23.272ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks clk_pl_0 {rise@0ns fall@2.491ns period=4.982ns} and byte_clock_out_2 {rise@0ns fall@11.636ns period=23.272ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks clk_pl_0 {rise@0ns fall@2.491ns period=4.982ns} and byte_clock_out_3 {rise@0ns fall@11.636ns period=23.272ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks ref_raw {rise@0ns fall@1.66067ns period=3.32133ns} and byte_clock_out {rise@0ns fall@11.636ns period=23.272ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks ref_raw {rise@0ns fall@1.66067ns period=3.32133ns} and byte_clock_out_1 {rise@0ns fall@11.636ns period=23.272ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks ref_raw {rise@0ns fall@1.66067ns period=3.32133ns} and byte_clock_out_2 {rise@0ns fall@11.636ns period=23.272ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks ref_raw {rise@0ns fall@1.66067ns period=3.32133ns} and byte_clock_out_3 {rise@0ns fall@11.636ns period=23.272ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks byte_clock_out {rise@0ns fall@11.636ns period=23.272ns} and clk_pl_0 {rise@0ns fall@2.491ns period=4.982ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks byte_clock_out_1 {rise@0ns fall@11.636ns period=23.272ns} and clk_pl_0 {rise@0ns fall@2.491ns period=4.982ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks byte_clock_out_2 {rise@0ns fall@11.636ns period=23.272ns} and clk_pl_0 {rise@0ns fall@2.491ns period=4.982ns} in 1000 cycles.
+WARNING: [Timing 38-127] No common period was found between clocks byte_clock_out_3 {rise@0ns fall@11.636ns period=23.272ns} and clk_pl_0 {rise@0ns fall@2.491ns period=4.982ns} in 1000 cycles.
+report_clock_interaction: Time (s): cpu = 00:00:25 ; elapsed = 00:00:20 . Memory (MB): peak = 2888.504 ; gain = 644.484
+# exit
+INFO: [Common 17-206] Exiting Vivado at Sun Oct 18 15:41:08 2026...

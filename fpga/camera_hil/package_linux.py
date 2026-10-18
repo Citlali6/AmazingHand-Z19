@@ -15,6 +15,18 @@ from audit import HERE, CAMERA, CLOCK_HZ, build_audit, require, sha, source_audi
 CAMERA_SHA = 'e25e9bc7fd4c2008c7a198a91bc4937716b333259d08da7ed777d8ffe9b3384b'
 
 
+def check_cdc(build, tool='2020.1'):
+    """The new multi-domain reference repair also requires a real CDC signoff."""
+    report = (build / 'cdc_impl.rpt').read_text(encoding='utf-8')
+    require(re.search(r'Tool Version\s*:\s*Vivado v\.' + re.escape(tool) + r'\b', report)
+            and re.search(r'Design\s*:\s*design_1_wrapper\b', report), 'wrong/missing CDC report provenance')
+    summary = report.split('Source Clock:', 1)[0]
+    rows = re.findall(r'^CDC-\d+\s+(Critical|Warning|Info)\s+(\d+)\s+', summary, re.M)
+    require(rows, 'CDC summary rows missing')
+    critical = sum(int(count) for severity, count in rows if severity == 'Critical')
+    require(critical == 0, 'CDC signoff failed: %d Critical findings' % critical)
+
+
 def check_reports(build, tool='2020.2', require_sources=False):
     require(tool in ['2020.1', '2020.2'], 'unsupported report tool profile')
     timing = (build / 'timing_impl.rpt').read_text()
@@ -76,6 +88,8 @@ def main():
                 sha(HERE / 'experimental_2020_1/repair_clock.tcl'), 'executed repair Tcl differs from reviewed source')
         run = record['implementation_run']
     check_reports(reports, tool=tool, require_sources=(tool == '2020.1'))
+    if topology['csi_reference_repair']:
+        check_cdc(reports, tool=tool)
     bit = build / ('vivado/mipi_dp.runs/' + run + '/design_1_wrapper.bit')
     xsa = reports / 'camera_hil.xsa'
     with zipfile.ZipFile(xsa) as archive:
@@ -93,7 +107,7 @@ def main():
     for name in runtime:
         shutil.copy2(HERE / 'ps' / name, output / name)
     names = runtime + ['camera-hil.bin', 'camera-original.bin']
-    inputs = [p for p in HERE.rglob('*') if p.suffix in ['.py', '.sv', '.v', '.tcl', '.json']
+    inputs = [p for p in HERE.rglob('*') if p.suffix in ['.py', '.sv', '.v', '.tcl', '.xdc', '.json']
               and 'evidence' not in p.parts and '__pycache__' not in p.parts]
     manifest = dict(profile='camera-hil/1', build_profile=topology['build_profile'], tool=tool,
                     implementation_run=run, report_directory=str(reports),
@@ -103,7 +117,7 @@ def main():
                     source_sha256={p.relative_to(HERE).as_posix(): sha(p) for p in inputs},
                     artifacts_sha256={p.name: sha(p) for p in [bit, xsa]},
                     reports_sha256={p.name: sha(p) for p in reports.iterdir()
-                                    if p.name.endswith('.rpt') or p.name in ['implementation.json', 'clock_sources.txt', 'repair_clock_executed.tcl']},
+                                    if p.name.endswith('.rpt') or p.name in ['implementation.json', 'clock_sources.txt', 'delay_primitives.txt', 'repair_clock_executed.tcl']},
                     source_audit=sources, build_audit=topology,
                     deployment='RAM-only; explicit human-approved PL load; no PS/FSBL/SD updates')
     (output / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')

@@ -10,6 +10,21 @@ The earlier 2020.1 version-guard rejection is historical evidence, not a finding
 of technical incompatibility. No board load or simultaneous camera/HIL test has
 been performed in this task.
 
+The [P0 follow-up](https://github.com/Tom-mr33/AmazingHand-based-on-FPGA/issues/17#issuecomment-6246782620)
+adds an explicitly isolated `--repair-csi` option: a shared PL-local 301.055970 MHz
+MMCM reference, common bank-safe reset sequencing, matching TIME-mode delay
+parameters and RDY/application gating. It preserves PS/DDR/AXI/stream clocks and
+all original archive bytes. The exact private CSI source/port deltas are audited;
+they are not changes to the validated original camera profile. The same option
+adds a documented nominal 171.875 MHz sensor clock model and narrowly checked
+URAM tie-offs. Its detailed design and evidence are in the experimental README.
+
+**Latest P0 result:** the fresh 2020.1 implementation and new diagnostic bit/XSA
+complete; all 14 reference pulse failures and 48 URAM DRC warnings are removed.
+The result remains **UNSAFE / NOT DEPLOYABLE**: WNS -1.986 ns, WHS -0.121 ns,
+44 Critical CDC findings, missing I/O delays 20/8, and RTSTAT-10 remain. Packaging
+actually refuses. See [P0 evidence and remaining work](evidence/p0-2020.1/README.md).
+
 ## Source and topology
 
 Base: `main` `ee52f09ae78d7163067d627eeae0d627ea92855c`.

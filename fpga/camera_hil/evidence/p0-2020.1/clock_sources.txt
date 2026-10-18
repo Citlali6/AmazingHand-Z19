@@ -1,0 +1,2 @@
+clk_pl_0	4.982	design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+clk_pl_1	9.965	design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[1]

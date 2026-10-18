@@ -1,0 +1,21 @@
+#-----------------------------------------------------------
+# xsim v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Sun Oct 18 15:16:24 2026
+# Process ID: 51732
+# Current directory: F:/ah-camera-hil-reference-sim01
+# Command line: xsim.exe -log reference-simulation-final.log -mode tcl -source {xsim.dir/test_reference_sim/xsim_script.tcl}
+# Log file: F:/ah-camera-hil-reference-sim01/reference-simulation-final.log
+# Journal file: F:/ah-camera-hil-reference-sim01\xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/test_reference_sim/xsim_script.tcl
+# xsim {test_reference_sim} -autoloadwcfg -runall
+Vivado Simulator 2020.1
+Time resolution is 1 fs
+run -all
+Warning: [Unisim MMCME4_ADV-39] Input clock has jitter. This may cause misalignment in output clocks. Instance test_reference.dut.ref_mmcm.mmcm_adv_1               366211
+PASS_REFERENCE physical_period_ns=3.321462000 io_to_ctrl_ns=106.293 all_four_RDY_required no_sensor_clock_dependency
+$finish called at time : 628639057 fs : File "F:/ah-camera-hil-reference-sim01/test_reference.sv" Line 42
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Oct 18 15:16:26 2026...

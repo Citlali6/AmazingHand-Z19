@@ -1,0 +1,14 @@
+[
+  {
+    "path": "F:\\ah-camera-hil-2020.1-p0-run04\\vivado\\mipi_dp.runs\\impl_1\\design_1_wrapper.bit",
+    "bytes": 12709560,
+    "sha256": "7b857d653a382208ad0c5b616cde9d4e7abf3d480f9a7c78ea7e158eb0aa6e6e",
+    "status": "UNSAFE/NOT DEPLOYABLE"
+  },
+  {
+    "path": "F:\\ah-camera-hil-2020.1-p0-run04\\camera_hil.xsa",
+    "bytes": 2363733,
+    "sha256": "481963326c34ef5de7fc010755ccca485ac74596050c673cc274d44b87d45941",
+    "status": "UNSAFE/NOT DEPLOYABLE"
+  }
+]

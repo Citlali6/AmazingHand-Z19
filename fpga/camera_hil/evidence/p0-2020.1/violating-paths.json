@@ -1,0 +1,182 @@
+[
+  {
+    "category": "original_clock_detector_reset_crossing",
+    "slack_ns": -1.986,
+    "type": "Recovery (Max at Slow Process Corner)",
+    "source": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkdet/clk_fail_count_reg[5]/C",
+    "source_clock": "(rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@2.491ns period=4.982ns})",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[0]/CLR",
+    "destination_clock": "(recovery check against rising-edge clock byte_clock_out_2  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "group": "**async_default**"
+  },
+  {
+    "category": "new_ready_or_calibration_reset_crossing",
+    "slack_ns": -1.95,
+    "type": "Recovery (Max at Slow Process Corner)",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "source_clock": "(rising edge-triggered cell FDCE clocked by ref_raw  {rise@0.000ns fall@1.661ns period=3.321ns})",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR",
+    "destination_clock": "(recovery check against rising-edge clock byte_clock_out  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "group": "**async_default**"
+  },
+  {
+    "category": "ps_to_new_byte_reset_crossing",
+    "slack_ns": -1.849,
+    "type": "Recovery (Max at Slow Process Corner)",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_2/C",
+    "source_clock": "(rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@2.491ns period=4.982ns})",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR",
+    "destination_clock": "(recovery check against rising-edge clock byte_clock_out_3  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "group": "**async_default**"
+  },
+  {
+    "category": "ps_to_new_byte_reset_crossing",
+    "slack_ns": -1.82,
+    "type": "Recovery (Max at Slow Process Corner)",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER/C",
+    "source_clock": "(rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@2.491ns period=4.982ns})",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR",
+    "destination_clock": "(recovery check against rising-edge clock byte_clock_out  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "group": "**async_default**"
+  },
+  {
+    "category": "original_clock_level_crossing",
+    "slack_ns": -1.788,
+    "type": "Setup (Max at Slow Process Corner)",
+    "source": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O",
+    "source_clock": "(clock source 'byte_clock_out'  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkdet/ext_clk_lat_reg/D",
+    "destination_clock": "(rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@2.491ns period=4.982ns})",
+    "group": "clk_pl_0"
+  },
+  {
+    "category": "original_fifo_ready_single_stage",
+    "slack_ns": -1.775,
+    "type": "Setup (Max at Slow Process Corner)",
+    "source": "design_1_i/csi_4lane_raw10_2/inst/fifo_ready_reg/C",
+    "source_clock": "(rising edge-triggered cell FDRE clocked by byte_clock_out_2  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/fifo_ready_maxis_reg/D",
+    "destination_clock": "(rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@2.491ns period=4.982ns})",
+    "group": "clk_pl_0"
+  },
+  {
+    "category": "original_clock_divider_reset_crossing",
+    "slack_ns": -1.772,
+    "type": "Recovery (Max at Slow Process Corner)",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica/C",
+    "source_clock": "(rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@2.491ns period=4.982ns})",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/CLR",
+    "destination_clock": "(recovery check against rising-edge clock csi2_hs_nominal  {rise@0.000ns fall@2.909ns period=5.818ns})",
+    "group": "**async_default**"
+  },
+  {
+    "category": "original_clock_divider_reset_crossing",
+    "slack_ns": -1.771,
+    "type": "Recovery (Max at Slow Process Corner)",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_3/C",
+    "source_clock": "(rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@2.491ns period=4.982ns})",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/CLR",
+    "destination_clock": "(recovery check against rising-edge clock csi3_hs_nominal  {rise@0.000ns fall@2.909ns period=5.818ns})",
+    "group": "**async_default**"
+  },
+  {
+    "category": "original_clock_divider_reset_crossing",
+    "slack_ns": -1.762,
+    "type": "Recovery (Max at Slow Process Corner)",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_1/C",
+    "source_clock": "(rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@2.491ns period=4.982ns})",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/CLR",
+    "destination_clock": "(recovery check against rising-edge clock csi0_hs_nominal  {rise@0.000ns fall@2.909ns period=5.818ns})",
+    "group": "**async_default**"
+  },
+  {
+    "category": "original_fifo_ready_single_stage",
+    "slack_ns": -1.716,
+    "type": "Setup (Max at Slow Process Corner)",
+    "source": "design_1_i/csi_4lane_raw10_3/inst/fifo_ready_reg/C",
+    "source_clock": "(rising edge-triggered cell FDRE clocked by byte_clock_out_3  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/fifo_ready_maxis_reg/D",
+    "destination_clock": "(rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@2.491ns period=4.982ns})",
+    "group": "clk_pl_0"
+  },
+  {
+    "category": "original_clock_divider_reset_crossing",
+    "slack_ns": -1.703,
+    "type": "Recovery (Max at Slow Process Corner)",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_4/C",
+    "source_clock": "(rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@2.491ns period=4.982ns})",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/CLR",
+    "destination_clock": "(recovery check against rising-edge clock csi1_hs_nominal  {rise@0.000ns fall@2.909ns period=5.818ns})",
+    "group": "**async_default**"
+  },
+  {
+    "category": "original_clock_detector_reset_crossing",
+    "slack_ns": -1.642,
+    "type": "Recovery (Max at Slow Process Corner)",
+    "source": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/clk_fail_count_reg[4]/C",
+    "source_clock": "(rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@2.491ns period=4.982ns})",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[0]/CLR",
+    "destination_clock": "(recovery check against rising-edge clock byte_clock_out_1  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "group": "**async_default**"
+  },
+  {
+    "category": "new_phy_reset_crossing",
+    "slack_ns": -1.62,
+    "type": "Recovery (Max at Slow Process Corner)",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "source_clock": "(rising edge-triggered cell FDPE clocked by ref_raw  {rise@0.000ns fall@1.661ns period=3.321ns})",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[0]/PRE",
+    "destination_clock": "(recovery check against rising-edge clock byte_clock_out_2  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "group": "**async_default**"
+  },
+  {
+    "category": "new_phy_reset_crossing",
+    "slack_ns": -1.516,
+    "type": "Recovery (Max at Slow Process Corner)",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "source_clock": "(rising edge-triggered cell FDPE clocked by ref_raw  {rise@0.000ns fall@1.661ns period=3.321ns})",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[0]/PRE",
+    "destination_clock": "(recovery check against rising-edge clock byte_clock_out_1  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "group": "**async_default**"
+  },
+  {
+    "category": "new_ready_or_calibration_reset_crossing",
+    "slack_ns": -1.493,
+    "type": "Recovery (Max at Slow Process Corner)",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[39]/C",
+    "source_clock": "(rising edge-triggered cell FDPE clocked by ref_raw  {rise@0.000ns fall@1.661ns period=3.321ns})",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR",
+    "destination_clock": "(recovery check against rising-edge clock byte_clock_out_3  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "group": "**async_default**"
+  },
+  {
+    "category": "original_clock_level_crossing",
+    "slack_ns": -1.186,
+    "type": "Setup (Max at Slow Process Corner)",
+    "source": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O",
+    "source_clock": "(clock source 'byte_clock_out_1'  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/ext_clk_lat_reg/D",
+    "destination_clock": "(rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@2.491ns period=4.982ns})",
+    "group": "clk_pl_0"
+  },
+  {
+    "category": "serdes_capture_hold_csi0",
+    "slack_ns": -0.121,
+    "type": "Hold (Min at Slow Process Corner)",
+    "source": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RX_DIV4_CLK_Q",
+    "source_clock": "(falling edge-triggered cell ISERDESE3 clocked by csi0_hs_nominal_DIV4_INV  {rise@11.636ns fall@23.272ns period=23.272ns})",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/gen_bytealign[0].ba/curr_byte_reg[5]/D",
+    "destination_clock": "(rising edge-triggered cell FDRE clocked by byte_clock_out  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "group": "byte_clock_out"
+  },
+  {
+    "category": "serdes_capture_hold_csi3",
+    "slack_ns": -0.005,
+    "type": "Hold (Min at Slow Process Corner)",
+    "source": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RX_DIV4_CLK_Q",
+    "source_clock": "(falling edge-triggered cell ISERDESE3 clocked by csi3_hs_nominal_DIV4_INV  {rise@11.636ns fall@23.272ns period=23.272ns})",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/gen_bytealign[0].ba/curr_byte_reg[5]/D",
+    "destination_clock": "(rising edge-triggered cell FDRE clocked by byte_clock_out_3  {rise@0.000ns fall@11.636ns period=23.272ns})",
+    "group": "byte_clock_out_3"
+  }
+]

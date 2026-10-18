@@ -12,10 +12,26 @@ spec = importlib.util.spec_from_file_location('unified', HERE / 'ps/unified.py')
 unified = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(unified)
 sys.path.insert(0, str(HERE))
-from package_linux import check_reports
+from package_linux import check_reports, check_cdc
 
 
 class Safety(unittest.TestCase):
+    def test_reference_profile_rejects_cdc_critical_findings(self):
+        report = ('Tool Version : Vivado v.2020.1\nDesign : design_1_wrapper\n'
+                  'CDC Report\nID Severity Count Description\n'
+                  'CDC-3 Info 17 synchronized\nCDC-7 Critical 0 reset\n')
+        with tempfile.TemporaryDirectory() as directory:
+            build = Path(directory)
+            path = build / 'cdc_impl.rpt'
+            path.write_text(report)
+            check_cdc(build)
+            path.write_text(report.replace('Critical 0', 'Critical 8'))
+            with self.assertRaisesRegex(ValueError, '8 Critical'):
+                check_cdc(build)
+            path.write_text('CDC Report')
+            with self.assertRaises(ValueError):
+                check_cdc(build)
+
     def test_reload_rejects_loaded_camera_even_without_capture(self):
         with self.assertRaisesRegex(RuntimeError, 'camera driver loaded'):
             unified.reject_active_users({'ah_camera0'}, [], [])

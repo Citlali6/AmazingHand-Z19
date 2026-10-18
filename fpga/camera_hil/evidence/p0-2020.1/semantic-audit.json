@@ -1,0 +1,150 @@
+{
+  "camera_files_verified": 117,
+  "inherited_files_verified": 4,
+  "inherited_pr": 13,
+  "inherited_commit": "caa84a5ddb541cd60ebd2e07869b83671ca8a1e2",
+  "camera_addresses": {
+    "SEG_AXI_GammaCorrection_0_Reg": {
+      "offset": "0x00A0040000",
+      "range": "64K"
+    },
+    "SEG_AXI_GammaCorrection_1_Reg": {
+      "offset": "0x00A0050000",
+      "range": "64K"
+    },
+    "SEG_AXI_GammaCorrection_2_Reg": {
+      "offset": "0x00A0000000",
+      "range": "64K"
+    },
+    "SEG_AXI_GammaCorrection_3_Reg": {
+      "offset": "0x00A0010000",
+      "range": "64K"
+    },
+    "SEG_axi_iic_0_Reg": {
+      "offset": "0x00A0090000",
+      "range": "64K"
+    },
+    "SEG_axi_iic_1_Reg": {
+      "offset": "0x00A00A0000",
+      "range": "64K"
+    },
+    "SEG_axi_vdma_0_Reg": {
+      "offset": "0x00A0060000",
+      "range": "64K"
+    },
+    "SEG_axi_vdma_1_Reg": {
+      "offset": "0x00A0070000",
+      "range": "64K"
+    },
+    "SEG_axi_vdma_2_Reg": {
+      "offset": "0x00A0020000",
+      "range": "64K"
+    },
+    "SEG_axi_vdma_3_Reg": {
+      "offset": "0x00A0030000",
+      "range": "64K"
+    },
+    "SEG_csi_rst_Reg": {
+      "offset": "0x00A0080000",
+      "range": "64K"
+    }
+  },
+  "new_hil": {
+    "base": "0xa1000000",
+    "size": 4096,
+    "clock_hz": 200703980
+  },
+  "ip_vlnv": [
+    "alinx.com.cn:user:csi_4lane_raw10:2.0",
+    "digilentinc.com:user:AXI_BayerToRGB:1.3",
+    "digilentinc.com:user:AXI_GammaCorrection:1.0",
+    "xilinx.com:ip:axi_gpio:2.0",
+    "xilinx.com:ip:axi_iic:2.0",
+    "xilinx.com:ip:axi_interconnect:2.1",
+    "xilinx.com:ip:axi_vdma:6.3",
+    "xilinx.com:ip:axis_subset_converter:1.1",
+    "xilinx.com:ip:proc_sys_reset:5.0",
+    "xilinx.com:ip:smartconnect:1.0",
+    "xilinx.com:ip:system_ila:1.1",
+    "xilinx.com:ip:xlconcat:2.1",
+    "xilinx.com:ip:xlconstant:1.1",
+    "xilinx.com:ip:zynq_ultra_ps_e:3.3",
+    "xilinx.com:module_ref:axis_pixel_counter:1.0"
+  ],
+  "tool_required": "strict archive: 2020.2; explicit isolated experimental route: 2020.1",
+  "validation": "source inspection only; not Vivado validation",
+  "build": {
+    "generated_bd": "F:\\ah-camera-hil-2020.1-p0-run04\\source\\mipi_dp.srcs\\sources_1\\bd\\design_1\\design_1.bd",
+    "camera_topology_preserved": true,
+    "build_profile": "experimental-camera-hil-2020.1",
+    "adaptations": [
+      {
+        "csi_repair": {
+          "version": 2,
+          "changes": [
+            {
+              "path": "repo/mipi/mipi_csi_rx_4lane/src/mipi-csi-rx/csi_4lane_raw10.v",
+              "original_sha256": "ac730b0ea032405562e6bd05057914e4ccbcdf2f98f6f3e4751eb8dacea7887a",
+              "patched_sha256": "8eae193061fb73372a1e18d44564a110054234a00c41994db0fad81a0de8f7f0"
+            },
+            {
+              "path": "repo/mipi/mipi_csi_rx_4lane/src/mipi-csi-rx/csi_rx_top.vhd",
+              "original_sha256": "de1dd77cb5ec7dc17eb44742f24d0e0cb2cc4c61b8dfa7e637a21ecab2426da8",
+              "patched_sha256": "7b15157056b2016d9ddb8c8cf3ee11602d6c499656cbefd215df533d93cd1521"
+            },
+            {
+              "path": "repo/mipi/mipi_csi_rx_4lane/src/mipi-csi-rx/csi_rx_4_lane_link.vhd",
+              "original_sha256": "15c46b5481f8c9f656129e949cd0f5841cf09206dce753e268e53aa5dfb86a19",
+              "patched_sha256": "6a1c48a1c6c1bc0d899c7b298404fa29cce372eba3c0554888a7ac450abf7a82"
+            },
+            {
+              "path": "repo/mipi/mipi_csi_rx_4lane/src/mipi-csi-rx/csi_rx_hs_lane_phy.vhd",
+              "original_sha256": "f556380e2bda328225613bef839c544dccc82afa8b3be16e7848ca3326906dce",
+              "patched_sha256": "e3696fff8111ab505f940e8382fd76ef39c8261430245f785be626077cabfe47"
+            },
+            {
+              "path": "repo/mipi/mipi_csi_rx_4lane/component.xml",
+              "original_sha256": "bad996ae0629c1183c5136a0379148953938285e4b50b9eab9277dcddaae9a38",
+              "patched_sha256": "f229cde779ae22f5482788d6f0067d6ef8cce3a181b04ac073336e933a0273d7"
+            }
+          ],
+          "input_hz": 200703980,
+          "multiplier": 6,
+          "divider": 4,
+          "output_hz": 301055970,
+          "minimum_idelayctrl_reset_ns": 52,
+          "reference_reset_cycles": 32,
+          "shared_reference_sha256": "b23a9155d431883bd8cf4465c8f4a88fca6621be46ded8bddef59bdedb00ce52",
+          "nominal_mipi_xdc_sha256": "ecf69f6ab4b9cc96f171b285b0c1b4addf65daa076e4e1e191c0037a40dbf0ef",
+          "netlist_hook_sha256": "b347e9dd5342f7540cfd681bad2d2711fec0f707d5e31fa7d2d627d0729bb92c",
+          "assumptions": "PS clock unchanged; MIPI external timing remains unqualified"
+        },
+        "packed_csi_hdl_sha256": {
+          "F:\\ah-camera-hil-2020.1-p0-run04\\vivado\\mipi_dp.srcs\\sources_1\\bd\\design_1\\ipshared\\582b\\src\\mipi-csi-rx\\csi_4lane_raw10.v": "8eae193061fb73372a1e18d44564a110054234a00c41994db0fad81a0de8f7f0",
+          "F:\\ah-camera-hil-2020.1-p0-run04\\vivado\\mipi_dp.srcs\\sources_1\\bd\\design_1\\ipshared\\582b\\src\\mipi-csi-rx\\csi_rx_top.vhd": "7b15157056b2016d9ddb8c8cf3ee11602d6c499656cbefd215df533d93cd1521",
+          "F:\\ah-camera-hil-2020.1-p0-run04\\vivado\\mipi_dp.srcs\\sources_1\\bd\\design_1\\ipshared\\582b\\src\\mipi-csi-rx\\csi_rx_4_lane_link.vhd": "6a1c48a1c6c1bc0d899c7b298404fa29cce372eba3c0554888a7ac450abf7a82",
+          "F:\\ah-camera-hil-2020.1-p0-run04\\vivado\\mipi_dp.srcs\\sources_1\\bd\\design_1\\ipshared\\582b\\src\\mipi-csi-rx\\csi_rx_hs_lane_phy.vhd": "e3696fff8111ab505f940e8382fd76ef39c8261430245f785be626077cabfe47"
+        },
+        "risk": "offline experimental; sensor timing/board acceptance required"
+      },
+      {
+        "block": "zynq_ultra_ps_e_0",
+        "parameter": "PSU__PROTECTION__SLAVES",
+        "added": [
+          "FPD;CCI_GPV;FD6E0000;FD6EFFFF;1",
+          "FPD;FPD_GPV;FD700000;FD7FFFFF;1"
+        ],
+        "risk": "tool-derived XSA metadata; never execute new PS initialization"
+      },
+      {
+        "native_xci_instances": 31,
+        "reviewed_differences": 489,
+        "audit_sha256": "a27b7fbd8136195207c740db1e421308820db04090b1af7700bdc69df52db63e",
+        "risk": "native IP implementation and generated metadata require board acceptance"
+      }
+    ],
+    "csi_reference_repair": true,
+    "hil_axilite_connected": true,
+    "generated_bd_sha256": "b033fe92578c8fa0fa89fedfaea051d8681038dcb2c0b89031d387fb24d626e9"
+  }
+}

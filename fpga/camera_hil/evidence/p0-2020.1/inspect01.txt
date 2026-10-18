@@ -1,0 +1,66 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Sun Oct 18 15:00:51 2026
+# Process ID: 50844
+# Current directory: F:/Amazing_Hand_unified_20261018
+# Command line: vivado.exe -mode batch -nojournal -log F:/ah-camera-hil-p0-inspect01.log -source fpga/camera_hil/experimental_2020_1/inspect_dcp.tcl -tclargs F:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.runs/impl_1/design_1_wrapper_routed.dcp F:/ah-camera-hil-p0-inspect01
+# Log file: F:/ah-camera-hil-p0-inspect01.log
+# Journal file:
+#-----------------------------------------------------------
+source fpga/camera_hil/experimental_2020_1/inspect_dcp.tcl
+# if {[llength $argv] != 2} {error "usage: inspect_dcp.tcl routed.dcp NEW_RESULT"}
+# lassign $argv dcp out
+# if {[file exists $out]} {error "result already exists"}
+# file mkdir $out
+# open_checkpoint $dcp
+Command: open_checkpoint F:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.runs/impl_1/design_1_wrapper_routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.024 . Memory (MB): peak = 1015.363 ; gain = 0.000
+INFO: [Device 21-403] Loading part xczu19eg-ffvc1760-2-i
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1519.641 ; gain = 0.145
+INFO: [Netlist 29-17] Analyzing 2689 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2020.1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2244.355 ; gain = 41.094
+Restored from archive | CPU: 4.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2244.355 ; gain = 41.094
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.024 . Memory (MB): peak = 2244.355 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 341 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRL16E, SRLC32E): 180 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 20 instances
+  IOBUF => IOBUF (IBUFCTRL, INBUF, OBUFT): 8 instances
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 4 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 129 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2020.1 (64-bit) build 2902540
+open_checkpoint: Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 2244.355 ; gain = 1228.992
+# set f [open [file join $out primitives.txt] w]
+# foreach c [get_cells -hier -filter {REF_NAME =~ URAM288*}] {
+#     puts $f "URAM $c A=[get_property CASCADE_ORDER_A $c] B=[get_property CASCADE_ORDER_B $c]"
+#     foreach p [get_pins -of_objects $c -filter {DIRECTION == IN && REF_PIN_NAME =~ CAS_IN_*}] {
+#         set n [get_nets -quiet -of_objects $p]
+#         set drivers [get_pins -quiet -of_objects $n -filter {DIRECTION == OUT}]
+#         puts $f "$p NET=$n DRIVER=$drivers"
+#     }
+# }
+get_nets: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2311.234 ; gain = 66.879
+# foreach n [get_nets -hier -filter {ROUTE_STATUS == NOLOADS}] {
+#     puts $f "NOLOAD $n PINS=[get_pins -of_objects $n] PORTS=[get_ports -quiet -of_objects $n]"
+# }
+# close $f
+# report_timing -unconstrained -max_paths 12 -file [file join $out unconstrained.rpt]
+ERROR: [Common 17-170] Unknown option '-unconstrained', please type 'report_timing -help' for usage info.
+INFO: [Common 17-206] Exiting Vivado at Sun Oct 18 15:01:28 2026...

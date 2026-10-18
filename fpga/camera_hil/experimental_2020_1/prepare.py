@@ -30,7 +30,7 @@ def size(value):
     return int(value[:-1]) * {'K': 1024, 'M': 1024**2, 'G': 1024**3}[value[-1]]
 
 
-def prepare(output, stage):
+def prepare(output, stage, repair_csi=False):
     if output.exists():
         raise ValueError('refusing existing output: ' + str(output))
     manifest = json.loads((CAMERA / 'manifest.json').read_text())
@@ -41,6 +41,13 @@ def prepare(output, stage):
     output.mkdir(parents=True)
     shutil.copytree(CAMERA / 'project', output / 'source')
     shutil.copytree(UNIFIED / 'rtl', output / 'hil_rtl')
+    csi_changes = []
+    if repair_csi:
+        from csi_patch import patch_source
+        csi_changes = patch_source(output / 'source')
+        shutil.copy2(HERE / 'fix_netlist.tcl', output / 'fix_netlist.tcl')
+        shutil.copy2(HERE / 'csi_delay_reference.v', output / 'csi_delay_reference.v')
+        shutil.copy2(HERE / 'mipi_nominal.xdc', output / 'mipi_nominal.xdc')
     script = []
     def emit(line):
         script.append(line)
@@ -57,6 +64,8 @@ def prepare(output, stage):
                 continue
             emit('add_files -norecurse [file join $out source ' + quote(name) + ']')
     emit('add_files -norecurse [glob [file join $out hil_rtl *]]')
+    if repair_csi:
+        emit('add_files -norecurse [file join $out csi_delay_reference.v]')
     emit('update_compile_order -fileset sources_1')
     emit('create_bd_design design_1')
     emit('set catalog [open [file join $out catalog.txt] w]')
@@ -98,6 +107,8 @@ def prepare(output, stage):
         emit('set_property CONFIG.NUM_MI 12 [get_bd_cells ps8_0_axi_periph]')
         emit('create_bd_cell -type module -reference hand_hil_shell hil')
         emit('set_property CONFIG.CLK_HZ 200703980 [get_bd_cells hil]')
+        if repair_csi:
+            emit('create_bd_cell -type module -reference csi_delay_reference delay_reference')
         for name, port in design['interface_ports'].items():
             emit('create_bd_intf_port -mode ' + port['mode'] + ' -vlnv ' + quote(port['vlnv']) + ' ' + name)
         for name, net in design['interface_nets'].items():
@@ -108,10 +119,21 @@ def prepare(output, stage):
             endpoints = list(net['ports'])
             if 'zynq_ultra_ps_e_0/pl_clk0' in endpoints:
                 endpoints += ['hil/clk', 'ps8_0_axi_periph/M11_ACLK']
+                if repair_csi:
+                    endpoints += ['delay_reference/clk_pl0']
+            if repair_csi and 'proc_sys_reset_100M/peripheral_reset' in endpoints:
+                endpoints += ['delay_reference/reset']
             if 'proc_sys_reset_100M/peripheral_aresetn' in endpoints:
                 endpoints += ['hil/rst_n', 'ps8_0_axi_periph/M11_ARESETN']
             pins = ['[get_bd_' + ('pins' if '/' in p else 'ports') + ' ' + quote(p) + ']' for p in endpoints]
             emit('connect_bd_net -net ' + quote(name) + ' ' + ' '.join(pins))
+        if repair_csi:
+            for shared, port in [('refclk', 'delay_refclock'), ('io_reset', 'io_reset'),
+                                 ('delay_reset', 'delay_reset'), ('all_ready', 'all_ready')]:
+                emit('connect_bd_net [get_bd_pins delay_reference/' + shared + '] ' +
+                     ' '.join('[get_bd_pins csi_4lane_raw10_%d/%s]' % (i, port) for i in range(4)))
+            for i in range(4):
+                emit('connect_bd_net [get_bd_pins csi_4lane_raw10_%d/delay_ready] [get_bd_pins delay_reference/ready%d]' % (i, i))
         for owner, block in design['addressing'].items():
             for space, address_space in block['address_spaces'].items():
                 for name, bank in address_space['segments'].items():
@@ -133,6 +155,8 @@ def prepare(output, stage):
         emit('add_files -norecurse [file join $out source ' + quote((BD.parent / 'hdl/design_1_wrapper.v').as_posix()) + ']')
         for name in manifest['source_groups']['constrs_1']:
             emit('add_files -fileset constrs_1 -norecurse [file join $out source ' + quote(name) + ']')
+        if repair_csi:
+            emit('add_files -fileset constrs_1 -norecurse [file join $out mipi_nominal.xdc]')
         emit('set_property top design_1_wrapper [current_fileset]')
         emit('update_compile_order -fileset sources_1')
         if stage in ['synth', 'impl']:
@@ -159,6 +183,9 @@ def prepare(output, stage):
             emit('add_files -fileset constrs_1 -norecurse [file join $out live_clock.xdc]')
             emit('set_property USED_IN_SYNTHESIS false [get_files live_clock.xdc]')
             emit('set_property PROCESSING_ORDER LATE [get_files live_clock.xdc]')
+            if repair_csi:
+                emit('set_property STEPS.OPT_DESIGN.TCL.POST [file join $out fix_netlist.tcl] [get_runs impl_1]')
+                emit('set_property STEPS.ROUTE_DESIGN.TCL.POST [file join $out fix_netlist.tcl] [get_runs impl_1]')
             emit('launch_runs impl_1 -to_step write_bitstream -jobs 4')
             emit('wait_on_run impl_1')
             emit('if {[get_property PROGRESS [get_runs impl_1]] ne "100%"} {error "experimental implementation failed"}')
@@ -171,6 +198,13 @@ def prepare(output, stage):
                 emit('puts $cf "clk_pl_' + str(i) + '\t[get_property PERIOD $clk]\t[get_property SOURCE_PINS $clk]"')
             emit('close $cf')
             emit('report_timing_summary -report_unconstrained -file [file join $out timing_impl.rpt]')
+            if repair_csi:
+                emit('check_timing -verbose -file [file join $out coverage_details.rpt]')
+                emit('report_cdc -details -file [file join $out cdc_impl.rpt]')
+                emit('set pf [open [file join $out delay_primitives.txt] w]')
+                emit('foreach c [get_cells -hier -filter {REF_NAME == IDELAYCTRL}] {puts $pf "$c REFCLK=[get_clocks -of_objects [get_pins $c/REFCLK]]"}')
+                emit('foreach c [get_cells -hier -filter {REF_NAME == IDELAYE3}] {puts $pf "$c FORMAT=[get_property DELAY_FORMAT $c] REFCLK_MHZ=[get_property REFCLK_FREQUENCY $c]"}')
+                emit('close $pf')
             emit('report_drc -file [file join $out drc_impl.rpt]')
             emit('report_methodology -file [file join $out methodology_impl.rpt]')
             emit('write_hw_platform -fixed -include_bit [file join $out camera_hil.xsa]')
@@ -180,6 +214,14 @@ def prepare(output, stage):
                   tool='2020.1', stage=stage, original_camera_manifest=manifest,
                   conversions=conversions, safety='offline only; no PS/DDR/SD/driver changes',
                   prepared_script_sha256=hashlib.sha256((output / 'rebuild.tcl').read_bytes()).hexdigest())
+    if repair_csi:
+        record['csi_repair'] = dict(version=2, changes=csi_changes,
+            input_hz=200703980, multiplier=6, divider=4, output_hz=301055970,
+            minimum_idelayctrl_reset_ns=52, reference_reset_cycles=32,
+            shared_reference_sha256=hashlib.sha256((output / 'csi_delay_reference.v').read_bytes()).hexdigest(),
+            nominal_mipi_xdc_sha256=hashlib.sha256((output / 'mipi_nominal.xdc').read_bytes()).hexdigest(),
+            netlist_hook_sha256=hashlib.sha256((output / 'fix_netlist.tcl').read_bytes()).hexdigest(),
+            assumptions='PS clock unchanged; MIPI external timing remains unqualified')
     (output / 'reconstruction.json').write_bytes((json.dumps(record, indent=2) + '\n').encode())
     print(str(output / 'rebuild.tcl'))
 
@@ -188,8 +230,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--stage', choices=['probe', 'validate', 'synth', 'impl'], default='probe')
+    parser.add_argument('--repair-csi', action='store_true', help='explicit private local-reference/CDC/netlist experiment')
     args = parser.parse_args()
-    prepare(args.output.resolve(), args.stage)
+    prepare(args.output.resolve(), args.stage, args.repair_csi)
 
 
 if __name__ == '__main__':
