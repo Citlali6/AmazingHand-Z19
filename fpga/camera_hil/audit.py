@@ -67,7 +67,7 @@ def source_audit():
                                   for name, b in banks.items()},
                 new_hil=dict(base=hex(BASE), size=4096, clock_hz=CLOCK_HZ),
                 ip_vlnv=sorted({c['vlnv'] for c in design['components'].values()}),
-                tool_required='Vivado 2020.2; original camera 2020.2_AR75986',
+                tool_required='strict archive: 2020.2; explicit isolated experimental route: 2020.1',
                 validation='source inspection only; not Vivado validation')
 
 
@@ -79,6 +79,24 @@ def connected(design, kind, endpoints, field):
 def build_audit(build):
     old = read_bd(CAMERA / 'project' / BD)
     new = read_bd(build / 'source' / BD)
+    native = (build / 'reconstruction.json').exists()
+    profile = 'camera-hil-2020.2'
+    adaptations = []
+    if native:
+        record = json.loads((build / 'reconstruction.json').read_text())
+        require(record['profile'] == 'experimental-camera-hil-2020.1' and
+                record['tool'] == '2020.1', 'unrecognized reconstruction record')
+        require(sha(build / 'rebuild.tcl') == record['prepared_script_sha256'],
+                'experimental Tcl changed after preparation')
+        require(sha(build / 'source' / BD) == sha(build / 'vivado' / BD),
+                'audited BD snapshot differs from the actual native project BD')
+        require((build / 'validated.txt').read_text().strip() ==
+                'Vivado 2020.1 validate_bd_design returned successfully',
+                'actual 2020.1 BD validation evidence missing')
+        for name in ['grasp_fsm.sv', 'hand_hil_axi.sv', 'hand_hil_shell.v']:
+            require(sha(build / 'hil_rtl' / name) == sha(HERE / 'rtl' / name),
+                    'experimental inherited HIL source changed: ' + name)
+        profile = record['profile']
     manifest = json.loads((CAMERA / 'manifest.json').read_text())
     for name, expected in manifest['sha256'].items():
         if name.startswith('project/repo/') or (name.startswith('project/') and
@@ -92,15 +110,38 @@ def build_audit(build):
         require(target['vlnv'] == component['vlnv'], 'camera IP version changed: ' + name)
         for key, parameter in component.get('parameters', {}).items():
             expected = '12' if name == 'ps8_0_axi_periph' and key == 'NUM_MI' else parameter['value']
+            if native and name == 'zynq_ultra_ps_e_0' and key == 'PSU__PROTECTION__SLAVES':
+                actual = value(target, key).split('|')
+                original = expected.split('|')
+                extra = {'FPD;FPD_GPV;FD700000;FD7FFFFF;1',
+                         'FPD;CCI_GPV;FD6E0000;FD6EFFFF;1'}
+                require(set(actual) == set(original) | extra and len(actual) == len(original) + 2,
+                        'unexpected PS protection-table change')
+                adaptations.append(dict(block=name, parameter=key, added=sorted(extra),
+                                        risk='tool-derived XSA metadata; never execute new PS initialization'))
+                continue
             require(value(target, key) == expected, 'camera parameter changed: ' + name + '/' + key)
     require(set(new['components']) == set(old['components']) | {'hil'}, 'unexpected new BD blocks')
     for kind, field in [('nets', 'ports'), ('interface_nets', 'interface_ports')]:
         for name, net in old[kind].items():
             require(connected(new, kind, net[field], field), 'camera connection changed: ' + name)
     # All four VDMA address spaces, including exclusions, must stay unchanged.
+    require(set(new['addressing']) == set(old['addressing']), 'unexpected new address-space owner')
     for name, address in old['addressing'].items():
         if name != '/zynq_ultra_ps_e_0':
-            require(new['addressing'][name] == address, 'camera DMA address map changed: ' + name)
+            target = new['addressing'][name]
+            if native:
+                require(set(target) == set(address), 'DMA address-block fields changed: ' + name)
+                require(set(target['address_spaces']) == set(address['address_spaces']),
+                        'unexpected DMA address space: ' + name)
+                for space, original in address['address_spaces'].items():
+                    actual = target['address_spaces'][space]
+                    require(actual['segments'] == original['segments'], 'DMA segments changed: ' + name)
+                    require(set(actual) == set(original) | {'width', 'range'} and
+                            actual['width'] == '64' and actual['range'] == '16E',
+                            'unexpected native DMA address-space metadata: ' + name)
+            else:
+                require(target == address, 'camera DMA address map changed: ' + name)
     banks = segments(new)
     for name, bank in segments(old).items():
         require(banks[name] == bank, 'camera register address changed: ' + name)
@@ -116,7 +157,19 @@ def build_audit(build):
                       ['proc_sys_reset_100M/peripheral_aresetn', 'hil/rst_n',
                        'ps8_0_axi_periph/M11_ARESETN']]:
         require(connected(new, 'nets', endpoints, 'ports'), 'AHIL clock/reset connection missing')
+    if native:
+        space = new['addressing']['/zynq_ultra_ps_e_0']['address_spaces']['Data']
+        original = old['addressing']['/zynq_ultra_ps_e_0']['address_spaces']['Data']
+        require(set(space) == set(original) | {'width', 'range'} and
+                space['width'] == '40' and space['range'] == '1T', 'unexpected PS address-space metadata')
+        from experimental_2020_1.audit_xci import audit_xci
+        xci = audit_xci(CAMERA, build, old, new)
+        adaptations.append(dict(native_xci_instances=len(xci),
+                                reviewed_differences=sum(len(v['differences']) for v in xci.values()),
+                                audit_sha256=hashlib.sha256(json.dumps(xci, sort_keys=True).encode()).hexdigest(),
+                                risk='native IP implementation and generated metadata require board acceptance'))
     return dict(generated_bd=str(build / 'source' / BD), camera_topology_preserved=True,
+                build_profile=profile, adaptations=adaptations,
                 hil_axilite_connected=True, generated_bd_sha256=sha(build / 'source' / BD))
 
 

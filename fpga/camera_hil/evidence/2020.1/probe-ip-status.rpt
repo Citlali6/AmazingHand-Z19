@@ -1,0 +1,170 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
+| Date         : Sun Oct 18 14:02:15 2026
+| Host         : LAPTOP-M6FJ5JKT running 64-bit major release  (build 9200)
+| Command      : report_ip_status
+------------------------------------------------------------------------------------
+
+IP Status Summary
+
+1. Project IP Status
+--------------------
+Your project uses 32 IP. Some of these IP may have undergone changes in this release of the software. Please review the recommended actions.
+
+More information on the Xilinx versioning policy is available at www.xilinx.com.
+
+Project IP Instances
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| Instance Name                      | Status     | Recommendation      | Change    | IP Name            | IP      | New Version   | New        | Original Part        |
+|                                    |            |                     | Log       |                    | Version |               | License    |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_AXI_BayerToRGB_0_0        | Up-to-date | No changes required | Change    | AXI_BayerToRGB_v1_ | 1.3     | 1.3 (Rev. 5)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 5)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_AXI_BayerToRGB_1_0        | Up-to-date | No changes required | Change    | AXI_BayerToRGB_v1_ | 1.3     | 1.3 (Rev. 5)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 5)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_AXI_BayerToRGB_2_0        | Up-to-date | No changes required | Change    | AXI_BayerToRGB_v1_ | 1.3     | 1.3 (Rev. 5)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 5)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_AXI_BayerToRGB_3_0        | Up-to-date | No changes required | Change    | AXI_BayerToRGB_v1_ | 1.3     | 1.3 (Rev. 5)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 5)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_AXI_GammaCorrection_0_0   | Up-to-date | No changes required | Change    | AXI_GammaCorrectio | 1.0     | 1.0 (Rev. 22) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 22)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_AXI_GammaCorrection_1_0   | Up-to-date | No changes required | Change    | AXI_GammaCorrectio | 1.0     | 1.0 (Rev. 22) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 22)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_AXI_GammaCorrection_2_0   | Up-to-date | No changes required | Change    | AXI_GammaCorrectio | 1.0     | 1.0 (Rev. 22) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 22)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_AXI_GammaCorrection_3_0   | Up-to-date | No changes required | Change    | AXI_GammaCorrectio | 1.0     | 1.0 (Rev. 22) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 22)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_axi_iic_0_0               | Up-to-date | No changes required |  *(1)     | AXI IIC            | 2.0     | 2.0 (Rev. 24) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           |                    | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 24)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_axi_iic_1_0               | Up-to-date | No changes required |  *(2)     | AXI IIC            | 2.0     | 2.0 (Rev. 24) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           |                    | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 24)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_axi_vdma_0_0              | Up-to-date | No changes required |  *(3)     | AXI Video Direct   | 6.3     | 6.3 (Rev. 9)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           | Memory Access      | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 9)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_axi_vdma_1_0              | Up-to-date | No changes required |  *(4)     | AXI Video Direct   | 6.3     | 6.3 (Rev. 9)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           | Memory Access      | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 9)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_axi_vdma_2_0              | Up-to-date | No changes required |  *(5)     | AXI Video Direct   | 6.3     | 6.3 (Rev. 9)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           | Memory Access      | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 9)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_axi_vdma_3_0              | Up-to-date | No changes required |  *(6)     | AXI Video Direct   | 6.3     | 6.3 (Rev. 9)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           | Memory Access      | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 9)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_axis_pixel_counter_0_0    | Up-to-date | No changes required | Change    | axis_pixel_counter | 1.0     | 1.0 (Rev. 1)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 1)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_axis_subset_converter_0_0 | Up-to-date | No changes required |  *(7)     | AXI4-Stream Subset | 1.1     | 1.1 (Rev. 21) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           | Converter          | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 21)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_axis_subset_converter_1_0 | Up-to-date | No changes required |  *(8)     | AXI4-Stream Subset | 1.1     | 1.1 (Rev. 21) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           | Converter          | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 21)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_axis_subset_converter_2_0 | Up-to-date | No changes required |  *(9)     | AXI4-Stream Subset | 1.1     | 1.1 (Rev. 21) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           | Converter          | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 21)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_axis_subset_converter_3_0 | Up-to-date | No changes required |  *(10)    | AXI4-Stream Subset | 1.1     | 1.1 (Rev. 21) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           | Converter          | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 21)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_csi_4lane_raw10_0_0       | Up-to-date | No changes required | Change    | csi_4lane_raw10_v2 | 2.0     | 2.0 (Rev. 1)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 1)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_csi_4lane_raw10_1_0       | Up-to-date | No changes required | Change    | csi_4lane_raw10_v2 | 2.0     | 2.0 (Rev. 1)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 1)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_csi_4lane_raw10_2_0       | Up-to-date | No changes required | Change    | csi_4lane_raw10_v2 | 2.0     | 2.0 (Rev. 1)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 1)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_csi_4lane_raw10_3_0       | Up-to-date | No changes required | Change    | csi_4lane_raw10_v2 | 2.0     | 2.0 (Rev. 1)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                                    |            |                     | available |                    | 1)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_csi_rst_0                 | Up-to-date | No changes required |  *(11)    | AXI GPIO           | 2.0     | 2.0 (Rev. 23) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           |                    | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 23)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_proc_sys_reset_100M_0     | Up-to-date | No changes required |  *(12)    | Processor System   | 5.0     | 5.0 (Rev. 13) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           | Reset              | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 13)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_ps8_0_axi_periph_0        | Up-to-date | No changes required |  *(13)    | AXI Interconnect   | 2.1     | 2.1 (Rev. 22) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           |                    | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 22)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_smartconnect_0_0          | Up-to-date | No changes required |  *(14)    | AXI SmartConnect   | 1.0     | 1.0 (Rev. 13) | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           |                    | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 13)     |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_system_ila_0_0            | Up-to-date | No changes required |  *(15)    | System ILA         | 1.1     | 1.1 (Rev. 7)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           |                    | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 7)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_system_ila_1_0            | Up-to-date | No changes required |  *(16)    | System ILA         | 1.1     | 1.1 (Rev. 7)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           |                    | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 7)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_xlconcat_3_0              | Up-to-date | No changes required |  *(17)    | Concat             | 2.1     | 2.1 (Rev. 3)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           |                    | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 3)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_xlconstant_0_0            | Up-to-date | No changes required |  *(18)    | Constant           | 1.1     | 1.1 (Rev. 7)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           |                    | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 7)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| design_1_zynq_ultra_ps_e_0_0       | Up-to-date | No changes required |  *(19)    | Zynq UltraScale+   | 3.3     | 3.3 (Rev. 2)  | Included   | xczu19eg-ffvc1760-2- |
+|                                    |            |                     |           | MPSoC              | (Rev.   |               |            |                      |
+|                                    |            |                     |           |                    | 2)      |               |            |                      |
++------------------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+*(1) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/axi_iic_v2_0/doc/axi_iic_v2_0_changelog.txt
+*(2) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/axi_iic_v2_0/doc/axi_iic_v2_0_changelog.txt
+*(3) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/axi_vdma_v6_3/doc/axi_vdma_v6_3_changelog.txt
+*(4) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/axi_vdma_v6_3/doc/axi_vdma_v6_3_changelog.txt
+*(5) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/axi_vdma_v6_3/doc/axi_vdma_v6_3_changelog.txt
+*(6) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/axi_vdma_v6_3/doc/axi_vdma_v6_3_changelog.txt
+*(7) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/axis_subset_converter_v1_1/doc/axis_subset_converter_v1_1_changelog.txt
+*(8) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/axis_subset_converter_v1_1/doc/axis_subset_converter_v1_1_changelog.txt
+*(9) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/axis_subset_converter_v1_1/doc/axis_subset_converter_v1_1_changelog.txt
+*(10) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/axis_subset_converter_v1_1/doc/axis_subset_converter_v1_1_changelog.txt
+*(11) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/axi_gpio_v2_0/doc/axi_gpio_v2_0_changelog.txt
+*(12) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/proc_sys_reset_v5_0/doc/proc_sys_reset_v5_0_changelog.txt
+*(13) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/axi_interconnect_v2_1/doc/axi_interconnect_v2_1_changelog.txt
+*(14) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/smartconnect_v1_0/doc/smartconnect_v1_0_changelog.txt
+*(15) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/system_ila_v1_1/doc/system_ila_v1_1_changelog.txt
+*(16) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/system_ila_v1_1/doc/system_ila_v1_1_changelog.txt
+*(17) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/xlconcat_v2_1/doc/xlconcat_v2_1_changelog.txt
+*(18) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/xlconstant_v1_1/doc/xlconstant_v1_1_changelog.txt
+*(19) f:/Xilinx/Vivado/2020.1/data/ip/xilinx/zynq_ultra_ps_e_v3_3/doc/zynq_ultra_ps_e_v3_3_changelog.txt
+
+

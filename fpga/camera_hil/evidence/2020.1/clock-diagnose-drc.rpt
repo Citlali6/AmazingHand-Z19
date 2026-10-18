@@ -1,0 +1,296 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+----------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
+| Date         : Sun Oct 18 14:27:02 2026
+| Host         : LAPTOP-M6FJ5JKT running 64-bit major release  (build 9200)
+| Command      : report_drc -file F:/ah-camera-hil-2020.1-clock-diagnose01/drc_impl.rpt
+| Design       : design_1_wrapper
+| Device       : xczu19eg-ffvc1760-2-i
+| Speed File   : -2
+| Design State : Fully Routed
+----------------------------------------------------------------------------------------
+
+Report DRC
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: checkpoint_design_1_wrapper_routed
+      Design limits: <entire design considered>
+           Ruledeck: default
+             Max violations: <unlimited>
+             Violations found: 49
++-----------+----------+---------------------------------------------------+------------+
+| Rule      | Severity | Description                                       | Violations |
++-----------+----------+---------------------------------------------------+------------+
+| REQP-1869 | Warning  | URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low | 48         |
+| RTSTAT-10 | Warning  | No routable loads                                 | 1          |
++-----------+----------+---------------------------------------------------+------------+
+
+2. REPORT DETAILS
+-----------------
+REQP-1869#1 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_ADDR_A[22:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#2 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_BWE_A[8:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#3 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_DIN_A[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#4 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_DOUT_A[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#5 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_RDACCESS_A pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#6 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_RDB_WR_A pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#7 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_ADDR_B[22:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#8 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_BWE_B[8:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#9 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_DIN_B[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#10 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_DOUT_B[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#11 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_RDACCESS_B pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#12 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_RDB_WR_B pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#13 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_ADDR_A[22:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#14 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_BWE_A[8:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#15 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_DIN_A[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#16 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_DOUT_A[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#17 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_RDACCESS_A pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#18 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_RDB_WR_A pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#19 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_ADDR_B[22:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#20 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_BWE_B[8:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#21 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_DIN_B[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#22 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_DOUT_B[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#23 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_RDACCESS_B pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#24 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_RDB_WR_B pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#25 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_ADDR_A[22:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#26 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_BWE_A[8:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#27 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_DIN_A[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#28 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_DOUT_A[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#29 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_RDACCESS_A pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#30 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_RDB_WR_A pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#31 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_ADDR_B[22:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#32 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_BWE_B[8:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#33 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_DIN_B[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#34 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_DOUT_B[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#35 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_RDACCESS_B pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#36 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_RDB_WR_B pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#37 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_ADDR_A[22:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#38 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_BWE_A[8:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#39 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_DIN_A[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#40 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_DOUT_A[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#41 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_RDACCESS_A pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#42 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_A (NONE) set to FIRST or NONE, the CAS_IN_RDB_WR_A pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#43 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_ADDR_B[22:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#44 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_BWE_B[8:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#45 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_DIN_B[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#46 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_DOUT_B[71:0] bus pins should be tied LOW.
+Related violations: <none>
+
+REQP-1869#47 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_RDACCESS_B pin should be tied LOW.
+Related violations: <none>
+
+REQP-1869#48 Warning
+URAM288_CASCADE_ORDER_FIRST-NONE_tie_CAS_IN_X_low
+URAM288 design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_uram_0 has CASCADE_ORDER_B (NONE) set to FIRST or NONE, the CAS_IN_RDB_WR_B pin should be tied LOW.
+Related violations: <none>
+
+RTSTAT-10#1 Warning
+No routable loads
+64 net(s) have no routable loads. The problem bus(es) and/or net(s) are design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_RD/U_RD_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_rdfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD7_CTL/ctl_reg[2:0],
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD1/ctl_reg_en_2[1],
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD7_CTL/ctl_reg_en_2[1],
+dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_switch/m_bscan_capture[0],
+dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_switch/m_bscan_drck[0],
+dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_switch/m_bscan_runtest[0],
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_WR/U_WR_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_wrfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwhf.whf/overflow,
+dbg_hub/inst/BSCANID.u_xsdbm_id/CORE_XSDB.UUT_MASTER/U_ICON_INTERFACE/U_CMD6_RD/U_RD_FIFO/SUBCORE_FIFO.xsdbm_v3_0_0_rdfifo_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwhf.whf/overflow,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb,
+design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb (the first 15 of 50 listed).
+Related violations: <none>
+
+

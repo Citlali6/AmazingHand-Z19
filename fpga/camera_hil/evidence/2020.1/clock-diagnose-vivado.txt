@@ -1,0 +1,570 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Sun Oct 18 14:25:07 2026
+# Process ID: 41004
+# Current directory: F:/Amazing_Hand_unified_20261018
+# Command line: vivado.exe -mode batch -nojournal -log F:/ah-camera-hil-2020.1-clock-diagnose01.log -source F:/Amazing_Hand_unified_20261018/fpga/camera_hil/experimental_2020_1/repair_clock.tcl -tclargs F:/ah-camera-hil-2020.1-run01 F:/ah-camera-hil-2020.1-clock-diagnose01 diagnose
+# Log file: F:/ah-camera-hil-2020.1-clock-diagnose01.log
+# Journal file:
+#-----------------------------------------------------------
+source F:/Amazing_Hand_unified_20261018/fpga/camera_hil/experimental_2020_1/repair_clock.tcl
+# if {[version -short] ne "2020.1" || $argc < 2 || $argc > 3} {error "Requires 2020.1 and ORIGINAL_BUILD NEW_REPORT_DIR ?diagnose|impl?"}
+# set build [file normalize [lindex $argv 0]]
+# set result [file normalize [lindex $argv 1]]
+# set stage [expr {$argc == 3 ? [lindex $argv 2] : "diagnose"}]
+# if {$stage ni {diagnose impl}} {error "Expected diagnose or impl"}
+# if {[file exists $result]} {error "Refusing existing result directory"}
+# file mkdir $result
+# file copy [file normalize [info script]] [file join $result repair_clock_executed.tcl]
+# open_project [file join $build vivado mipi_dp.xpr]
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'f:/ah-camera-hil-2020.1-run01/source/repo'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'F:/Xilinx/Vivado/2020.1/data/ip'.
+open_project: Time (s): cpu = 00:00:07 ; elapsed = 00:00:09 . Memory (MB): peak = 1014.754 ; gain = 0.000
+# if {[get_property PROGRESS [get_runs synth_1]] ne "100%"} {error "Successful original synthesis required"}
+# set constrset [expr {$stage eq "diagnose" ? "clock_diagnose" : "live_clock_fixed"}]
+# set run [expr {$stage eq "diagnose" ? "diagnose_liveclock" : "impl_liveclock"}]
+# create_fileset -constrset $constrset
+# foreach name {system.xdc mipi.xdc QSFP.xdc ddr4_set.xdc mipi2.xdc} {
+#     add_files -fileset $constrset -norecurse [file join $build source mipi_dp.srcs constrs_1 new $name]
+# }
+# create_run $run -parent_run synth_1 -flow {Vivado Implementation 2020} -strategy {Vivado Implementation Defaults} -constrset $constrset
+Run is defaulting to parent run srcset: sources_1
+Run is defaulting to parent run part: xczu19eg-ffvc1760-2-i
+# current_run -implementation [get_runs $run]
+# open_run synth_1
+Design is defaulting to impl run constrset: clock_diagnose
+Design is defaulting to synth run part: xczu19eg-ffvc1760-2-i
+INFO: [Device 21-403] Loading part xczu19eg-ffvc1760-2-i
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_AXI_BayerToRGB_0_0/design_1_AXI_BayerToRGB_0_0.dcp' for cell 'design_1_i/AXI_BayerToRGB_0'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_AXI_BayerToRGB_1_0/design_1_AXI_BayerToRGB_1_0.dcp' for cell 'design_1_i/AXI_BayerToRGB_1'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_AXI_BayerToRGB_2_0/design_1_AXI_BayerToRGB_2_0.dcp' for cell 'design_1_i/AXI_BayerToRGB_2'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_AXI_BayerToRGB_3_0/design_1_AXI_BayerToRGB_3_0.dcp' for cell 'design_1_i/AXI_BayerToRGB_3'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_AXI_GammaCorrection_0_0/design_1_AXI_GammaCorrection_0_0.dcp' for cell 'design_1_i/AXI_GammaCorrection_0'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_AXI_GammaCorrection_1_0/design_1_AXI_GammaCorrection_1_0.dcp' for cell 'design_1_i/AXI_GammaCorrection_1'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_AXI_GammaCorrection_2_0/design_1_AXI_GammaCorrection_2_0.dcp' for cell 'design_1_i/AXI_GammaCorrection_2'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_AXI_GammaCorrection_3_0/design_1_AXI_GammaCorrection_3_0.dcp' for cell 'design_1_i/AXI_GammaCorrection_3'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_iic_0_0/design_1_axi_iic_0_0.dcp' for cell 'design_1_i/axi_iic_0'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_iic_1_0/design_1_axi_iic_1_0.dcp' for cell 'design_1_i/axi_iic_1'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.dcp' for cell 'design_1_i/axi_vdma_0'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.dcp' for cell 'design_1_i/axi_vdma_1'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.dcp' for cell 'design_1_i/axi_vdma_2'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.dcp' for cell 'design_1_i/axi_vdma_3'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axis_pixel_counter_0_0/design_1_axis_pixel_counter_0_0.dcp' for cell 'design_1_i/axis_pixel_counter_0'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axis_subset_converter_0_0/design_1_axis_subset_converter_0_0.dcp' for cell 'design_1_i/axis_subset_converter_0'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axis_subset_converter_1_0/design_1_axis_subset_converter_1_0.dcp' for cell 'design_1_i/axis_subset_converter_1'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axis_subset_converter_2_0/design_1_axis_subset_converter_2_0.dcp' for cell 'design_1_i/axis_subset_converter_2'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axis_subset_converter_3_0/design_1_axis_subset_converter_3_0.dcp' for cell 'design_1_i/axis_subset_converter_3'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_csi_4lane_raw10_0_0/design_1_csi_4lane_raw10_0_0.dcp' for cell 'design_1_i/csi_4lane_raw10_0'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_csi_4lane_raw10_1_0/design_1_csi_4lane_raw10_1_0.dcp' for cell 'design_1_i/csi_4lane_raw10_1'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_csi_4lane_raw10_2_0/design_1_csi_4lane_raw10_2_0.dcp' for cell 'design_1_i/csi_4lane_raw10_2'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_csi_4lane_raw10_3_0/design_1_csi_4lane_raw10_3_0.dcp' for cell 'design_1_i/csi_4lane_raw10_3'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_csi_rst_0/design_1_csi_rst_0.dcp' for cell 'design_1_i/csi_rst'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_hil_0/design_1_hil_0.dcp' for cell 'design_1_i/hil'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_proc_sys_reset_100M_0/design_1_proc_sys_reset_100M_0.dcp' for cell 'design_1_i/proc_sys_reset_100M'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_smartconnect_0_0/design_1_smartconnect_0_0.dcp' for cell 'design_1_i/smartconnect_0'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/design_1_system_ila_0_0.dcp' for cell 'design_1_i/system_ila_0'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_system_ila_1_0/design_1_system_ila_1_0.dcp' for cell 'design_1_i/system_ila_1'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0/design_1_zynq_ultra_ps_e_0_0.dcp' for cell 'design_1_i/zynq_ultra_ps_e_0'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_xbar_0/design_1_xbar_0.dcp' for cell 'design_1_i/ps8_0_axi_periph/xbar'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_auto_ds_0/design_1_auto_ds_0.dcp' for cell 'design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds'
+INFO: [Project 1-454] Reading design checkpoint 'f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0.dcp' for cell 'design_1_i/ps8_0_axi_periph/s00_couplers/auto_pc'
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1721.805 ; gain = 7.602
+INFO: [Netlist 29-17] Analyzing 2844 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2020.1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Chipscope 16-324] Core: design_1_i/system_ila_0/inst/ila_lib UUID: cd4c83c8-23a6-596d-99ad-09be1335c6b0
+INFO: [Chipscope 16-324] Core: design_1_i/system_ila_1/inst/ila_lib UUID: 1ac8c4c2-d1ac-5faa-b5d9-9a6ca09c91e7
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_csi_rst_0/design_1_csi_rst_0_board.xdc] for cell 'design_1_i/csi_rst/U0'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_csi_rst_0/design_1_csi_rst_0_board.xdc] for cell 'design_1_i/csi_rst/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_csi_rst_0/design_1_csi_rst_0.xdc] for cell 'design_1_i/csi_rst/U0'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_csi_rst_0/design_1_csi_rst_0.xdc] for cell 'design_1_i/csi_rst/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc] for cell 'design_1_i/axi_vdma_0/U0'
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:60]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:64]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:68]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:72]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:76]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:80]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:84]
+WARNING: [Vivado_Tcl 4-935] Waiver ID 'CDC-4' is a duplicate and will not be added again. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:92]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:112]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:128]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:132]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:156]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:160]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:164]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:168]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:172]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:176]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:180]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:184]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:188]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:192]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:196]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:200]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:204]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:208]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:212]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:216]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc:220]
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0.xdc] for cell 'design_1_i/axi_vdma_0/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc] for cell 'design_1_i/axi_vdma_1/U0'
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:60]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:64]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:68]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:72]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:76]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:80]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:84]
+WARNING: [Vivado_Tcl 4-935] Waiver ID 'CDC-4' is a duplicate and will not be added again. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:92]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:112]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:128]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:132]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:156]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:160]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:164]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:168]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:172]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:176]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:180]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:184]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:188]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:192]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:196]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:200]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:204]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:208]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:212]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:216]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc:220]
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0.xdc] for cell 'design_1_i/axi_vdma_1/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_proc_sys_reset_100M_0/design_1_proc_sys_reset_100M_0_board.xdc] for cell 'design_1_i/proc_sys_reset_100M/U0'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_proc_sys_reset_100M_0/design_1_proc_sys_reset_100M_0_board.xdc] for cell 'design_1_i/proc_sys_reset_100M/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_proc_sys_reset_100M_0/design_1_proc_sys_reset_100M_0.xdc] for cell 'design_1_i/proc_sys_reset_100M/U0'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_proc_sys_reset_100M_0/design_1_proc_sys_reset_100M_0.xdc] for cell 'design_1_i/proc_sys_reset_100M/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0/design_1_zynq_ultra_ps_e_0_0.xdc] for cell 'design_1_i/zynq_ultra_ps_e_0/inst'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0/design_1_zynq_ultra_ps_e_0_0.xdc] for cell 'design_1_i/zynq_ultra_ps_e_0/inst'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_smartconnect_0_0/bd_0/ip/ip_1/bd_48ac_psr_aclk_0_board.xdc] for cell 'design_1_i/smartconnect_0/inst/clk_map/psr_aclk/U0'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_smartconnect_0_0/bd_0/ip/ip_1/bd_48ac_psr_aclk_0_board.xdc] for cell 'design_1_i/smartconnect_0/inst/clk_map/psr_aclk/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_smartconnect_0_0/bd_0/ip/ip_1/bd_48ac_psr_aclk_0.xdc] for cell 'design_1_i/smartconnect_0/inst/clk_map/psr_aclk/U0'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_smartconnect_0_0/bd_0/ip/ip_1/bd_48ac_psr_aclk_0.xdc] for cell 'design_1_i/smartconnect_0/inst/clk_map/psr_aclk/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila_impl.xdc] for cell 'design_1_i/system_ila_0/inst/ila_lib/inst'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila_impl.xdc] for cell 'design_1_i/system_ila_0/inst/ila_lib/inst'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila.xdc] for cell 'design_1_i/system_ila_0/inst/ila_lib/inst'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_system_ila_0_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila.xdc] for cell 'design_1_i/system_ila_0/inst/ila_lib/inst'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila_impl.xdc] for cell 'design_1_i/system_ila_1/inst/ila_lib/inst'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila_impl.xdc] for cell 'design_1_i/system_ila_1/inst/ila_lib/inst'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila.xdc] for cell 'design_1_i/system_ila_1/inst/ila_lib/inst'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila.xdc] for cell 'design_1_i/system_ila_1/inst/ila_lib/inst'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc] for cell 'design_1_i/axi_vdma_2/U0'
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:60]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:64]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:68]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:72]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:76]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:80]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:84]
+WARNING: [Vivado_Tcl 4-935] Waiver ID 'CDC-4' is a duplicate and will not be added again. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:92]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:112]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:128]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:132]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:156]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:160]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:164]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:168]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:172]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:176]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:180]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:184]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:188]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:192]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:196]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:200]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:204]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:208]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:212]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:216]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-6' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc:220]
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0.xdc] for cell 'design_1_i/axi_vdma_2/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc] for cell 'design_1_i/axi_vdma_3/U0'
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:60]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:64]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:68]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:72]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:76]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:80]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:84]
+WARNING: [Vivado_Tcl 4-935] Waiver ID 'CDC-4' is a duplicate and will not be added again. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:92]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:112]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:128]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:132]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:156]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:160]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:164]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:168]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:172]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:176]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-4' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:180]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:184]
+WARNING: [Vivado_Tcl 4-921] Waiver ID 'CDC-1' -to list should not be empty. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:188]
+INFO: [Common 17-14] Message 'Vivado_Tcl 4-921' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc:188]
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0.xdc] for cell 'design_1_i/axi_vdma_3/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_iic_0_0/design_1_axi_iic_0_0_board.xdc] for cell 'design_1_i/axi_iic_0/U0'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_iic_0_0/design_1_axi_iic_0_0_board.xdc] for cell 'design_1_i/axi_iic_0/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_iic_1_0/design_1_axi_iic_1_0_board.xdc] for cell 'design_1_i/axi_iic_1/U0'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_iic_1_0/design_1_axi_iic_1_0_board.xdc] for cell 'design_1_i/axi_iic_1/U0'
+Parsing XDC File [F:/ah-camera-hil-2020.1-run01/source/mipi_dp.srcs/constrs_1/new/system.xdc]
+Finished Parsing XDC File [F:/ah-camera-hil-2020.1-run01/source/mipi_dp.srcs/constrs_1/new/system.xdc]
+Parsing XDC File [F:/ah-camera-hil-2020.1-run01/source/mipi_dp.srcs/constrs_1/new/mipi.xdc]
+Finished Parsing XDC File [F:/ah-camera-hil-2020.1-run01/source/mipi_dp.srcs/constrs_1/new/mipi.xdc]
+Parsing XDC File [F:/ah-camera-hil-2020.1-run01/source/mipi_dp.srcs/constrs_1/new/QSFP.xdc]
+Finished Parsing XDC File [F:/ah-camera-hil-2020.1-run01/source/mipi_dp.srcs/constrs_1/new/QSFP.xdc]
+Parsing XDC File [F:/ah-camera-hil-2020.1-run01/source/mipi_dp.srcs/constrs_1/new/ddr4_set.xdc]
+Finished Parsing XDC File [F:/ah-camera-hil-2020.1-run01/source/mipi_dp.srcs/constrs_1/new/ddr4_set.xdc]
+Parsing XDC File [F:/ah-camera-hil-2020.1-run01/source/mipi_dp.srcs/constrs_1/new/mipi2.xdc]
+Finished Parsing XDC File [F:/ah-camera-hil-2020.1-run01/source/mipi_dp.srcs/constrs_1/new/mipi2.xdc]
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0_clocks.xdc] for cell 'design_1_i/axi_vdma_0/U0'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_0_0/design_1_axi_vdma_0_0_clocks.xdc] for cell 'design_1_i/axi_vdma_0/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0_clocks.xdc] for cell 'design_1_i/axi_vdma_1/U0'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_1_0/design_1_axi_vdma_1_0_clocks.xdc] for cell 'design_1_i/axi_vdma_1/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_auto_ds_0/design_1_auto_ds_0_clocks.xdc] for cell 'design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_auto_ds_0/design_1_auto_ds_0_clocks.xdc] for cell 'design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0_clocks.xdc] for cell 'design_1_i/axi_vdma_2/U0'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_2_0/design_1_axi_vdma_2_0_clocks.xdc] for cell 'design_1_i/axi_vdma_2/U0'
+Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0_clocks.xdc] for cell 'design_1_i/axi_vdma_3/U0'
+Finished Parsing XDC File [f:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.srcs/sources_1/bd/design_1/ip/design_1_axi_vdma_3_0/design_1_axi_vdma_3_0_clocks.xdc] for cell 'design_1_i/axi_vdma_3/U0'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_async_rst.tcl] for cell 'design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.rst_wr_reg2_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_async_rst.tcl] for cell 'design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_READ.read_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.rst_wr_reg2_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_async_rst.tcl] for cell 'design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.rst_wr_reg2_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_async_rst.tcl] for cell 'design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.rst_wr_reg2_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_async_rst.tcl] for cell 'design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.rst_wr_reg2_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_async_rst.tcl] for cell 'design_1_i/ps8_0_axi_periph/s00_couplers/auto_ds/inst/gen_downsizer.gen_simple_downsizer.axi_downsizer_inst/USE_WRITE.write_addr_inst/cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.rst_wr_reg2_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_dc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_dc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_dc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_dc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_dc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_dc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_dc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_dc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_dc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_dc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_dc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_dc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_dc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_dc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_dc_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_gray.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.rd_pntr_cdc_dc_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_0/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_0/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_XD_FIFO/NON_BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_0/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_XD_FIFO/NON_BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_0/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_0/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_1/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_1/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_XD_FIFO/NON_BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_1/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_XD_FIFO/NON_BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_1/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_1/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_2/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_2/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_XD_FIFO/NON_BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_2/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_XD_FIFO/NON_BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_2/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_2/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_3/U0/GEN_SPRT_FOR_S2MM.S2MM_LINEBUFFER_I/GEN_S2MM_FLUSH_SOF_LOGIC.GEN_LINEBUFFER_FLUSH_SOF.GEN_SYNC_FIFO_FLUSH_SOF.I_LINEBUFFER_FIFO/xpm_fifo_sync_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_3/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_XD_FIFO/NON_BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_3/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_XD_FIFO/NON_BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_3/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/tcl/xpm_fifo_rst.tcl] for cell 'design_1_i/axi_vdma_3/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s01_nodes/s01_b_node/inst/inst_mi_handler/gen_normal_area.gen_node_prog_full.inst_node_prog_full/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s01_nodes/s01_b_node/inst/inst_mi_handler/gen_normal_area.gen_node_prog_full.inst_node_prog_full/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s00_nodes/s00_b_node/inst/inst_mi_handler/gen_normal_area.gen_node_prog_full.inst_node_prog_full/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s00_nodes/s00_b_node/inst/inst_mi_handler/gen_normal_area.gen_node_prog_full.inst_node_prog_full/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s03_nodes/s03_b_node/inst/inst_mi_handler/gen_normal_area.gen_node_prog_full.inst_node_prog_full/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s03_nodes/s03_b_node/inst/inst_mi_handler/gen_normal_area.gen_node_prog_full.inst_node_prog_full/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_w_node/inst/inst_mi_handler/gen_normal_area.gen_node_prog_full.inst_node_prog_full/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_w_node/inst/inst_mi_handler/gen_normal_area.gen_node_prog_full.inst_node_prog_full/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_aw_node/inst/inst_mi_handler/gen_normal_area.gen_node_prog_full.inst_node_prog_full/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_aw_node/inst/inst_mi_handler/gen_normal_area.gen_node_prog_full.inst_node_prog_full/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s02_nodes/s02_b_node/inst/inst_mi_handler/gen_normal_area.gen_node_prog_full.inst_node_prog_full/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s02_nodes/s02_b_node/inst/inst_mi_handler/gen_normal_area.gen_node_prog_full.inst_node_prog_full/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_aw_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_aw_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_b_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_b_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_b_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_b_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_w_node/inst/inst_si_handler/gen_si_handler.gen_request_fifos.gen_req_fifo[0].inst_req_fifo/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_w_node/inst/inst_si_handler/gen_si_handler.gen_request_fifos.gen_req_fifo[0].inst_req_fifo/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_w_node/inst/inst_si_handler/gen_si_handler.gen_request_fifos.gen_req_fifo[3].inst_req_fifo/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_w_node/inst/inst_si_handler/gen_si_handler.gen_request_fifos.gen_req_fifo[3].inst_req_fifo/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_w_node/inst/inst_si_handler/gen_si_handler.gen_request_fifos.gen_req_fifo[2].inst_req_fifo/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_w_node/inst/inst_si_handler/gen_si_handler.gen_request_fifos.gen_req_fifo[2].inst_req_fifo/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_w_node/inst/inst_si_handler/gen_si_handler.gen_request_fifos.gen_req_fifo[1].inst_req_fifo/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_w_node/inst/inst_si_handler/gen_si_handler.gen_request_fifos.gen_req_fifo[1].inst_req_fifo/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_w_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/m00_nodes/m00_w_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s01_nodes/s01_aw_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s01_nodes/s01_aw_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s02_nodes/s02_aw_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s02_nodes/s02_aw_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s00_nodes/s00_w_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s00_nodes/s00_w_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s00_nodes/s00_aw_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s00_nodes/s00_aw_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s01_nodes/s01_w_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s01_nodes/s01_w_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s03_nodes/s03_w_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s03_nodes/s03_w_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s03_nodes/s03_aw_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s03_nodes/s03_aw_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s02_nodes/s02_w_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s02_nodes/s02_w_node/inst/inst_mi_handler/gen_normal_area.gen_fifo_req.inst_fifo_req/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s01_nodes/s01_aw_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s01_nodes/s01_aw_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s03_nodes/s03_aw_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s03_nodes/s03_aw_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s02_nodes/s02_aw_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s02_nodes/s02_aw_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s00_nodes/s00_aw_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s00_nodes/s00_aw_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s01_nodes/s01_b_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s01_nodes/s01_b_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s03_nodes/s03_b_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s03_nodes/s03_b_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s02_nodes/s02_b_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s02_nodes/s02_b_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s00_nodes/s00_b_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s00_nodes/s00_b_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s01_nodes/s01_w_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s01_nodes/s01_w_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s03_nodes/s03_w_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s03_nodes/s03_w_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s02_nodes/s02_w_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s02_nodes/s02_w_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s00_nodes/s00_w_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+Finished Sourcing Tcl File [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl] for cell 'design_1_i/smartconnect_0/inst/s00_nodes/s00_w_node/inst/inst_mi_handler/gen_normal_area.inst_fifo_node_payld/gen_xpm_memory_fifo.inst_fifo/gen_mem_rep[0].inst_xpm_memory'
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.025 . Memory (MB): peak = 2384.934 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 423 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRL16E, SRLC32E): 180 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 40 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 20 instances
+  IOBUF => IOBUF (IBUFCTRL, INBUF, OBUFT): 8 instances
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 4 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 165 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 6 instances
+
+open_run: Time (s): cpu = 00:00:41 ; elapsed = 00:00:56 . Memory (MB): peak = 2384.934 ; gain = 1370.180
+# set xdc [file join $result live_clock_single_source.xdc]
+# set f [open $xdc w]
+# foreach index {0 1} {
+#     set period [expr {1.0e9 * (1 + $index) / 200703980}]
+#     set clk [get_clocks clk_pl_$index]
+#     set sources [get_property SOURCE_PINS $clk]
+#     # Read the original PS clock, before adding the new constraint set.
+#     if {[llength $clk] != 1 || [llength $sources] != 1} {error "Expected original single-source PS clock $index: $sources"}
+#     puts "ORIGINAL_CLOCK_SOURCE clk_pl_$index $sources"
+#     puts $f "create_clock -name clk_pl_$index -period $period \[get_pins \{$sources\}\]"
+# }
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+ORIGINAL_CLOCK_SOURCE clk_pl_0 design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+ORIGINAL_CLOCK_SOURCE clk_pl_1 design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[1]
+# close $f
+# close_design
+# add_files -fileset $constrset -norecurse $xdc
+# set_property USED_IN_SYNTHESIS false [get_files $xdc]
+# set_property PROCESSING_ORDER LATE [get_files $xdc]
+# if {$stage eq "impl"} {
+#     launch_runs $run -to_step write_bitstream -jobs 4
+#     wait_on_run $run
+#     if {[get_property PROGRESS [get_runs $run]] ne "100%"} {error "Corrected-clock implementation failed"}
+#     open_run $run
+# } else {
+#     open_checkpoint [file join $build vivado mipi_dp.runs impl_1 design_1_wrapper_routed.dcp]
+#     read_xdc $xdc
+# }
+Command: open_checkpoint F:/ah-camera-hil-2020.1-run01/vivado/mipi_dp.runs/impl_1/design_1_wrapper_routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.025 . Memory (MB): peak = 2384.934 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.825 . Memory (MB): peak = 2384.934 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 2689 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2020.1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2481.746 ; gain = 29.191
+Restored from archive | CPU: 5.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2481.746 ; gain = 29.191
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 2481.746 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 341 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRL16E, SRLC32E): 180 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 20 instances
+  IOBUF => IOBUF (IBUFCTRL, INBUF, OBUFT): 8 instances
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 4 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 129 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2020.1 (64-bit) build 2902540
+open_checkpoint: Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 2481.746 ; gain = 96.812
+Parsing XDC File [F:/ah-camera-hil-2020.1-clock-diagnose01/live_clock_single_source.xdc]
+WARNING: [Vivado 12-2489] -period contains time 4.982462 which will be rounded to 4.982 to ensure it is an integer multiple of 1 picosecond [F:/ah-camera-hil-2020.1-clock-diagnose01/live_clock_single_source.xdc:1]
+WARNING: [Constraints 18-619] A clock with name 'clk_pl_0' already exists, overwriting the previous clock with the same name. [F:/ah-camera-hil-2020.1-clock-diagnose01/live_clock_single_source.xdc:1]
+WARNING: [Vivado 12-2489] -period contains time 9.964924 which will be rounded to 9.965 to ensure it is an integer multiple of 1 picosecond [F:/ah-camera-hil-2020.1-clock-diagnose01/live_clock_single_source.xdc:2]
+WARNING: [Constraints 18-619] A clock with name 'clk_pl_1' already exists, overwriting the previous clock with the same name. [F:/ah-camera-hil-2020.1-clock-diagnose01/live_clock_single_source.xdc:2]
+Finished Parsing XDC File [F:/ah-camera-hil-2020.1-clock-diagnose01/live_clock_single_source.xdc]
+# report_clocks -file [file join $result clocks_impl.rpt]
+# set f [open [file join $result clock_sources.txt] w]
+# foreach index {0 1} {
+#     set clk [get_clocks clk_pl_$index]
+#     if {[llength $clk] != 1 || [llength [get_property SOURCE_PINS $clk]] != 1} {error "Final PL clock must have one source"}
+#     puts $f "clk_pl_$index\t[get_property PERIOD $clk]\t[get_property SOURCE_PINS $clk]"
+# }
+# close $f
+# report_timing_summary -report_unconstrained -file [file join $result timing_impl.rpt]
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Temperature grade: I, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d0phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d1phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d2phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d3phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0 has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d1phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0_2 has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d3phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0_1 has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d2phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0_2 has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d3phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d3phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d0phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d1phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d2phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0 has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d1phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0_1 has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d2phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d0phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d1phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d2phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d3phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0_1 has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d2phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0 has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d1phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0_2 has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d3phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d1phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d0phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d2phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d3phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0 has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d2phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+CRITICAL WARNING: [Timing 38-470] The REFCLK pin of IDELAYCTRL design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0 has a clock period of 4.982 ns (frequency 200.723 Mhz) and IDELAYE3 design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d3phy/gen_us.indelay within its nibble has DELAY_FORMAT set to TIME with REFCLK_FREQUENCY of 200.000 Mhz (period 5.000 ns). The IDELAYCTRL REFCLK pin frequency must match the IDELAYE3 REFCLK_FREQUENCY property value when DELAY_FORMAT TIME is used.
+Resolution: Check that the IDELAYCTRL REFCLK pin is receiving a clock and that the period of the clock matches the REFCLK_FREQUENCY property of the <IDELAYE3/ODELAYE3>.
+WARNING: [Timing 38-436] There are set_bus_skew constraint(s) in this design. Please run report_bus_skew to ensure that bus skew requirements are met.
+report_timing_summary: Time (s): cpu = 00:00:27 ; elapsed = 00:00:19 . Memory (MB): peak = 3194.695 ; gain = 712.340
+# report_drc -file [file join $result drc_impl.rpt]
+Command: report_drc -file F:/ah-camera-hil-2020.1-clock-diagnose01/drc_impl.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'F:/Xilinx/Vivado/2020.1/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Coretcl 2-168] The results of DRC are in file F:/ah-camera-hil-2020.1-clock-diagnose01/drc_impl.rpt.
+report_drc completed successfully
+report_drc: Time (s): cpu = 00:00:14 ; elapsed = 00:00:08 . Memory (MB): peak = 3299.801 ; gain = 105.105
+# report_methodology -file [file join $result methodology_impl.rpt]
+Command: report_methodology -file F:/ah-camera-hil-2020.1-clock-diagnose01/methodology_impl.rpt
+WARNING: [Constraints 18-633] Creating clock clk_pl_0 with 2 sources. [F:/ah-camera-hil-2020.1-run01/live_clock.xdc:3]
+WARNING: [Constraints 18-633] Creating clock clk_pl_1 with 2 sources. [F:/ah-camera-hil-2020.1-run01/live_clock.xdc:6]
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [DRC 23-133] Running Methodology with 2 threads
+INFO: [Coretcl 2-1520] The results of Report Methodology are in file F:/ah-camera-hil-2020.1-clock-diagnose01/methodology_impl.rpt.
+report_methodology completed successfully
+report_methodology: Time (s): cpu = 00:00:19 ; elapsed = 00:00:12 . Memory (MB): peak = 3522.133 ; gain = 222.332
+# if {$stage eq "impl"} {
+#     write_hw_platform -fixed -include_bit [file join $result camera_hil.xsa]
+#     set f [open [file join $result implementation.json] w]
+#     puts $f "\{\"build\":\"$build\",\"implementation_run\":\"impl_liveclock\",\"repair\":\"single-source live clocks; no IP or PS edits\"\}"
+# } else {
+#     set f [open [file join $result diagnosis.json] w]
+#     puts $f "\{\"build\":\"$build\",\"stage\":\"routed DCP reanalysis only\",\"implementation_rerun\":false,\"corrected_bit_created\":false\}"
+# }
+# close $f
+# puts "REPAIRED_CLOCK_DONE stage=$stage; no board validation"
+REPAIRED_CLOCK_DONE stage=diagnose; no board validation
+INFO: [Common 17-206] Exiting Vivado at Sun Oct 18 14:27:14 2026...

@@ -1,0 +1,48 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------
+| Tool Version      : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
+| Date              : Sun Oct 18 14:26:35 2026
+| Host              : LAPTOP-M6FJ5JKT running 64-bit major release  (build 9200)
+| Command           : report_clocks -file F:/ah-camera-hil-2020.1-clock-diagnose01/clocks_impl.rpt
+| Design            : design_1_wrapper
+| Device            : xczu19eg-ffvc1760
+| Speed File        : -2
+| Temperature Grade : I
+---------------------------------------------------------------------------------------------------
+
+Clock Report
+
+
+Attributes
+  P: Propagated
+  G: Generated
+  A: Auto-derived
+  R: Renamed
+  V: Virtual
+  I: Inverted
+  S: Pin phase-shifted with Latency mode
+
+Clock                                                                                                Period(ns)  Waveform(ns)     Attributes  Sources
+clk_pl_0                                                                                             4.982       {0.000 2.491}    P           {design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]}
+clk_pl_1                                                                                             9.965       {0.000 4.983}    P           {design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[1]}
+dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/SERIES7_BSCAN.bscan_inst/INTERNAL_TCK  50.000      {0.000 25.000}   P           {dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/SERIES7_BSCAN.bscan_inst/INTERNAL_TCK}
+mdio0_mdc_clock                                                                                      480.000     {0.000 240.000}  P           {design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/EMIOENET0MDIOMDC}
+
+
+====================================================
+Generated Clocks
+====================================================
+
+
+
+====================================================
+User Uncertainty
+====================================================
+
+
+
+====================================================
+User Jitter
+====================================================
+
+

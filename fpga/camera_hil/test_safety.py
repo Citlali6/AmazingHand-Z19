@@ -94,6 +94,14 @@ class Safety(unittest.TestCase):
             (build / 'drc_impl.rpt').write_text(drc.replace('found: 0', 'found: 1'))
             with self.assertRaisesRegex(ValueError, 'DRC'):
                 check_reports(build)
+            # Experimental tool selection changes only the accepted report
+            # version, never the timing, coverage or DRC requirements.
+            (build / 'timing_impl.rpt').write_text(timing.replace('v.2020.2', 'v.2020.1'))
+            (build / 'drc_impl.rpt').write_text(drc.replace('v.2020.2', 'v.2020.1'))
+            check_reports(build, tool='2020.1')
+            (build / 'drc_impl.rpt').write_text(drc.replace('v.2020.2', 'v.2020.1').replace('found: 0', 'found: 1'))
+            with self.assertRaisesRegex(ValueError, 'DRC'):
+                check_reports(build, tool='2020.1')
 
 
 if __name__ == '__main__':

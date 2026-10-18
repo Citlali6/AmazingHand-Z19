@@ -1,11 +1,14 @@
 # Camera + AHIL unified PL (Issue #17)
 
-**2026-10-18: source implementation delivered; hardware build blocked by missing
-Vivado 2020.2.** This host has 2020.1, which actually exits 1 at the preserved
-version guard. No unified BD has been generated/validated by Vivado; no new
-bit/XSA/bin, synthesis, timing, DRC or simultaneous camera/HIL board test exists.
-The user confirmed that no 2020.2 installation is available. Do not downgrade
-the camera project or substitute the previously tested HIL-only bit.
+**2026-10-18 follow-up: use the installed Vivado 2020.1 only.** The explicitly
+authorized [experimental reconstruction](experimental_2020_1/README.md) has
+actually recreated/validated the combined camera/HIL BD, synthesized, placed,
+routed and generated a diagnostic bit/XSA in 2020.1. **Timing/coverage and DRC
+gates fail, so these artifacts must not be deployed.** The original strict entry and
+117 archived camera files remain unchanged. No new tool installation is needed.
+The earlier 2020.1 version-guard rejection is historical evidence, not a finding
+of technical incompatibility. No board load or simultaneous camera/HIL test has
+been performed in this task.
 
 ## Source and topology
 
@@ -14,13 +17,13 @@ The archived camera project, validated bit/XSA, driver, SD, and original source
 are untouched. `build.tcl` invokes the original guarded camera creation script
 into a new output directory, then modifies that **copy** through Vivado BD APIs:
 
-- Keep the complete four-camera CSI/Bayer/Gamma/VDMA→SmartConnect→HP1 path,
+- Keep the complete four-camera CSI/Bayer/Gamma/VDMA鈫扴martConnect鈫扝P1 path,
   camera external ports/XDC, PS properties, clocks, resets and all 11 addresses.
 - Keep HPM0_FPD at 128 bits. Extend its existing `ps8_0_axi_periph` from 11 to
   12 master interfaces; connect new M11 to `hand_hil_shell/s_axi` (AXI4-Lite).
   The original interconnect performs protocol/width conversion.
 - Connect AHIL and M11 to the existing PL0 clock and peripheral reset net.
-  Add only 4 KiB at `0xA1000000`; the original 11 × 64 KiB control ranges are
+  Add only 4 KiB at `0xA1000000`; the original 11 脳 64 KiB control ranges are
   `0xA0000000` through `0xA00AFFFF`. Camera 0 retains VDMA `0xA0060000`, Gamma
   `0xA0040000` and reset GPIO `0xA0080000`.
 - AHIL uses the previously measured **200703980 Hz** clock for its independent
@@ -29,18 +32,26 @@ into a new output directory, then modifies that **copy** through Vivado BD APIs:
   live clocks. No PS clock register or FSBL changes are performed.
 
 `rtl/{grasp_fsm.sv,hand_hil_axi.sv,hand_hil_shell.v}` and `ps/hil_server.py`
-are exact selective copies of unmerged [PR #13](https://github.com/Tom-mr33/AmazingHand-based-on-FPGA/pull/13)
+are exact selective copies of [PR #13](https://github.com/Tom-mr33/AmazingHand-based-on-FPGA/pull/13)
 at `caa84a5ddb541cd60ebd2e07869b83671ca8a1e2`; original paths and byte hashes
 are in `provenance.json`. The fixed FSM is local to this design; the baseline
 `fpga/rtl/grasp_fsm.sv` is unchanged. PR #13's standalone project, deployment
 loader and old evidence are not imported. [PR #12](https://github.com/Tom-mr33/AmazingHand-based-on-FPGA/pull/12)
 at `583abe105eb2035f3f272556229f66b1530b742f` supplies the separate PC
-`amazinghand-hil/1` MuJoCo client; it is not in main or this PR. PR #15 is not
-imported. Interface v0.3 remains a draft. There are no physical servo pins.
+`amazinghand-hil/1` MuJoCo client. PR #12/#13/#14 have since been merged into main
+(`6b1c90094e9979d1729a331896954a12821c7ae2` at this follow-up); the four copied
+HIL files still match that main byte for byte. This branch keeps its original
+branch point without merge/rebase. PR #15 is not imported. Interface v0.3 remains a draft. There are no physical servo pins.
 
-## Rebuild with the matching tool
+## Rebuild with the installed 2020.1 tool
 
-Use a new absolute destination. This command performs no board access:
+Use [experimental_2020_1/README.md](experimental_2020_1/README.md) for the current
+native reconstruction command, actual compatibility adaptations and evidence.
+It restores the original camera configuration through the 2020.1 catalog,
+then adds AHIL; it never changes the original archive's tool-version field.
+
+The preserved strict 2020.2 entry remains available for provenance/reference.
+It is not a prerequisite for this task. Its isolated command performs no board access:
 
 ```powershell
 & 'PATH-TO-VIVADO-2020.2/bin/vivado.bat' -mode batch -nojournal -nolog -source fpga/camera_hil/build.tcl -tclargs F:/ah-camera-hil-build-new impl
@@ -52,15 +63,16 @@ outputs: `source/.../design_1.bd`, `camera_hil_bd.tcl`, the private
 `vivado/mipi_dp.xpr`, `vivado/mipi_dp.runs/impl_1/design_1_wrapper.bit`,
 `camera_hil.xsa`, and IP/utilization/timing/DRC/methodology reports.
 Generation is not implementation acceptance. Locked IP causes refusal; do not
-run `upgrade_ip`. The original camera was `2020.2_AR75986`; any remaining
-patch/IP compatibility problem must be resolved in that matching environment.
+run `upgrade_ip`. The original camera was `2020.2_AR75986`; that fact explains
+the historical strict guard. The current authorized route uses native 2020.1
+reconstruction and records its actual findings without requiring 2020.2.
 
 The supplied ALINX CSI and Digilent Bayer/Gamma repositories contain all
 35 component-declared file references, with no missing files and no protected
 HDL blocks found. They keep their original vendor notices. No new third-party
-IP is introduced. **2020.2 IP lock state, device license and synthesis rights
-remain unverified** until the matching tool can open the project; the bundled
-source/IP hashes alone do not prove a working license or successful rebuild.
+IP is introduced. The native 2020.1 probe reports 32 IP up to date with included
+licenses and no locked IP; actual synthesis subruns acquired the xczu19eg
+Synthesis license. This is separate from final implementation and board acceptance.
 
 `audit.py` checks 117 camera archive hashes and the four inherited hashes. With
 `--build`, it additionally checks copied camera HDL/XDC/IP source hashes, every
@@ -73,7 +85,9 @@ Only a completed, audited implementation may be packaged:
 python fpga/camera_hil/package_linux.py --build F:/ah-camera-hil-build-new --output F:/amazinghand-camera-hil-new --bootgen F:/Xilinx/Vitis/2020.1/bin/bootgen.bat
 ```
 
-The packager requires 2020.2 reports, passing timing at both live periods,
+The packager requires reports from the audited build's exact tool profile
+(2020.1 only for the explicit experimental route; 2020.2 for the strict route),
+passing timing at both live periods,
 zero DRC violations and zero reported unconstrained/internal/clock/partial IO
 checks, plus an XSA whose embedded bit exactly matches the output bit. It
 converts copies of both bits with Bootgen and verifies the original camera bin
@@ -131,12 +145,34 @@ an approved rollback; it does not trigger an unrequested automatic PL switch.
 
 ## Recorded checks
 
-`evidence/` contains the real 2020.1 rejection, source hash/address audit and
-seven safety tests. `python -m compileall -q fpga/camera_hil`,
+`evidence/` retains the historical strict-entry rejection and source-only audit.
+[evidence/2020.1/README.md](evidence/2020.1/README.md) contains the new real
+native build, corrected-clock diagnosis, reports, reproduction commands and
+artifact hashes. Seven focused safety tests remain passing. `python -m compileall -q fpga/camera_hil`,
 `python fpga/camera_hil/test_safety.py`, Tcl `info complete` and
 `git diff --check` passed. The tests use fakes only for reload order/safety and
 report rejection; they do not claim a built BD or board runtime. Earlier PR #13
 HIL board results remain separate historical evidence.
 
-No 2020.2 build, package conversion, deployment/rollback, simultaneous video/HIL,
-load/STOP/watchdog performance, real servos or physical grasp was tested here.
+The current 2020.1 build evidence is separate from the historical f214242
+source-only checks. Deployment/rollback, simultaneous video/HIL,
+load/STOP/watchdog performance, real servos and physical grasp remain untested.
+
+
+Current native result: real BD validate, synthesis, placement, routing and
+bitgen/XSA generation succeeded. The single-source clock correction was
+confirmed by reanalysing the same routed DCP; no corrected implementation was
+rerun and no corrected candidate bit was generated. The first bit/XSA retain
+that attempt's clock-XDC diagnostics. Native packaging actually exits 1 for
+failed timing, leaving no bin or deployment package. Both binary artifacts stay
+only in `F:/ah-camera-hil-2020.1-run01/`; they are **not uploaded to GitHub**.
+
+The substantive blockers are 14 IDELAYCTRL max-period failures at the preserved
+~200.704 MHz reference (required period <=3.333 ns), 2,496 unclocked pins,
+6,036 unconstrained internal endpoints, 24/8 missing IO delay constraints, and
+49 DRC warnings. These are findings of this real 2020.1 reconstruction; no
+2020.2 comparison establishes that a version change alone caused them. The
+original camera's field success is separate from full offline timing signoff.
+The [evidence explanation](evidence/2020.1/README.md) describes the smallest
+remaining design/data work. No new MMCM, guessed MIPI constraints, VDMA mode
+change, DRC waiver or board experiment was added to conceal these findings.
