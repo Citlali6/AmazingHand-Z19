@@ -1896,8 +1896,3 @@ Slack:                    inf
                                                       0.019     5.362 r  dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.u_bufg_icon_tck/O
     X2Y2 (CLOCK_ROOT)    net (fo=494, routed)         0.843     6.205    dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_switch/s_bscan_tck
     SLICE_X89Y105        FDRE                                         r  dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_switch/shiftreg_reg[31]/C
-
-
-
-
-

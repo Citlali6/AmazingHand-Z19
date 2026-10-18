@@ -164,7 +164,7 @@
   "artifacts_uploaded_to_github": false,
   "bin_created": false,
   "deployment_package_created": false,
-  "archive_text": "UTF-8/LF with trailing line padding removed; original raw files remain at original_path with separate SHA256",
+  "archive_text": "UTF-8/LF with trailing line/EOF padding removed; original raw files remain at original_path with separate SHA256",
   "evidence": [
     {
       "evidence": "probe-catalog.txt",
@@ -182,7 +182,7 @@
       "evidence": "probe-ip-status.rpt",
       "original_path": "F:\\ah-camera-hil-2020.1-probe01\\ip_status.rpt",
       "original_sha256": "e8ac284d2ac4f8cbb3b32386d4d6f6d2df9e5bf1f1d82fa5e993395765e5f94b",
-      "archived_sha256": "e8ac284d2ac4f8cbb3b32386d4d6f6d2df9e5bf1f1d82fa5e993395765e5f94b"
+      "archived_sha256": "3dc4b29b7be76d8b4990b0cec59b88c6e4435dc55ea45086d60e6d4161738527"
     },
     {
       "evidence": "run01-vivado.txt",
@@ -206,13 +206,13 @@
       "evidence": "run01-timing.rpt",
       "original_path": "F:\\ah-camera-hil-2020.1-run01\\timing_impl.rpt",
       "original_sha256": "7e09e43b4c643997c494fedf47be159cd9155697ce005923d9fe910a3d7dab76",
-      "archived_sha256": "57b6686281c8b2325868d91415ea5e3431c91be1f6951ed4328a7179f20a3744"
+      "archived_sha256": "08781357f8d7914e912876c0045c861d5274cd158e429ddd7e4096dd405f2f37"
     },
     {
       "evidence": "run01-drc.rpt",
       "original_path": "F:\\ah-camera-hil-2020.1-run01\\drc_impl.rpt",
       "original_sha256": "9aea50bf05bc0522cc903f174b704f363ece9ac10d6b6b4e9db812382f699d59",
-      "archived_sha256": "8fd8eee2358e7d0ab81d412bf61c90d276e1beee8c311e080c31279ed25ab3b5"
+      "archived_sha256": "87d55de6ed8aa8bbb9a7af7d4083870f35c0849631961b599c1e2fed52bb69ee"
     },
     {
       "evidence": "rebuild-executed.tcl",
@@ -230,19 +230,19 @@
       "evidence": "clock-diagnose-timing.rpt",
       "original_path": "F:\\ah-camera-hil-2020.1-clock-diagnose01\\timing_impl.rpt",
       "original_sha256": "ee82f2b403b0477981733a758bcf131ccdd49a5a5e0a3b2e68a7812f3cdf0689",
-      "archived_sha256": "c832da4b020a1ec7baf675f4babec4f73e8fbeb1d76aaa73fa55a3ef2c68717e"
+      "archived_sha256": "a1f14c953d257e1020ad8bf45173c782d0ed47339d84d8fa363f2a39c0b36b31"
     },
     {
       "evidence": "clock-diagnose-clocks.rpt",
       "original_path": "F:\\ah-camera-hil-2020.1-clock-diagnose01\\clocks_impl.rpt",
       "original_sha256": "de6cf08e969b7defe68606a58c99c8744bf26b7dd9a82b29ebec1121897a7b51",
-      "archived_sha256": "6497c305487bd3ef46dea9ad48b5c0ddb7ce82d11e346193c11e0b11651a81db"
+      "archived_sha256": "bf2c2915e42dd42732f078e1d6fe5a7207977870a7244b5490472bc68b1e7582"
     },
     {
       "evidence": "clock-diagnose-drc.rpt",
       "original_path": "F:\\ah-camera-hil-2020.1-clock-diagnose01\\drc_impl.rpt",
       "original_sha256": "42d8095417d604af5741dd7a6bdbab45f0b4b8666db4ab24e504d14503ad5572",
-      "archived_sha256": "b1f5b870ccbc5873c266724bcf3e418ed098932de405e56c4659fab0cf37051d"
+      "archived_sha256": "d11025c33d6f6bad356834278c8e9f463dc8093b235fb0921d4feac2bacbf55d"
     },
     {
       "evidence": "clock-sources.txt",
