@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import json
 import time
 from urllib.request import ProxyHandler, build_opener
@@ -37,6 +37,9 @@ class CameraFrame:
     capture_monotonic: float
     received_monotonic: float
     source_age_ms: float
+    timings_ms: dict = field(default_factory=dict)
+    width: int = 0
+    height: int = 0
 
     def age_ms(self):
         # Works across hosts too: never subtract a PC clock from the board clock.
@@ -50,20 +53,24 @@ class PreviewCamera(CameraSource):
     additive HTTP server update; never guess a JPEG's identity from status.json.
     """
 
-    def __init__(self, url='http://127.0.0.1:9000', max_age_ms=800, timeout=2):
+    def __init__(self, url='http://127.0.0.1:9000', max_age_ms=800, timeout=2,
+                 decode_bgr=True):
         self.url = url.rstrip('/')
         self.max_age_ms = float(max_age_ms)
         self.timeout = timeout
         self.opener = build_opener(ProxyHandler({}))
         self.last = None
+        self.decode_bgr = decode_bgr
 
     def read_packet(self):
         try:
+            status_started = time.monotonic()
             with self.opener.open(self.url + '/status.json', timeout=self.timeout) as response:
                 status = json.loads(response.read(65536))
             if status.get('state') != 'LIVE':
                 raise CameraUnavailable('camera state: ' + str(status.get('state')))
             started = time.monotonic()
+            timings = {'status_http': (started - status_started) * 1000}
             with self.opener.open(self.url + '/frame.jpg', timeout=self.timeout) as response:
                 headers = response.headers
                 data = response.read(8 * 1024 * 1024 + 1)
@@ -72,6 +79,10 @@ class PreviewCamera(CameraSource):
                 age = float(headers['X-Frame-Age-Ms'])
                 session = headers['X-Camera-Session']
             received = time.monotonic()
+            timings['jpeg_http'] = (received - started) * 1000
+            for header, key in [('X-Copy-Ms', 'camera_copy'), ('X-Encode-Ms', 'camera_encode')]:
+                if headers.get(header) is not None:
+                    timings[key] = float(headers[header])
             # Whole HTTP duration is a conservative upper bound on transit age.
             age += (received - started) * 1000
             if (not session or seq < 0 or not np.isfinite(stamp) or stamp < 0
@@ -86,11 +97,19 @@ class PreviewCamera(CameraSource):
             if (len(data) > 8 * 1024 * 1024 or not data.startswith(b'\xff\xd8')
                     or not data.endswith(b'\xff\xd9')):
                 raise CameraUnavailable('invalid JPEG')
-            frame = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_COLOR)
-            if frame is None:
+            decode_started = time.monotonic()
+            frame = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_COLOR) if self.decode_bgr else None
+            if self.decode_bgr and frame is None:
                 raise CameraUnavailable('JPEG decode failed')
+            timings['bgr_decode'] = (time.monotonic() - decode_started) * 1000
+            width = int(headers.get('X-Frame-Width', frame.shape[1] if frame is not None else 0))
+            height = int(headers.get('X-Frame-Height', frame.shape[0] if frame is not None else 0))
+            if width <= 0 or height <= 0 or width > 8192 or height > 8192:
+                raise CameraUnavailable('atomic JPEG geometry missing; update preview HTTP server')
+            if frame is not None and (width, height) != (frame.shape[1], frame.shape[0]):
+                raise CameraUnavailable('decoded JPEG geometry mismatch')
             self.last = identity
-            packet = CameraFrame(frame, data, seq, session, stamp, received, age)
+            packet = CameraFrame(frame, data, seq, session, stamp, received, age, timings, width, height)
             if packet.age_ms() > self.max_age_ms:
                 raise CameraUnavailable('frame expired during decode')
             return packet
@@ -100,7 +119,17 @@ class PreviewCamera(CameraSource):
             raise CameraUnavailable('camera HTTP/metadata failure: %s' % error) from error
 
     def read(self):
-        return self.read_packet().bgr
+        packet = self.read_packet()
+        if packet.bgr is not None:
+            return packet.bgr
+        frame = cv2.imdecode(np.frombuffer(packet.jpeg, np.uint8), cv2.IMREAD_COLOR)
+        if frame is None:
+            raise CameraUnavailable('JPEG decode failed')
+        if (frame.shape[1], frame.shape[0]) != (packet.width, packet.height):
+            raise CameraUnavailable('decoded JPEG geometry mismatch')
+        if packet.age_ms() > self.max_age_ms:
+            raise CameraUnavailable('frame expired during decode')
+        return frame
 
     def close(self):
         pass

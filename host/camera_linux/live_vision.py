@@ -78,10 +78,13 @@ def process_usage(pids):
 
 
 class LiveVision:
-    def __init__(self, camera, detector, result_max_age_ms=1600, categories=None):
+    def __init__(self, camera, detector, result_max_age_ms=1600, categories=None,
+                 input_transport='jpeg', capture_interval_ms=200):
         self.camera, self.detector = camera, detector
         self.result_max_age_ms = result_max_age_ms
         self.categories = set(categories or ('apple', 'banana', 'bottle', 'car'))
+        self.input_transport = input_transport
+        self.capture_interval_s = capture_interval_ms / 1000.
         self.lock = threading.Lock()
         self.stop = threading.Event()
         self.latest = None
@@ -117,7 +120,7 @@ class LiveVision:
                 with self.lock:
                     self.source_error = str(error)
                     self.latest = None
-            self.stop.wait(.1)
+            self.stop.wait(self.capture_interval_s)
 
     def infer(self):
         while not self.stop.is_set():
@@ -130,7 +133,10 @@ class LiveVision:
                 continue
             started = time.monotonic()
             try:
-                detections = self.detector.detect_raw(packet.bgr)
+                deadline = time.monotonic() + (self.camera.max_age_ms-packet.age_ms())/1000
+                detections = (self.detector.detect_jpeg(packet.jpeg, packet.width, packet.height, deadline)
+                              if self.input_transport == 'jpeg'
+                              else self.detector.detect_raw(packet.bgr, deadline))
                 elapsed = (time.monotonic() - started) * 1000
                 selected = [dict(category=DISPLAY_CLASSES.get(cid), confidence=confidence,
                                  bbox_xyxy=box) for cid,confidence,box in detections
@@ -152,6 +158,11 @@ class LiveVision:
                               service_and_bridge_rss_kib=usage['rss_kib'],
                               service_and_bridge_cpu_seconds=usage['cpu_seconds'],
                               bridge_pid=self.detector.proc.pid)
+                result.update(input_transport=self.input_transport,
+                              source_timings_ms=packet.timings_ms,
+                              native_timings_ms=getattr(self.detector, 'native_timings_ms', {}),
+                              bridge_timings_ms=getattr(self.detector, 'bridge_timings_ms', {}),
+                              bridge_input_bytes=getattr(self.detector, 'bridge_input_bytes', None))
                 if result['age_ms'] > self.result_max_age_ms:
                     result.update(state='STALE', error='inference result expired', detections=[])
                     result.pop('jpeg_base64', None)
@@ -162,6 +173,9 @@ class LiveVision:
                         result.pop('jpeg_base64', None)
                     self.result = (result, packet)
                 print(json.dumps({k:v for k,v in result.items() if k != 'jpeg_base64'}), flush=True)
+            except CameraUnavailable as error:
+                with self.lock:
+                    self.result = ({'state':'STALE', 'error':str(error), 'detections':[]}, packet)
             except Exception as error:
                 with self.lock:
                     self.result = ({'state':'MODEL_ERROR','error':str(error), 'detections':[]}, packet)
@@ -202,7 +216,9 @@ def main():
     parser.add_argument('--model-dir', type=Path, required=True)
     parser.add_argument('--bridge', required=True)
     parser.add_argument('--input-size', type=int, default=416)
-    parser.add_argument('--threads', type=int, default=3)
+    parser.add_argument('--threads', type=int, default=2)
+    parser.add_argument('--input-transport', choices=('bmp','jpeg'), default='jpeg')
+    parser.add_argument('--capture-interval-ms', type=float, default=200)
     parser.add_argument('--conf', type=float, default=.35)
     parser.add_argument('--categories', nargs='+', default=['apple','banana','bottle','car'])
     parser.add_argument('--source-max-age-ms', type=float, default=800)
@@ -210,14 +226,18 @@ def main():
     parser.add_argument('--bind', default='127.0.0.1')
     parser.add_argument('--port', type=int, default=9100)
     args = parser.parse_args()
+    if not 20 <= args.capture_interval_ms <= 500:
+        parser.error('capture interval must be between 20 and 500 ms')
     if platform.machine() != 'aarch64':
         parser.error('this demonstration must run on the Z19 ARM64 board')
     manifest = verify_model(args.model_dir, args.input_size)
     detector = build_detector({'vision':{'backend':'ncnn_cpp','conf_threshold':args.conf,
                               'ncnn':dict(model_dir=str(args.model_dir), executable=args.bridge,
                                           input_size=args.input_size, num_threads=args.threads)}})
-    pipeline = LiveVision(PreviewCamera(args.camera_url, args.source_max_age_ms), detector,
-                          args.result_max_age_ms, args.categories)
+    pipeline = LiveVision(PreviewCamera(args.camera_url, args.source_max_age_ms,
+                                       decode_bgr=args.input_transport != 'jpeg'), detector,
+                          args.result_max_age_ms, args.categories, args.input_transport,
+                          args.capture_interval_ms)
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self):
             if self.path == '/':

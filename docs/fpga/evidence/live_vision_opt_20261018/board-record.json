@@ -1,0 +1,126 @@
+{
+  "architecture": "aarch64",
+  "host": "zu19eg_mipi",
+  "kernel": "5.4.0-xilinx-v2020.2",
+  "source_sha256": {
+    "host/app/vision/camera.py": "7bfadcb0318714e4079d9dce96bba966db9f6ae376172eeda246d58670aae632",
+    "host/app/vision/backends/ncnn_cpp.py": "c0303a052ce1482b2c9212eca374748796a410b96cf4c242b02f48347ad65bd6",
+    "host/camera_linux/live_vision.py": "c53be8f07c6cb7f62b8c41b293c02c5ecb135a5983eeb66f98eeee23f2392b8b",
+    "host/camera_linux/vision_control.py": "5ade89058729b8877889ec45da3cccc4392bd2117cba8222b1718ce39645c449",
+    "host/camera_linux/preview_server.py": "1d9c0d1eeb4293bad6c9ac427dfcb63bf030ca3b73de40425ac77b36a7a21c16",
+    "host/camera_linux/ncnn_bridge/main.cpp": "ad9a59c6a45f2988db0896516b24ecbd441ed45ffc39f826e700a9b6f5e48caa",
+    "native/ah_ncnn_bridge": "1d70f69efe909f1c7c96efe9057250c39a69df5e37b486dbf9b034cd63e4262d",
+    "tools/profile_live_vision.py": "447a35ad5f2a70dab3435fe57bcffb269ba141d504db2a3a10ab35b6c3d01256"
+  },
+  "unchanged_original_sha256": {
+    "/lib/firmware/amazinghand-camera-28e1e3e7-20261010.bin": "e25e9bc7fd4c2008c7a198a91bc4937716b333259d08da7ed777d8ffe9b3384b",
+    "/opt/amazinghand/camera0-linux-hd-20261010/ah_camera0.ko": "56bc43d3153ed861a598293ea7d38920806107c1ec8eaac4b70eeb87f62fe368",
+    "/opt/amazinghand/camera0-linux-hd-20261010/capture_camera0": "fdb6ed7b6c3fd7961a2e089fff9cd392baae74453d01085a0f292c95874b4ce2",
+    "/opt/amazinghand/live-vision-20261018/native-openmp/bridge/ah_ncnn_bridge": "857f3a36f7836f786a5cf34424f1e118a77d6c3469405bccb612b10fc96c801c",
+    "/opt/amazinghand/live-vision-20261018/models/model.ncnn.param": "f3442384b9a10d471fa7b423ad2ce73f27db475c1105be89f4fc8a1489f74b77",
+    "/opt/amazinghand/live-vision-20261018/models/model.ncnn.bin": "3d2aded68c86aab0f298cf0091699d010cad87ad65ecafad2729b1f557469871"
+  },
+  "state": {
+    "pid": 21822,
+    "start_ticks": "537415",
+    "log": "/var/lib/amazinghand/log/vision-opt-20261018/vision-20261010T125824Z.jsonl",
+    "service": "/opt/amazinghand/live-vision-opt-20261018/host/camera_linux/live_vision.py"
+  },
+  "processes": {
+    "preview": {
+      "pid": 27170,
+      "cmdline": "python3 /opt/amazinghand/live-vision-opt-20261018/host/camera_linux/preview_server.py --capture /opt/amazinghand/camera0-linux-hd-20261010/capture_camera0 --bind 0.0.0.0 --log-dir /var/lib/amazinghand/log/vision-opt-20261018 ",
+      "status": "Name:\tpython3\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t27170\nNgid:\t0\nPid:\t27170\nPPid:\t1\nTracerPid:\t0\nUid:\t0\t0\t0\t0\nGid:\t0\t0\t0\t0\nFDSize:\t64\nGroups:\t0 \nNStgid:\t27170\nNSpid:\t27170\nNSpgid:\t27170\nNSsid:\t27170\nVmPeak:\t  243452 kB\nVmSize:\t  243160 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   17524 kB\nVmRSS:\t   17288 kB\nRssAnon:\t   10220 kB\nRssFile:\t    7068 kB\nRssShmem:\t       0 kB\nVmData:\t   35340 kB\nVmStk:\t     132 kB\nVmExe:\t       4 kB\nVmLib:\t    9784 kB\nVmPTE:\t     104 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nThreads:\t1\nSigQ:\t0/28743\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000180004003\nCapInh:\t0000000000000000\nCapPrm:\t0000003fffffffff\nCapEff:\t0000003fffffffff\nCapBnd:\t0000003fffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSpeculation_Store_Bypass:\tnot vulnerable\nCpus_allowed:\tf\nCpus_allowed_list:\t0-3\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t12316\nnonvoluntary_ctxt_switches:\t12\n",
+      "tids": {
+        "27170": "27170 (python3) S 1 27170 27170 0 -1 4194304 2995 0 0 0 246 48 0 0 20 0 1 0 512769 248995840 4322 18446744073709551615 187650360782848 187650360785852 281474300009936 0 0 0 0 16781312 16387 1 0 0 17 3 0 0 0 0 0 187650360851824 187650360852496 187650413957120 281474300014142 281474300014367 281474300014367 281474300014567 0\n"
+      }
+    },
+    "capture": {
+      "pid": 27171,
+      "cmdline": "/opt/amazinghand/camera0-linux-hd-20261010/capture_camera0 3600 /var/lib/amazinghand/log/vision-opt-20261018/camera0-preview-20261010-125418-1.raw 300 /run/amazinghand-preview/camera0-preview-20261010-125418-1 ",
+      "status": "Name:\tcapture_camera0\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t27171\nNgid:\t0\nPid:\t27171\nPPid:\t27170\nTracerPid:\t0\nUid:\t0\t0\t0\t0\nGid:\t0\t0\t0\t0\nFDSize:\t64\nGroups:\t0 \nNStgid:\t27171\nNSpid:\t27171\nNSpgid:\t27170\nNSsid:\t27170\nVmPeak:\t  278732 kB\nVmSize:\t  213064 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   13924 kB\nVmRSS:\t   13620 kB\nRssAnon:\t   12576 kB\nRssFile:\t    1044 kB\nRssShmem:\t       0 kB\nVmData:\t   62700 kB\nVmStk:\t     132 kB\nVmExe:\t      20 kB\nVmLib:\t    1848 kB\nVmPTE:\t     136 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nThreads:\t7\nSigQ:\t0/28743\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000000000\nSigCgt:\t0000000180004002\nCapInh:\t0000000000000000\nCapPrm:\t0000003fffffffff\nCapEff:\t0000003fffffffff\nCapBnd:\t0000003fffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSpeculation_Store_Bypass:\tnot vulnerable\nCpus_allowed:\tf\nCpus_allowed_list:\t0-3\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t117183\nnonvoluntary_ctxt_switches:\t11\n",
+      "tids": {
+        "27171": "27171 (capture_camera0) S 27170 27170 27170 0 -1 1077936384 103 0 0 0 100 355 0 0 20 0 7 0 512808 218177536 3405 18446744073709551615 187649996656640 187649996674260 281474485164960 0 0 0 0 0 16386 1 0 0 17 1 0 0 0 0 0 187649996742024 187649996743080 187650897600512 281474485165603 281474485165813 281474485165813 281474485166013 0\n",
+        "27174": "27174 (capture_camera0) R 27170 27170 27170 0 -1 4194368 245027 0 0 0 12687 289 0 0 20 0 7 0 512898 218177536 3405 18446744073709551615 187649996656640 187649996674260 281474485164960 0 0 0 0 0 16386 0 0 0 -1 2 0 0 0 0 0 187649996742024 187649996743080 187650897600512 281474485165603 281474485165813 281474485165813 281474485166013 0\n",
+        "27175": "27175 (capture_camera0) S 27170 27170 27170 0 -1 1077936192 182822 0 0 0 8954 199 0 0 20 0 7 0 512898 218177536 3405 18446744073709551615 187649996656640 187649996674260 281474485164960 0 0 0 0 0 16386 1 0 0 -1 3 0 0 0 0 0 187649996742024 187649996743080 187650897600512 281474485165603 281474485165813 281474485165813 281474485166013 0\n",
+        "31869": "31869 (capture_camera0) R 27170 27170 27170 0 -1 4194368 0 0 0 0 0 0 0 0 20 0 7 0 547156 218177536 3405 18446744073709551615 187649996656640 187649996674260 281474485164960 0 0 0 0 0 16386 0 0 0 -1 0 0 0 0 0 0 187649996742024 187649996743080 187650897600512 281474485165603 281474485165813 281474485165813 281474485166013 0\n",
+        "31870": "31870 (capture_camera0) R 27170 27170 27170 0 -1 4194368 0 0 0 0 0 0 0 0 20 0 7 0 547156 218177536 3405 18446744073709551615 187649996656640 187649996674260 281474485164960 0 0 0 0 0 16386 0 0 0 -1 2 0 0 0 0 0 187649996742024 187649996743080 187650897600512 281474485165603 281474485165813 281474485165813 281474485166013 0\n",
+        "31871": "31871 (capture_camera0) R 27170 27170 27170 0 -1 4194368 0 0 0 0 0 0 0 0 20 0 7 0 547156 218177536 3405 18446744073709551615 187649996656640 187649996674260 281474485164960 0 0 0 0 0 16386 0 0 0 -1 3 0 0 0 0 0 187649996742024 187649996743080 187650897600512 281474485165603 281474485165813 281474485165813 281474485166013 0\n",
+        "31872": "31872 (capture_camera0) R 27170 27170 27170 0 -1 4194368 0 0 0 0 0 0 0 0 20 0 7 0 547156 218177536 3405 18446744073709551615 187649996656640 187649996674260 281474485164960 0 0 0 0 0 16386 0 0 0 -1 0 0 0 0 0 0 187649996742024 187649996743080 187650897600512 281474485165603 281474485165813 281474485165813 281474485166013 0\n"
+      }
+    },
+    "vision": {
+      "pid": 21822,
+      "cmdline": "/usr/bin/python3 /opt/amazinghand/live-vision-opt-20261018/host/camera_linux/live_vision.py --model-dir /opt/amazinghand/live-vision-20261018/models --bridge /opt/amazinghand/live-vision-opt-20261018/native/ah_ncnn_bridge --threads 2 --input-transport jpeg --capture-interval-ms 200 ",
+      "status": "Name:\tpython3\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t21822\nNgid:\t0\nPid:\t21822\nPPid:\t1\nTracerPid:\t0\nUid:\t0\t0\t0\t0\nGid:\t0\t0\t0\t0\nFDSize:\t64\nGroups:\t0 \nNStgid:\t21822\nNSpid:\t21822\nNSpgid:\t21822\nNSsid:\t21822\nVmPeak:\t  344084 kB\nVmSize:\t  344084 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   70240 kB\nVmRSS:\t   70240 kB\nRssAnon:\t   41252 kB\nRssFile:\t   28988 kB\nRssShmem:\t       0 kB\nVmData:\t   76816 kB\nVmStk:\t     132 kB\nVmExe:\t       4 kB\nVmLib:\t   77092 kB\nVmPTE:\t     304 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nThreads:\t3\nSigQ:\t0/28743\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000180004003\nCapInh:\t0000000000000000\nCapPrm:\t0000003fffffffff\nCapEff:\t0000003fffffffff\nCapBnd:\t0000003fffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSpeculation_Store_Bypass:\tnot vulnerable\nCpus_allowed:\tf\nCpus_allowed_list:\t0-3\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t993\nnonvoluntary_ctxt_switches:\t79\n",
+      "tids": {
+        "21822": "21822 (python3) S 1 21822 21822 0 -1 4194304 11519 260 0 0 139 16 0 0 20 0 3 0 537415 352342016 17560 18446744073709551615 187650382331904 187650382334908 281474064622864 0 0 0 0 16781312 16387 1 0 0 17 0 0 0 0 0 0 187650382400880 187650382401552 187650743488512 281474064625156 281474064625439 281474064625439 281474064625639 0\n",
+        "21974": "21974 (python3) S 1 21822 21822 0 -1 1077936192 4414 260 0 0 364 42 0 0 20 0 3 0 537557 352342016 17560 18446744073709551615 187650382331904 187650382334908 281474064622864 0 0 0 0 16781312 16387 1 0 0 -1 1 0 0 0 0 0 187650382400880 187650382401552 187650743488512 281474064625156 281474064625439 281474064625439 281474064625639 0\n",
+        "21975": "21975 (python3) S 1 21822 21822 0 -1 4194368 295 260 0 0 100 15 0 0 20 0 3 0 537559 352342016 17560 18446744073709551615 187650382331904 187650382334908 281474064622864 0 0 0 0 16781312 16387 1 0 0 -1 1 0 0 0 0 0 187650382400880 187650382401552 187650743488512 281474064625156 281474064625439 281474064625439 281474064625639 0\n"
+      }
+    },
+    "native": {
+      "pid": 21969,
+      "cmdline": "/opt/amazinghand/live-vision-opt-20261018/native/ah_ncnn_bridge /opt/amazinghand/live-vision-20261018/models 416 2 0.35 0.45 ",
+      "status": "Name:\tah_ncnn_bridge\nUmask:\t0022\nState:\tR (running)\nTgid:\t21969\nNgid:\t0\nPid:\t21969\nPPid:\t21822\nTracerPid:\t0\nUid:\t0\t0\t0\t0\nGid:\t0\t0\t0\t0\nFDSize:\t64\nGroups:\t0 \nNStgid:\t21969\nNSpid:\t21969\nNSpgid:\t21822\nNSsid:\t21822\nVmPeak:\t  118068 kB\nVmSize:\t  118068 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t  100104 kB\nVmRSS:\t  100104 kB\nRssAnon:\t   92516 kB\nRssFile:\t    7588 kB\nRssShmem:\t       0 kB\nVmData:\t  103408 kB\nVmStk:\t     132 kB\nVmExe:\t    1152 kB\nVmLib:\t   11924 kB\nVmPTE:\t     264 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nThreads:\t2\nSigQ:\t0/28743\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000000000\nSigCgt:\t0000000180000000\nCapInh:\t0000000000000000\nCapPrm:\t0000003fffffffff\nCapEff:\t0000003fffffffff\nCapBnd:\t0000003fffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSpeculation_Store_Bypass:\tnot vulnerable\nCpus_allowed:\tf\nCpus_allowed_list:\t0-3\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t4362\nnonvoluntary_ctxt_switches:\t18462\n",
+      "tids": {
+        "21969": "21969 (ah_ncnn_bridge) R 21822 21822 21822 0 -1 4194304 17764 0 0 0 7627 52 0 0 20 0 2 0 537555 120901632 25026 18446744073709551615 187650686840832 187650688018992 281474179802592 0 0 0 0 0 0 0 0 0 17 1 0 0 0 0 0 187650688087024 187650688099376 187651543654400 281474179804787 281474179804912 281474179804912 281474179805112 0\n",
+        "21977": "21977 (ah_ncnn_bridge) S 21822 21822 21822 0 -1 1077936192 8702 0 0 0 5975 30 0 0 20 0 2 0 537559 120901632 25026 18446744073709551615 187650686840832 187650688018992 281474179802592 0 0 0 0 0 0 1 0 0 -1 1 0 0 0 0 0 187650688087024 187650688099376 187651543654400 281474179804787 281474179804912 281474179804912 281474179805112 0\n"
+      }
+    }
+  },
+  "elf": "/opt/amazinghand/live-vision-opt-20261018/native/ah_ncnn_bridge: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=ab0a5fc3b5c4b957bab7bb2abfc68260d04b706f, for GNU/Linux 3.14.0, with debug_info, not stripped",
+  "ldd": "\tlinux-vdso.so.1 (0x0000ffff854e5000)\n\tlibopencv_imgcodecs.so.3.4 => /usr/lib/libopencv_imgcodecs.so.3.4 (0x0000ffff85243000)\n\tlibgomp.so.1 => /usr/lib/libgomp.so.1 (0x0000ffff85202000)\n\tlibopencv_imgproc.so.3.4 => /usr/lib/libopencv_imgproc.so.3.4 (0x0000ffff84ecb000)\n\tlibopencv_core.so.3.4 => /usr/lib/libopencv_core.so.3.4 (0x0000ffff84c7c000)\n\tlibstdc++.so.6 => /usr/lib/libstdc++.so.6 (0x0000ffff84a9d000)\n\tlibm.so.6 => /lib/libm.so.6 (0x0000ffff849f3000)\n\tlibgcc_s.so.1 => /lib/libgcc_s.so.1 (0x0000ffff849cc000)\n\tlibpthread.so.0 => /lib/libpthread.so.0 (0x0000ffff8499c000)\n\tlibc.so.6 => /lib/libc.so.6 (0x0000ffff84831000)\n\tlibjpeg.so.62 => /usr/lib/libjpeg.so.62 (0x0000ffff847e0000)\n\tlibwebp.so.7 => /usr/lib/libwebp.so.7 (0x0000ffff8477c000)\n\tlibpng16.so.16 => /usr/lib/libpng16.so.16 (0x0000ffff8473a000)\n\tlibtiff.so.5 => /usr/lib/libtiff.so.5 (0x0000ffff846b3000)\n\tlibz.so.1 => /lib/libz.so.1 (0x0000ffff8468c000)\n\t/lib/ld-linux-aarch64.so.1 (0x0000ffff854b7000)\n\tlibdl.so.2 => /lib/libdl.so.2 (0x0000ffff84678000)\n\tlibtbb.so.2 => /usr/lib/libtbb.so.2 (0x0000ffff84639000)\n\tliblzma.so.5 => /usr/lib/liblzma.so.5 (0x0000ffff84604000)\n\tlibrt.so.1 => /lib/librt.so.1 (0x0000ffff845ea000)\n",
+  "dmesg_tail": [
+    "[    5.249571] mmcblk0boot0: mmc0:0001 S0J57X partition 1 31.5 MiB",
+    "[    5.255654] mmcblk0boot1: mmc0:0001 S0J57X partition 2 31.5 MiB",
+    "[    5.261629] mmcblk0rpmb: mmc0:0001 S0J57X partition 3 4.00 MiB, chardev (244:0)",
+    "[    5.298129] cfg80211: Loaded X.509 cert 'sforshee: 00b28ddf47aef9cea7'",
+    "[    5.302869] usb 1-1: new high-speed USB device number 2 using xhci-hcd",
+    "[    5.304659] clk: Not disabling unused clocks",
+    "[    5.315692] ALSA device list:",
+    "[    5.318657]   #0: DisplayPort monitor",
+    "[    5.322577] platform regulatory.0: Direct firmware load for regulatory.db failed with error -2",
+    "[    5.331189] cfg80211: failed to load regulatory.db",
+    "[    5.378596] EXT4-fs (mmcblk1p2): recovery complete",
+    "[    5.385887] EXT4-fs (mmcblk1p2): mounted filesystem with ordered data mode. Opts: (null)",
+    "[    5.393992] VFS: Mounted root (ext4 filesystem) on device 179:2.",
+    "[    5.407169] devtmpfs: mounted",
+    "[    5.410290] Freeing unused kernel memory: 768K",
+    "[    5.414770] Run /sbin/init as init process",
+    "[    5.465279] usb 1-1: New USB device found, idVendor=05e3, idProduct=0610, bcdDevice=93.04",
+    "[    5.473451] usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=0",
+    "[    5.480575] usb 1-1: Product: USB2.1 Hub",
+    "[    5.484488] usb 1-1: Manufacturer: GenesysLogic",
+    "[    5.532963] random: fast init done",
+    "[    5.538085] hub 1-1:1.0: USB hub found",
+    "[    5.542059] hub 1-1:1.0: 4 ports detected",
+    "[    5.601952] usb 2-1: new SuperSpeed Gen 1 USB device number 2 using xhci-hcd",
+    "[    5.629436] usb 2-1: New USB device found, idVendor=05e3, idProduct=0620, bcdDevice=93.04",
+    "[    5.637608] usb 2-1: New USB device strings: Mfr=1, Product=2, SerialNumber=0",
+    "[    5.644740] usb 2-1: Product: USB3.1 Hub",
+    "[    5.648651] usb 2-1: Manufacturer: GenesysLogic",
+    "[    5.682081] hub 2-1:1.0: USB hub found",
+    "[    5.686109] hub 2-1:1.0: 4 ports detected",
+    "[    5.762882] [drm] Cannot find any crtc or sizes",
+    "[    5.967633] udevd[402]: starting version 3.2.8",
+    "[    5.988108] random: udevd: uninitialized urandom read (16 bytes read)",
+    "[    5.995303] random: udevd: uninitialized urandom read (16 bytes read)",
+    "[    6.001765] random: udevd: uninitialized urandom read (16 bytes read)",
+    "[    6.058635] udevd[403]: starting eudev-3.2.8",
+    "[    6.177805] mali: loading out-of-tree module taints kernel.",
+    "[    7.473250] FAT-fs (mmcblk1p1): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.",
+    "[    7.549742] EXT4-fs (mmcblk1p2): re-mounted. Opts: (null)",
+    "[    9.005592] urandom_read: 4 callbacks suppressed",
+    "[    9.005596] random: dd: uninitialized urandom read (512 bytes read)",
+    "[    9.127440] pps pps0: new PPS source ptp0",
+    "[    9.131449] macb ff0e0000.ethernet: gem-ptp-timer ptp clock registered.",
+    "[    9.195320] random: dbus-daemon: uninitialized urandom read (12 bytes read)",
+    "[    9.213239] random: dbus-daemon: uninitialized urandom read (12 bytes read)",
+    "[    9.958895] random: crng init done",
+    "[   90.015412] macb ff0e0000.ethernet eth1: link up (100/Full)",
+    "[   90.020998] IPv6: ADDRCONF(NETDEV_CHANGE): eth1: link becomes ready",
+    "[ 4588.494498] fpga_manager fpga0: writing amazinghand-camera-28e1e3e7-20261010.bin to Xilinx ZynqMP FPGA Manager",
+    "[ 4588.671335] ah_camera0: 1920 x 1080 RGB, 3 buffers, DMA=0x50100000 map=18665472"
+  ]
+}

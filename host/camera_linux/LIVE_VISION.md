@@ -12,7 +12,8 @@ red model car. `car` is a demo-only COCO mapping; no grasp-table entry is added.
 
 `PreviewCamera` reads the existing `/status.json` and `/frame.jpg`. New additive
 JPEG headers (`X-Sequence`, `X-Capture-Monotonic`, `X-Frame-Age-Ms`,
-`X-Camera-Session`) bind identity to the locked JPEG snapshot. Old HTTP servers
+`X-Camera-Session`, `X-Frame-Width`, `X-Frame-Height`, copy/encode timings) bind
+identity and geometry to the locked JPEG snapshot. Old HTTP servers
 without headers fail explicitly; a separate status response is never used to
 guess which JPEG was fetched. Existing `/stream.mjpg` and camera controls remain.
 
@@ -28,7 +29,10 @@ Low confidence produces `NO_TARGET`. Every state prohibits autonomous grasping.
 `bbox_xyxy` in original JPEG pixels, total inference time, native inference time,
 backend, machine architecture, board hostname, service/bridge PIDs, accumulated
 FPS, CPU seconds and current RSS for service + bridge. Native timing includes
-letterbox, NCNN and NMS; total timing additionally includes BMP IPC and decode.
+letterbox, NCNN and NMS; total timing additionally includes JPEG IPC and decode.
+Separate `source_timings_ms`, `native_timings_ms` and `bridge_timings_ms` expose
+HTTP reads, source decode, native decode/preprocess/forward/postprocess and IPC.
+`bridge_input_bytes` reports bytes separately from milliseconds.
 The independent original camera service's resource use is not included in RSS.
 `jpeg_sha256` identifies the decoded browser source. No PC inference occurs.
 
@@ -100,7 +104,31 @@ incomplete single-thread build is retained separately, not a validated artifact.
 Without the optional private header the compiler may build single-thread NCNN;
 `num_threads=4` alone is not proof of parallel execution. The bridge reports
 whether OpenMP is compiled in, and uses only ARMv8 baseline instructions.
-The demo defaults to three inference threads to leave CPU time for HD capture.
+The optimized demo defaults to two inference threads, JPEG transport and a
+200 ms source poll interval; the first-round baseline used three threads/BMP.
+
+For the follow-up bridge-only build, reuse the retained validated static NCNN
+prefix; do not rebuild or overwrite it. Copy new sources into a new `N` directory:
+
+```sh
+OLD=/opt/amazinghand/live-vision-20261018
+N=/opt/amazinghand/live-vision-opt-20261018
+# N/native must not already exist. These variables refer only to private files.
+test ! -e "$N/native" || exit 1
+cmake -S "$N/host/camera_linux/ncnn_bridge" -B "$N/native" \
+  -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$OLD/native-openmp/local" \
+  -DCMAKE_CXX_FLAGS="-I$OLD/private-omp" \
+  -DOpenMP_CXX_FLAGS=-fopenmp -DOpenMP_CXX_LIB_NAMES=gomp \
+  -DOpenMP_gomp_LIBRARY=/usr/lib/libgomp.so.1
+cmake --build "$N/native" -- -j1
+```
+
+The native request carries the original JPEG width/height and a board monotonic
+deadline. Native OpenCV actually decodes the image and rejects corrupt data or
+geometry disagreement, then checks the unchanged 800 ms deadline **before** NCNN
+forward. JPEG marker bytes alone are insufficient validation. The exact JPEG is
+decoded only for a frame selected for inference; the single-slot producer no
+longer decodes each discarded waiting frame. BMP remains a diagnostic option.
 
 ## Start, view, stop
 
@@ -122,7 +150,7 @@ driver/PL loaded. The actual new-copy startup command is:
 
 ```sh
 export PATH=/usr/sbin:/usr/bin:/sbin:/bin
-D=/opt/amazinghand/live-vision-20261018
+D=/opt/amazinghand/live-vision-opt-20261018
 mkdir -p /var/lib/amazinghand/log /run/amazinghand-preview
 python3 "$D/host/camera_linux/preview_server.py" \
   --capture /opt/amazinghand/camera0-linux-hd-20261010/capture_camera0 \
@@ -136,8 +164,11 @@ Do not run the new copy's unchanged `start_preview.py` with defaults: the
 validated capture ELF deliberately remains in the original package.
 
 ```sh
-D=/opt/amazinghand/live-vision-20261018
-python3 "$D/host/camera_linux/vision_control.py" start --model-dir "$D/models" --bridge "$D/native-openmp/bridge/ah_ncnn_bridge"
+D=/opt/amazinghand/live-vision-opt-20261018
+OLD=/opt/amazinghand/live-vision-20261018
+python3 "$D/host/camera_linux/vision_control.py" start \
+  --model-dir "$OLD/models" --bridge "$D/native/ah_ncnn_bridge" \
+  --threads 2 --input-transport jpeg --capture-interval-ms 200
 python3 "$D/host/camera_linux/vision_control.py" status
 ```
 
@@ -155,7 +186,7 @@ python3 "$D/host/camera_linux/vision_control.py" stop
 ```
 
 This verifies PID start time/command identity, then requests clean exit and
-cleans the bridge's owned `/run/ah-vision-*` BMP directory. It preserves logs,
+cleans the bridge's owned `/run/ah-vision-*` IPC directory. It preserves logs,
 models, original camera preview and firmware. Ctrl+C closes the PC tunnel.
 Restarting/reverting camera service must first confirm camera ownership; PL
 reconfiguration is a separate approved operation, never part of vision startup.
@@ -170,7 +201,75 @@ owner separately chooses to share them; a summary includes hashes and timings.
 Focused checks: `python host/tests/test_live_vision.py`. Actual board results and
 limitations are recorded in `docs/log/2026-10-18.md` and the validation JSON.
 
-## Measured result, 2026-10-18
+## Follow-up measured result, 2026-10-18
+
+Same original 1080p camera ELF/driver/bit and 416 FP32 model; same 800/1600 ms
+source/result expiry, confidence .35 and nice=0. A new board boot required a new
+explicit owner approval before restoring the original camera with its guarded
+loader once. No new dependency, PS clock or SD boot change was made.
+
+| On-board profile | Preview FPS median | Detection completed FPS | Total inference median / p95 ms | Observed age median / p95 ms | AI RSS MiB |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Camera only, 20.46 s | 27.75 | — | — | — | — |
+| Previous HEAD BMP / 3T, warm 30.49 s | 7.38 | 1.970 | 483.1 / 594.8 | 1065.0 / 1441.7 | 231.7 |
+| JPEG / 3T, 30.40 s | 10.95 | 1.976 | 500.7 / 564.2 | 1027.3 / 1218.6 | 190.7 |
+| JPEG / 2T / poll100, 30.15 s | 14.73 | 2.094 | 472.2 / 515.8 | 877.9 / 1157.5 | 167.3 |
+| **Selected JPEG / 2T / poll200, 30.08 s** | **14.89** | **2.099** | **462.4 / 504.1** | **899.3 / 1201.6** | **166.1** |
+
+Preview is **approximately 15 FPS**, with sampled minimum 10.93 and p95 17.92;
+it is not continuously >=15. CPU remains busy: 88.26% of total four-core
+capacity versus baseline 95.31%. Final median per-core usage is 88.0/88.9/88.9/87.0%;
+process CPU (one-core basis) is camera180.35%, native141.65%, Python5.71%,
+previewHTTP3.70%. Service+native RSS excludes the independent camera processes.
+These short sequential observations do not establish guarantees or isolated
+causal effects; scene, scheduling and allocator differences can affect numbers.
+
+The 10.41 s instrumented BMP diagnostic measured producer JPEG→BGR87.04 ms,
+6,220,854-byte BMP write14.20 ms, native BMP read9.02 ms, forward452.03 ms.
+The final JPEG path uses about134,931 bytes/write0.78 ms; producer decode is
+deferred, native JPEG decode60.67 ms, preprocess11.36 ms, forward381.62 ms,
+postprocess5.76 ms (all medians). Source status/JPEG HTTP reads12.31/11.68 ms;
+camera copy/encode26.19/48.10 ms. Original capture still enforces its 30 ms copy
+deadline: final raw counters grew450 frames/228 copy discards/129 busy skips.
+No tearing guard or obsolete-frame check was disabled to increase rate.
+
+All56 final observer reads were LIVE with a real car box. The .5 s observer saw
+56 unique valid results (1.862/s); completed inference throughput2.099/s comes
+from the processed counter and can exceed the observer's sampling limit.
+Observed age includes consumer sampling delay, not just publication age.
+Corrupt JPEG, geometry mismatch and expired-before-forward native probes pass;
+12 focused checks pass on PC and board. Full frames containing faces stay local.
+
+Raw JSONL, per-core/process statistics, build diagnostics, source/ELF hashes and
+same-frame browser proof are in the [follow-up validation](../../docs/fpga/evidence/live_vision_opt_20261018/validation.json).
+
+![Actual optimized board result, browser car ROI](../../docs/fpga/evidence/live_vision_opt_20261018/z19-opt-car-board-detection.png)
+
+The browser DOM frame/hash matched its JSON exactly. The real-time ROI screenshot
+may be later than the recorded sample; it is not claimed to be that exact frame.
+
+To repeat a read-only profile on the board, identify the currently owned preview
+PID first, then choose a new output directory:
+
+```sh
+python3 "$D/tools/profile_live_vision.py" --preview-pid <verified-preview-PID> \
+  --vision-url http://127.0.0.1:9100 --seconds 30 --output /var/lib/amazinghand/log/new-profile
+```
+
+For software rollback, stop with the **new** controller above, wait until its
+`status` reports STOPPED, then start the retained first-round controller:
+
+```sh
+python3 "$OLD/host/camera_linux/vision_control.py" start \
+  --model-dir "$OLD/models" --bridge "$OLD/native-openmp/bridge/ah_ncnn_bridge"
+```
+
+The additive preview headers work with either version. There is no reason to
+reload PL or unload the driver for this software rollback. If preview itself
+must revert, stop only its verified owned process and reuse the original capture
+with the retained first-round HTTP copy. Neither operation rewrites original files.
+
+## First-round measured result, 2026-10-18 (historical)
 
 The real red model car was detected by Z19 ARM NCNN (for example car 0.93735).
 A 30.172-second run yielded 58 distinct results, **1.922 fps**, total inference

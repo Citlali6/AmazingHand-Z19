@@ -1,0 +1,30 @@
+{
+  "checks": [
+    {
+      "name": "corrupt",
+      "response": {
+        "error": "native inference failed; see bridge diagnostics",
+        "error_code": "MODEL_ERROR"
+      }
+    },
+    {
+      "name": "geometry_mismatch",
+      "response": {
+        "error": "native inference failed; see bridge diagnostics",
+        "error_code": "MODEL_ERROR"
+      }
+    },
+    {
+      "name": "expired_before_forward",
+      "response": {
+        "error": "native inference failed; see bridge diagnostics",
+        "error_code": "STALE_INPUT"
+      }
+    }
+  ],
+  "source_jpeg_sha256": "d9e6b906fa54b2084bce5cd47fd98b6f764545752e6e291e36f9c595352f7abf",
+  "width": 1920,
+  "height": 1080,
+  "stderr": "NCNN_CPU_READY requested_threads=2 input=416 openmp=enabled\nNCNN_ERROR image decode failed\nNCNN_ERROR JPEG geometry differs from atomic frame metadata\nNCNN_ERROR STALE_INPUT\n",
+  "returncode": 0
+}

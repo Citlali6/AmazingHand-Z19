@@ -68,6 +68,15 @@ class CameraContract(unittest.TestCase):
         with patch.object(self.camera.opener,'open',side_effect=OSError('offline')):
             with self.assertRaises(CameraUnavailable): self.camera.read_packet()
 
+    def test_encoded_transport_requires_geometry_and_defers_decode(self):
+        self.camera.decode_bgr=False
+        with self.assertRaises(CameraUnavailable): self.read()
+        self.headers.update({'X-Frame-Width':'40','X-Frame-Height':'20'})
+        with patch('app.vision.camera.cv2.imdecode',side_effect=AssertionError('producer decoded')):
+            packet=self.read()
+        self.assertIsNone(packet.bgr)
+        self.assertEqual((packet.width,packet.height),(40,20))
+
 
 class YoloContract(unittest.TestCase):
     def test_rgb_and_padding(self):

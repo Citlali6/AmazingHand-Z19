@@ -208,6 +208,10 @@ def main():
                         'X-Sequence': result['sequence'],
                         'X-Capture-Monotonic': '%.6f' % result['capture_monotonic'],
                         'X-Frame-Age-Ms': '%.3f' % (result['age_seconds'] * 1000),
+                        'X-Copy-Ms': '%.3f' % result['copy_ms'],
+                        'X-Encode-Ms': '%.3f' % result['encode_ms'],
+                        'X-Frame-Width': result['preview_width'],
+                        'X-Frame-Height': result['preview_height'],
                         'X-Camera-Session': result['session']})
             elif path == '/stream.mjpg':
                 result, jpeg = camera.snapshot(image=True)

@@ -1,0 +1,70 @@
+{
+  "canvasDataset": {
+    "frameSeq": "5866",
+    "jpegSha256": "2e050c1666601f53234e7152d78e99ef6940f37af03eb971f42b0a11c49ecb41"
+  },
+  "clip": {
+    "height": 547.4932256453405,
+    "width": 1434.7959819171983,
+    "x": 115.32313235682679,
+    "y": 554.9288668759823
+  },
+  "limitation": "Live refresh remains active; screenshot can follow the sampled DOM result.",
+  "privacy": "Actual browser car ROI only; full scene stays local",
+  "result": {
+    "age_ms": 730.7578300003715,
+    "architecture": "aarch64",
+    "autonomous_grasp_allowed": false,
+    "backend": "ncnn_cpp_aarch64",
+    "bridge_input_bytes": 136211,
+    "bridge_pid": 21969,
+    "bridge_timings_ms": {
+      "roundtrip": 466.6528100005962,
+      "write": 0.78295999992406
+    },
+    "camera_session": "camera0-preview-20261010-125418-1",
+    "capture_monotonic": 5508.888414,
+    "detections": [
+      {
+        "bbox_xyxy": [
+          120.85468,
+          511.75922,
+          1667.1975,
+          1067.2561
+        ],
+        "category": "car",
+        "confidence": 0.9262141
+      }
+    ],
+    "dropped_waiting": 307,
+    "fps": 2.111435599219924,
+    "frame_seq": 5866,
+    "inference_host": "zu19eg_mipi",
+    "inference_ms": 467.56564999941475,
+    "input_transport": "jpeg",
+    "jpeg_sha256": "2e050c1666601f53234e7152d78e99ef6940f37af03eb971f42b0a11c49ecb41",
+    "native_inference_ms": 406.19188,
+    "native_timings_ms": {
+      "decode": 59.82191,
+      "forward": 389.24476,
+      "postprocess": 5.58357,
+      "preprocess": 11.36355,
+      "total": 466.01379
+    },
+    "pid": 21822,
+    "processed": 283,
+    "result_max_age_ms": 1600,
+    "service_and_bridge_cpu_seconds": 201.26999999999998,
+    "service_and_bridge_rss_kib": 170344,
+    "source_timings_ms": {
+      "bgr_decode": 0.004819999958272092,
+      "camera_copy": 29.776,
+      "camera_encode": 41.375,
+      "jpeg_http": 13.216559999818855,
+      "status_http": 14.489680000224325
+    },
+    "state": "LIVE"
+  },
+  "same_frame": true,
+  "ui_utc": "2026-10-18T06:17:20.767Z"
+}

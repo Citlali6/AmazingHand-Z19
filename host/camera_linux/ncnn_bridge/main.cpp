@@ -11,8 +11,14 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <ctime>
 
 struct Box { int id; float score, x1, y1, x2, y2; };
+double monotonic_now() {
+    timespec stamp;
+    clock_gettime(CLOCK_MONOTONIC,&stamp);
+    return stamp.tv_sec+stamp.tv_nsec/1e9;
+}
 float overlap(const Box& a, const Box& b) {
     float intersection = std::max(0.f, std::min(a.x2,b.x2)-std::max(a.x1,b.x1)) *
                          std::max(0.f, std::min(a.y2,b.y2)-std::max(a.y1,b.y1));
@@ -54,10 +60,25 @@ int main(int argc, char** argv) {
         try {
             std::string path;
             std::istringstream request(line);
-            if (!(request >> std::quoted(path)) || path.empty() || path[0] != '/')
+            int expected_width=0, expected_height=0;
+            double deadline=0;
+            if (request.peek()=='[') {
+                char open,c1,c2,c3,close;
+                if (!(request >> open >> std::quoted(path) >> c1 >> expected_width >> c2
+                      >> expected_height >> c3 >> deadline >> close) || open!='[' || close!=']'
+                      || c1!=',' || c2!=',' || c3!=',' || expected_width<=0 || expected_height<=0
+                      || expected_width>8192 || expected_height>8192 || !std::isfinite(deadline) || deadline<=0)
+                    throw std::runtime_error("invalid JPEG geometry/deadline request");
+            } else if (!(request >> std::quoted(path))) {
+                throw std::runtime_error("invalid legacy image request");
+            }
+            if (path.empty() || path[0] != '/')
                 throw std::runtime_error("invalid image path");
+            const auto request_start = std::chrono::steady_clock::now();
             cv::Mat image = cv::imread(path, cv::IMREAD_COLOR);
             if (image.empty()) throw std::runtime_error("image decode failed");
+            if (expected_width && (image.cols!=expected_width || image.rows!=expected_height))
+                throw std::runtime_error("JPEG geometry differs from atomic frame metadata");
             const auto start = std::chrono::steady_clock::now();
             float scale = std::min(float(size)/image.rows, float(size)/image.cols);
             int nw = std::round(image.cols*scale), nh = std::round(image.rows*scale);
@@ -71,8 +92,12 @@ int main(int argc, char** argv) {
             input.substract_mean_normalize(nullptr,normalization);
             auto extractor = net.create_extractor();
             ncnn::Mat out;
+            const auto preprocess_end = std::chrono::steady_clock::now();
+            if (deadline && monotonic_now()>=deadline)
+                throw std::runtime_error("STALE_INPUT");
             if (extractor.input("in0",input) || extractor.extract("out0",out))
                 throw std::runtime_error("NCNN extraction failed");
+            const auto forward_end = std::chrono::steady_clock::now();
             if (out.dims != 2 || (out.h != 84 && out.w != 84))
                 throw std::runtime_error("expected decoded 84xN or Nx84 output");
             bool rows = out.w == 84;
@@ -103,8 +128,15 @@ int main(int argc, char** argv) {
                 for (const auto& a:kept) if(a.id==b.id && overlap(a,b)>iou) {suppress=true;break;}
                 if (!suppress) kept.push_back(b);
             }
-            double ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count();
-            std::cout << std::setprecision(8) << "{\"inference_ms\":" << ms << ",\"detections\":[";
+            const auto postprocess_end = std::chrono::steady_clock::now();
+            auto ms = [](auto a, auto b){return std::chrono::duration<double,std::milli>(b-a).count();};
+            std::cout << std::setprecision(8) << "{\"inference_ms\":" << ms(start,postprocess_end)
+                      << ",\"timings_ms\":{\"decode\":" << ms(request_start,start)
+                      << ",\"preprocess\":" << ms(start,preprocess_end)
+                      << ",\"forward\":" << ms(preprocess_end,forward_end)
+                      << ",\"postprocess\":" << ms(forward_end,postprocess_end)
+                      << ",\"total\":" << ms(request_start,postprocess_end)
+                      << "},\"detections\":[";
             bool first=true;
             for (const auto& b:kept) {
                 if(!first) std::cout << ',';
@@ -114,7 +146,9 @@ int main(int argc, char** argv) {
             std::cout << "]}" << std::endl;
         } catch(const std::exception& error) {
             std::cerr << "NCNN_ERROR " << error.what() << '\n';
-            std::cout << "{\"error\":\"native inference failed; see bridge diagnostics\"}" << std::endl;
+            std::cout << "{\"error\":\"native inference failed; see bridge diagnostics\",\"error_code\":\""
+                      << (std::string(error.what())=="STALE_INPUT" ? "STALE_INPUT" : "MODEL_ERROR")
+                      << "\"}" << std::endl;
         }
     }
 }

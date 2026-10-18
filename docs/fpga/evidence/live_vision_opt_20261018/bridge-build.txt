@@ -1,0 +1,36 @@
+-- The CXX compiler identification is GNU 9.2.0
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found OpenMP_CXX: -fopenmp
+-- Found OpenMP: TRUE
+-- Looking for C++ include pthread.h
+-- Looking for C++ include pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Check if compiler accepts -pthread
+-- Check if compiler accepts -pthread - yes
+-- Found Threads: TRUE
+-- Found OpenCV: /usr (found version "3.4.3") found components:  core imgproc imgcodecs
+-- Configuring done
+-- Generating done
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    OpenMP_C_FLAGS
+    OpenMP_C_LIB_NAMES
+
+
+-- Build files have been written to: /opt/amazinghand/live-vision-opt-20261018/native
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /opt/amazinghand/live-vision-opt-20261018/native
+Scanning dependencies of target ah_ncnn_bridge
+gmake[2]: Warning: File '/opt/amazinghand/live-vision-opt-20261018/host/camera_linux/ncnn_bridge/main.cpp' has modification time 666911 s in the future
+[ 50%] Building CXX object CMakeFiles/ah_ncnn_bridge.dir/main.cpp.o
+[100%] Linking CXX executable ah_ncnn_bridge
+gmake[2]: warning:  Clock skew detected.  Your build may be incomplete.
+[100%] Built target ah_ncnn_bridge
