@@ -82,6 +82,12 @@ def build_detector(settings: dict) -> BaseDetector:
     backend = vs.get("backend", "ncnn")
     conf = float(vs.get("conf_threshold", DEFAULT_CONF))
     iou = float(vs.get("iou_threshold", DEFAULT_IOU))
+    if backend == "ncnn_cpp":
+        from app.vision.backends.ncnn_cpp import NcnnCppDetector
+        return NcnnCppDetector(vs['ncnn']['model_dir'], vs['ncnn']['executable'],
+                               input_size=int(vs['ncnn'].get('input_size', 416)),
+                               num_threads=int(vs['ncnn'].get('num_threads', 3)),
+                               conf=conf, iou=iou)
     if backend == "ncnn":
         from app.vision.backends.ncnn_det import NcnnDetector
 

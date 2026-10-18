@@ -3,6 +3,23 @@
 
 backend: sim          # sim | serial | fpga（PC 冒烟用 sim；板端 serial/fpga）
 
+# Standalone board demo: host/camera_linux/live_vision.py (never starts hand control).
+camera:
+  type: preview_http
+  url: http://127.0.0.1:9000
+  max_age_ms: 800
+  timeout_s: 2
+
+vision:
+  backend: ncnn_cpp
+  conf_threshold: 0.35
+  iou_threshold: 0.45
+  ncnn:
+    model_dir: /opt/amazinghand/live-vision-20261018/models
+    executable: /opt/amazinghand/live-vision-20261018/native-openmp/bridge/ah_ncnn_bridge
+    input_size: 416
+    num_threads: 3  # leave CPU capacity for the independent HD camera service
+
 serial:
   port: /dev/ttyUSB0  # Waveshare 总线驱动板（软件环后端）
   baudrate: 1000000   # SCS0009 固定 1Mbps

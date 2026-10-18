@@ -1,0 +1,292 @@
+{
+  "client_date": "2026-10-18",
+  "issue": "https://github.com/Tom-mr33/AmazingHand-based-on-FPGA/issues/16",
+  "branch": "feature/citlali6-z19-live-vision-20261018",
+  "base_sha": "ee52f09ae78d7163067d627eeae0d627ea92855c",
+  "board": {
+    "host": "zu19eg_mipi",
+    "architecture": "aarch64",
+    "kernel": "5.4.0-xilinx-v2020.2",
+    "python": "3.7.6",
+    "opencv": "3.4.3",
+    "wall_clock_date": "2026-10-10; not changed; all age/timing uses monotonic",
+    "service_pid": 17718,
+    "bridge_pid": 17854,
+    "bridge_threads_observed": 3,
+    "restored_final_native_nice": 0
+  },
+  "build": {
+    "ncnn_source_tag": "20250503",
+    "ncnn_source_zip_sha256": "d2b6250aedbd9014fe3e03d7206758e99c6337d73c5b27b24bcbf64220dc9d26",
+    "gcc": "9.2.0",
+    "cmake": "3.15.3",
+    "openmp_probe": "OPENMP_THREADS=4; AArch64 Linux lock sizes/alignment static_assert passed",
+    "openmp_template_sha256": "c76a386994d6ff3c0a3c544538237d8e12a2109cce3d84937d539718f6809417",
+    "bridge_sha256": "857f3a36f7836f786a5cf34424f1e118a77d6c3469405bccb612b10fc96c801c",
+    "bridge_bytes": 1322928,
+    "deployed_runtime_source_sha256": {
+      "host/app/vision/camera.py": "a14e16c8d4cfb6f982846a8588b5aebdf1cdc3946d86173bf0b034b534f8d93e",
+      "host/app/vision/backends/ncnn_cpp.py": "130464e2a6e559e52883d6d4cb2588ed8cb6a37b68624b9334912806d42a2cfd",
+      "host/camera_linux/live_vision.py": "d5905340f267f4b8bb2b645e79c1d4ef8b216868d8fa735f47bd4d3c429d95a2",
+      "host/camera_linux/vision_control.py": "5ade89058729b8877889ec45da3cccc4392bd2117cba8222b1718ce39645c449",
+      "host/camera_linux/ncnn_bridge/main.cpp": "c05398a6cffb63c5b18f83544f6985fc1d7a60a4b3554e9beaf111000bc724c2"
+    },
+    "result": "native build/link successful; initial missing Scale crash located by gdb, then fixed with internal helpers and startup preflight"
+  },
+  "checks": {
+    "pc_contract_tests": "11 passed",
+    "board_python37_opencv34_contract_tests": "11 passed",
+    "cpp": "bridge -Wall -Wextra -Werror passed; upstream NCNN warnings retained",
+    "browser": "actual canvas identity matched displayed frame_seq/JPEG hash; PC only draws"
+  },
+  "normal_profile_30_seconds": {
+    "duration_seconds": 30.17199999999957,
+    "unique_published_results": 58,
+    "observed_result_fps": 1.9223120774228035,
+    "states": {
+      "LIVE": 14,
+      "NO_TARGET": 110
+    },
+    "note": "PC HTTP observer; inference performed by the reported ARM64 process",
+    "first_detection_result": {
+      "state": "LIVE",
+      "frame_seq": 21453,
+      "camera_session": "camera0-preview-20261010-125356-2",
+      "capture_monotonic": 6413.729923,
+      "age_ms": 1110.707360000104,
+      "inference_ms": 434.69008000010945,
+      "native_inference_ms": 410.2433,
+      "backend": "ncnn_cpp_aarch64",
+      "inference_host": "zu19eg_mipi",
+      "architecture": "aarch64",
+      "pid": 17718,
+      "detections": [
+        {
+          "category": "car",
+          "confidence": 0.92927957,
+          "bbox_xyxy": [
+            290.40613,
+            581.3924,
+            1119.7594,
+            898.70978
+          ]
+        }
+      ],
+      "autonomous_grasp_allowed": false,
+      "processed": 133,
+      "dropped_waiting": 155,
+      "fps": 1.9054171936303204,
+      "jpeg_sha256": "1fd2cc18bb7c8efcce4ac034d372d035c6a54d495b6b10fdca4596a5fa7110ed",
+      "service_and_bridge_rss_kib": 208224,
+      "service_and_bridge_cpu_seconds": 140.07,
+      "bridge_pid": 17854,
+      "result_max_age_ms": 1600
+    },
+    "inference_ms": {
+      "median": 514.4262850003543,
+      "min": 434.69008000010945,
+      "max": 672.4250799998117,
+      "p95": 612.9901200001768
+    },
+    "native_inference_ms": {
+      "median": 488.742155,
+      "min": 410.2433,
+      "max": 642.02677,
+      "p95": 581.81087
+    },
+    "age_ms": {
+      "median": 992.1463399996674,
+      "min": 776.7852200007954,
+      "max": 1321.683209999917,
+      "p95": 1253.033169999984
+    },
+    "service_and_bridge_rss_kib": {
+      "median": 208224.0,
+      "min": 208224,
+      "max": 208224,
+      "p95": 208224
+    },
+    "cpu_percent_one_core_service_and_bridge": 196.70555481904032
+  },
+  "placement_transition_30_seconds": {
+    "duration_seconds": 30.15599999999995,
+    "unique_published_results": 57,
+    "observed_result_fps": 1.8901711102268237,
+    "states": {
+      "LIVE": 55,
+      "NO_TARGET": 69,
+      "STALE": 1
+    },
+    "note": "PC HTTP observer; inference performed by the reported ARM64 process",
+    "first_detection_result": {
+      "state": "LIVE",
+      "frame_seq": 21029,
+      "camera_session": "camera0-preview-20261010-125356-2",
+      "capture_monotonic": 6352.565759,
+      "age_ms": 972.3445800006016,
+      "inference_ms": 529.9757900002078,
+      "native_inference_ms": 505.49687,
+      "backend": "ncnn_cpp_aarch64",
+      "inference_host": "zu19eg_mipi",
+      "architecture": "aarch64",
+      "pid": 17718,
+      "detections": [
+        {
+          "category": "car",
+          "confidence": 0.71653104,
+          "bbox_xyxy": [
+            334.58255,
+            561.53925,
+            919.89832,
+            869.03448
+          ]
+        }
+      ],
+      "autonomous_grasp_allowed": false,
+      "processed": 17,
+      "dropped_waiting": 18,
+      "fps": 1.920312036518288,
+      "jpeg_sha256": "9b36b5e644d1db34b4ee890724d5b62d79ca88a10c4daa0abe6937ad92a1b195",
+      "service_and_bridge_rss_kib": 206820,
+      "service_and_bridge_cpu_seconds": 19.09,
+      "bridge_pid": 17854,
+      "result_max_age_ms": 1600
+    },
+    "inference_ms": {
+      "median": 523.1219399993279,
+      "min": 423.30124999989494,
+      "max": 671.7332300004273,
+      "p95": 629.9982300006377
+    },
+    "native_inference_ms": {
+      "median": 495.12768,
+      "min": 400.08796,
+      "max": 645.08363,
+      "p95": 605.72799
+    },
+    "age_ms": {
+      "median": 984.0024600004497,
+      "min": 778.174910000067,
+      "max": 1262.8161900002078,
+      "p95": 1238.5914099995878
+    },
+    "service_and_bridge_rss_kib": {
+      "median": 208148,
+      "min": 206820,
+      "max": 208224,
+      "p95": 208224
+    },
+    "cpu_percent_one_core_service_and_bridge": 195.51664677012897
+  },
+  "rejected_nice5_comparison": {
+    "duration_seconds": 30.17199999999957,
+    "unique_published_results": 40,
+    "observed_result_fps": 1.3257324671881403,
+    "states": {
+      "NO_TARGET": 41,
+      "STALE": 37,
+      "LIVE": 51
+    },
+    "note": "PC HTTP observer; inference performed by the reported ARM64 process",
+    "first_detection_result": {
+      "state": "LIVE",
+      "frame_seq": 22869,
+      "camera_session": "camera0-preview-20261010-125356-2",
+      "capture_monotonic": 6596.749044,
+      "age_ms": 1268.1538599994585,
+      "inference_ms": 830.8631299996705,
+      "native_inference_ms": 807.85835,
+      "backend": "ncnn_cpp_aarch64",
+      "inference_host": "zu19eg_mipi",
+      "architecture": "aarch64",
+      "pid": 17718,
+      "detections": [
+        {
+          "category": "apple",
+          "confidence": 0.36183506,
+          "bbox_xyxy": [
+            702.64777,
+            622.2666,
+            1402.8177,
+            1069.9789
+          ]
+        }
+      ],
+      "autonomous_grasp_allowed": false,
+      "processed": 482,
+      "dropped_waiting": 584,
+      "fps": 1.9032775501458146,
+      "jpeg_sha256": "2d1e04c235ee5f9c6881efe62c9ec35b98d965c580a49a6ff8b3336765e764c7",
+      "service_and_bridge_rss_kib": 208260,
+      "service_and_bridge_cpu_seconds": 501.37,
+      "bridge_pid": 17854,
+      "result_max_age_ms": 1600
+    },
+    "inference_ms": {
+      "median": 777.9975000003105,
+      "min": 585.9949499999857,
+      "max": 902.3548900004243,
+      "p95": 877.721439999732
+    },
+    "native_inference_ms": {
+      "median": 749.17066,
+      "min": 549.72878,
+      "max": 878.63416,
+      "p95": 834.92958
+    },
+    "age_ms": {
+      "median": 1158.8285599999053,
+      "min": 930.1571700001092,
+      "max": 1450.3895799994361,
+      "p95": 1346.942689999848
+    },
+    "service_and_bridge_rss_kib": {
+      "median": 208260.0,
+      "min": 208260,
+      "max": 208260,
+      "p95": 208260
+    },
+    "cpu_percent_one_core_service_and_bridge": 168.6663131380111,
+    "camera_states": {
+      "LIVE": 26
+    },
+    "concurrent_camera_fps": {
+      "median": 16.475572390307107,
+      "min": 6.339174354234156,
+      "max": 19.10299607751289
+    }
+  },
+  "nice_decision": "Restored all three owned native TIDs from nice 5 to 0; higher result latency/STALE outweighed improved preview; no TTL relaxation",
+  "concurrent_camera_normal_profile_fps_observation": 6.461349591322602,
+  "browser_proof": "z19-browser-proof.json",
+  "artifacts": {
+    "z19-car-board-detection.png": {
+      "bytes": 283748,
+      "sha256": "2016ade4c0763761cd5814b27f59a2f8a4c55ba500640ee9c22920724decb523"
+    },
+    "z19-browser-proof.json": {
+      "bytes": 2238,
+      "sha256": "7a43155d29b9faab0918f9cf9712edc9ff622b47f52f2be0dae2e27ec0e7fd0c"
+    },
+    "model_manifest.json": {
+      "bytes": 1147,
+      "sha256": "dacc2bcacfb90499f1c28d2339e5f96d113d4498857358029a94b402bc574d44"
+    }
+  },
+  "limitations": [
+    "Only real car model accepted. apple/banana/bottle require real-object validation.",
+    "Camera/target moved during measurement; no claim of continuous 30-second car recall.",
+    "Hand occlusion produced an apple 0.3618 false positive at threshold 0.35; not apple acceptance.",
+    "Camera preview slows under concurrent CPU inference; historical camera-only 25 fps is not the AI rate.",
+    "Initial PC Ultralytics import reset existing user settings/cache; no trustworthy JSON backup found. Formal export now isolates YOLO_CONFIG_DIR.",
+    "Original PL/driver/capture/SD unchanged in files; one separately approved runtime restore of original camera PL/driver.",
+    "No autonomous grasping or action commands."
+  ],
+  "raw_evidence_local": "F:/Amazing_Hand/tmp/vision-20261018",
+  "board_log": "/var/lib/amazinghand/log/vision-20261010T131433Z.jsonl",
+  "reproduction": "host/camera_linux/LIVE_VISION.md",
+  "original_local_json_artifact_sha256_before_git_lf_normalization": {
+    "model_manifest.json": "c2ed07da71a99c80042c841f7b066285c4cd8f450776154274df05526cc78a9d",
+    "z19-browser-proof.json": "11e9d433025ef96086c4198747f2caed88f021b753476c41de55c91840ff414d"
+  }
+}

@@ -54,6 +54,9 @@ python3 start_preview.py
 
 ## 资料入口
 
+- Z19 板端 YOLOv8n/NCNN 识别演示、同图画框、启动/停止及限制：
+  [实时视觉说明](../../host/camera_linux/LIVE_VISION.md)。原高清预览接口继续保留。
+
 - GitHub 工程/功能与复现入口：[相机交付清单](camera_delivery_20261010.md)。
 - 配套 bit/XSA、BD/XDC/IP 和版本限制：[硬件归档](../../fpga/camera_hw/README.md)。
 - 源码、编译与生命周期：[camera_linux/README](../../host/camera_linux/README.md)。

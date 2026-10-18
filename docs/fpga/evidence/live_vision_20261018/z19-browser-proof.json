@@ -1,0 +1,71 @@
+{
+  "canvas_metadata_matched_at_sample": true,
+  "current": {
+    "architecture": "aarch64",
+    "backend": "ncnn_cpp_aarch64",
+    "canvasDataset": {
+      "frameSeq": "22607",
+      "jpegSha256": "724d3319e26384e6ea41faca507edaa48a89eccfa7bbe5ead3e93efc83247b5c"
+    },
+    "frame_seq": 22607,
+    "state": "NO_TARGET"
+  },
+  "sampled_browser_proof": {
+    "canvasDataset": {
+      "frameSeq": "21431",
+      "jpegSha256": "47144f30da3b9e17bc1384e62fa2b75e5b46f10a10555bf20d35e753388a9d33"
+    },
+    "clip": {
+      "height": 359.8076589961836,
+      "width": 821.3677946424751,
+      "x": 233.3158768655892,
+      "y": 429.0673836990967
+    },
+    "privacy": "Browser screenshot clipped to actual car region; full source JPEG retained locally",
+    "result": {
+      "age_ms": 974.72839999951,
+      "architecture": "aarch64",
+      "autonomous_grasp_allowed": false,
+      "backend": "ncnn_cpp_aarch64",
+      "bridge_pid": 17854,
+      "camera_session": "camera0-preview-20261010-125356-2",
+      "capture_monotonic": 6410.708224,
+      "detections": [
+        {
+          "bbox_xyxy": [
+            264.55923,
+            389.20392,
+            1106.2371,
+            704.05347
+          ],
+          "category": "car",
+          "confidence": 0.8198511
+        }
+      ],
+      "dropped_waiting": 147,
+      "fps": 1.9015829805081927,
+      "frame_seq": 21431,
+      "inference_host": "zu19eg_mipi",
+      "inference_ms": 435.68160999984684,
+      "jpeg_sha256": "47144f30da3b9e17bc1384e62fa2b75e5b46f10a10555bf20d35e753388a9d33",
+      "native_inference_ms": 405.27549,
+      "pid": 17718,
+      "processed": 127,
+      "result_max_age_ms": 1600,
+      "service_and_bridge_cpu_seconds": 133.97,
+      "service_and_bridge_rss_kib": 208224,
+      "state": "LIVE"
+    },
+    "source_roi_xyxy": [
+      264.55923,
+      389.20392,
+      1106.2371,
+      704.05347
+    ]
+  },
+  "screenshot": {
+    "description": "Actual live browser screenshot clipped to car ROI. UI refreshed during capture, so screenshot may show a later frame than sampled_browser_proof; do not claim they are the identical frame.",
+    "file": "z19-car-board-detection.png",
+    "sha256": "2016ade4c0763761cd5814b27f59a2f8a4c55ba500640ee9c22920724decb523"
+  }
+}

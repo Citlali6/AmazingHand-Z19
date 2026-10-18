@@ -152,6 +152,7 @@ class Camera:
                     self.preview_fps = (meta['sequence'] - self.rate_sample[1]) / (stamp - self.rate_sample[0])
                     self.rate_sample = (stamp, meta['sequence'])
                 result.update(state='LIVE', message='实时画面', age_seconds=age, sequence=meta['sequence'],
+                              session=self.preview_dir.name,
                               preview_fps=self.preview_fps, capture_monotonic=stamp,
                               preview_width=meta['preview_width'], preview_height=meta['preview_height'],
                               copy_ms=meta['copy_ms'], encode_ms=meta['encode_ms'],
@@ -177,11 +178,13 @@ def main():
     camera = Camera(args.capture, args.log_dir, args.ram_dir)
 
     class Handler(BaseHTTPRequestHandler):
-        def reply(self, code, body, mime='application/json; charset=utf-8'):
+        def reply(self, code, body, mime='application/json; charset=utf-8', headers=None):
             self.send_response(code)
             self.send_header('Content-Type', mime)
             self.send_header('Content-Length', str(len(body)))
             self.send_header('Cache-Control', 'no-store')
+            for key, value in (headers or {}).items():
+                self.send_header(key, str(value))
             self.end_headers()
             try:
                 self.wfile.write(body)
@@ -199,7 +202,13 @@ def main():
                 if result['state'] != 'LIVE' or jpeg is None:
                     self.reply(503, b'{"error":"no fresh frame"}')
                 else:
-                    self.reply(200, jpeg, 'image/jpeg')
+                    # Metadata and JPEG come from one locked snapshot. A separate
+                    # status GET may already describe the next capture.
+                    self.reply(200, jpeg, 'image/jpeg', {
+                        'X-Sequence': result['sequence'],
+                        'X-Capture-Monotonic': '%.6f' % result['capture_monotonic'],
+                        'X-Frame-Age-Ms': '%.3f' % (result['age_seconds'] * 1000),
+                        'X-Camera-Session': result['session']})
             elif path == '/stream.mjpg':
                 result, jpeg = camera.snapshot(image=True)
                 if result['state'] != 'LIVE' or jpeg is None:

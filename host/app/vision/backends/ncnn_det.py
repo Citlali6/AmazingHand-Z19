@@ -58,8 +58,8 @@ class NcnnDetector(BaseDetector):
         binw = model_dir / "model.ncnn.bin"
         if not param.exists() or not binw.exists():
             raise FileNotFoundError(f"ncnn model not found in {model_dir}（先跑 tools/export_yolo_ncnn.py）")
-        self._net.load_param(str(param))
-        self._net.load_model(str(binw))
+        if self._net.load_param(str(param)) != 0 or self._net.load_model(str(binw)) != 0:
+            raise RuntimeError('NCNN model load failed')
         self.input_size = input_size
 
     def detect_raw(self, frame_bgr: np.ndarray) -> list[tuple[int, float, tuple[float, float, float, float]]]:
@@ -71,41 +71,53 @@ class NcnnDetector(BaseDetector):
         import ncnn
 
         with self._net.create_extractor() as ex:
-            ex.input(INPUT_NAME, ncnn.Mat(blob))
+            if ex.input(INPUT_NAME, ncnn.Mat(blob)) != 0:
+                raise RuntimeError('NCNN input failed')
             ret, out = ex.extract(OUTPUT_NAME)
         if ret != 0:
             raise RuntimeError(f"ncnn extract failed: {ret}")
-        preds = np.array(out)  # (84, N)
-        preds = preds.reshape(-1, preds.shape[-1])  # (84, N)
-
-        boxes, scores, class_ids = [], [], []
-        for i in range(preds.shape[1]):
-            cls_scores = preds[4:, i]
-            cid = int(cls_scores.argmax())
-            score = float(cls_scores[cid])
-            if score < self.conf:
-                continue
-            cx, cy, bw, bh = preds[:4, i]
-            # letterbox 坐标 → 原图坐标
-            x1 = (cx - bw / 2 - pad_x) / scale
-            y1 = (cy - bh / 2 - pad_y) / scale
-            x2 = (cx + bw / 2 - pad_x) / scale
-            y2 = (cy + bh / 2 - pad_y) / scale
-            boxes.append([x1, y1, x2 - x1, y2 - y1])
-            scores.append(score)
-            class_ids.append(cid)
-
-        if not boxes:
-            return []
-        keep = cv2.dnn.NMSBoxes(boxes, scores, self.conf, self.iou)
-        keep = np.array(keep).reshape(-1) if len(keep) else []
-        return [(class_ids[i], scores[i],
-                 (boxes[i][0], boxes[i][1],
-                  boxes[i][0] + boxes[i][2], boxes[i][1] + boxes[i][3]))
-                for i in keep]
+        return decode_yolov8(np.array(out), frame_bgr.shape, scale,
+                             (pad_x, pad_y), self.conf, self.iou)
 
     def close(self) -> None:
         self._net.clear()
+
+
+def decode_yolov8(preds, image_shape, scale, pad, conf=.35, iou=.45):
+    """Decoded YOLOv8 head only, [84,N] or [N,84]; class-aware NMS."""
+    preds = np.asarray(preds).squeeze()
+    if preds.ndim != 2:
+        raise ValueError('YOLOv8 output must have two dimensions')
+    if preds.shape[0] == 84:
+        preds = preds.T
+    elif preds.shape[1] != 84:
+        raise ValueError('expected decoded 4+80 class head, got %s' % (preds.shape,))
+    if not np.isfinite(preds).all():
+        raise ValueError('nonfinite YOLOv8 output')
+    ids = preds[:, 4:].argmax(axis=1)
+    scores = preds[np.arange(len(preds)), ids + 4]
+    selected = scores >= conf
+    values, ids, scores = preds[selected, :4], ids[selected], scores[selected]
+    boxes = np.empty_like(values)
+    boxes[:, :2] = values[:, :2] - values[:, 2:] / 2
+    boxes[:, 2:] = values[:, :2] + values[:, 2:] / 2
+    boxes = (boxes - np.array([pad[0], pad[1], pad[0], pad[1]])) / scale
+    boxes[:, [0, 2]] = boxes[:, [0, 2]].clip(0, image_shape[1])
+    boxes[:, [1, 3]] = boxes[:, [1, 3]].clip(0, image_shape[0])
+    valid = np.all(boxes[:, 2:] > boxes[:, :2], axis=1)
+    boxes, ids, scores = boxes[valid], ids[valid], scores[valid]
+    remaining = np.argsort(-scores)
+    keep = []
+    while len(remaining):
+        index = remaining[0]
+        keep.append(index)
+        others = remaining[1:]
+        intersection = np.maximum(0, np.minimum(boxes[index, 2:], boxes[others, 2:])
+                                  - np.maximum(boxes[index, :2], boxes[others, :2])).prod(axis=1)
+        area = np.prod(boxes[:, 2:] - boxes[:, :2], axis=1)
+        overlap = intersection / np.maximum(area[index] + area[others] - intersection, 1e-9)
+        remaining = others[(ids[others] != ids[index]) | (overlap <= iou)]
+    return [(int(ids[k]), float(scores[k]), tuple(float(x) for x in boxes[k])) for k in keep]
 
 
 def _probe_input_shape(param_path: Path) -> tuple[int, int]:  # pragma: no cover

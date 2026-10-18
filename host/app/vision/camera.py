@@ -3,16 +3,107 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Protocol
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+import json
+import time
+from urllib.request import ProxyHandler, build_opener
 
 import cv2
 import numpy as np
 
 
-class CameraSource(Protocol):
+class CameraSource(ABC):
+    @abstractmethod
     def read(self) -> np.ndarray | None:
         """返回一帧 BGR 图像；无帧返回 None。"""
     def close(self) -> None: ...
+
+
+class CameraUnavailable(RuntimeError):
+    """No new, fresh, valid image; callers must suppress detection/actions."""
+
+
+class DuplicateFrame(CameraUnavailable):
+    """A fresh JPEG was already consumed; wait, never infer on it again."""
+
+
+@dataclass(frozen=True)
+class CameraFrame:
+    bgr: np.ndarray
+    jpeg: bytes
+    sequence: int
+    session: str
+    capture_monotonic: float
+    received_monotonic: float
+    source_age_ms: float
+
+    def age_ms(self):
+        # Works across hosts too: never subtract a PC clock from the board clock.
+        return self.source_age_ms + (time.monotonic() - self.received_monotonic) * 1000
+
+
+class PreviewCamera(CameraSource):
+    """Reuse the IMX214 service; require atomic JPEG identity headers.
+
+    Existing preview packages without these headers fail explicitly. Deploy the
+    additive HTTP server update; never guess a JPEG's identity from status.json.
+    """
+
+    def __init__(self, url='http://127.0.0.1:9000', max_age_ms=800, timeout=2):
+        self.url = url.rstrip('/')
+        self.max_age_ms = float(max_age_ms)
+        self.timeout = timeout
+        self.opener = build_opener(ProxyHandler({}))
+        self.last = None
+
+    def read_packet(self):
+        try:
+            with self.opener.open(self.url + '/status.json', timeout=self.timeout) as response:
+                status = json.loads(response.read(65536))
+            if status.get('state') != 'LIVE':
+                raise CameraUnavailable('camera state: ' + str(status.get('state')))
+            started = time.monotonic()
+            with self.opener.open(self.url + '/frame.jpg', timeout=self.timeout) as response:
+                headers = response.headers
+                data = response.read(8 * 1024 * 1024 + 1)
+                seq = int(headers['X-Sequence'])
+                stamp = float(headers['X-Capture-Monotonic'])
+                age = float(headers['X-Frame-Age-Ms'])
+                session = headers['X-Camera-Session']
+            received = time.monotonic()
+            # Whole HTTP duration is a conservative upper bound on transit age.
+            age += (received - started) * 1000
+            if (not session or seq < 0 or not np.isfinite(stamp) or stamp < 0
+                    or not np.isfinite(age) or age < 0 or age > self.max_age_ms):
+                raise CameraUnavailable('invalid or stale frame metadata')
+            identity = (session, seq)
+            if self.last is not None and self.last[0] == session:
+                if seq == self.last[1]:
+                    raise DuplicateFrame('duplicate frame; waiting for a new sequence')
+                if seq < self.last[1]:
+                    raise CameraUnavailable('reordered frame')
+            if (len(data) > 8 * 1024 * 1024 or not data.startswith(b'\xff\xd8')
+                    or not data.endswith(b'\xff\xd9')):
+                raise CameraUnavailable('invalid JPEG')
+            frame = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_COLOR)
+            if frame is None:
+                raise CameraUnavailable('JPEG decode failed')
+            self.last = identity
+            packet = CameraFrame(frame, data, seq, session, stamp, received, age)
+            if packet.age_ms() > self.max_age_ms:
+                raise CameraUnavailable('frame expired during decode')
+            return packet
+        except CameraUnavailable:
+            raise
+        except Exception as error:
+            raise CameraUnavailable('camera HTTP/metadata failure: %s' % error) from error
+
+    def read(self):
+        return self.read_packet().bgr
+
+    def close(self):
+        pass
 
 
 class OpenCVCamera:
@@ -61,6 +152,9 @@ class ImageFolderSource:
 
 def build_camera(settings: dict) -> CameraSource:
     cs = settings.get("camera", {})
+    if cs.get("type") == "preview_http":
+        return PreviewCamera(cs.get('url', 'http://127.0.0.1:9000'),
+                             cs.get('max_age_ms', 800), cs.get('timeout_s', 2))
     if cs.get("type") == "images":
         return ImageFolderSource(cs["folder"])
     return OpenCVCamera(index=int(cs.get("index", 0)),
