@@ -56,6 +56,9 @@ Git 中包含源码、平台与已验证相机二进制；SD 系统镜像、登�
 
 已有 PC 模拟链路可运行 `python host/tests/smoke_test_control.py`、`python host/tests/smoke_test_backend.py`，
 或 `python host/app/main.py --mock-voice "抓起香蕉,放下"`；通过不代表真实抓取或协议已实机核验。
+新增实时交互入口：`.venv/Scripts/python.exe host/app/main.py --mujoco`，支持当次输入控制、
+MuJoCo 实测反馈和锁存停止；环境准备与按键操作见 [实时控制说明](sim/LIVE_CONTROL.md)。
+该演示是手部仿真控制，不代表物体抓取或实板 HIL 已验收。
 整手接线、舵机标定、语音/识别模型和闭环运行步骤仍按 [实施状态](docs/fpga/implementation_progress.md) 推进。
 
 ## 开发状态
