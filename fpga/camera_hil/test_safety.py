@@ -12,7 +12,7 @@ spec = importlib.util.spec_from_file_location('unified', HERE / 'ps/unified.py')
 unified = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(unified)
 sys.path.insert(0, str(HERE))
-from package_linux import check_reports, check_cdc
+from package_linux import check_reports, check_cdc, check_bus_skew
 
 
 class Safety(unittest.TestCase):
@@ -31,6 +31,19 @@ class Safety(unittest.TestCase):
             path.write_text('CDC Report')
             with self.assertRaises(ValueError):
                 check_cdc(build)
+
+    def test_bus_skew_requires_real_nonnegative_report(self):
+        report = ('Tool Version : Vivado v.2020.1\nDesign : design_1_wrapper\n'
+                  'Slack (MET) : 4.2ns\nSlack (MET) : 1.1ns\n')
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'bus_skew_impl.rpt'
+            path.write_text(report)
+            check_bus_skew(Path(directory))
+            for invalid in [report.replace('MET) : 1.1', 'VIOLATED) : -0.1'),
+                            report.replace('v.2020.1', 'v.2020.2'), 'Bus Skew Report']:
+                path.write_text(invalid)
+                with self.assertRaises(ValueError):
+                    check_bus_skew(Path(directory))
 
     def test_reload_rejects_loaded_camera_even_without_capture(self):
         with self.assertRaisesRegex(RuntimeError, 'camera driver loaded'):

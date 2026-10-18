@@ -1,0 +1,68 @@
+#-----------------------------------------------------------
+# xsim v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Sun Oct 18 16:54:43 2026
+# Process ID: 55432
+# Current directory: F:/ah-camera-hil-cdc-sim01
+# Command line: xsim.exe -log fifo-original-profile.log -mode tcl -source {xsim.dir/fifo_original_profile/xsim_script.tcl}
+# Log file: F:/ah-camera-hil-cdc-sim01/fifo-original-profile.log
+# Journal file: F:/ah-camera-hil-cdc-sim01\xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/fifo_original_profile/xsim_script.tcl
+# xsim {fifo_original_profile} -autoloadwcfg -runall
+Vivado Simulator 2020.1
+Time resolution is 1 ps
+run -all
+Info: [XPM_MEMORY 20-1] MEMORY_PRIMITIVE (0) instructs Vivado Synthesis to choose the memory primitive type. Depending on their values, other XPM_MEMORY parameters may preclude the choice of certain memory primitive types. Review XPM_MEMORY documentation and parameter values to understand any limitations, or set MEMORY_PRIMITIVE to a different value. test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst .\gen_sdpram.xpm_memory_base_inst .config_drc
+Time: 1 ps  Iteration: 0  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/Initial294_37  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst .\gen_sdpram.xpm_memory_base_inst .config_drc  File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv Line: 488
+Warning: SIM_ASSERT_CHK (1) specifies simulation message reporting, messages related to potential misuse will be reported.
+Time: 1 ps  Iteration: 0  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst/Initial1438_120  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst   File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line: 1445
+
+Time: 2491 ps Started: 2491 ps Scope: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line:1493
+Error: [SLEEP_CHECK S-7] 'sleep' is deasserted at 2491, but rd_en must be low for 0 rd_clk cycles after 2491
+Time: 2491 ps  Iteration: 2  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst//test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst   File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line: 1496
+
+Time: 11636 ps Started: 11636 ps Scope: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line:1488
+Error: [SLEEP_CHECK S-6] 'sleep' is deasserted at 11636, but wr_en must be low for 0 wr_clk cycles after 11636
+Time: 11636 ps  Iteration: 2  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst//test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst   File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line: 1491
+
+Time: 122059 ps Started: 117077 ps Scope: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line:1476
+Error: [EMPTY_CHECK S-4] Reset is applied, but empty flag is not 1 or transitioning to 1 at 122059.
+Time: 122059 ps  Iteration: 1  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst//test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst   File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line: 1479
+FIFO_INIT_RELEASE
+
+Time: 660115 ps Started: 655133 ps Scope: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line:1476
+Error: [EMPTY_CHECK S-4] Reset is applied, but empty flag is not 1 or transitioning to 1 at 660115.
+Time: 660115 ps  Iteration: 1  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst//test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst   File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line: 1479
+FIFO_INIT_READY
+
+Time: 1151964 ps Started: 1128692 ps Scope: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line:1481
+Error: [SLEEP_CHECK S-5] 'sleep' is deasserted at 1151964, but wr_en must be low for 0 wr_clk cycles after 1151964
+Time: 1151964 ps  Iteration: 2  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst//test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst   File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line: 1484
+
+Time: 1198508 ps Started: 1175236 ps Scope: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line:1481
+Error: [SLEEP_CHECK S-5] 'sleep' is deasserted at 1198508, but wr_en must be low for 0 wr_clk cycles after 1198508
+Time: 1198508 ps  Iteration: 2  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst//test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst   File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line: 1484
+FIFO_RESTART_RELEASE
+
+Time: 1696371 ps Started: 1691389 ps Scope: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line:1476
+Error: [EMPTY_CHECK S-4] Reset is applied, but empty flag is not 1 or transitioning to 1 at 1696371.
+Time: 1696371 ps  Iteration: 1  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst//test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst   File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line: 1479
+FIFO_RESTART_READY
+
+Time: 2280656 ps Started: 2257384 ps Scope: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line:1481
+Error: [SLEEP_CHECK S-5] 'sleep' is deasserted at 2280656, but wr_en must be low for 0 wr_clk cycles after 2280656
+Time: 2280656 ps  Iteration: 2  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst//test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst   File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line: 1484
+
+Time: 2303928 ps Started: 2280656 ps Scope: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line:1481
+Error: [SLEEP_CHECK S-5] 'sleep' is deasserted at 2303928, but wr_en must be low for 0 wr_clk cycles after 2303928
+Time: 2303928 ps  Iteration: 2  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst//test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst   File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line: 1484
+
+Time: 2373744 ps Started: 2350472 ps Scope: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line:1481
+Error: [SLEEP_CHECK S-5] 'sleep' is deasserted at 2373744, but wr_en must be low for 0 wr_clk cycles after 2373744
+Time: 2373744 ps  Iteration: 2  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst//test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst   File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv Line: 1484
+PASS_VENDOR_FIFO reset_busy flush_stale_on_clock_stop resume_new_data stream_reset backpressure
+$finish called at time : 2408797 ps : File "F:/ah-camera-hil-cdc-sim01/test_fifo.sv" Line 47
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Oct 18 16:54:47 2026...

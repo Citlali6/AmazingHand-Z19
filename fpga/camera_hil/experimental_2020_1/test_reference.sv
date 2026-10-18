@@ -27,8 +27,8 @@ module test_reference;
     #0.01;
     if (!all_ready) $fatal(1, "Four ready controllers did not release");
     for (integer i=0; i<4; i=i+1) begin
-      ready[i] = 0; #0.01;
-      if (all_ready) $fatal(1, "RDY loss did not assert immediately");
+      ready[i] = 0; repeat(5) @(posedge refclk); #0.01;
+      if (all_ready) $fatal(1, "RDY loss did not clear registered qualification");
       ready[i] = 1;
       repeat (5) @(posedge refclk);
     end
@@ -36,6 +36,9 @@ module test_reference;
     #0.01;
     if (!io_reset || !delay_reset || all_ready) $fatal(1, "Lock-loss assertion failed");
     release dut.locked;
+    wait(!io_reset && !delay_reset);
+    repeat(6) @(posedge refclk); #0.01;
+    if(!all_ready) $fatal(1,"MMCM relock/requalification failed");
     reset = 1; #0.01;
     if (!io_reset || !delay_reset || all_ready) $fatal(1, "Reset assertion failed");
     $display("PASS_REFERENCE physical_period_ns=%0.9f io_to_ctrl_ns=%0.3f all_four_RDY_required no_sensor_clock_dependency", edge2-edge1, controller_release-io_release);

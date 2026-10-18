@@ -59,8 +59,8 @@ remain mandatory. New firmware still needs separate current field approval.
 
 The [P0 authorization](https://github.com/Tom-mr33/AmazingHand-based-on-FPGA/issues/17#issuecomment-6246782620)
 adds `--repair-csi`. Omitting that flag reproduces the earlier reconstruction.
-The flagged path makes five exact transformations only in the copied CSI IP:
-four HDL files plus its component.xml scalar ports. `csi_patch.py` records
+The current v3 flagged path makes seven exact file transformations only in the
+copied CSI IP: six HDL files plus component.xml scalar ports/XPM metadata. `csi_patch.py` records
 original/patched SHA256 and the auditor recomputes every expected byte from
 the untouched archive. A single new `delay_reference` module is shared by all
 four CSI instances; all existing connections, addresses and PS parameters stay.
@@ -79,9 +79,24 @@ four CSI instances; all existing connections, addresses and PS parameters stay.
   each application separately synchronizes this condition and waits at least
   64 of its own byte clocks before accepting data. An absent camera therefore
   does not prevent the reference-domain calibration sequence from running.
-- Original clock-loss detection is retained for runtime SERDES recovery after
-  initial calibration. New synchronizer flops have ASYNC_REG/SHREG_EXTRACT
-  attributes; complete CDC acceptance still requires real implementation.
+- The v3 structural follow-up replaces clock-level sampling with a real byte-domain
+  heartbeat FF, three-stage XPM transfer to PL0, registered missing-clock state,
+  and a three-stage XPM asynchronous-assert/synchronous-release reset back to byte.
+  The timeout is 201 PL0 cycles after the last observed heartbeat transition
+  (plus observation latency), approximately 1 us, and handles stopped-high/low clocks.
+- Each controller group's RDY is separately synchronized into the reference domain,
+  then qualification is registered there before crossing to byte through one XPM
+  reset. Application logic waits 64 byte cycles; the same local link reset flushes
+  the FIFO after calibration/clock failure. No duplicate reset synchronizer can
+  release application and FIFO independently in the same domain.
+- FIFO write-ready originates in a real byte-domain register and crosses through
+  three XPM stages. Both actual FIFO busy outputs, full/empty and stream reset
+  gate transfers; AXIS valid no longer depends on sink ready. Original FIFO
+  mode/depth/width/memory selection remain unchanged.
+- BUFGCE_DIV clear releases through an XPM reset clocked by the undivided HS
+  clock. ISERDESE3 CLK and CLK_B use the same physical clock net with local
+  IS_CLK_B_INVERTED=1 per UG949. This is a real primitive connection/property
+  change, not a hold exception. Routed hold and CDC reports remain mandatory.
 - `mipi_nominal.xdc` models only the nominal source clocks derived from the
   local FL0214 REV1.0 manual and fl0214_2018-3-14 schematic p4
   (X1 OSC25MHz -> U12 5PB1102PGGI -> both CSI MCLK) and Sony IMX214 Software Reference
@@ -100,3 +115,53 @@ The clock/reset requirements are from [DS925 I/O delay characteristics](https://
 and [UG571 v1.16 pp188-194](https://docs.amd.com/api/khub/documents/kFbaUC5HGcXyGNauhgU6Gw/content).
 The local Sony/module manuals are not redistributed here. The older archived
 camera, validated firmware and strict entry are never patched by this option.
+
+
+## Structural CDC fault tests and signoff
+
+Authorized by [the structural P0 follow-up](https://github.com/Tom-mr33/AmazingHand-based-on-FPGA/issues/17#issuecomment-6247649307).
+The exact patch ledger is version 3 and rejects any unreviewed private source
+change. `csi_clock_detector.vhd`, `csi_cdc_helpers.v` and `structural_patch.py`
+are reproducible private transformations, not edits to the original camera IP.
+Vendor XPM instances supply their own narrowly scoped first-stage CDC constraints;
+no clock groups, broad false paths or manual CDC exceptions were added.
+
+```powershell
+python fpga/camera_hil/experimental_2020_1/run_local_tests.py --output F:/ah-camera-hil-faults-new
+python fpga/camera_hil/experimental_2020_1/prepare.py --output F:/ah-camera-hil-local-new --stage impl --repair-csi
+& F:/Xilinx/Vivado/2020.1/bin/vivado.bat -mode batch -nojournal -log F:/ah-camera-hil-local-new/local.log -source fpga/camera_hil/experimental_2020_1/local_verify.tcl -tclargs F:/ah-camera-hil-local-new F:/ah-camera-hil-local-synth-new
+```
+
+These tests inject initial reset, actual MMCM model loss/relock, delayed/all-RDY
+qualification, byte clock stop high/low and restart, FIFO busy/full/empty,
+backpressure, stream reset and stale-data flushing with the actual vendor FIFO.
+They do not simulate sensor electrical margins or establish live image capture.
+The actual FIFO uses the original production-default SIM_ASSERT_CHK=0 with
+independent overflow/underflow, busy and data checks. An additional diagnostic
+SIM_ASSERT_CHK=1 run emitted vendor S4/S5/S6/S7 errors and is retained separately;
+it is **not** described as a clean vendor assertion run. The S5 diagnostic is a
+one-cycle cross-domain read-pointer equality check despite its sleep wording. S4 remains an
+unresolved diagnostic, bounded by the independent busy/empty/flush self-checks.
+
+SERDES clock guidance: [UG949 ISERDESE3/IDDRE1 clocking](https://docs.amd.com/r/2021.2-English/ug949-vivado-design-methodology/ISERDESE3-and-IDDRE1-Clocking)
+and UG571 v1.16 pp190-191. No internal divide-clock fabric connection, arbitrary
+input delay, FIFO mode change or clock-frequency reduction was used.
+
+The packaging gate also requires a genuine nonnegative bus-skew report for
+XPM Gray-pointer constraints, alongside zero Critical CDC, complete timing
+coverage, timing closure, zero DRC and source/topology/bit-XSA matching.
+The [current full-implementation facts](../evidence/cdc-2020.1/README.md) show
+modeled timing met and whole-design Critical/Warning CDC zero; external timing,
+RTSTAT and frame-protocol acceptance still prevent deployment. The
+older P0 evidence remains immutable historical output.
+
+
+A remaining protocol risk is deliberately not hidden by the local FIFO tests:
+the approximately1us missing-clock threshold can also be reached during a normal
+noncontinuous MIPI HS/frame gap. Flushing on link reset may discard queued tail
+pixels under downstream backpressure. The four-word FIFO test does not establish
+complete-frame behavior. Normal HS gaps, TUSER/TLAST preservation, incomplete-frame
+handling and VDMA recovery at real frame boundaries require a focused protocol
+simulation and later separately authorized same-bit sensor test. These remain
+functional acceptance blockers even if internal timing/CDC close. No current
+claim is made that the private camera capture profile has been board validated.

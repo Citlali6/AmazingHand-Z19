@@ -1,0 +1,19 @@
+{
+  "files": [
+    {
+      "path": "F:/ah-camera-hil-cdc-run01/vivado/mipi_dp.runs/impl_1/design_1_wrapper.bit",
+      "bytes": 12134116,
+      "sha256": "3103b4f875fe3019a83274f440b8a7dd71e88754ce41ecb5e7a3fe2228688e6a",
+      "status": "diagnostic_only_NOT_DEPLOYABLE"
+    },
+    {
+      "path": "F:/ah-camera-hil-cdc-run01/camera_hil.xsa",
+      "bytes": 2330915,
+      "sha256": "f518bf32fa55aa6b64322393aead38023bc977640a864028b9b52791cd117f81",
+      "status": "diagnostic_only_NOT_DEPLOYABLE"
+    }
+  ],
+  "unique_embedded_bit": "camera_hil.bit",
+  "bit_equal": true,
+  "uploaded_to_github": false
+}

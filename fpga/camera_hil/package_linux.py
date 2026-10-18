@@ -27,6 +27,16 @@ def check_cdc(build, tool='2020.1'):
     require(critical == 0, 'CDC signoff failed: %d Critical findings' % critical)
 
 
+def check_bus_skew(build, tool='2020.1'):
+    """XPM Gray pointers carry instance-scoped bus-skew constraints too."""
+    report = (build / 'bus_skew_impl.rpt').read_text(encoding='utf-8')
+    require(re.search(r'Tool Version\s*:\s*Vivado v\.' + re.escape(tool) + r'\b', report)
+            and re.search(r'Design\s*:\s*design_1_wrapper\b', report), 'wrong/missing bus-skew report provenance')
+    slacks = re.findall(r'Slack \((MET|VIOLATED)\)\s*:\s*([-0-9.]+)ns', report)
+    require(slacks and all(status == 'MET' and float(value) >= 0 for status, value in slacks),
+            'bus-skew signoff failed or missing')
+
+
 def check_reports(build, tool='2020.2', require_sources=False):
     require(tool in ['2020.1', '2020.2'], 'unsupported report tool profile')
     timing = (build / 'timing_impl.rpt').read_text()
@@ -90,6 +100,7 @@ def main():
     check_reports(reports, tool=tool, require_sources=(tool == '2020.1'))
     if topology['csi_reference_repair']:
         check_cdc(reports, tool=tool)
+        check_bus_skew(reports, tool=tool)
     bit = build / ('vivado/mipi_dp.runs/' + run + '/design_1_wrapper.bit')
     xsa = reports / 'camera_hil.xsa'
     with zipfile.ZipFile(xsa) as archive:
@@ -107,7 +118,7 @@ def main():
     for name in runtime:
         shutil.copy2(HERE / 'ps' / name, output / name)
     names = runtime + ['camera-hil.bin', 'camera-original.bin']
-    inputs = [p for p in HERE.rglob('*') if p.suffix in ['.py', '.sv', '.v', '.tcl', '.xdc', '.json']
+    inputs = [p for p in HERE.rglob('*') if p.suffix in ['.py', '.sv', '.v', '.vhd', '.tcl', '.xdc', '.json']
               and 'evidence' not in p.parts and '__pycache__' not in p.parts]
     manifest = dict(profile='camera-hil/1', build_profile=topology['build_profile'], tool=tool,
                     implementation_run=run, report_directory=str(reports),

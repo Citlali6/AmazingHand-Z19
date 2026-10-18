@@ -56,6 +56,8 @@ def prepare(output, stage, repair_csi=False):
     emit('create_project mipi_dp [file join $out vivado] -part xczu19eg-ffvc1760-2-i')
     emit('set_property ip_repo_paths [list [file join $out source repo]] [current_project]')
     emit('update_ip_catalog')
+    if repair_csi:
+        emit('set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]')
     for group, names in manifest['source_groups'].items():
         if group != 'sources_1':
             continue
@@ -201,6 +203,8 @@ def prepare(output, stage, repair_csi=False):
             if repair_csi:
                 emit('check_timing -verbose -file [file join $out coverage_details.rpt]')
                 emit('report_cdc -details -file [file join $out cdc_impl.rpt]')
+                emit('report_bus_skew -file [file join $out bus_skew_impl.rpt]')
+                emit('report_timing -delay_type min_max -max_paths 40 -nworst 2 -file [file join $out paths_impl.rpt]')
                 emit('set pf [open [file join $out delay_primitives.txt] w]')
                 emit('foreach c [get_cells -hier -filter {REF_NAME == IDELAYCTRL}] {puts $pf "$c REFCLK=[get_clocks -of_objects [get_pins $c/REFCLK]]"}')
                 emit('foreach c [get_cells -hier -filter {REF_NAME == IDELAYE3}] {puts $pf "$c FORMAT=[get_property DELAY_FORMAT $c] REFCLK_MHZ=[get_property REFCLK_FREQUENCY $c]"}')
@@ -215,7 +219,7 @@ def prepare(output, stage, repair_csi=False):
                   conversions=conversions, safety='offline only; no PS/DDR/SD/driver changes',
                   prepared_script_sha256=hashlib.sha256((output / 'rebuild.tcl').read_bytes()).hexdigest())
     if repair_csi:
-        record['csi_repair'] = dict(version=2, changes=csi_changes,
+        record['csi_repair'] = dict(version=3, changes=csi_changes,
             input_hz=200703980, multiplier=6, divider=4, output_hz=301055970,
             minimum_idelayctrl_reset_ns=52, reference_reset_cycles=32,
             shared_reference_sha256=hashlib.sha256((output / 'csi_delay_reference.v').read_bytes()).hexdigest(),

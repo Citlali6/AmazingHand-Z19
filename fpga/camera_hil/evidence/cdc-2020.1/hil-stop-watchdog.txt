@@ -1,0 +1,20 @@
+#-----------------------------------------------------------
+# xsim v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Sun Oct 18 16:49:50 2026
+# Process ID: 54976
+# Current directory: F:/ah-camera-hil-cdc-sim01
+# Command line: xsim.exe -log hil-safety.log -mode tcl -source {xsim.dir/hil_safety/xsim_script.tcl}
+# Log file: F:/ah-camera-hil-cdc-sim01/hil-safety.log
+# Journal file: F:/ah-camera-hil-cdc-sim01\xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/hil_safety/xsim_script.tcl
+# xsim {hil_safety} -autoloadwcfg -runall
+Vivado Simulator 2020.1
+Time resolution is 1 ps
+run -all
+PASS HIL AXI: atomic commands, load/hold/release, stop latch/reset, watchdog, offline, replay
+$finish called at time : 668490 ns : File "F:/ah-camera-hil-cdc-sim01/tb_hand_hil_axi.sv" Line 107
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Oct 18 16:49:54 2026...

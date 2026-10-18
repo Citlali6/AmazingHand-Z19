@@ -1,0 +1,3 @@
+
+*** Running vivado
+    with args -log design_1_csi_4lane_raw10_0_0.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_csi_4lane_raw10_0_0.tcl

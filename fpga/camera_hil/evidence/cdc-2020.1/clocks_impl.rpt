@@ -1,0 +1,121 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+-----------------------------------------------------------------------------------------
+| Tool Version      : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
+| Date              : Sun Oct 18 17:11:53 2026
+| Host              : LAPTOP-M6FJ5JKT running 64-bit major release  (build 9200)
+| Command           : report_clocks -file F:/ah-camera-hil-cdc-run01/clocks_impl.rpt
+| Design            : design_1_wrapper
+| Device            : xczu19eg-ffvc1760
+| Speed File        : -2
+| Temperature Grade : I
+-----------------------------------------------------------------------------------------
+
+Clock Report
+
+
+Attributes
+  P: Propagated
+  G: Generated
+  A: Auto-derived
+  R: Renamed
+  V: Virtual
+  I: Inverted
+  S: Pin phase-shifted with Latency mode
+
+Clock                                                                                                Period(ns)  Waveform(ns)     Attributes  Sources
+clk_pl_0                                                                                             4.982       {0.000 2.491}    P           {design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]}
+clk_pl_1                                                                                             9.965       {0.000 4.983}    P           {design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[1]}
+csi0_hs_nominal                                                                                      5.818       {0.000 2.909}    P           {mipi_phy_if_0_clk_hs_p}
+csi1_hs_nominal                                                                                      5.818       {0.000 2.909}    P           {mipi_phy_if_1_clk_hs_p}
+csi2_hs_nominal                                                                                      5.818       {0.000 2.909}    P           {mipi_phy_if_2_clk_hs_p}
+csi3_hs_nominal                                                                                      5.818       {0.000 2.909}    P           {mipi_phy_if_3_clk_hs_p}
+dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/SERIES7_BSCAN.bscan_inst/INTERNAL_TCK  50.000      {0.000 25.000}   P           {dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/SERIES7_BSCAN.bscan_inst/INTERNAL_TCK}
+mdio0_mdc_clock                                                                                      480.000     {0.000 240.000}  P           {design_1_i/zynq_ultra_ps_e_0/inst/PS8_i/EMIOENET0MDIOMDC}
+byte_clock_out                                                                                       23.272      {0.000 11.636}   P,G,A       {design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O}
+byte_clock_out_1                                                                                     23.272      {0.000 11.636}   P,G,A       {design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O}
+byte_clock_out_2                                                                                     23.272      {0.000 11.636}   P,G,A       {design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O}
+byte_clock_out_3                                                                                     23.272      {0.000 11.636}   P,G,A       {design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O}
+csi0_hs_nominal_DIV4_INV                                                                             23.272      {11.636 23.272}  P,G,A,I     {design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser/RX_DIV4_CLK_Q}
+csi1_hs_nominal_DIV4_INV                                                                             23.272      {11.636 23.272}  P,G,A,I     {design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser/RX_DIV4_CLK_Q}
+csi2_hs_nominal_DIV4_INV                                                                             23.272      {11.636 23.272}  P,G,A,I     {design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser/RX_DIV4_CLK_Q}
+csi3_hs_nominal_DIV4_INV                                                                             23.272      {11.636 23.272}  P,G,A,I     {design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser/RX_DIV4_CLK_Q}
+feedback_raw                                                                                         4.982       {0.000 2.491}    P,G,A       {design_1_i/delay_reference/inst/ref_mmcm/CLKFBOUT}
+ref_raw                                                                                              3.321       {0.000 1.661}    P,G,A       {design_1_i/delay_reference/inst/ref_mmcm/CLKOUT0}
+
+
+====================================================
+Generated Clocks
+====================================================
+
+Generated Clock     : byte_clock_out
+Master Source       : design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/I
+Master Clock        : csi0_hs_nominal
+Divide By           : 4
+Generated Sources   : {design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O}
+
+Generated Clock     : byte_clock_out_1
+Master Source       : design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/I
+Master Clock        : csi1_hs_nominal
+Divide By           : 4
+Generated Sources   : {design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O}
+
+Generated Clock     : byte_clock_out_2
+Master Source       : design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/I
+Master Clock        : csi2_hs_nominal
+Divide By           : 4
+Generated Sources   : {design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O}
+
+Generated Clock     : byte_clock_out_3
+Master Source       : design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/I
+Master Clock        : csi3_hs_nominal
+Divide By           : 4
+Generated Sources   : {design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O}
+
+Generated Clock     : csi0_hs_nominal_DIV4_INV
+Master Source       : design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkphy/gen_us.iclkbufio/O
+Master Clock        : csi0_hs_nominal
+Divide By           : 4
+Generated Sources   : {design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser/RX_DIV4_CLK_Q}
+
+Generated Clock     : csi1_hs_nominal_DIV4_INV
+Master Source       : design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkphy/gen_us.iclkbufio/O
+Master Clock        : csi1_hs_nominal
+Divide By           : 4
+Generated Sources   : {design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser/RX_DIV4_CLK_Q}
+
+Generated Clock     : csi2_hs_nominal_DIV4_INV
+Master Source       : design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkphy/gen_us.iclkbufio/O
+Master Clock        : csi2_hs_nominal
+Divide By           : 4
+Generated Sources   : {design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser/RX_DIV4_CLK_Q}
+
+Generated Clock     : csi3_hs_nominal_DIV4_INV
+Master Source       : design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkphy/gen_us.iclkbufio/O
+Master Clock        : csi3_hs_nominal
+Divide By           : 4
+Generated Sources   : {design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d0phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d1phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d2phy/gen_us.ideser/RX_DIV4_CLK_Q design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d3phy/gen_us.ideser/RX_DIV4_CLK_Q}
+
+Generated Clock     : feedback_raw
+Master Source       : design_1_i/delay_reference/inst/ref_mmcm/CLKIN1
+Master Clock        : clk_pl_0
+Multiply By         : 1
+Generated Sources   : {design_1_i/delay_reference/inst/ref_mmcm/CLKFBOUT}
+
+Generated Clock     : ref_raw
+Master Source       : design_1_i/delay_reference/inst/ref_mmcm/CLKIN1
+Master Clock        : clk_pl_0
+Edges               : {1 2 3}
+Edge Shifts(ns)     : {0.000 -0.830 -1.661}
+Generated Sources   : {design_1_i/delay_reference/inst/ref_mmcm/CLKOUT0}
+
+
+
+====================================================
+User Uncertainty
+====================================================
+
+
+
+====================================================
+User Jitter
+====================================================

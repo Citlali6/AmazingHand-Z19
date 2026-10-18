@@ -1,0 +1,30 @@
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0 REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0 REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0_1 REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0_2 REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0 REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0_1 REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0_2 REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0 REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0_1 REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/gen_idctl.idctrl/gen_us.delayctrl_REPLICATED_0_2 REFCLK=ref_raw
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d0phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d1phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d2phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d3phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d0phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d1phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d2phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d3phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d0phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d1phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d2phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d3phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d0phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d1phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d2phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056
+design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d3phy/gen_us.indelay FORMAT=TIME REFCLK_MHZ=301.056

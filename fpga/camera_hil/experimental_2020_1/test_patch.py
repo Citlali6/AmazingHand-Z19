@@ -19,7 +19,7 @@ class PrivatePatchGate(unittest.TestCase):
             component = ROOT.parent.parent / 'component.xml'
             shutil.copy2(CAMERA / 'project' / component, source / component)
             ledger = patch_source(source)
-            self.assertEqual(len(verify_patches(CAMERA, build, ledger)), 5)
+            self.assertEqual(len(verify_patches(CAMERA, build, ledger)), 7)
             path = source / ROOT / 'csi_4lane_raw10.v'
             path.write_bytes(path.read_bytes() + b'\n// unreviewed delta\n')
             with self.assertRaisesRegex(ValueError, 'differs from exact patch'):

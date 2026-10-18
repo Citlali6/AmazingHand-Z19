@@ -1,0 +1,55 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+-----------------------------------------------------------------------------------------
+| Tool Version      : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
+| Date              : Sun Oct 18 16:45:13 2026
+| Host              : LAPTOP-M6FJ5JKT running 64-bit major release  (build 9200)
+| Command           : report_cdc -details -file F:/ah-camera-hil-cdc-synth01/cdc.rpt
+| Design            : cdc_local_top
+| Device            : xczu19eg-ffvc1760
+| Speed File        : -2  PRODUCTION 1.27 02-28-2020
+| Temperature Grade : I
+-----------------------------------------------------------------------------------------
+
+CDC Report
+
+ID      Severity  Count  Description
+------  --------  -----  -------------------------------------------------------
+CDC-3   Info          4  1-bit synchronized with ASYNC_REG property
+CDC-9   Info          2  Asynchronous reset synchronized with ASYNC_REG property
+CDC-11  Critical      2  Fan-out from launch flop to destination clock
+
+Source Clock: local_pl0
+Destination Clock: byte_clock_out
+CDC Type: No Common Primary Clock
+
+Row  ID     Severity  Description                                              Depth  Exception   Source (From)                                                                                                      Destination (To)
+---  -----  --------  -------------------------------------------------------  -----  ----------  -----------------------------------------------------------------------------------------------------------------  --------------------------------------------------------------------------------------------------------------------------------
+  1  CDC-9  Info      Asynchronous reset synchronized with ASYNC_REG property      3  False Path  camera/csi_rx_4lane_m0/link/clkdet/missing_ref_reg/C                                                               camera/csi_rx_4lane_m0/link/clkdet/reset_transfer/arststages_ff_reg[0]/PRE
+  2  CDC-3  Info      1-bit synchronized with ASYNC_REG property                   2  False Path  camera/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.fifo_rd_rst_ic_reg/C  camera/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst/syncstages_ff_reg[0]/D
+
+Source Clock: ref_raw
+Destination Clock: byte_clock_out
+CDC Type: No Common Primary Clock
+
+Row  ID      Severity  Description                                    Depth  Exception   Source (From)                      Destination (To)
+---  ------  --------  ---------------------------------------------  -----  ----------  ---------------------------------  --------------------------------------------------------------------------------------
+  1  CDC-11  Critical  Fan-out from launch flop to destination clock      3  False Path  reference/qualified_ref_reg_inv/C  camera/csi_rx_4lane_m0/link/qualification/qualification_reset/arststages_ff_reg[0]/PRE
+  2  CDC-11  Critical  Fan-out from launch flop to destination clock      3  False Path  reference/qualified_ref_reg_inv/C  camera/gate/reset_to_write/arststages_ff_reg[0]/PRE
+
+Source Clock: input port clock
+Destination Clock: local_hs_nominal
+CDC Type: No Common Primary Clock
+
+Row  ID     Severity  Description                                              Depth  Exception   Source (From)  Destination (To)
+---  -----  --------  -------------------------------------------------------  -----  ----------  -------------  --------------------------------------------------------------------------------
+  1  CDC-9  Info      Asynchronous reset synchronized with ASYNC_REG property      3  False Path  reset          camera/csi_rx_4lane_m0/link/clkphy/gen_us.reset_divider/arststages_ff_reg[0]/PRE
+
+Source Clock: byte_clock_out
+Destination Clock: local_pl0
+CDC Type: No Common Primary Clock
+
+Row  ID     Severity  Description                                 Depth  Exception   Source (From)                                                                                                      Destination (To)
+---  -----  --------  ------------------------------------------  -----  ----------  -----------------------------------------------------------------------------------------------------------------  --------------------------------------------------------------------------------------------------------------------------------
+  1  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  camera/csi_rx_4lane_m0/link/clkdet/heartbeat_reg/C                                                                 camera/csi_rx_4lane_m0/link/clkdet/heartbeat_sync/syncstages_ff_reg[0]/D
+  2  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  camera/gate/write_ready_reg/C                                                                                      camera/gate/ready_transfer/syncstages_ff_reg[0]/D
+  3  CDC-3  Info      1-bit synchronized with ASYNC_REG property      2  False Path  camera/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.fifo_wr_rst_ic_reg/C  camera/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst/syncstages_ff_reg[0]/D

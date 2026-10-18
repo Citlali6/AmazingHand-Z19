@@ -1,0 +1,814 @@
+[
+  {
+    "rule": "CDC-7",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/application_ready_reg/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "inherited_clock_detector",
+    "source": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkdet/clk_fail_count_reg[6]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "inherited_clock_detector",
+    "source": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkdet/clk_fail_count_reg[6]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[1]/CLR"
+  },
+  {
+    "rule": "CDC-12",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[1]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[2]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[3]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[4]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[5]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[6]/CLR"
+  },
+  {
+    "rule": "CDC-3",
+    "severity": "Info",
+    "category": "other",
+    "source": "design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.fifo_rd_rst_ic_reg/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst/syncstages_ff_reg[0]/D"
+  },
+  {
+    "rule": "CDC-7",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/application_ready_reg/CLR"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d1phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/d3phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-12",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[39]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[1]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[2]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[3]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[4]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[5]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/ready_count_reg[6]/CLR"
+  },
+  {
+    "rule": "CDC-7",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/application_ready_reg/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "inherited_clock_detector",
+    "source": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/clk_fail_count_reg[6]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "inherited_clock_detector",
+    "source": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/clk_fail_count_reg[6]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[1]/CLR"
+  },
+  {
+    "rule": "CDC-12",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[1]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[2]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[3]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[4]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[5]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[6]/CLR"
+  },
+  {
+    "rule": "CDC-3",
+    "severity": "Info",
+    "category": "other",
+    "source": "design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.fifo_rd_rst_ic_reg/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst/syncstages_ff_reg[0]/D"
+  },
+  {
+    "rule": "CDC-7",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/application_ready_reg/CLR"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d1phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/d3phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-12",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[39]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[1]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[2]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[3]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[4]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[5]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/ready_count_reg[6]/CLR"
+  },
+  {
+    "rule": "CDC-7",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/application_ready_reg/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "inherited_clock_detector",
+    "source": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkdet/clk_fail_count_reg[6]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "inherited_clock_detector",
+    "source": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkdet/clk_fail_count_reg[6]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[1]/CLR"
+  },
+  {
+    "rule": "CDC-12",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[1]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[2]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[3]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[4]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[5]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[6]/CLR"
+  },
+  {
+    "rule": "CDC-3",
+    "severity": "Info",
+    "category": "other",
+    "source": "design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.fifo_rd_rst_ic_reg/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst/syncstages_ff_reg[0]/D"
+  },
+  {
+    "rule": "CDC-7",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/application_ready_reg/CLR"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d1phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/d3phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-12",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[39]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[1]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[2]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[3]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[4]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[5]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/ready_count_reg[6]/CLR"
+  },
+  {
+    "rule": "CDC-7",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/application_ready_reg/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "inherited_clock_detector",
+    "source": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkdet/clk_fail_count_reg[6]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "inherited_clock_detector",
+    "source": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkdet/clk_fail_count_reg[6]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkdet/count_value_reg[1]/CLR"
+  },
+  {
+    "rule": "CDC-12",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_2/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[1]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[2]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[3]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[4]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[5]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_5/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[6]/CLR"
+  },
+  {
+    "rule": "CDC-3",
+    "severity": "Info",
+    "category": "other",
+    "source": "design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.fifo_rd_rst_ic_reg/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst/syncstages_ff_reg[0]/D"
+  },
+  {
+    "rule": "CDC-7",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/application_ready_reg/CLR"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d0phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d1phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d2phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-10",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[7]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/d3phy/reset_sync_reg[0]/PRE"
+  },
+  {
+    "rule": "CDC-12",
+    "severity": "Critical",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/reset_hold_reg[39]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_byte_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[0]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[1]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[2]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[3]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[4]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[5]/CLR"
+  },
+  {
+    "rule": "CDC-15",
+    "severity": "Warning",
+    "category": "new_reference_application_phy_reset",
+    "source": "design_1_i/delay_reference/inst/ready_release_reg[2]/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/ready_count_reg[6]/CLR"
+  },
+  {
+    "rule": "CDC-1",
+    "severity": "Critical",
+    "category": "inherited_clock_detector",
+    "source": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkdet/ext_clk_lat_reg/D"
+  },
+  {
+    "rule": "CDC-1",
+    "severity": "Critical",
+    "category": "inherited_fifo_single_ready",
+    "source": "design_1_i/csi_4lane_raw10_0/inst/fifo_ready_reg/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/fifo_ready_maxis_reg/D"
+  },
+  {
+    "rule": "CDC-3",
+    "severity": "Info",
+    "category": "other",
+    "source": "design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.fifo_wr_rst_ic_reg/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst/syncstages_ff_reg[0]/D"
+  },
+  {
+    "rule": "CDC-1",
+    "severity": "Critical",
+    "category": "inherited_clock_detector",
+    "source": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkdet/ext_clk_lat_reg/D"
+  },
+  {
+    "rule": "CDC-1",
+    "severity": "Critical",
+    "category": "inherited_fifo_single_ready",
+    "source": "design_1_i/csi_4lane_raw10_1/inst/fifo_ready_reg/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/fifo_ready_maxis_reg/D"
+  },
+  {
+    "rule": "CDC-3",
+    "severity": "Info",
+    "category": "other",
+    "source": "design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.fifo_wr_rst_ic_reg/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst/syncstages_ff_reg[0]/D"
+  },
+  {
+    "rule": "CDC-1",
+    "severity": "Critical",
+    "category": "inherited_clock_detector",
+    "source": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkdet/ext_clk_lat_reg/D"
+  },
+  {
+    "rule": "CDC-1",
+    "severity": "Critical",
+    "category": "inherited_fifo_single_ready",
+    "source": "design_1_i/csi_4lane_raw10_2/inst/fifo_ready_reg/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/fifo_ready_maxis_reg/D"
+  },
+  {
+    "rule": "CDC-3",
+    "severity": "Info",
+    "category": "other",
+    "source": "design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.fifo_wr_rst_ic_reg/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst/syncstages_ff_reg[0]/D"
+  },
+  {
+    "rule": "CDC-1",
+    "severity": "Critical",
+    "category": "inherited_clock_detector",
+    "source": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/O",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkdet/ext_clk_lat_reg/D"
+  },
+  {
+    "rule": "CDC-1",
+    "severity": "Critical",
+    "category": "inherited_fifo_single_ready",
+    "source": "design_1_i/csi_4lane_raw10_3/inst/fifo_ready_reg/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/fifo_ready_maxis_reg/D"
+  },
+  {
+    "rule": "CDC-3",
+    "severity": "Info",
+    "category": "other",
+    "source": "design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.fifo_wr_rst_ic_reg/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/xpm_fifo_async_inst/gnuram_async_fifo.xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst/syncstages_ff_reg[0]/D"
+  },
+  {
+    "rule": "CDC-13",
+    "severity": "Critical",
+    "category": "inherited_divider_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_1/C",
+    "destination": "design_1_i/csi_4lane_raw10_0/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/CLR"
+  },
+  {
+    "rule": "CDC-13",
+    "severity": "Critical",
+    "category": "inherited_divider_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_4/C",
+    "destination": "design_1_i/csi_4lane_raw10_1/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/CLR"
+  },
+  {
+    "rule": "CDC-13",
+    "severity": "Critical",
+    "category": "inherited_divider_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica/C",
+    "destination": "design_1_i/csi_4lane_raw10_2/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/CLR"
+  },
+  {
+    "rule": "CDC-13",
+    "severity": "Critical",
+    "category": "inherited_divider_reset",
+    "source": "design_1_i/proc_sys_reset_100M/U0/PR_OUT_DFF[0].FDRE_PER_replica_3/C",
+    "destination": "design_1_i/csi_4lane_raw10_3/inst/csi_rx_4lane_m0/link/clkphy/gen_us.clkdiv/CLR"
+  }
+]

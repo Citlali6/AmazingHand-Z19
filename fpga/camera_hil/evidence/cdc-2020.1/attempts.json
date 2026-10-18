@@ -1,0 +1,68 @@
+{
+  "task_baseline": "bf11ac222685c812c6813794959898a8c3e61d59",
+  "local_attempts": [
+    {
+      "output": "F:/ah-camera-hil-cdc-local01",
+      "operation": "preparation only; no Vivado"
+    },
+    {
+      "output": "F:/ah-camera-hil-cdc-local02",
+      "operation": "preparation/clock detector simulation; no Vivado"
+    },
+    {
+      "output": "F:/ah-camera-hil-cdc-synth01",
+      "prepared": "F:/ah-camera-hil-cdc-local03",
+      "result": "actual one-CSI synth/CDC:2 Critical CDC11 from duplicated reset transfer"
+    },
+    {
+      "output": "F:/ah-camera-hil-cdc-synth02",
+      "prepared": "F:/ah-camera-hil-cdc-local04",
+      "result": "actual one-CSI synth/CDC:0 Critical after shared target reset"
+    },
+    {
+      "output": "F:/ah-camera-hil-cdc-synth03",
+      "prepared": "F:/ah-camera-hil-cdc-local05",
+      "result": "actual one-CSI synth/CDC:0 Critical with full link-reset FIFO flush; Info3=4/9=3"
+    }
+  ],
+  "full_attempts": [
+    {
+      "output": "F:/ah-camera-hil-cdc-run01",
+      "operation": "single fresh full implementation; final reports authoritative"
+    }
+  ],
+  "simulation_diagnostics": [
+    {
+      "path": "F:/ah-camera-hil-cdc-sim01/fifo-faults.log",
+      "result": "test harness incorrectly selected ultra/0000/1-bit-count profile; timeout; corrected to original auto/0707/13-bit-count. No design change"
+    },
+    {
+      "path": "F:/ah-camera-hil-cdc-sim01/fifo-original-profile.log",
+      "result": "actual original FIFO dimensions/profile with extra SIM_ASSERT_CHK1: functional self-check PASS but vendorS4/S5/S6/S7 errors; NOT clean assertion pass"
+    },
+    {
+      "path": "F:/ah-camera-hil-cdc-tests-final01",
+      "result": "reproducible final run: production defaultSIM_ASSERT_CHK0, independent busy/full/empty/overflow/underflow/data checks PASS; detector/reference fault tests PASS"
+    },
+    {
+      "path": "F:/ah-camera-hil-cdc-sim01/hil-safety.log",
+      "result": "existing HIL test PASS after xelab timescale override; no inherited RTL modification"
+    }
+  ],
+  "board_operations": [],
+  "issue20_started": false,
+  "physical_review": [
+    {
+      "output": "F:/ah-camera-hil-cdc-review01",
+      "result": "audit failed:exact1'b1 primitive property compared to decimal1; unchanged design"
+    },
+    {
+      "output": "F:/ah-camera-hil-cdc-inspect01.txt",
+      "result": "all16actualsame CLK/CLK_B nets/drivers +1'b1 proven"
+    },
+    {
+      "output": "F:/ah-camera-hil-cdc-review02",
+      "result": "PASS after exact1'b1 representation accepted; no topology/constraint changes"
+    }
+  ]
+}

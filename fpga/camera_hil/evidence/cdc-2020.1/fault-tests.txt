@@ -1,0 +1,207 @@
+COMMAND ["F:\\Xilinx\\Vivado\\2020.1\\bin\\xvlog.bat", "--sv", "F:\\Xilinx\\Vivado\\2020.1\\data\\ip\\xpm\\xpm_cdc\\hdl\\xpm_cdc.sv", "F:\\Xilinx\\Vivado\\2020.1\\data\\ip\\xpm\\xpm_memory\\hdl\\xpm_memory.sv", "F:\\Xilinx\\Vivado\\2020.1\\data\\ip\\xpm\\xpm_fifo\\hdl\\xpm_fifo.sv", "--work", "xpm"]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv" into library xpm
+INFO: [VRFC 10-311] analyzing module xpm_cdc_single
+INFO: [VRFC 10-311] analyzing module xpm_cdc_gray
+INFO: [VRFC 10-311] analyzing module xpm_cdc_handshake
+INFO: [VRFC 10-311] analyzing module xpm_cdc_pulse
+INFO: [VRFC 10-311] analyzing module xpm_cdc_array_single
+INFO: [VRFC 10-311] analyzing module xpm_cdc_sync_rst
+INFO: [VRFC 10-311] analyzing module xpm_cdc_async_rst
+INFO: [VRFC 10-311] analyzing module xpm_cdc_low_latency_handshake
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv" into library xpm
+INFO: [VRFC 10-311] analyzing module xpm_memory_base
+INFO: [VRFC 10-311] analyzing module asym_bwe_bb
+INFO: [VRFC 10-311] analyzing module xpm_memory_dpdistram
+INFO: [VRFC 10-311] analyzing module xpm_memory_dprom
+INFO: [VRFC 10-311] analyzing module xpm_memory_sdpram
+INFO: [VRFC 10-311] analyzing module xpm_memory_spram
+INFO: [VRFC 10-311] analyzing module xpm_memory_sprom
+INFO: [VRFC 10-311] analyzing module xpm_memory_tdpram
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv" into library xpm
+INFO: [VRFC 10-311] analyzing module xpm_fifo_base
+INFO: [VRFC 10-311] analyzing module xpm_fifo_rst
+INFO: [VRFC 10-311] analyzing module xpm_counter_updn
+INFO: [VRFC 10-311] analyzing module xpm_fifo_reg_vec
+INFO: [VRFC 10-311] analyzing module xpm_fifo_reg_bit
+INFO: [VRFC 10-311] analyzing module xpm_reg_pipe_bit
+INFO: [VRFC 10-311] analyzing module xpm_fifo_sync
+INFO: [VRFC 10-311] analyzing module xpm_fifo_async
+INFO: [VRFC 10-311] analyzing module xpm_fifo_axis
+INFO: [VRFC 10-311] analyzing module xpm_fifo_axif
+WARNING: [VRFC 10-2821] generate block is allowed only inside loop and conditional generate in SystemVerilog mode [F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv:3554]
+INFO: [VRFC 10-311] analyzing module xpm_fifo_axil
+INFO: [VRFC 10-311] analyzing module xpm_fifo_axi_reg_slice
+COMMAND ["F:\\Xilinx\\Vivado\\2020.1\\bin\\xvhdl.bat", "--work", "xpm", "F:\\Xilinx\\Vivado\\2020.1\\data\\ip\\xpm\\xpm_VCOMP.vhd"]
+INFO: [VRFC 10-163] Analyzing VHDL file "F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_VCOMP.vhd" into library xpm
+COMMAND ["F:\\Xilinx\\Vivado\\2020.1\\bin\\xvhdl.bat", "csi_clock_detector.vhd"]
+INFO: [VRFC 10-163] Analyzing VHDL file "F:/ah-camera-hil-cdc-tests-final01/csi_clock_detector.vhd" into library work
+INFO: [VRFC 10-3107] analyzing entity 'csi_rx_clock_det'
+COMMAND ["F:\\Xilinx\\Vivado\\2020.1\\bin\\xvlog.bat", "--sv", "csi_cdc_helpers.v", "csi_delay_reference.v", "test_cdc.sv", "test_fifo.sv", "test_reference.sv"]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/ah-camera-hil-cdc-tests-final01/csi_cdc_helpers.v" into library work
+INFO: [VRFC 10-311] analyzing module csi_application_gate
+INFO: [VRFC 10-311] analyzing module csi_fifo_gate
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/ah-camera-hil-cdc-tests-final01/csi_delay_reference.v" into library work
+INFO: [VRFC 10-311] analyzing module csi_delay_reference
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/ah-camera-hil-cdc-tests-final01/test_cdc.sv" into library work
+INFO: [VRFC 10-311] analyzing module test_cdc
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/ah-camera-hil-cdc-tests-final01/test_fifo.sv" into library work
+INFO: [VRFC 10-311] analyzing module test_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/ah-camera-hil-cdc-tests-final01/test_reference.sv" into library work
+INFO: [VRFC 10-311] analyzing module test_reference
+COMMAND ["F:\\Xilinx\\Vivado\\2020.1\\bin\\xvlog.bat", "F:\\Xilinx\\Vivado\\2020.1\\data\\verilog\\src\\glbl.v"]
+INFO: [VRFC 10-2263] Analyzing Verilog file "F:/Xilinx/Vivado/2020.1/data/verilog/src/glbl.v" into library work
+INFO: [VRFC 10-311] analyzing module glbl
+COMMAND ["F:\\Xilinx\\Vivado\\2020.1\\bin\\xelab.bat", "test_cdc", "glbl", "-L", "xpm", "-L", "unisims_ver", "-s", "test_cdc_faults"]
+Vivado Simulator 2020.1
+Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
+Running: F:/Xilinx/Vivado/2020.1/bin/unwrapped/win64.o/xelab.exe test_cdc glbl -L xpm -L unisims_ver -s test_cdc_faults
+Multi-threading is on. Using 30 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.numeric_std
+Compiling package xpm.vcomponents
+Compiling module xpm.xpm_cdc_single(DEST_SYNC_FF=3,IN...
+Compiling module xpm.xpm_cdc_async_rst(DEST_SYNC_FF=3...
+Compiling architecture structural of entity work.csi_rx_clock_det [csi_rx_clock_det_default]
+Compiling module xpm.xpm_cdc_async_rst(DEST_SYNC_FF=3...
+Compiling module work.csi_application_gate
+Compiling module xpm.xpm_cdc_single(DEST_SYNC_FF=3,IN...
+Compiling module work.csi_fifo_gate
+Compiling module work.test_cdc
+Compiling module work.glbl
+Built simulation snapshot test_cdc_faults
+
+****** Webtalk v2020.1 (64-bit)
+  **** SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+  **** IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source F:/ah-camera-hil-cdc-tests-final01/xsim.dir/test_cdc_faults/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-206] Exiting Webtalk at Sun Oct 18 16:57:27 2026...
+COMMAND ["F:\\Xilinx\\Vivado\\2020.1\\bin\\xsim.bat", "test_cdc_faults", "-runall", "-log", "test_cdc.log"]
+
+****** xsim v2020.1 (64-bit)
+  **** SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+  **** IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source xsim.dir/test_cdc_faults/xsim_script.tcl
+# xsim {test_cdc_faults} -autoloadwcfg -runall
+Vivado Simulator 2020.1
+Time resolution is 1 ps
+run -all
+PASS_CDC power_reset RDY_delay clock_stop_low_high restart FIFO_busy_full_empty valid_backpressure requalification
+$finish called at time : 7803848 ps : File "F:/ah-camera-hil-cdc-tests-final01/test_cdc.sv" Line 60
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Oct 18 16:57:33 2026...
+COMMAND ["F:\\Xilinx\\Vivado\\2020.1\\bin\\xelab.bat", "test_fifo", "glbl", "-L", "xpm", "-L", "unisims_ver", "-s", "test_fifo_faults"]
+Vivado Simulator 2020.1
+Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
+Running: F:/Xilinx/Vivado/2020.1/bin/unwrapped/win64.o/xelab.exe test_fifo glbl -L xpm -L unisims_ver -s test_fifo_faults
+Multi-threading is on. Using 30 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xpm.xpm_cdc_single(DEST_SYNC_FF=3,IN...
+Compiling module work.csi_fifo_gate
+Compiling module xpm.xpm_cdc_sync_rst(DEST_SYNC_FF=2,...
+Compiling module xpm.xpm_fifo_rst(COMMON_CLOCK=0)
+Compiling module xpm.xpm_fifo_reg_bit
+Compiling module xpm.xpm_counter_updn(COUNTER_WIDTH=1...
+Compiling module xpm.xpm_counter_updn(COUNTER_WIDTH=1...
+Compiling module xpm.xpm_memory_base(MEMORY_TYPE=1,ME...
+Compiling module xpm.xpm_cdc_gray(DEST_SYNC_FF=2,INIT...
+Compiling module xpm.xpm_fifo_reg_vec(REG_WIDTH=12)
+Compiling module xpm.xpm_cdc_gray(INIT_SYNC_FF=1,WIDT...
+Compiling module xpm.xpm_fifo_reg_vec(REG_WIDTH=13)
+Compiling module xpm.xpm_cdc_gray(DEST_SYNC_FF=2,INIT...
+Compiling module xpm.xpm_counter_updn(COUNTER_WIDTH=2...
+Compiling module xpm.xpm_fifo_base(COMMON_CLOCK=0,FIF...
+Compiling module xpm.xpm_fifo_async(FIFO_WRITE_DEPTH=...
+Compiling module work.test_fifo
+Compiling module work.glbl
+Built simulation snapshot test_fifo_faults
+
+****** Webtalk v2020.1 (64-bit)
+  **** SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+  **** IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source F:/ah-camera-hil-cdc-tests-final01/xsim.dir/test_fifo_faults/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-206] Exiting Webtalk at Sun Oct 18 16:57:36 2026...
+COMMAND ["F:\\Xilinx\\Vivado\\2020.1\\bin\\xsim.bat", "test_fifo_faults", "-runall", "-log", "test_fifo.log"]
+
+****** xsim v2020.1 (64-bit)
+  **** SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+  **** IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source xsim.dir/test_fifo_faults/xsim_script.tcl
+# xsim {test_fifo_faults} -autoloadwcfg -runall
+Vivado Simulator 2020.1
+Time resolution is 1 ps
+run -all
+Info: [XPM_MEMORY 20-1] MEMORY_PRIMITIVE (0) instructs Vivado Synthesis to choose the memory primitive type. Depending on their values, other XPM_MEMORY parameters may preclude the choice of certain memory primitive types. Review XPM_MEMORY documentation and parameter values to understand any limitations, or set MEMORY_PRIMITIVE to a different value. test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst .\gen_sdpram.xpm_memory_base_inst .config_drc
+Time: 1 ps  Iteration: 0  Process: /test_fifo/fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/Initial294_36  Scope: test_fifo.fifo.\gnuram_async_fifo.xpm_fifo_base_inst .\gen_sdpram.xpm_memory_base_inst .config_drc  File: F:/Xilinx/Vivado/2020.1/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv Line: 488
+FIFO_INIT_RELEASE
+FIFO_INIT_READY
+FIFO_RESTART_RELEASE
+FIFO_RESTART_READY
+PASS_VENDOR_FIFO reset_busy flush_stale_on_clock_stop resume_new_data stream_reset backpressure
+$finish called at time : 2408797 ps : File "F:/ah-camera-hil-cdc-tests-final01/test_fifo.sv" Line 52
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Oct 18 16:57:41 2026...
+COMMAND ["F:\\Xilinx\\Vivado\\2020.1\\bin\\xelab.bat", "test_reference", "glbl", "-L", "xpm", "-L", "unisims_ver", "-s", "test_reference_faults"]
+Vivado Simulator 2020.1
+Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
+Running: F:/Xilinx/Vivado/2020.1/bin/unwrapped/win64.o/xelab.exe test_reference glbl -L xpm -L unisims_ver -s test_reference_faults
+Multi-threading is on. Using 30 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1fs
+Compiling module unisims_ver.MMCME4_ADV(CLKFBOUT_MULT_F=6.0,C...
+Compiling module unisims_ver.MMCME4_BASE(CLKFBOUT_MULT_F=6.0,...
+Compiling module unisims_ver.BUFG
+Compiling module xpm.xpm_cdc_single(DEST_SYNC_FF=3,IN...
+Compiling module work.csi_delay_reference
+Compiling module work.test_reference
+Compiling module work.glbl
+Built simulation snapshot test_reference_faults
+
+****** Webtalk v2020.1 (64-bit)
+  **** SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+  **** IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source F:/ah-camera-hil-cdc-tests-final01/xsim.dir/test_reference_faults/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-206] Exiting Webtalk at Sun Oct 18 16:57:48 2026...
+COMMAND ["F:\\Xilinx\\Vivado\\2020.1\\bin\\xsim.bat", "test_reference_faults", "-runall", "-log", "test_reference.log"]
+
+****** xsim v2020.1 (64-bit)
+  **** SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+  **** IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source xsim.dir/test_reference_faults/xsim_script.tcl
+# xsim {test_reference_faults} -autoloadwcfg -runall
+Vivado Simulator 2020.1
+Time resolution is 1 fs
+run -all
+Warning: [Unisim MMCME4_ADV-39] Input clock has jitter. This may cause misalignment in output clocks. Instance test_reference.dut.ref_mmcm.mmcm_adv_1               366211
+PASS_REFERENCE physical_period_ns=3.321462000 io_to_ctrl_ns=106.293 all_four_RDY_required no_sensor_clock_dependency
+$finish called at time : 857832309 fs : File "F:/ah-camera-hil-cdc-tests-final01/test_reference.sv" Line 45
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Oct 18 16:57:53 2026...

@@ -101,7 +101,7 @@ def build_audit(build):
         if 'csi_repair' in record:
             from experimental_2020_1.csi_patch import verify_patches
             repair = record['csi_repair']
-            require(repair['version'] == 2 and repair['input_hz'] == CLOCK_HZ and
+            require(repair['version'] == 3 and repair['input_hz'] == CLOCK_HZ and
                     repair['output_hz'] == 301055970 and repair['multiplier'] == 6 and
                     repair['divider'] == 4 and repair['reference_reset_cycles'] == 32,
                     'unexpected CSI reference repair')

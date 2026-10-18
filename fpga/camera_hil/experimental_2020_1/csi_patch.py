@@ -151,7 +151,16 @@ attribute SHREG_EXTRACT of reset_sync : signal is "NO";'''),
     component.write_bytes(after)
     changes.append(dict(path=component.relative_to(source).as_posix(),
                         original_sha256=digest(before), patched_sha256=digest(after)))
-    return changes
+    try:
+        from .structural_patch import apply_structural
+    except ImportError:
+        from structural_patch import apply_structural
+    original = {row['path']: row['original_sha256'] for row in changes}
+    for name in ['csi_rx_clock_det.vhd', 'csi_rx_hs_clk_phy.vhd']:
+        original[(ROOT / name).as_posix()] = digest((source / ROOT / name).read_bytes())
+    apply_structural(source)
+    return [dict(path=name, original_sha256=before,
+                 patched_sha256=digest((source/name).read_bytes())) for name,before in original.items()]
 
 
 def verify_patches(camera, build, ledger):

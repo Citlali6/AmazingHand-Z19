@@ -3,7 +3,7 @@
 **2026-10-18 follow-up: use the installed Vivado 2020.1 only.** The explicitly
 authorized [experimental reconstruction](experimental_2020_1/README.md) has
 actually recreated/validated the combined camera/HIL BD, synthesized, placed,
-routed and generated a diagnostic bit/XSA in 2020.1. **Timing/coverage and DRC
+routed and generated a diagnostic bit/XSA in 2020.1. **External timing coverage and DRC
 gates fail, so these artifacts must not be deployed.** The original strict entry and
 117 archived camera files remain unchanged. No new tool installation is needed.
 The earlier 2020.1 version-guard rejection is historical evidence, not a finding
@@ -19,11 +19,16 @@ they are not changes to the validated original camera profile. The same option
 adds a documented nominal 171.875 MHz sensor clock model and narrowly checked
 URAM tie-offs. Its detailed design and evidence are in the experimental README.
 
-**Latest P0 result:** the fresh 2020.1 implementation and new diagnostic bit/XSA
-complete; all 14 reference pulse failures and 48 URAM DRC warnings are removed.
-The result remains **UNSAFE / NOT DEPLOYABLE**: WNS -1.986 ns, WHS -0.121 ns,
-44 Critical CDC findings, missing I/O delays 20/8, and RTSTAT-10 remain. Packaging
-actually refuses. See [P0 evidence and remaining work](evidence/p0-2020.1/README.md).
+**Latest structural P0 result:** the single fresh 2020.1 full implementation
+now satisfies all **modeled** setup/hold/pulse checks: WNS +0.574 ns,
+WHS +0.010 ns, WPWS +0.012 ns. Whole-design CDC is **0 Critical / 0 Warning**
+(previously44/64), and XPM bus skew passes. The result is still
+**UNSAFE / NOT DEPLOYABLE**: external I/O delays20/8, RTSTAT-10 (60 nets),
+reset-methodology alerts, complete-frame/gap protocol validation and actual
+same-bit camera/HIL acceptance remain open. The packager actually rejects the DRC warning; no bin/deployment
+package exists. See [structural CDC evidence](evidence/cdc-2020.1/README.md),
+[per-port external timing inputs](experimental_2020_1/IO_TIMING.md) and the
+[preceding P0 evidence](evidence/p0-2020.1/README.md).
 
 ## Source and topology
 
@@ -174,7 +179,8 @@ source-only checks. Deployment/rollback, simultaneous video/HIL,
 load/STOP/watchdog performance, real servos and physical grasp remain untested.
 
 
-Current native result: real BD validate, synthesis, placement, routing and
+**Historical first native reconstruction (superseded by the P0/CDC rounds above):**
+real BD validate, synthesis, placement, routing and
 bitgen/XSA generation succeeded. The single-source clock correction was
 confirmed by reanalysing the same routed DCP; no corrected implementation was
 rerun and no corrected candidate bit was generated. The first bit/XSA retain
@@ -182,7 +188,7 @@ that attempt's clock-XDC diagnostics. Native packaging actually exits 1 for
 failed timing, leaving no bin or deployment package. Both binary artifacts stay
 only in `F:/ah-camera-hil-2020.1-run01/`; they are **not uploaded to GitHub**.
 
-The substantive blockers are 14 IDELAYCTRL max-period failures at the preserved
+That historical attempt had 14 IDELAYCTRL max-period failures at the preserved
 ~200.704 MHz reference (required period <=3.333 ns), 2,496 unclocked pins,
 6,036 unconstrained internal endpoints, 24/8 missing IO delay constraints, and
 49 DRC warnings. These are findings of this real 2020.1 reconstruction; no

@@ -1,0 +1,21 @@
+#-----------------------------------------------------------
+# xsim v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Sun Oct 18 16:54:02 2026
+# Process ID: 52272
+# Current directory: F:/ah-camera-hil-cdc-sim01
+# Command line: xsim.exe -log fifo-faults.log -mode tcl -source {xsim.dir/fifo_faults/xsim_script.tcl}
+# Log file: F:/ah-camera-hil-cdc-sim01/fifo-faults.log
+# Journal file: F:/ah-camera-hil-cdc-sim01\xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/fifo_faults/xsim_script.tcl
+# xsim {fifo_faults} -autoloadwcfg -runall
+Vivado Simulator 2020.1
+Time resolution is 1 ps
+run -all
+Fatal: FIFO test timeout
+Time: 50 us  Iteration: 0  Process: /test_fifo/Initial49_10  Scope: test_fifo  File: F:/ah-camera-hil-cdc-sim01/test_fifo.sv Line: 49
+$finish called at time : 50 us
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Oct 18 16:54:06 2026...

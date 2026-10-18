@@ -1,0 +1,314 @@
+{
+  "local-cdc-attempt01.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-synth01/cdc.rpt",
+    "raw_bytes": 5337,
+    "raw_sha256": "3a16bacd733a220c9ff3dca23216a933e9e20656304af0c4ebac8f8737a1d66d",
+    "archived_sha256": "c5ce70ed4d3eedcf3f5e8c94961bd69c29d1d42592f16896830ac816c30454f9"
+  },
+  "local-cdc-shared-reset.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-synth02/cdc.rpt",
+    "raw_bytes": 5111,
+    "raw_sha256": "acac057a65b8b97afa8d8eca0ff6328df8a8d5873deee5acb7d4301a88de80a6",
+    "archived_sha256": "7d72e3f5ba22ccc558475d0adaee505713cbbe7b7d6ced560931327cfe2a05e2"
+  },
+  "local-cdc-final.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-synth03/cdc.rpt",
+    "raw_bytes": 5111,
+    "raw_sha256": "a9c8e3963294376ad32e7d244112eb937ad1116b01e3b0417968c7f50212dbf8",
+    "archived_sha256": "024fe91fac4a86ba100be6667c60f4ed24db945c1ae754ae02f55fd7010926df"
+  },
+  "local-synth-final.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-local05/local-synth.log",
+    "raw_bytes": 77815,
+    "raw_sha256": "5873587c32da81d115896f5b09d3ceb5162fa5bbafdaaec919b6e01fd2c8584b",
+    "archived_sha256": "9843aa3824379788d9d5e34b338d55cc0ab812f0182393d8fa6ac51cc973cbc1"
+  },
+  "local-timing-final.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-synth03/timing.rpt",
+    "raw_bytes": 203039,
+    "raw_sha256": "25f9b4756e62e05de6fd9287dd13108b199a7ee31d46ee678d0fe7b34cf3b113",
+    "archived_sha256": "157eaf20a1473bc55dbb8e314228735851224ad4e0487809e9631c05ed2204ce"
+  },
+  "fault-tests.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-tests-final01/transcript.txt",
+    "raw_bytes": 12671,
+    "raw_sha256": "62d5bc423f262460a15b097a79293f3c1dccc4eed9048ef21cfa199d10395419",
+    "archived_sha256": "ae79551a3d9b6c19443155225723cd0c9c2ae2cbe1536cc2bc725c47b9cdd0db"
+  },
+  "fault-tests.json": {
+    "raw_path": "F:/ah-camera-hil-cdc-tests-final01/tests.json",
+    "raw_bytes": 2726,
+    "raw_sha256": "63e69b70a5bf2b0b845dd68f89c711c9b72465d570e3ffc1213390273facbfaf",
+    "archived_sha256": "fe8c79d1fa59aa902baf435f296d80ef56eb050ca03e7d666b819cf996887f53"
+  },
+  "fifo-initial-harness-timeout.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-sim01/fifo-faults.log",
+    "raw_bytes": 979,
+    "raw_sha256": "d632c85dbb2b1611dfa4dfe978d83f640036b0253a5fdcb1ae2c20a01cee5eb3",
+    "archived_sha256": "d632c85dbb2b1611dfa4dfe978d83f640036b0253a5fdcb1ae2c20a01cee5eb3"
+  },
+  "fifo-extra-vendor-assertions-not-clean.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-sim01/fifo-original-profile.log",
+    "raw_bytes": 7950,
+    "raw_sha256": "31ae6833408ebd943aab57a327ea571d0097d382cbd029a50d1134bc6fe19557",
+    "archived_sha256": "31ae6833408ebd943aab57a327ea571d0097d382cbd029a50d1134bc6fe19557"
+  },
+  "hil-stop-watchdog.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-sim01/hil-safety.log",
+    "raw_bytes": 977,
+    "raw_sha256": "255f9fcc6ca7be1102d524f595c57d71a0c5ec04c39e08b9c0b38dbb51c5f429",
+    "archived_sha256": "255f9fcc6ca7be1102d524f595c57d71a0c5ec04c39e08b9c0b38dbb51c5f429"
+  },
+  "timing_impl.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/timing_impl.rpt",
+    "raw_bytes": 767596,
+    "raw_sha256": "c026c05c3aab8021f551b1bc6e9992a4ad8f354a969168f85b27f88c60e951b8",
+    "archived_sha256": "5d55b813822c2799c438ec6b78302ead497c6e874a4b361edf38df1cef8aefd4"
+  },
+  "coverage_details.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/coverage_details.rpt",
+    "raw_bytes": 3813,
+    "raw_sha256": "01af2ad83f0c1dd1c8862b36fbfeced41009834685dcf3e8c03dd7e0eba9c1b9",
+    "archived_sha256": "95377b0c54766cf4a1df3d70a2919c3ec9340558bef37c4c6cfeb6556a412e7a"
+  },
+  "drc_impl.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/drc_impl.rpt",
+    "raw_bytes": 4224,
+    "raw_sha256": "3ba95861235c8a7b96e4c592f1d3d7678c1ce2b80654f130f2ca770ee7281783",
+    "archived_sha256": "e546ddb2c320643efe02881408fca50aa4988b0dd020334d748bab6f9f287fcd"
+  },
+  "cdc_impl.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/cdc_impl.rpt",
+    "raw_bytes": 25531,
+    "raw_sha256": "1fa8bd6c478e9a80a33636181abd7c0deda4695adba8852ac16200fb5bff0a0d",
+    "archived_sha256": "5d26fde0f9acf8ac57172f33ddfc1373a70295576c6a7092efc745d9a0a89405"
+  },
+  "clocks_impl.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/clocks_impl.rpt",
+    "raw_bytes": 10345,
+    "raw_sha256": "175a37f2319da127ae0b016099ff4f1edb30a3b586c7fe3da844bad6af4c21c6",
+    "archived_sha256": "744e8b11e5a781bc9e9aa703e67d37e743bb91d684bcafbe2873c2f64d2b3c08"
+  },
+  "bus_skew_impl.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/bus_skew_impl.rpt",
+    "raw_bytes": 224680,
+    "raw_sha256": "11e7a5290d092b81c6e782910608d813b9cdf9ea6a0eb48afe95d06fa08195bb",
+    "archived_sha256": "490eba42af55bfadd03dfd50a8c133554f22f7754f1822119f4110cb9a3db288"
+  },
+  "paths_impl.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/paths_impl.rpt",
+    "raw_bytes": 219493,
+    "raw_sha256": "d0a40748e9f0488cf392a7d6da9298df5d21c39ade4b0cfc242ad7eadebf3724",
+    "archived_sha256": "39ad34060e7e85052f25d4f78c856463ef64ad0ebabb473a8e34818dd3160ed1"
+  },
+  "methodology_impl.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/methodology_impl.rpt",
+    "raw_bytes": 38102,
+    "raw_sha256": "4e6503163bc95a4b21862182a8a15a12b518a207cc29b148038003978ccf99be",
+    "archived_sha256": "c903c16fcc13d80c85554fd6187e59bf272b3e2ee35e455ab2b231b015d1ba1c"
+  },
+  "utilization_synth.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/utilization_synth.rpt",
+    "raw_bytes": 11179,
+    "raw_sha256": "625efefb9fd9a940a891df42d7b2fdef283af7aa6cd759db763b7baf40537e86",
+    "archived_sha256": "c31b935cb3110b2466fa3ae85cff4c4164350ca6c7a49872593002032a74413a"
+  },
+  "clock_sources.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/clock_sources.txt",
+    "raw_bytes": 130,
+    "raw_sha256": "b8598580561a92f0145e274568f019725dcd4c7fcb9637ca139dd581a35f148d",
+    "archived_sha256": "bdfaedd5f45ec5f41f7b1d9cb9273db5cfff7f6d05741bfb188813aa5f18c95d"
+  },
+  "delay_primitives.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/delay_primitives.txt",
+    "raw_bytes": 3340,
+    "raw_sha256": "fb66f7cfc9c90268ec45f43ecc066649f9eaa3fd5bddad650a5b0e3f1e9e3467",
+    "archived_sha256": "c0a01e2b3b2c7643e77d9845ff3c89327ee7c739cd8ce41623067f330c5ea9fa"
+  },
+  "semantic-audit.json": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/semantic-audit.json",
+    "raw_bytes": 7530,
+    "raw_sha256": "c4beace1ffcde4fdd59c121ad9b892c7385695aca3582f8c8e9d33255e0c7809",
+    "archived_sha256": "4ea5af6f5be2d7d985c9eb105d06a4583ebfe4291deb65deebdabacf150abd94"
+  },
+  "reconstruction.json": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/reconstruction.json",
+    "raw_bytes": 30694,
+    "raw_sha256": "75572c394961defc79840a9018892b67cc9b41f0b66265b14cfc2a8516e184bb",
+    "archived_sha256": "75572c394961defc79840a9018892b67cc9b41f0b66265b14cfc2a8516e184bb"
+  },
+  "artifacts.json": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/artifacts.json",
+    "raw_bytes": 607,
+    "raw_sha256": "abe188366c9592dbb457bee96345677de4ada443c271ec8899d59b026b445b54",
+    "archived_sha256": "abe188366c9592dbb457bee96345677de4ada443c271ec8899d59b026b445b54"
+  },
+  "safety-tests.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/safety-tests.txt",
+    "raw_bytes": 163,
+    "raw_sha256": "16b7edb090603e10a8b8c5a5ef2b82a9662fbaf0ac8a45876758293bae21799b",
+    "archived_sha256": "95a647fc33a2a9f4f596826f5a0ad80402df0423e43db539590ff9f5e7dd7543"
+  },
+  "patch-negative-test.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/patch-negative-test.txt",
+    "raw_bytes": 103,
+    "raw_sha256": "a6e0d9481a1e317b65973a596f4a3545de017042417bc01ac69ff443246fb77f",
+    "archived_sha256": "aa3e57ae7be01669c483a9205961a3c36a3f8b42ee78c2e52381a9cea82fbc08"
+  },
+  "package-refused.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/package-refused.txt",
+    "raw_bytes": 69,
+    "raw_sha256": "abf63e01f83ff71c96bd8c42ce2f6dc7edc29b4f053d8c213ea15fb0d74b840a",
+    "archived_sha256": "a3163c497c8d2f9abb0d994996f426c9f20564735598ba53924dca465637fdfa"
+  },
+  "cdc-gate.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/cdc-gate.txt",
+    "raw_bytes": 47,
+    "raw_sha256": "903ee866b4ff9597d2a8bf5f7f7cc6832f296b8e247eaa32163547aa2624a26b",
+    "archived_sha256": "903ee866b4ff9597d2a8bf5f7f7cc6832f296b8e247eaa32163547aa2624a26b"
+  },
+  "bus-skew-gate.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/bus-skew-gate.txt",
+    "raw_bytes": 63,
+    "raw_sha256": "537305cdab868fff5a44f27863ef47085422bb15ce8960d9614198d86fa24a14",
+    "archived_sha256": "537305cdab868fff5a44f27863ef47085422bb15ce8960d9614198d86fa24a14"
+  },
+  "ip_status.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/ip_status.rpt",
+    "raw_bytes": 58727,
+    "raw_sha256": "a0ebdab2b867be8359a7afd865c98e1c734fe417db01ec1bce9bf0023826b778",
+    "archived_sha256": "ca736d29dc772710803ca6c48ac294a6d92bd33322f123022b5ce2f6ae38b297"
+  },
+  "vivado.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/vivado.log",
+    "raw_bytes": 690148,
+    "raw_sha256": "0f492548617a5ee638c71797a3aac88b44c411724b02ef1f94b140e2e634db1a",
+    "archived_sha256": "a689adf696503888f7ce9774ec60489fc46fef6b79f7da534f0d7b032aa9deb8"
+  },
+  "rebuild-executed.tcl": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/rebuild.tcl",
+    "raw_bytes": 281758,
+    "raw_sha256": "a171a3b638855c30d0076d1983daa61561aaf52e81ff1d97d5befb7d9080a9b7",
+    "archived_sha256": "a171a3b638855c30d0076d1983daa61561aaf52e81ff1d97d5befb7d9080a9b7"
+  },
+  "netlist-hook-executed.tcl": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/fix_netlist.tcl",
+    "raw_bytes": 3414,
+    "raw_sha256": "b347e9dd5342f7540cfd681bad2d2711fec0f707d5e31fa7d2d627d0729bb92c",
+    "archived_sha256": "b347e9dd5342f7540cfd681bad2d2711fec0f707d5e31fa7d2d627d0729bb92c"
+  },
+  "live-clock-executed.xdc": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/live_clock.xdc",
+    "raw_bytes": 200,
+    "raw_sha256": "ffc2a7c6dc56047fcea53af91ac5d2a5b008fdc921112c49a9d1510a5fb41c95",
+    "archived_sha256": "ffc2a7c6dc56047fcea53af91ac5d2a5b008fdc921112c49a9d1510a5fb41c95"
+  },
+  "mipi-nominal-executed.xdc": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/mipi_nominal.xdc",
+    "raw_bytes": 876,
+    "raw_sha256": "ecf69f6ab4b9cc96f171b285b0c1b4addf65daa076e4e1e191c0037a40dbf0ef",
+    "archived_sha256": "ecf69f6ab4b9cc96f171b285b0c1b4addf65daa076e4e1e191c0037a40dbf0ef"
+  },
+  "netlist-repair.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/vivado/mipi_dp.runs/impl_1/netlist_repair.txt",
+    "raw_bytes": 8443,
+    "raw_sha256": "7390efdf81007acc6adee63e1210dbe1f39d29dd554560589fa85b27b1062d88",
+    "archived_sha256": "ae5cb45dfb8339fd9de8a05b32dfd197d89a508eb20206a7cea9e5bc305ef793"
+  },
+  "csi0-synthesis.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/vivado/mipi_dp.runs/design_1_csi_4lane_raw10_0_0_synth_1/runme.log",
+    "raw_bytes": 181,
+    "raw_sha256": "a9001d39a911555dffe72620d4e29bebb6176a5a572e492312dcf4678b23c2a2",
+    "archived_sha256": "709c5e8dfb33d72bb2b3bb7ef88a8cb72607be91c09b5b2d294478925208b98f"
+  },
+  "csi3-synthesis-cache.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/vivado/mipi_dp.runs/design_1_csi_4lane_raw10_3_0_synth_1/runme.log",
+    "raw_bytes": 870,
+    "raw_sha256": "a9a5eef1e9e439ef481b7f0c257c5b91cefafad1b49329077fccba48bad9386a",
+    "archived_sha256": "fc58b88436ae1207bfb1930ee7660a3eda4fc8999feda77bf78aa9cb7a2763cb"
+  },
+  "reference-synthesis.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/vivado/mipi_dp.runs/design_1_delay_reference_0_synth_1/runme.log",
+    "raw_bytes": 20944,
+    "raw_sha256": "23ec45102115debddf77a67021858faf4b956f24f2e3f9a2ac1aa4f929f555e9",
+    "archived_sha256": "0271f301e31d98342fd2ddf00c977e4ec10e9cb06458b414d7b5edc460eb44c7"
+  },
+  "main-synthesis.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-run01/vivado/mipi_dp.runs/synth_1/runme.log",
+    "raw_bytes": 104614,
+    "raw_sha256": "efca5496cba0635e282fcc79965fb971919c9e4733a2d7abb9884b3369c96abd",
+    "archived_sha256": "93984fd2662adbdf890372b5fbfad711e6b13cc0a415c971d4eb73b9cd59ef26"
+  },
+  "physical-reference.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-ref-review01/physical_reference.txt",
+    "raw_bytes": 8895,
+    "raw_sha256": "536ca17aff396f22041bd41636ec4fb2b2bdcdb5ce75383b77fccdda53f52eef",
+    "archived_sha256": "ca1d44838a46db7cafaa270238929b81e0e191acdfd48c1f7fa8e94c718288f5"
+  },
+  "physical-reference-review.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-ref-review01.log",
+    "raw_bytes": 5430,
+    "raw_sha256": "0d6d725e8e1ddd32201c646cf813afd86cf10804d8d04066f9a418ed9c129a35",
+    "archived_sha256": "8966770aaa3217fb9505430a7cfd478441488bd96178517112fadf3d3b8af0ab"
+  },
+  "physical-cdc.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-review02/cdc_physical.txt",
+    "raw_bytes": 55951,
+    "raw_sha256": "329df0546c171b802f41f7ab3d99e795286d3b5bfb6294d38422d188047faf0d",
+    "archived_sha256": "7a6ac2e51ca15952bdec12e118ee03508fa90250fc428867e6b5b752afdfe0d7"
+  },
+  "serdes-hold.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-review02/serdes_hold.rpt",
+    "raw_bytes": 108342,
+    "raw_sha256": "402f9dea506dac038b9c6a65791807725d8350fac6d5d0a0dfd8576d5c99fa0a",
+    "archived_sha256": "a9c86f88af7cf6f6050ea65f6664dbb60a5420c898225d2f5fa5d1c57a08c428"
+  },
+  "physical-cdc-review.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-review02.log",
+    "raw_bytes": 5708,
+    "raw_sha256": "729ad519d50442c99a47b931da14cbfca9dc4d4940d09519be2b61db89cd06ea",
+    "archived_sha256": "d64b8fe9ac45ffbed7f157c10bf99b68b9d8f2c0c79109c8d4214912efe5e359"
+  },
+  "clock-interaction.rpt": {
+    "raw_path": "F:/ah-camera-hil-cdc-review02/clock_interaction.rpt",
+    "raw_bytes": 12829,
+    "raw_sha256": "3547b9ffa3b34784184d613ef276bc49d9b5b4c9fbfb0c94eb35d8836d6cba44",
+    "archived_sha256": "1c97848f5c4db38796934078f386e0e092f8ad9543166ca50f561b5db42a3771"
+  },
+  "physical-assertion-initial-failed.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-review01.log",
+    "raw_bytes": 4348,
+    "raw_sha256": "3d66f35d2807b71a2b8f4754263ed48df1f0a7858c518b75c41b894b12898c62",
+    "archived_sha256": "85fa104a17dcc9ca015d7b8a346da1971e6837240217d79cc03dfb5f1f9634f1"
+  },
+  "physical-assertion-initial-executed.tcl": {
+    "raw_path": "F:/ah-camera-hil-cdc-review01-executed.tcl",
+    "raw_bytes": 2022,
+    "raw_sha256": "67aa69ce0f4bc01843ceeaa0f5a3dc4cf4d936d1d5145c93c0cc292967425c13",
+    "archived_sha256": "67aa69ce0f4bc01843ceeaa0f5a3dc4cf4d936d1d5145c93c0cc292967425c13"
+  },
+  "serdes-inspect.txt": {
+    "raw_path": "F:/ah-camera-hil-cdc-inspect01.txt",
+    "raw_bytes": 27504,
+    "raw_sha256": "e70588701c5837cb3937205cf25d5dc47419cacb4a090fc9fb04b53e33d59b9e",
+    "archived_sha256": "f0d44259a618834d407128083b8d3b8f6541b500c60ba154538b1a6ccd5461cf"
+  },
+  "serdes-inspect-executed.tcl": {
+    "raw_path": "F:/ah-camera-hil-cdc-inspect01.tcl",
+    "raw_bytes": 601,
+    "raw_sha256": "dccdfda0b356312a50af934e4fa3a7b704df51c12db4a36e314f4ea7b1d82502",
+    "archived_sha256": "dccdfda0b356312a50af934e4fa3a7b704df51c12db4a36e314f4ea7b1d82502"
+  },
+  "review-cdc-executed.tcl": {
+    "raw_path": "F:/Amazing_Hand_unified_20261018/fpga/camera_hil/experimental_2020_1/review_cdc.tcl",
+    "raw_bytes": 2119,
+    "raw_sha256": "1d09b84b77049773dea8d5659161236ade8b6b0ab24c5a3db279e2695728cbbe",
+    "archived_sha256": "1d09b84b77049773dea8d5659161236ade8b6b0ab24c5a3db279e2695728cbbe"
+  },
+  "review-reference-executed.tcl": {
+    "raw_path": "F:/Amazing_Hand_unified_20261018/fpga/camera_hil/experimental_2020_1/review_impl.tcl",
+    "raw_bytes": 2114,
+    "raw_sha256": "30ad51f3666fabfe834ab923a185c761ef064a7b2d12877858b777c8185a4fcd",
+    "archived_sha256": "30ad51f3666fabfe834ab923a185c761ef064a7b2d12877858b777c8185a4fcd"
+  }
+}

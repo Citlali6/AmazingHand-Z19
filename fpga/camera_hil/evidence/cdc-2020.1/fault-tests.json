@@ -1,0 +1,99 @@
+{
+  "commands": [
+    [
+      "F:\\Xilinx\\Vivado\\2020.1\\bin\\xvlog.bat",
+      "--sv",
+      "F:\\Xilinx\\Vivado\\2020.1\\data\\ip\\xpm\\xpm_cdc\\hdl\\xpm_cdc.sv",
+      "F:\\Xilinx\\Vivado\\2020.1\\data\\ip\\xpm\\xpm_memory\\hdl\\xpm_memory.sv",
+      "F:\\Xilinx\\Vivado\\2020.1\\data\\ip\\xpm\\xpm_fifo\\hdl\\xpm_fifo.sv",
+      "--work",
+      "xpm"
+    ],
+    [
+      "F:\\Xilinx\\Vivado\\2020.1\\bin\\xvhdl.bat",
+      "--work",
+      "xpm",
+      "F:\\Xilinx\\Vivado\\2020.1\\data\\ip\\xpm\\xpm_VCOMP.vhd"
+    ],
+    [
+      "F:\\Xilinx\\Vivado\\2020.1\\bin\\xvhdl.bat",
+      "csi_clock_detector.vhd"
+    ],
+    [
+      "F:\\Xilinx\\Vivado\\2020.1\\bin\\xvlog.bat",
+      "--sv",
+      "csi_cdc_helpers.v",
+      "csi_delay_reference.v",
+      "test_cdc.sv",
+      "test_fifo.sv",
+      "test_reference.sv"
+    ],
+    [
+      "F:\\Xilinx\\Vivado\\2020.1\\bin\\xvlog.bat",
+      "F:\\Xilinx\\Vivado\\2020.1\\data\\verilog\\src\\glbl.v"
+    ],
+    [
+      "F:\\Xilinx\\Vivado\\2020.1\\bin\\xelab.bat",
+      "test_cdc",
+      "glbl",
+      "-L",
+      "xpm",
+      "-L",
+      "unisims_ver",
+      "-s",
+      "test_cdc_faults"
+    ],
+    [
+      "F:\\Xilinx\\Vivado\\2020.1\\bin\\xsim.bat",
+      "test_cdc_faults",
+      "-runall",
+      "-log",
+      "test_cdc.log"
+    ],
+    [
+      "F:\\Xilinx\\Vivado\\2020.1\\bin\\xelab.bat",
+      "test_fifo",
+      "glbl",
+      "-L",
+      "xpm",
+      "-L",
+      "unisims_ver",
+      "-s",
+      "test_fifo_faults"
+    ],
+    [
+      "F:\\Xilinx\\Vivado\\2020.1\\bin\\xsim.bat",
+      "test_fifo_faults",
+      "-runall",
+      "-log",
+      "test_fifo.log"
+    ],
+    [
+      "F:\\Xilinx\\Vivado\\2020.1\\bin\\xelab.bat",
+      "test_reference",
+      "glbl",
+      "-L",
+      "xpm",
+      "-L",
+      "unisims_ver",
+      "-s",
+      "test_reference_faults"
+    ],
+    [
+      "F:\\Xilinx\\Vivado\\2020.1\\bin\\xsim.bat",
+      "test_reference_faults",
+      "-runall",
+      "-log",
+      "test_reference.log"
+    ]
+  ],
+  "scope": "offline local faults, not sensor/board acceptance",
+  "source_sha256": {
+    "csi_cdc_helpers.v": "396a54b0a15d013d23604e5e7f64afdcb03dd82d47a6c315ef94b9e60f6ad265",
+    "csi_clock_detector.vhd": "327d384ce97cba93ea7a9d0d31e6de769029dc6e56a154ab05ce7f5827a9d716",
+    "csi_delay_reference.v": "3fbcad267f9809d82974a23df4091e30bde2b865b4e21e525a1935a12ff458b8",
+    "test_cdc.sv": "182368b3d4a60d73c4975ba012cca51a1b78de4045fc523e9f2064075583565f",
+    "test_fifo.sv": "74cde06906d34471eec28a8cf6c43dc09e4131d9239240e2a59bc0e25a8e2585",
+    "test_reference.sv": "b41db9011679ec23570310bd7f3356c18fc380a142ab591719c2aae43ee6576e"
+  }
+}

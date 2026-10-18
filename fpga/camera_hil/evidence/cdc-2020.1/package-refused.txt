@@ -1,0 +1,3 @@
+UNIFIED_PACKAGE_REFUSED: DRC must have zero violations
+
+EXIT_CODE=1

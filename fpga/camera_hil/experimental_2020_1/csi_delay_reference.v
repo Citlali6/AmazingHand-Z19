@@ -31,10 +31,18 @@ module csi_delay_reference(input wire clk_pl0, input wire reset,
   // IO primitives release after 8 reference cycles; CTRL 32 cycles later.
   assign io_reset = reset_hold[7];
   assign delay_reset = reset_hold[39];
-  (* ASYNC_REG="TRUE", SHREG_EXTRACT="NO" *) reg [2:0] ready_release = 0;
-  wire ready_assert = delay_reset || !(ready0 && ready1 && ready2 && ready3);
-  always @(posedge refclk or posedge ready_assert)
-    if (ready_assert) ready_release <= 0;
-    else ready_release <= {ready_release[1:0], 1'b1};
-  assign all_ready = ready_release[2];
+  wire [3:0] ready_ref;
+  xpm_cdc_single #(.DEST_SYNC_FF(3),.INIT_SYNC_FF(1),.SRC_INPUT_REG(0))
+    rdy0_sync(.src_clk(1'b0),.src_in(ready0),.dest_clk(refclk),.dest_out(ready_ref[0]));
+  xpm_cdc_single #(.DEST_SYNC_FF(3),.INIT_SYNC_FF(1),.SRC_INPUT_REG(0))
+    rdy1_sync(.src_clk(1'b0),.src_in(ready1),.dest_clk(refclk),.dest_out(ready_ref[1]));
+  xpm_cdc_single #(.DEST_SYNC_FF(3),.INIT_SYNC_FF(1),.SRC_INPUT_REG(0))
+    rdy2_sync(.src_clk(1'b0),.src_in(ready2),.dest_clk(refclk),.dest_out(ready_ref[2]));
+  xpm_cdc_single #(.DEST_SYNC_FF(3),.INIT_SYNC_FF(1),.SRC_INPUT_REG(0))
+    rdy3_sync(.src_clk(1'b0),.src_in(ready3),.dest_clk(refclk),.dest_out(ready_ref[3]));
+  reg qualified_ref = 0;
+  always @(posedge refclk or posedge io_reset)
+    if(io_reset) qualified_ref<=0;
+    else qualified_ref<= &ready_ref && !delay_reset;
+  assign all_ready = qualified_ref;
 endmodule
