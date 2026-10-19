@@ -17,7 +17,10 @@
     "releases": 0,
     "wiki_enabled": false,
     "discussions_enabled": false,
-    "redacted_credential_patterns": 0
+    "redacted_credential_patterns": 0,
+    "pull_head_refs": 14,
+    "pull_merge_preview_refs": 3,
+    "pull_merge_previews_preserved": true
   },
   "files": {
     "actions-artifacts.json": {
@@ -628,9 +631,17 @@
       "bytes": 8119,
       "sha256": "cae11044282c09f18672f5d61dc69b77c3421e41a1678965df409b65b0244036"
     },
+    "pull-merge-previews.bundle": {
+      "bytes": 4203,
+      "sha256": "acaef694d9fe5ec2e51c23f898de545a42bb1d91457a682fc9e681d8bc75acac"
+    },
+    "pull-refs.json": {
+      "bytes": 4580,
+      "sha256": "ee108fe51cd37fe35b37bc74e99cefa3dbf37451678b4952eb03a6b189c210ae"
+    },
     "README.md": {
-      "bytes": 3334,
-      "sha256": "d58339582022ecb5096f48c83b3cc39786d999bdd4b9944ca66ed610caaccc77"
+      "bytes": 3838,
+      "sha256": "55693d36a4560f60303998a171117da35ee1656724c22c4a08cfbd679c4a4281"
     },
     "releases.json": {
       "bytes": 3,
@@ -641,8 +652,8 @@
       "sha256": "f9947cd8a01f70bcb31ca7357bf40087bb75103691895b0601ad4e73451fb836"
     },
     "summary.json": {
-      "bytes": 408,
-      "sha256": "20f1487a773a2bae123225b536311b919c7e55b303c56bb3be083afded42673c"
+      "bytes": 505,
+      "sha256": "ee9a355c4b1fbb03b3b7c15a5a1cbb73d7f532e1d0c18a50039d3539f1d92dea"
     }
   }
 }

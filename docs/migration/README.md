@@ -3,6 +3,8 @@
 新仓库：[xiaomi-he-only/AmazingHand-Z19](https://github.com/xiaomi-he-only/AmazingHand-Z19)。
 它是原公开仓库的 Fork，拥有者是 xiaomi-he-only，保留上游关系及版权声明。原仓库和原有同名私库均保留。
 
+再次逐项核查的结果、补存资料及尚未复制的 GitHub 功能/设置见 [完整性复核报告](audit_20261019/README.md)。
+
 ## 保存了什么
 
 - 原仓库的 18 个分支及其全部提交历史，迁移时分支 SHA 逐一匹配，见 [清单](source-refs-20261019.json)。源仓库当时没有标签或 Release；没有 Git LFS 文件。

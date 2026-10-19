@@ -38,3 +38,9 @@ GitHub 的身份、审批效力、通知、星标和关注关系不会通过文�
 [逐文件校验清单](archive_manifest.json) 用于复核全部原始记录、可读页面与补丁。原 PR 的审批状态保留为历史记录，不作为新仓库的审批。
 
 本次没有可下载附件、Wiki、Discussions、Release、Actions 运行或产物；API 原始结果也已保存。认证凭据和仓库 Secrets 不在归档中。
+
+## GitHub PR 内部引用补充
+
+再次核查保留了全部 17 个 PR 内部引用：[引用清单](pull-refs.json)。14 个 PR head 已在新仓库分支历史中；另将 3 个自动合并预览提交保存为 [增量 Git bundle](pull-merge-previews.bundle)。
+
+预览是 GitHub 为未合并 PR 生成的历史计算结果，不表示已经审批或合并。bundle 的前置提交均在已迁移历史中；在完整 Git 克隆内可用 `git bundle verify` 检查，不自动应用到工作分支。

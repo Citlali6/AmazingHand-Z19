@@ -14,5 +14,8 @@
   "releases": 0,
   "wiki_enabled": false,
   "discussions_enabled": false,
-  "redacted_credential_patterns": 0
+  "redacted_credential_patterns": 0,
+  "pull_head_refs": 14,
+  "pull_merge_preview_refs": 3,
+  "pull_merge_previews_preserved": true
 }

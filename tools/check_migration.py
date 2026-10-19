@@ -52,6 +52,30 @@ def main() -> int:
         counts = discussion_manifest['counts']
         result.update(discussion_records=counts['issues'] + counts['pull_requests'],
                       discussion_integrity='passed')
+        local_root = ROOT / 'deliverables/local_sources'
+        snapshots = json.loads((local_root / 'snapshots.json').read_text(encoding='utf-8'))
+        for item in snapshots:
+            path = local_root / item['archive']
+            if digest(path) != item['archive_sha256']:
+                raise ValueError('Local source snapshot hash mismatch: ' + path.name)
+            with zipfile.ZipFile(path) as data:
+                if data.testzip() is not None:
+                    raise ValueError('Local source snapshot ZIP error: ' + path.name)
+                for source in item['files']:
+                    if hashlib.sha256(data.read('source/' + source['path'])).hexdigest() != source['sha256']:
+                        raise ValueError('Local source file hash mismatch: ' + source['path'])
+        legacy = json.loads((local_root / 'legacy-configs-manifest.json').read_text(encoding='utf-8'))
+        if digest(local_root / legacy['archive']) != legacy['sha256']:
+            raise ValueError('Legacy generated configuration archive hash mismatch')
+        with zipfile.ZipFile(local_root / legacy['archive']) as data:
+            snapshot = json.loads(data.read('snapshot.json'))
+            if len(snapshot['files']) != legacy['source_files']:
+                raise ValueError('Legacy generated configuration file count mismatch')
+            for item in snapshot['files']:
+                if hashlib.sha256(data.read('source/' + item['path'])).hexdigest() != item['sha256']:
+                    raise ValueError('Legacy generated configuration file mismatch: ' + item['path'])
+        result.update(local_source_archives=len(snapshots) + 1,
+                      legacy_configuration_files=legacy['source_files'])
         if args.runtime:
             import mujoco
             path = ROOT / 'AmazingHand/Demo/AHSimulation/AHSimulation/AH_Right/mjcf/scene.xml'
