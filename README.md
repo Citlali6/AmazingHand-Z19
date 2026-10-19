@@ -49,6 +49,14 @@ report/  设计报告（比赛交付）
 
 ## 快速开始
 
+**本仓库迁移入口：[下载、启动与完整性记录](docs/migration/README.md)。**
+原仓库的 Issue、PR 讨论、评审与变更补丁已补存为 [可离线查阅的归档](docs/migration/upstream_archive_20261019_v2/README.md)。
+虚拟手模型已随迁移分支完整保存；本机已准备独立 PC 环境，可双击 `start_virtual_hand.bat` 打开交互虚拟手。
+PL 控制观察入口为 `start_mjc1_observer.bat`，需配套板端 MJC1 R2 程序与 SSH 转发，操作见迁移说明。
+
+微雪 USB TO AUDIO 的语音基础入口、离线资料与到货步骤见 [USB麦克风说明](docs/voice/USB_MICROPHONE.md)。当前已补采音/识别源码，真实麦克风验收及语音→PL接入待完成。
+含中文模型和板端依赖的完整离线包见 [麦克风部署包下载](deliverables/voice_usb/README.md)。
+
 相机实机操作从 [相机快速操作](docs/fpga/camera_quickstart.md) 开始。
 当前硬件为 **Z19 + FL0214/IMX214 MIPI 第一通道**，板端使用 Linux 5.4/PetaLinux 2020.2 基线。
 Git 中包含源码、平台与已验证相机二进制；SD 系统镜像、登录密码/SSH 私钥和现场录像留在本机。
