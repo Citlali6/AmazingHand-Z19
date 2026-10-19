@@ -2,8 +2,8 @@
 
 当前开发仓库：[Citlali6/AmazingHand-Z19](https://github.com/Citlali6/AmazingHand-Z19)。
 迁移阶段与待人工审查事项见 [Issue #1](https://github.com/Citlali6/AmazingHand-Z19/issues/1)。
-默认 `feature/migration-ready-20261019` 暂作下载/审计检查点；先完成迁移 PR 的他人审批与人工合并，
-再由 Citlali6 审批并核实默认分支切回 main，恢复正常 main 分支工作流。
+迁移检查点 `feature/migration-ready-20261019` 在 PR #2 合并前保持冻结；先按所有者新的无强制审批规则依序合并 PR #2、#3，
+再将默认分支切回 main 并核实。团队成员有写入权限即可自行合并 PR，不必等待他人 Approve。
 旧 Tom 仓库仅作只读出处；归档中的旧地址、作者和证据保持原样。
 
 基于 AMD Zynq UltraScale+ MPSoC（ALINX Z19, XCZU19EG）的人机协作抓取系统。
