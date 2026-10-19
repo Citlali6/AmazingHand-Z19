@@ -3,13 +3,18 @@
 新仓库：[Citlali6/AmazingHand-Z19](https://github.com/Citlali6/AmazingHand-Z19)。
 它仍是原公开仓库的 Fork，当前拥有者为 Citlali6，保留上游关系及版权声明。旧 Tom 仓库仅作只读来源；不更改其它仓库或工作区。
 
-迁移收尾以 [Issue #1](https://github.com/Citlali6/AmazingHand-Z19/issues/1) 为准。
-默认 `feature/migration-ready-20261019` 是冻结的下载/审计检查点，五个已有提交通过 PR #2 进入 main。
-所有者于 2026-10-19 决定取消强制他人 Approve：GitHub 设置实际生效后，有写入权限的成员可直接合并 PR。
-按顺序合并 #2、#3 后将默认分支切回 main 并核验。
-随后各成员在自己的干净工作区核对 origin、ff-only 同步 main，再创建工作分支。
-迁移合并前不从检查点启动新研发；例外须 Citlali6 明确同意。Codex 只有在当前任务明确授权、GitHub 实际允许时才可合并 PR 或调整设置；任何合并或配置结果须回读核实。
-本页的迁移修正也须在迁移 PR 之后经独立 PR 审查，不改写检查点。
+迁移收尾记录见 [Issue #1](https://github.com/Citlali6/AmazingHand-Z19/issues/1)。
+**迁移已于 2026-10-20 完成**：PR #2、#3 均通过 Merge Commit 合入 `main`，
+仓库默认分支已恢复为 `main`，不再从迁移检查点启动研发。
+`feature/migration-ready-20261019` 保留为冻结的历史资料检查点。
+GitHub 强制其他人 Approve 的要求已按所有者决定调整为 0；
+有写权限成员可在完成必要检查后自行正常合并 PR，Codex 仍须获得当轮授权。
+
+从此本项目**只向 `Citlali6/AmazingHand-Z19` 写入**。旧 Tom 仓库只能查询源码、
+历史 Issue/PR、实验记录和署名；禁止对旧仓库任何提交、评论、Issue/PR、合并或设置更改。
+操作前检查工具目标仓库和本地 `origin` 是否指向新仓库；若不符，停止并报告，
+不得擅自改他人本地仓库。详细约束以 `AGENTS.md` 和 `docs/GIT_WORKFLOW.md` 为准。
+默认分支恢复后，按最新 `main` → 工作分支 → PR 的流程继续。
 
 再次逐项核查的结果、补存资料及尚未复制的 GitHub 功能/设置见 [完整性复核报告](audit_20261019/README.md)。
 
@@ -17,7 +22,7 @@
 
 - 原仓库的 18 个分支及其全部提交历史，迁移时分支 SHA 逐一匹配，见 [清单](source-refs-20261019.json)。源仓库当时没有标签或 Release；没有 Git LFS 文件。
 - [原仓库讨论归档](upstream_archive_20261019_v2/README.md)：6 个 Issue、14 个 PR、8 条评论、4 条 Review、10 个标签，以及原始 JSON、提交/文件列表、14 份补丁和完整性记录。14 个 PR 的 base/head 均已在新仓库历史中保留；归档是只读记录，不冒充新仓库的审批或合并。源 Wiki/Discussions 未开启，没有 Release、Actions 运行/产物或可下载附件。
-- `feature/migration-ready-20261019`：以最新 main 为基线，复制已上传的麦克风工作，补齐模型和本机 MJC1 交付物。本分支作为新仓库下载入口；原 main 未改动，未合并 PR。
+- `feature/migration-ready-20261019`：当时以原 main 为基线补齐麦克风、模型和 MJC1 等迁移资产，随后通过新仓库 PR #2 合入 main；目前此分支仅用于历史核查。
 - `AmazingHand/`：原模型 gitlink 固定版本 `3e8241074df3436a3044ced4881e3bb2133aa725` 的 196 个文件，直接随普通下载保存，不再依赖子模块初始化。[来源和逐文件 hash](model-snapshot.json)。保留原 Apache/CC-BY 许可和归属；未修改模型 XML/STL。
 - [麦克风离线包](../../deliverables/voice_usb/README.md)：中文模型、15 个 AArch64/Python 3.7 离线依赖和语音源码。
 - [MJC1 R2 固件包](../../deliverables/mjc1_fpd/README.md)：本机 2026-10-18 已验证 bit/bin/XSA、报告与回传记录，SHA 与原 manifest 匹配。源码在 `fpga/mjc1_fpd/`。
@@ -39,7 +44,7 @@
 首次安装需要联网；不得把 PC 依赖环境复制到 Z19。不要安装根目录混合了 ARM/视觉组件的 `requirements.txt`。
 
 ```powershell
-git clone --branch feature/migration-ready-20261019 https://github.com/Citlali6/AmazingHand-Z19.git
+git clone --branch main https://github.com/Citlali6/AmazingHand-Z19.git
 cd AmazingHand-Z19
 setup_pc.bat
 start_virtual_hand.bat
