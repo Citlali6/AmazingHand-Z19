@@ -22,3 +22,5 @@
 # Preserve the pinned upstream model and native MMIO provenance byte for byte.
 AmazingHand/** -text
 fpga/mjc1_fpd/mmio.c -text
+# Keep exported upstream discussions and patches unchanged for hash verification.
+docs/migration/upstream_archive_20261019_v2/** -text

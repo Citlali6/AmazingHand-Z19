@@ -50,6 +50,7 @@ report/  设计报告（比赛交付）
 ## 快速开始
 
 **本仓库迁移入口：[下载、启动与完整性记录](docs/migration/README.md)。**
+原仓库的 Issue、PR 讨论、评审与变更补丁已补存为 [可离线查阅的归档](docs/migration/upstream_archive_20261019_v2/README.md)。
 虚拟手模型已随迁移分支完整保存；本机已准备独立 PC 环境，可双击 `start_virtual_hand.bat` 打开交互虚拟手。
 PL 控制观察入口为 `start_mjc1_observer.bat`，需配套板端 MJC1 R2 程序与 SSH 转发，操作见迁移说明。
 

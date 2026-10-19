@@ -43,6 +43,15 @@ def main() -> int:
                 raise ValueError('Native MMIO source hash mismatch')
         result = dict(model_files=len(model['files']), archives=len(archives),
                       asset_integrity='passed', board_access='not_attempted')
+        discussion_root = ROOT / 'docs/migration/upstream_archive_20261019_v2'
+        discussion_manifest = json.loads((discussion_root / 'archive_manifest.json').read_text(encoding='utf-8'))
+        for name, item in discussion_manifest['files'].items():
+            path = (discussion_root / name).resolve()
+            if discussion_root.resolve() not in path.parents or digest(path) != item['sha256']:
+                raise ValueError('Discussion archive hash mismatch: ' + name)
+        counts = discussion_manifest['counts']
+        result.update(discussion_records=counts['issues'] + counts['pull_requests'],
+                      discussion_integrity='passed')
         if args.runtime:
             import mujoco
             path = ROOT / 'AmazingHand/Demo/AHSimulation/AHSimulation/AH_Right/mjcf/scene.xml'

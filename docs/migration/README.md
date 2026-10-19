@@ -6,6 +6,7 @@
 ## 保存了什么
 
 - 原仓库的 18 个分支及其全部提交历史，迁移时分支 SHA 逐一匹配，见 [清单](source-refs-20261019.json)。源仓库当时没有标签或 Release；没有 Git LFS 文件。
+- [原仓库讨论归档](upstream_archive_20261019_v2/README.md)：6 个 Issue、14 个 PR、8 条评论、4 条 Review、10 个标签，以及原始 JSON、提交/文件列表、14 份补丁和完整性记录。14 个 PR 的 base/head 均已在新仓库历史中保留；归档是只读记录，不冒充新仓库的审批或合并。源 Wiki/Discussions 未开启，没有 Release、Actions 运行/产物或可下载附件。
 - `feature/migration-ready-20261019`：以最新 main 为基线，复制已上传的麦克风工作，补齐模型和本机 MJC1 交付物。本分支作为新仓库下载入口；原 main 未改动，未合并 PR。
 - `AmazingHand/`：原模型 gitlink 固定版本 `3e8241074df3436a3044ced4881e3bb2133aa725` 的 196 个文件，直接随普通下载保存，不再依赖子模块初始化。[来源和逐文件 hash](model-snapshot.json)。保留原 Apache/CC-BY 许可和归属；未修改模型 XML/STL。
 - [麦克风离线包](../../deliverables/voice_usb/README.md)：中文模型、15 个 AArch64/Python 3.7 离线依赖和语音源码。
@@ -54,3 +55,11 @@ MJC1-only 和相机-only 会替换整片 PL，不能同时加载。相机+控制
 PC 八执行器模型加载、55 项现有测试和实际 GUI 动作检查通过，见 [迁移日志](../log/2026-10-19.md) 与 [界面](evidence/pc-control-panel.png)。本次没有重新验证上板闭环或相机并发，麦克风仍待到货联调；既有 SD 镜像、板端驱动、端口和时钟配置仍是使用条件。
 
 后续修改继续使用工作分支与人工审查流程，不直接开发/推送/合并 main。
+
+## 原仓库改为私有后
+
+GitHub 官方说明，公开仓库改为私有时，其已有公开 Fork 会保留公开状态并进入独立网络，不会因此失去当前代码。见 [官方说明](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility)。
+
+本仓库的日常 clone、拉取、提交、构建和既有运行入口使用本仓库内容；模型和已交付固件已保存。讨论正文/评审和补丁也可在上述归档离线查阅，不依赖原 Issue/PR 网页。原始 URL 保留作出处，届时可能无法访问。
+
+原仓库私有后新增加或修改的内容不在这次快照中，也不会绕过访问权限自动同步。后续在 `xiaomi-he-only/AmazingHand-Z19` 上继续工作即可。
