@@ -2,7 +2,7 @@
 
 ## Project
 
-- Repository: xiaomi-he-only/AmazingHand-Z19
+- Repository: Citlali6/AmazingHand-Z19
 - Upstream source: Tom-mr33/AmazingHand-based-on-FPGA (preserve attribution)
 - Project: AmazingHand based on FPGA
 - Main hardware platform: ALINX Z19
@@ -12,6 +12,23 @@ These team rules apply to every future Codex agent working in this repository.
 Read `docs/GIT_WORKFLOW.md`, the current development log, and relevant design
 files before working. Preserve existing work and do not invent missing hardware
 or software implementation from design documents.
+
+## Migration transition (Issue #1)
+
+The only active development repository is `Citlali6/AmazingHand-Z19`.
+The Tom repository is a read-only historical source; do not write to it.
+Until migration PR #2 and follow-up documentation PR #3 have actually been
+merged into `main`, `feature/migration-ready-20261019` remains a frozen
+download/audit checkpoint, not a substitute development baseline. Preserve
+its existing commits. GitHub protection requirements must be changed through
+authorized repository settings before any blocked merge can proceed.
+New engineering tasks wait for that migration; do not infer permission to
+branch from the checkpoint. Any non-main branch-base exception requires
+Citlali6's explicit consent under Issue #1.
+After both migration PRs are merged, the repository owner sets and verifies
+`main` as the default branch. Then resume the normal main-based workflow.
+GitHub settings changes require the owner's explicit authorization; agents
+must report actual API outcomes rather than claim a change succeeded.
 
 ## Main Branch Protection
 
@@ -23,8 +40,8 @@ NEVER:
 - push directly to main, including pushing another local branch to remote main
 - force push main
 - merge code into main without a Pull Request
-- bypass team review or another team member's Approve
-- automatically merge Pull Requests (Codex must not merge PRs)
+- treat a review/approval as completed when none occurred
+- merge or enable auto-merge without explicit authorization in the current task
 - delete remote branches automatically
 
 Before every new task, inspect `git status` and `git branch --show-current`.
@@ -56,11 +73,19 @@ Use one appropriate command, not all four. Confirm the new branch before editing
 All changes must follow:
 
 latest main → new working branch → development → local validation → git diff
-review → commit → push working branch → Pull Request → review by another team
-member → Approve → merge by an authorized human team member.
+review → commit → push working branch → Pull Request → merge by the repository
+owner or a collaborator with Write/Maintain/Admin access.
 
-Codex must NEVER merge a PR, enable automatic merging, bypass review, or delete a
-remote branch. Do not create a PR unless the user authorizes it.
+**Owner decision (2026-10-19):** Another person's Review/Approve is **not** a
+mandatory merge gate. A write-authorized collaborator may merge a PR, including
+their own PR, after checking the diff, conflict status and applicable test
+results. Reviews remain welcome but optional. Citlali6 retains ownership and
+may stop, defer, or reject a change; ownership does not automatically override
+GitHub branch protection settings.
+
+Codex may create, merge, or enable auto-merge only when the current user task
+explicitly authorizes that operation and GitHub permits it. Do not fabricate
+review approval, disable protection secretly, or automatically delete branches.
 
 ## Before Editing
 
@@ -127,10 +152,12 @@ Activate it in each clone with repository-local configuration:
 git config --local core.hooksPath .githooks
 ```
 
-Local hooks are an accidental-push guard, not GitHub branch protection. Ask the
-repository administrator to enforce PRs, at least one approval from another team
-member, and no force pushes/deletions on main through repository rules. Do not
-change remote repository settings without authorization.
+Local hooks are an accidental-push guard, not GitHub branch protection. The
+owner-selected GitHub policy is PR-based merge with **zero required approvals**;
+write-authorized collaborators may merge without an independent review. Retain
+no-force-push/no-deletion protection when configured. GitHub's actual rule must
+be verified after an administrator changes it; policy text alone does not change
+settings. Never change remote settings without explicit owner authorization.
 
 ## FPGA Project Rules
 

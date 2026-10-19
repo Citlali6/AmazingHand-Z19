@@ -1,5 +1,11 @@
 # Amazing Hand AI — 人机协作智能辅助手
 
+当前开发仓库：[Citlali6/AmazingHand-Z19](https://github.com/Citlali6/AmazingHand-Z19)。
+迁移阶段与待人工审查事项见 [Issue #1](https://github.com/Citlali6/AmazingHand-Z19/issues/1)。
+迁移检查点 `feature/migration-ready-20261019` 在 PR #2 合并前保持冻结；先按所有者新的无强制审批规则依序合并 PR #2、#3，
+再将默认分支切回 main 并核实。团队成员有写入权限即可自行合并 PR，不必等待他人 Approve。
+旧 Tom 仓库仅作只读出处；归档中的旧地址、作者和证据保持原样。
+
 基于 AMD Zynq UltraScale+ MPSoC（ALINX Z19, XCZU19EG）的人机协作抓取系统。
 目标流程：语音指定目标 → 端侧视觉识别物体并估计尺寸 → 引导人手就位 → FPGA 实时力控完成抓取。
 目标为全系统单板自主运行、无云端依赖；目前已完成相机基础链路，整手闭环仍待集成。

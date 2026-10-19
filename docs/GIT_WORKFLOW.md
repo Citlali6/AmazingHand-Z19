@@ -1,21 +1,36 @@
 # AmazingHand 团队 Git 工作流
 
-适用仓库：`xiaomi-he-only/AmazingHand-Z19`。所有成员与 Codex 均遵守：
-**最新 main → 独立分支 → 开发与验证 → 提交 → 推送当前分支 → PR → 其他队员 Review / Approve → 人工合并。**
+适用仓库：`Citlali6/AmazingHand-Z19`。所有成员与 Codex 均遵守：
+**最新 main → 独立分支 → 开发与验证 → 提交 → 推送当前分支 → PR → 有写入权限的成员自行决定合并。**
+
+**2026-10-19 仓库所有者决定：**不再强制其他队员 Review / Approve。仓库所有者 Citlali6 具有最终项目管理决策权；拥有 Write/Maintain/Admin 权限的队友也可直接合并 PR（包括自己的 PR），无需额外审批。可自愿 Review，但不得将不存在的审批记作已完成。规则仍须在 GitHub Settings 实际调整后才生效。
+
+## 迁移过渡期（Issue #1）
+
+日常开发源只有 `Citlali6/AmazingHand-Z19`；旧 Tom 仓库仅作只读出处。
+当前默认分支 `feature/migration-ready-20261019` 是保留不改的迁移检查点。
+先确认 GitHub 的旧“至少 1 人 Approve”保护已按所有者决定取消，再将迁移 PR #2、文档 PR #3 依序合入 main；
+迁移合并前暂停新研发，不因为 clone 默认落在检查点就从它启动功能工作。
+从非 main 起分支的例外须先说明必要性并取得 Citlali6 明确同意。
+
+迁移 PR #2 和文档 PR #3 **实际合并后**，将默认分支切回 main 并回读核验；
+随后每位成员在自己的干净工作区核对 origin，再按下述 ff-only 流程同步并建新分支。
+不要替其他成员改 remote 或工作区；origin 不符时保留现场、报告，不能自动换址。
+旧记录、归档、模型来源和作者署名中的地址继续保留。
 
 ## 1. 首次获取项目
 
 先检查目标目录；只在目录不存在或为空时 clone，非空目录不得删除、覆盖或移动。
 
 ```powershell
-git clone https://github.com/xiaomi-he-only/AmazingHand-Z19.git F:\Amazing_Hand
-Set-Location F:\Amazing_Hand
+git clone https://github.com/Citlali6/AmazingHand-Z19.git F:\AmazingHand-Z19
+Set-Location F:\AmazingHand-Z19
 git status
 git remote -v
 git branch -a
 ```
 
-origin 必须是 `https://github.com/xiaomi-he-only/AmazingHand-Z19.git`。
+origin 必须是 `https://github.com/Citlali6/AmazingHand-Z19.git`。
 认证失败时完成自己的 GitHub 身份认证，不更换地址、不借用他人的 Token。
 
 本规范文件经过 PR 合并后，每位队员在各自 clone 中执行：
@@ -40,7 +55,7 @@ git config --get core.hooksPath
 首次 clone 如需代理，可使用仅本次命令生效的配置（端口须以自己的配置为准）：
 
 ```powershell
-git -c http.proxy=http://127.0.0.1:7897 clone https://github.com/xiaomi-he-only/AmazingHand-Z19.git F:\Amazing_Hand
+git -c http.proxy=http://127.0.0.1:7897 clone https://github.com/Citlali6/AmazingHand-Z19.git F:\AmazingHand-Z19
 ```
 
 ## 2. 每次开始工作
@@ -98,7 +113,7 @@ git commit -m "docs: document team git workflow"
 
 功能提交可以使用 `feat: xxx`，修复使用 `fix: xxx`，维护使用 `chore: xxx`。
 优先 `git add <明确的文件>`，不要无脑 `git add .`。
-**Codex 只有获得用户明确提交指令后才能执行 add/commit；本轮不提交。**
+**Codex 只有获得用户当前任务的明确提交授权后才能执行 add/commit；本规范本身不构成授权。**
 
 ## 6. 只推送当前工作分支
 
@@ -121,19 +136,19 @@ git branch --show-current
 git push -u origin feature/servo-calibration
 ```
 
-**Codex 只有获得用户明确推送指令后才能 push；本轮不推送。**
+**Codex 只有获得用户当前任务的明确推送授权后才能 push；本规范本身不构成授权。**
 不推送其他分支，不使用 `--all`、`--mirror`、`--no-verify` 或绕过 hook 的配置。
 
 ## 7. Pull Request、Review 与合并
 
 1. 在 GitHub 创建 PR：base 为 `main`，compare 为自己的工作分支。
 2. 说明问题、改动、验证结果、限制及相关硬件影响。
-3. 邀请其他团队成员 Code Review，按反馈继续修改和验证。
-4. 必须由其他队员明确 **Approve**；自己检查或留言不能代替审批。
-5. 满足团队要求后，由有权限的团队成员人工合并到 main。
-6. Codex 不得自行 merge、启用自动合并、绕过审批或删除远程分支。
+3. 自己检查 diff、冲突状态、合适的自动/手工测试证据及安全边界；必要时可邀请队友自愿 Review。
+4. **不强制其他队员 Approve**；不要求 PR 作者以外的人审批。
+5. Citlali6 或具有 Write/Maintain/Admin 权限的协作者可按自己的职责决定直接合并 PR；无需额外审批。其他人的 Issue/PR 不得被无关任务擅自改写。
+6. Codex 仅在 Citlali6 当前任务明确授权时可执行 PR merge/auto-merge；不得伪造 Review、绕过 GitHub 当前规则、强推或自动删除远端分支。
 
-本轮不创建 PR。以后也应在用户授权的任务范围内创建 PR。
+仅在用户当前任务明确授权的范围内创建 PR；本规范本身不构成授权。
 
 ## 8. 合并后与下一项任务
 
@@ -161,7 +176,7 @@ git push --force origin main
 git push origin HEAD:main
 ```
 
-禁止直接在 main 开发、提交，禁止绕过 PR 或其他队员审批。
+禁止直接在 main 开发、提交或绕过 PR。独立 Approve 并非强制条件；应遵守当前 GitHub 实际保护规则。
 未经明确授权，不执行 `git reset --hard`、`git clean -fd`、`git clean -fdx`、
 `git push --force`、`git push --force-with-lease`、rebase 后强推等破坏历史或现场的操作。
 
@@ -180,5 +195,5 @@ Please push a feature branch and create a Pull Request.
 `core.hooksPath` 即可。
 
 本地 hook 只防误操作，不能强制其他 clone 或 GitHub 网页上的 Review。建议仓库
-管理员配置 main 的分支保护或 Ruleset：必须 PR、至少一位其他成员 Approve、禁止
-强推及删除，并限制绕过。远程规则的配置状态需另行核实，本轮没有修改 GitHub 设置。
+管理员按所有者的新策略配置 main 的分支保护或 Ruleset：使用 PR 合并、**不强制 Approve（0 required approvals）**、禁止
+强推及删除；有 Write/Maintain/Admin 权限的成员可直接合并 PR。远程规则需以当前账号的实际 API 回读或网页核验为准；本规范不授权修改 GitHub 设置。
