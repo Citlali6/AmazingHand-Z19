@@ -36,6 +36,7 @@
 4. [10 天排期与责任分配](TEN_DAY_EXECUTION.md)：D1-D10 依赖、止损线、队友如何并行；
 5. [接线 / 测试 / 验收记录](HARDWARE_BRINGUP.md)：授权闸门、分层 bring-up、DoD；
 6. [团队任务与协作入口](TEAM_ONBOARDING.md)：Codex、队友、人类审核与 Issue。
+7. [现行文档与历史旧方案隔离规范](DOC_STATUS_AND_RULES.md)：遇到旧八舵机、FMC、旧截止日期等冲突时以此为准。
 
 ## 3. 当前已知真实基础（证据级别）
 
