@@ -1,3 +1,9 @@
+> [!CAUTION]
+> **2026-10-20 路线变更标识｜历史资料，非当前任务说明。** 该技术设计主要服务于旧八舵机 SCS/FMC 直接控制；不意味着当前 RoArm 的 PL IP、接口、时序或真实力控已实现。
+> **当前主线：** [RoArm-M2-S + Z19 十天交付](../relaunch_20261020/README.md) · [当前架构/ABI 草案](../relaunch_20261020/SYSTEM_ARCHITECTURE.md) · [项目总控 #6](https://github.com/Citlali6/AmazingHand-Z19/issues/6)。以下原文保留用于审计和历史追溯；不要按其中的旧截止日期、人员分工和旧电气方案启动 Codex 或现场接线。
+
+---
+
 # FPGA 控制系统技术设计
 
 状态：第一版施工设计草案，2026-10-05；尚无对应 RTL 实现。
