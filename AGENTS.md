@@ -1,5 +1,14 @@
 # AmazingHand Codex Development Rules
 
+## 2026-10-20 active RoArm scope — mandatory before every Codex task
+
+**Current deliverable is NOT the old wearable AmazingHand eight-servo implementation.** From 2026-10-20 onward, the 10-day P0 goal is a fixed-tabletop **Waveshare RoArm-M2-S + ALINX Z19 PS/PL + USB camera** real pick-and-place demonstration. Read **`docs/relaunch_20261020/README.md`**, `SYSTEM_ARCHITECTURE.md`, `DOC_STATUS_AND_RULES.md`, `TEN_DAY_EXECUTION.md`, and new repo Issues **#6–#12** before editing. Root `README.md` and `docs/project_framework.md` are the active descriptions.
+
+**Legacy guidance is not executable authority**: `docs/design/architecture.md`, `docs/design/interface.md`, and old `docs/fpga/` servo plans describe SCS0009/FMC/8-servo hand hardware and outdated deadlines/personnel. Retain their historical tests and failures, but do not buy hardware, implement an old ABI, issue new Codex tasks, or power any device from those plans. For RoArm use the vendor ESP32 USB serial API; FPGA PL must meaningfully gate new actions, but is NOT assumed to directly drive servo PWM, provide verified torque control, or electrically force a moving ESP32 to stop.
+
+**Code and hardware truth:** existing MJC1 R2 and IMX214 camera bitstreams are distinct PL profiles; the combined diagnostic bit is NOT DEPLOYABLE. USB UVC on Z19, RoArm serial on Z19, and physical end-to-end pick are NOT VERIFIED. Reuse only source and previously measured facts with their respective scope. Speech #12 is HOLD; first prioritize #7 (RoArm bridge), #8 (camera/calibration), #9 (PL gate), then #10/#11. No board reprogramming, ESP32 flash, motor motion, system image/kernel change, or main merge unless Citlali6 explicitly authorizes that action in the current task. Git writes strictly through a current-main feature branch and PR; honor author attribution and legacy archives.
+
+
 ## Project
 
 - Repository: Citlali6/AmazingHand-Z19
