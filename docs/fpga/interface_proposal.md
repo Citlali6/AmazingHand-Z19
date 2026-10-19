@@ -1,3 +1,9 @@
+> [!CAUTION]
+> **2026-10-20 路线变更标识｜历史资料，非当前任务说明。** 该旧 SCS 八舵机接口草案未冻结成当前 RoArm ABI；现行控制合同仍需在新仓库 #9 依据真实 MJC1 源码审计和仿真建立。
+> **当前主线：** [RoArm-M2-S + Z19 十天交付](../relaunch_20261020/README.md) · [当前架构/ABI 草案](../relaunch_20261020/SYSTEM_ARCHITECTURE.md) · [项目总控 #6](https://github.com/Citlali6/AmazingHand-Z19/issues/6)。以下原文保留用于审计和历史追溯；不要按其中的旧截止日期、人员分工和旧电气方案启动 Codex 或现场接线。
+
+---
+
 # PS↔PL 接口 v0.3 修订草案
 
 状态：**待双方评审的设计提案，尚未实现，尚未替代 v0.2.x**。

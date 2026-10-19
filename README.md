@@ -1,105 +1,82 @@
-# Amazing Hand AI — 人机协作智能辅助手
+# AmazingHand-Z19 — 视觉引导抓取与 FPGA 实时控制系统
 
-**唯一正式开发仓库**：[Citlali6/AmazingHand-Z19](https://github.com/Citlali6/AmazingHand-Z19)（默认分支 `main`）。
+**正式研发仓库：** [Citlali6/AmazingHand-Z19](https://github.com/Citlali6/AmazingHand-Z19) · **正式基线：** `main` · **项目负责人：** Citlali6
 
-2026-10-20 已通过正常 Merge Commit 合入迁移 PR [#2](https://github.com/Citlali6/AmazingHand-Z19/pull/2)、
-[#3](https://github.com/Citlali6/AmazingHand-Z19/pull/3)，完成迁移，现按 `main` 正常开发。
-旧 `Tom-mr33/AmazingHand-based-on-FPGA` **永久只读**，不再在那里投入新的 Issue、Codex 任务、
-代码、PR、评论或管理操作；旧链接及署名仅作为出处。每次写入前必须核对目标仓库，
-详细见 [Codex 规则](AGENTS.md)及[Git 协作规范](docs/GIT_WORKFLOW.md)。
-合并采用 PR 流程，所有者或具有写入权限的队友可自主合并，不强制其他队员 Approve。
-历史迁移与仍需补验事项见 [Issue #1](https://github.com/Citlali6/AmazingHand-Z19/issues/1)。
+> **当前路线（2026-10-20 起）**：RoArm-M2-S 成品桌面机械臂 + ALINX Z19 (XCZU19EG) + 实验室 USB 摄像头。为 10 天内交付可重复展示的真实工程而调整。旧“可穿戴 AmazingHand 八舵机、FMC 直驱、手背 ArUco 引导、PL 舵机力控”是**历史方案，不是当前开发任务**。本 README 和 [现行方案](docs/relaunch_20261020/README.md) 是新人第一入口。
 
-基于 AMD Zynq UltraScale+ MPSoC（ALINX Z19, XCZU19EG）的人机协作抓取系统。
-目标流程：语音指定目标 → 端侧视觉识别物体并估计尺寸 → 引导人手就位 → FPGA 实时力控完成抓取。
-目标为全系统单板自主运行、无云端依赖；目前已完成相机基础链路，整手闭环仍待集成。
+## 项目介绍与用途
 
-> 设计哲学：**模糊性交给 AI（PS/DPU），确定性交给 RTL（PL）**
+暂定正式题目：《基于 Zynq UltraScale+ MPSoC 的多模态视觉引导抓取与 FPGA 实时控制系统》。
 
-## 系统架构
+面向实验室教学演示、固定桌面轻量物品自动抓放/分拣：用户通过界面选择目标（可选离线语音）；固定 USB 摄像头读取桌面真实画面、输出目标位置；Z19 的 Cortex-A53 / Linux PS 进行目标确认、坐标标定和动作规划；Z19 PL 在实际命令链上执行阶段授权、序号/超时检查、STOP 锁存和反馈监督；由 PS USB 串口将获授权命令发送给成品 RoArm-M2-S 的 ESP32 控制器，驱动其夹爪完成抓取、搬运、放置。
 
-```
-PS (Linux / Cortex-A53)：语音命令词识别 → YOLO 检测 + 单目尺寸估计 → 抓取策略查表 → ArUco 就位引导
-PL (RTL，待实现)：单条半双工总线控制 8 个舵机 + 基于负载反馈的抓握监督与保护状态机
-执行器：8 × Feetech SCS0009 → AmazingHand（pollen-robotics 开源灵巧手）
-```
+这是**待完成的工程目标**，不是宣布已经联调成功的功能。原本的助残可穿戴愿景已不作为本期实物交付或安全适用范围；本期不宣称医疗级、工业级、物理急停认证或 FPGA 电流/力矩伺服能力。
 
-详细设计见 [docs/design/architecture.md](docs/design/architecture.md)。
+## 读文档请按这个顺序
 
-FPGA工作计划、技术设计、施工步骤与验收见 [FPGA开发文档入口](docs/fpga/README.md)。
-第一版要求在 **2026-10-15 前完成真实灵巧手抓取**；建议10-14验收交付。
-现有相机工程/平台已归档，手控制 RTL 与接口仍需修订、仿真和实机验收，不能写成已完成抓取。
-
-## 当前已验证功能（2026-10-10）
-
-| 功能 | 实测结果 | 实现与操作说明 |
+| 顺序 | 正式入口 | 看什么 |
 |---|---|---|
-| Linux SD 启动 | ext4 系统安装、自己的 root 登录、一轮断电启动通过 | [SD 部署记录](docs/fpga/linux_sd_bringup.md) |
-| 电脑直连与 SSH | PS 网口 100 Mbps 全双工，SSH/SCP/hash 核对通过 | [相机快速操作](docs/fpga/camera_quickstart.md) |
-| CAM0 采集 | IMX214 真正 1920×1080，连续十分钟、DMA 错误/空样本为零 | [Linux 相机源码](host/camera_linux/README.md) |
-| 高清实时视频 | 30 秒收到 757 张不同的 1080p JPEG，约 25.16 fps，逐张解码通过 | [验收记录](docs/fpga/linux_camera0_bringup.md) |
-| 控制及故障处理 | 启停、手动焦距、过期画面拒绝、采集异常后停 DMA/重新启动通过 | [功能及交付清单](docs/fpga/camera_delivery_20261010.md) |
-| 相机硬件归档 | 已使用的 bit/XSA、原 BD/XDC、依赖 IP 源码及文件 hash | [硬件工程说明](fpga/camera_hw/README.md) |
+| 1 | [十天交付总说明](docs/relaunch_20261020/README.md) | MVP、项目边界、历史验证资产 |
+| 2 | [系统架构与接口](docs/relaunch_20261020/SYSTEM_ARCHITECTURE.md) | PS/PL/ESP32职责、USB/坐标、安全 |
+| 3 | [微雪 RoArm 官方开源核查](docs/relaunch_20261020/ROARM_OPEN_SOURCE_AUDIT.md) | 固件/SDK/ROS2 固定版本、API、许可证 |
+| 4 | [十天执行计划](docs/relaunch_20261020/TEN_DAY_EXECUTION.md) | D1-D10、止损线、队员职责 |
+| 5 | [硬件接入指南](docs/relaunch_20261020/HARDWARE_BRINGUP.md) | 摄像头、串口、供电、STOP和上板许可 |
+| 6 | [新成员 / Codex 协作](docs/relaunch_20261020/TEAM_ONBOARDING.md) | 如何阅读、提交、测试、Review |
+| 7 | [现行文档权威性与旧项目隔离规范](docs/relaunch_20261020/DOC_STATUS_AND_RULES.md) | 遇到矛盾听哪份，历史目录怎么用 |
 
-当前没有开机自动加载相机、第二路验收、自动对焦、目标识别或真实灵巧手闭环。
-约 25 fps 指电脑接收测试，不代表固定 30 fps 或无丢帧的传感器采集。
+**当前执行看板：** [总控 Issue #6](https://github.com/Citlali6/AmazingHand-Z19/issues/6)，[RoArm 串口 #7](https://github.com/Citlali6/AmazingHand-Z19/issues/7)、[视觉 #8](https://github.com/Citlali6/AmazingHand-Z19/issues/8)、[FPGA #9](https://github.com/Citlali6/AmazingHand-Z19/issues/9)、[实体联调 #10](https://github.com/Citlali6/AmazingHand-Z19/issues/10)、[终测 #11](https://github.com/Citlali6/AmazingHand-Z19/issues/11)、[可选语音 HOLD #12](https://github.com/Citlali6/AmazingHand-Z19/issues/12)。
 
-## 目录结构
+## MVP 工作链（**待实现和联调**）
 
+```text
+USB UVC 摄像头(固定俯视) → PS/PC 真实帧定位 → 桌面标定及人工确认
+                                        ↓
+                           Z19 PS 动作规划/串口桥
+                                        ↕
+                           Z19 PL 动作授权与 STOP
+                                        ↓
+                     Z19 PS USB 串口 → RoArm ESP32 → 舵机与夹爪
+                                        ↑
+                                   实体关节反馈
 ```
-fpga/    相机硬件工程/bit/XSA、历史裸核验证；手控制 RTL/仿真/构建输入
-host/    Linux 相机驱动/采集/实时预览、板端脚本；语音/视觉/控制骨架
-tools/   SD 制作/安全检查、串口日志与测试；标定工具按实施状态确认
-sim/     MuJoCo 数字孪生：抓取参数离线验证
-data/    标定结果与实测指标
-docs/    项目框架、设计文档、开发日志
-skill/   技能包（比赛交付）
-report/  设计报告（比赛交付）
-```
 
-## 快速开始
+优先相机接 Z19 PS USB Host；当前 Linux UVC 驱动兼容性**未验收**，超过规定排障时间切“PC 取图 → Z19 执行 FPGA 控制”的保底架构，必须如实标注。机械臂实际控制必须经过有意义的 PL 动作授权；ESP32 才负责真实底层伺服。不要把 USB 串口传输描述为 PL 直接产生 PWM 或 1Mbps SCS 舵机协议。
 
-**本仓库迁移入口：[下载、启动与完整性记录](docs/migration/README.md)。**
-原仓库的 Issue、PR 讨论、评审与变更补丁已补存为 [可离线查阅的归档](docs/migration/upstream_archive_20261019_v2/README.md)。
-虚拟手模型已随迁移分支完整保存；本机已准备独立 PC 环境，可双击 `start_virtual_hand.bat` 打开交互虚拟手。
-PL 控制观察入口为 `start_mjc1_observer.bat`，需配套板端 MJC1 R2 程序与 SSH 转发，操作见迁移说明。
+演示必须是**新的真实画面 → 目标变位定位 → PL 授权 → 实体抓取投放 → 反馈和异常记录**；彩色块 / 规则检测可用来保证第一版稳定，但不冒充 YOLO/NCNN 准确率。语音/ROS2/大型模型是可选项，不能阻塞 P0。
 
-微雪 USB TO AUDIO 的语音基础入口、离线资料与到货步骤见 [USB麦克风说明](docs/voice/USB_MICROPHONE.md)。当前已补采音/识别源码，真实麦克风验收及语音→PL接入待完成。
-含中文模型和板端依赖的完整离线包见 [麦克风部署包下载](deliverables/voice_usb/README.md)。
+## 当前已实现的历史资产（与本期交付严格区分）
 
-相机实机操作从 [相机快速操作](docs/fpga/camera_quickstart.md) 开始。
-当前硬件为 **Z19 + FL0214/IMX214 MIPI 第一通道**，板端使用 Linux 5.4/PetaLinux 2020.2 基线。
-Git 中包含源码、平台与已验证相机二进制；SD 系统镜像、登录密码/SSH 私钥和现场录像留在本机。
-其他成员准备同一基线系统及自己的 SSH 认证后，按 [交付清单](docs/fpga/camera_delivery_20261010.md) 复现。
+| 资产 | 真实证据或资料 | 不得外推为 |
+|---|---|---|
+| Z19 Linux SD、SSH | 已启动、网络通信、文件传输：[`docs/fpga/linux_sd_bringup.md`](docs/fpga/linux_sd_bringup.md) | RoArm USB 串口已连接 |
+| IMX214 camera-only | 1920×1080、PC 约 25 fps 接收：[`host/camera_linux/README.md`](host/camera_linux/README.md) | UVC 驱动可用，或与控制 PL 已同时运行 |
+| AHIL / MJC1 R2 | 原 MuJoCo HIL，有真实 PL 状态与 ACK：[`fpga/mjc1_fpd/README.md`](fpga/mjc1_fpd/README.md) | PL 已驱动真实 RoArm |
+| NCNN 视觉工作 | 历史分支对 car 有真实推理；苹果误判 orange、保温瓶漏检 | 新桌面物品已识别成功 |
+| USB Vosk 离线包 | [语音资料](docs/voice/USB_MICROPHONE.md) 有源码模型 | 麦克风与实物链路已经验收 |
+| 组合 MIPI+HIL | 仅结构/时序局部验证，仍有 DRC 和 I/O 约束阻断 | **不可加载实验 bit** |
+| RoArm-M2-S 与实验室 USB 相机 | 用户已下单 S 标准整机；USB 摄像头曾在树莓派可用 | 新实物已联调或 Z19 可读取相机 |
 
-已有 PC 模拟链路可运行 `python host/tests/smoke_test_control.py`、`python host/tests/smoke_test_backend.py`，
-或 `python host/app/main.py --mock-voice "抓起香蕉,放下"`；通过不代表真实抓取或协议已实机核验。
-新增实时交互入口：`.venv/Scripts/python.exe host/app/main.py --mujoco`，支持当次输入控制、
-MuJoCo 实测反馈和锁存停止；环境准备与按键操作见 [实时控制说明](sim/LIVE_CONTROL.md)。
-该演示是手部仿真控制，不代表物体抓取或实板 HIL 已验收。
-整手接线、舵机标定、语音/识别模型和闭环运行步骤仍按 [实施状态](docs/fpga/implementation_progress.md) 推进。
+旧 AmazingHand MuJoCo / SCS / RTL / FM​​C 等资源**完整保留供研究、复现和追溯**，但新机械臂采用原厂 ESP32 的官方串口协议，不能盲搬旧八路舵机指令及力控策略。
 
-## 开发状态
+## 新人如何开始
 
-- [x] 方案定稿与系统设计
-- [x] Python协议参考模型与Host骨架（模拟测试通过，协议实物参数待复核）
-- [ ] AmazingHand实物可用性与标定交接（历史日志记录已组装，本轮尚未核实）
-- [x] Z19 Linux SD、一次冷启动、电脑直连 SSH
-- [x] 单路 MIPI 相机 Linux 采集与 1080p 实时预览
-- [x] 相机工程/已验证平台/源码/功能说明归档
-- [ ] RTL 舵机总线控制器与力控状态机
-- [ ] 视觉与语音链路
-- [ ] 系统集成与指标实测
+1. 阅读上方七个入口及根目录 [AGENTS.md](AGENTS.md)、[Git 工作流](docs/GIT_WORKFLOW.md)。
+2. 在 [总控 #6](https://github.com/Citlali6/AmazingHand-Z19/issues/6) 回复 GitHub 账号、认领视觉 A / 机械臂 B、能投入时间与现场硬件时段。
+3. Codex 只在负责人明确启动对应 Issue 后，在最新 `main` 建个人分支、离线开发和测试、提交 PR；代码与实板证据分级回报。未获本次独立授权，不得重配 PL、刷 ESP32 固件、改 SD/内核或自动发机械臂运动命令。
+4. 物理演示必须有**现场操作者与可触及的独立 12V 断能手段**；软件 STOP 锁存不等于实体伺服能立即停止。失败日志保留，不允许选择性排除。
 
-进度详见 [docs/log/](docs/log/)。
+原有 PC 旧手模型仍可用 `setup_pc.bat`、`start_virtual_hand.bat` 打开；它们只用于**历史功能回归**，不是 RoArm 自动抓取的启动命令。详见 [迁移存档入口](docs/migration/README.md)。
 
-## 许可证
+## 仓库目录和研发边界
 
-项目代码默认 Apache-2.0，以各文件声明为准。Linux 相机内核模块声明 GPL；
-归档的供应方 IP 保留原有版权/许可，Digilent 核包含 MIT 声明，不统一重授权为 Apache。
-机械结构继承 [AmazingHand](https://github.com/pollen-robotics/AmazingHand) 的 CC-BY 4.0。
+`fpga/`：Z19 PL 原 RTL、MJC1 R2、历史相机/组合工程，新增 RoArm 授权 IP 应独立开发；
+`host/`：现有 Host 与视觉/语音/控制抽象，新增 UVC 输入及 RoArm serial 适配器须与旧 SCS 后端隔离；
+`sim/`、`AmazingHand/`：历史八执行器虚拟手和模型；
+`deliverables/`：迁移离线包与校验档案；
+`docs/relaunch_20261020/`：**当前项目设计与执行权威入口**；
+`docs/design/`、`docs/fpga/` 中部分文档是旧技术方案或当时快照，明确标识后**只读追溯**；
+`docs/log/`、`docs/migration/`：历史实验与迁移依据，不覆盖、不伪造新实测。
 
-## 致谢
+许可证按文件和上游声明分别遵守：项目原代码 Apache-2.0，旧结构/模型存在 CC-BY 等，RoArm 固件和 Python SDK 另有 GPL/AGPL 条款；不可简单整体重授权。
 
-- [Pollen Robotics — AmazingHand](https://github.com/pollen-robotics/AmazingHand)
-- AMD Xilinx Vitis AI / PYNQ 社区
+**唯一写入仓库：** `Citlali6/AmazingHand-Z19`，旧仓库永久只读。严格遵守最新 `main → 独立分支 → PR → 有权限成员按当轮授权合并`。

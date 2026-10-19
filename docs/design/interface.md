@@ -1,3 +1,9 @@
+> [!CAUTION]
+> **2026-10-20 路线变更标识｜历史资料，非当前任务说明。** 本文件的 1Mbps SCS0009/FMC/8 舵机寄存器 v0.2.2 属于旧仿生手协议，并非 RoArm 的 ESP32 USB 串口协议；旧地址不得用于新控制链。实际 MJC1 R2 另有 0xA0000000 profile，必须据实际源码验证。
+> **当前主线：** [RoArm-M2-S + Z19 十天交付](../relaunch_20261020/README.md) · [当前架构/ABI 草案](../relaunch_20261020/SYSTEM_ARCHITECTURE.md) · [项目总控 #6](https://github.com/Citlali6/AmazingHand-Z19/issues/6)。以下原文保留用于审计和历史追溯；不要按其中的旧截止日期、人员分工和旧电气方案启动 Codex 或现场接线。
+
+---
+
 # PS↔PL 接口契约 v0.2.2（审查修订）
 
 > 本文件是 `host/` 与 `fpga/` 并行开发的唯一依据。

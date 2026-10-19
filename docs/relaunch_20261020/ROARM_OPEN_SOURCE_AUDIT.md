@@ -1,6 +1,6 @@
 # RoArm-M2-S 官方开源工程实核与 Z19 适配路线
 
-> 来源审计日期 2026-10-20。下列 GitHub SHA 为这次实际读取的公开分支 HEAD，只记录官方文件/接口存在的事实；未到货时**没有实机兼容证据**。固定上游版本后再引入代码，不跟随远端 \`main\` 自动升级。
+> 来源审计日期 2026-10-20。下列 GitHub SHA 为这次实际读取的公开分支 HEAD，只记录官方文件/接口存在的事实；未到货时**没有实机兼容证据**。固定上游版本后再引入代码，不跟随远端 `main` 自动升级。
 
 ## 1. 购买机型与机械基础
 
@@ -14,9 +14,9 @@
 
 | 来源 | 当次官方 HEAD | 资料和实际检查 | 用途/限制 |
 |---|---|---|---|
-| https://github.com/waveshareteam/roarm_m2 | \`c6ccc5bda2eb92df2f0850d3e63cc42b81557f4f\` | 有 \`RoArm-M2_example/\` ESP32 固件、\`RoArm-M2_python/\`、README；配置源码列出关节 ID、机械结构尺寸、默认舵机控制等；GPL 系列声明 | 固件参考，**不在 D1-D3 重新刷写**。出厂固件是否完全等同 GitHub HEAD 未验证 |
-| https://github.com/waveshareteam/waveshare_roarm_sdk | \`d9893632aa7f5a9cb283136ab024faf3143ea7db\` | 已实际读 \`roarm_sdk/roarm.py\`、\`doc/roarm_m2_zh.md\`、\`requirements.txt\`、LICENSE。SDK \`roarm_type='roarm_m2'\`、串口 115200、\`gripper_type='angular_direct'\`；\`pyserial\` 与 \`requests\` 依赖 | 最快 PC 测试/协议源；LICENSE 为 AGPL-3.0，若复制 SDK 到参赛工程需依法审查相应开源义务 |
-| https://github.com/waveshareteam/roarm_ws_em0 | \`f06b2ed6c1ddc5b7690975fdbba84aab626a2229\` (\`ros2-humble\`) | 实际存在 ROS2 工程和源目录 | **只作为以后参考**：D1-D10 不将 ROS2/MoveIt 安装列为前置任务 |
+| https://github.com/waveshareteam/roarm_m2 | `c6ccc5bda2eb92df2f0850d3e63cc42b81557f4f` | 有 `RoArm-M2_example/` ESP32 固件、`RoArm-M2_python/`、README；配置源码列出关节 ID、机械结构尺寸、默认舵机控制等；GPL 系列声明 | 固件参考，**不在 D1-D3 重新刷写**。出厂固件是否完全等同 GitHub HEAD 未验证 |
+| https://github.com/waveshareteam/waveshare_roarm_sdk | `d9893632aa7f5a9cb283136ab024faf3143ea7db` | 已实际读 `roarm_sdk/roarm.py`、`doc/roarm_m2_zh.md`、`requirements.txt`、LICENSE。SDK `roarm_type='roarm_m2'`、串口 115200、`gripper_type='angular_direct'`；`pyserial` 与 `requests` 依赖 | 最快 PC 测试/协议源；LICENSE 为 AGPL-3.0，若复制 SDK 到参赛工程需依法审查相应开源义务 |
+| https://github.com/waveshareteam/roarm_ws_em0 | `f06b2ed6c1ddc5b7690975fdbba84aab626a2229` (`ros2-humble`) | 实际存在 ROS2 工程和源目录 | **只作为以后参考**：D1-D10 不将 ROS2/MoveIt 安装列为前置任务 |
 
 具体官方文件：
 - [SDK README（安装、型号）](https://github.com/waveshareteam/waveshare_roarm_sdk/blob/d9893632aa7f5a9cb283136ab024faf3143ea7db/README.md)
@@ -27,7 +27,7 @@
 
 ## 3. 已确认的官方 API（不是我们板端测试）
 
-\`\`\`python
+```python
 from roarm_sdk.roarm import roarm
 arm = roarm(roarm_type="roarm_m2", port="/dev/ttyUSB0",
             baudrate=115200, gripper_type="angular_direct")
@@ -41,9 +41,9 @@ feedback = arm.feedback_get()  # [x,y,z,j1,j2,j3,j4]（官方文档口径）
 # arm.gripper_angle_ctrl(angle=..., speed=..., acc=...)
 # arm.pose_ctrl(pose=[x_mm,y_mm,z_mm,gripper_angle_deg])
 # arm.torque_set(cmd=0)
-\`\`\`
+```
 
-官方文档：\`joints_angle_get\` 返回 4 个角度；\`feedback_get\` 返回 XYZ 与 4 个关节弧度，XYZ 单位 mm；\`pose_ctrl\` 的 xyz 单位 mm，末端角度用 degree。当前 SDK 默认 \`gripper_type=angular_direct\` 对 S 版做夹爪角度取反；**不应自行假定 0° 是张开或闭合**，须在低速台架观测并冻结映射。SDK 的 HTTP 模式文档明确仅发控制，读取反馈和拖动示教须走串口。
+官方文档：`joints_angle_get` 返回 4 个角度；`feedback_get` 返回 XYZ 与 4 个关节弧度，XYZ 单位 mm；`pose_ctrl` 的 xyz 单位 mm，末端角度用 degree。当前 SDK 默认 `gripper_type=angular_direct` 对 S 版做夹爪角度取反；**不应自行假定 0° 是张开或闭合**，须在低速台架观测并冻结映射。SDK 的 HTTP 模式文档明确仅发控制，读取反馈和拖动示教须走串口。
 
 **严格区分三层状态**：
 1. Python API 返回/串口已发送；
@@ -55,22 +55,22 @@ feedback = arm.feedback_get()  # [x,y,z,j1,j2,j3,j4]（官方文档口径）
 - 单关节角度范围：J1 -180~180°、J2 -90~90°、J3 0~180°、J4 0~90°；
 - 厂商 SDK 给出的 speed 1~4096、acc 1~254，并不意味着我们第一天可以使用最大值；
 - 位置接口输入的厂家允许几何坐标范围不等于机械碰撞安全区域。每一姿态需实物标定、限速与机械空间检查。
-- 机械臂固件可能具有开机运动、自检/力矩逻辑；先查实际版本并进行空载、低速、无人在运动范围内的验证，不要自动 \`middle_set()\` 或刷出厂固件。
+- 机械臂固件可能具有开机运动、自检/力矩逻辑；先查实际版本并进行空载、低速、无人在运动范围内的验证，不要自动 `middle_set()` 或刷出厂固件。
 
 ## 4. 正确的最短上手路径
 
-**D1（未到货）**：PC 独立虚拟环境备好最小 \`pyserial\` / 官网 SDK（许可证一起保存），编写 mock serial/replay；不得在 Z19 全局 Python3.7 根环境运行 \`pip install\`。准备串口 JSON 帧/命令白名单和本地日志；用单元测试拒绝错误命令、重复序号、断线。
+**D1（未到货）**：PC 独立虚拟环境备好最小 `pyserial` / 官网 SDK（许可证一起保存），编写 mock serial/replay；不得在 Z19 全局 Python3.7 根环境运行 `pip install`。准备串口 JSON 帧/命令白名单和本地日志；用单元测试拒绝错误命令、重复序号、断线。
 
-**D2~D3（到货、现场允许）**：用户安装底座、核对 12V5A、电源线、舵机与夹爪。先用厂商浏览器 Web UI 验证 HOME 附近的低速运动和小幅开合；再用电脑串口（Windows COMx / Linux \`/dev/ttyUSBx\`）逐步查询反馈、单关节低速小角度控制、夹爪低速开合。确认实际固件与 SDK 兼容后，固定串口通信口径。
+**D2~D3（到货、现场允许）**：用户安装底座、核对 12V5A、电源线、舵机与夹爪。先用厂商浏览器 Web UI 验证 HOME 附近的低速运动和小幅开合；再用电脑串口（Windows COMx / Linux `/dev/ttyUSBx`）逐步查询反馈、单关节低速小角度控制、夹爪低速开合。确认实际固件与 SDK 兼容后，固定串口通信口径。
 
-**D3~D4**：Z19 只读检测 \`lsusb\` / \`dmesg\` / \`/dev/ttyUSB*\`、\`cp210x\` 模块、Python3.7 运行；优先移植极简 stdlib JSON + \`termios\`/已存在串口依赖的安全桥，不引入 PC PyTorch/ROS2。串口一次只由一个进程占用。手动断电/安全限位先于自动搬运。
+**D3~D4**：Z19 只读检测 `lsusb` / `dmesg` / `/dev/ttyUSB*`、`cp210x` 模块、Python3.7 运行；优先移植极简 stdlib JSON + `termios`/已存在串口依赖的安全桥，不引入 PC PyTorch/ROS2。串口一次只由一个进程占用。手动断电/安全限位先于自动搬运。
 
 ## 5. SDK 使用、二次开发与许可证
 
-- RoArm 固件仓库 README 显示 GPLv3-or-later，SDK 仓库 LICENSE 为 AGPLv3；\`ros2-humble\` 仓库单独检查。我们的根项目 Apache-2.0 **不能覆盖这些源文件的上游许可**。
+- RoArm 固件仓库 README 显示 GPLv3-or-later，SDK 仓库 LICENSE 为 AGPLv3；`ros2-humble` 仓库单独检查。我们的根项目 Apache-2.0 **不能覆盖这些源文件的上游许可**。
 - 首选把上游 SDK 作为**独立安装的原始依赖**而非将源码复制进根项目，并记录固定 commit/pip 版本/许可证。若需要移植 SDK 的源文件或分发其修改版本，先由队员审核 AGPL/GPL 对提交包或网络部署的责任；不要在此文档里臆断所有组合行为的法律结论。
 - 固件默认保护措施、夹爪力矩上限、异常电源恢复等随不同固件版本可能改变；没有到货设备固件版本之前，不能把 GitHub main 最新实现说成我们已拥有的固件。
-- 危险操作禁止自动执行：刷机/修改电机 ID、校准中位 \`middle_set()\`、打开力矩、载物高速运动、全臂长伸展、机械臂运动时人员手动干预。
+- 危险操作禁止自动执行：刷机/修改电机 ID、校准中位 `middle_set()`、打开力矩、载物高速运动、全臂长伸展、机械臂运动时人员手动干预。
 
 ## 6. 集成风险与决策
 

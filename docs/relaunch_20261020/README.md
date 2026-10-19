@@ -1,6 +1,6 @@
 # AmazingHand-Z19 | 2026-10-20 十天实物交付总入口
 
-> 状态：**新方向设计与任务规划，非已完成实物联调**。项目负责人：Citlali6。唯一开发仓库：https://github.com/Citlali6/AmazingHand-Z19 。原仓库不再开展任何读写任务；迁移历史请读本仓库 \`docs/migration/\`。本文件不代表启动任何实板操作的许可。
+> 状态：**新方向设计与任务规划，非已完成实物联调**。项目负责人：Citlali6。唯一开发仓库：https://github.com/Citlali6/AmazingHand-Z19 。原仓库不再开展任何读写任务；迁移历史请读本仓库 `docs/migration/`。本文件不代表启动任何实板操作的许可。
 
 ## 0. 给新队友一分钟读完的说明
 
@@ -36,29 +36,30 @@
 4. [10 天排期与责任分配](TEN_DAY_EXECUTION.md)：D1-D10 依赖、止损线、队友如何并行；
 5. [接线 / 测试 / 验收记录](HARDWARE_BRINGUP.md)：授权闸门、分层 bring-up、DoD；
 6. [团队任务与协作入口](TEAM_ONBOARDING.md)：Codex、队友、人类审核与 Issue。
+7. [现行文档与历史旧方案隔离规范](DOC_STATUS_AND_RULES.md)：遇到旧八舵机、FMC、旧截止日期等冲突时以此为准。
 
 ## 3. 当前已知真实基础（证据级别）
 
 | 模块 | 现有证据 | 本轮不能声称 |
 |---|---|---|
-| Z19 Linux 5.4 / A53 / SSH | 已在真实板卡 SD 启动、网口、SSH 文件传输；见 \`docs/fpga/linux_sd_bringup.md\` | 新摄像头驱动可用 |
-| IMX214 | 原相机 PL 独占配置下 1080p 视频约 25fps PC 接收，见 \`host/camera_linux/README.md\` | 可和原 HIL 同一 bit 并发 |
-| MuJoCo & AHIL | 原 \`#12/#13\` 的历史提交已在 main，PS/PL ↔ MuJoCo HIL 有实板证据 | 控制过真实 RoArm |
-| MJC1 R2 | \`fpga/mjc1_fpd/README.md\` 与 \`deliverables/mjc1_fpd/README.md\`：至少 17 个真实周期及 ACK，地址 \`0xA0000000\`，仅 R2 有效 | 具有物理舵机输出、能和相机 PL profile 同时加载 |
-| NCNN | 分支 \`feature/citlali6-z19-live-vision-20261018\` 有真实 car 检测；苹果预测 orange、瓶子漏检 | 苹果、瓶子或新的目标已验收 |
-| 组合相机/HIL | 分支 \`feature/citlali6-camera-hil-unified-20261018\` 已有 Vivado2020.1 构建、内部 CDC/timing 结果 | DRC / 外部时序 signoff / 实板并发合格；当前 **NOT DEPLOYABLE** |
-| 语音 | \`docs/voice/USB_MICROPHONE.md\` 已归档 Vosk 中文离线模型与入口 | 麦克风实测、语音驱动 RoArm 已实现 |
+| Z19 Linux 5.4 / A53 / SSH | 已在真实板卡 SD 启动、网口、SSH 文件传输；见 `docs/fpga/linux_sd_bringup.md` | 新摄像头驱动可用 |
+| IMX214 | 原相机 PL 独占配置下 1080p 视频约 25fps PC 接收，见 `host/camera_linux/README.md` | 可和原 HIL 同一 bit 并发 |
+| MuJoCo & AHIL | 原 `#12/#13` 的历史提交已在 main，PS/PL ↔ MuJoCo HIL 有实板证据 | 控制过真实 RoArm |
+| MJC1 R2 | `fpga/mjc1_fpd/README.md` 与 `deliverables/mjc1_fpd/README.md`：至少 17 个真实周期及 ACK，地址 `0xA0000000`，仅 R2 有效 | 具有物理舵机输出、能和相机 PL profile 同时加载 |
+| NCNN | 分支 `feature/citlali6-z19-live-vision-20261018` 有真实 car 检测；苹果预测 orange、瓶子漏检 | 苹果、瓶子或新的目标已验收 |
+| 组合相机/HIL | 分支 `feature/citlali6-camera-hil-unified-20261018` 已有 Vivado2020.1 构建、内部 CDC/timing 结果 | DRC / 外部时序 signoff / 实板并发合格；当前 **NOT DEPLOYABLE** |
+| 语音 | `docs/voice/USB_MICROPHONE.md` 已归档 Vosk 中文离线模型与入口 | 麦克风实测、语音驱动 RoArm 已实现 |
 | RoArm-S | 官方有开源固件/SDK，S 标准整机已购买 | 已经上电、连通 Z19、完成抓取 |
 
 ## 4. 非目标和旧资产保护
 
-- 不改原 \`fpga/camera_hw/\` 归档、原 SD 根系统、已验证 camera bit 与 MJC1 R2 固件；新组合 bit 不允许加载。
+- 不改原 `fpga/camera_hw/` 归档、原 SD 根系统、已验证 camera bit 与 MJC1 R2 固件；新组合 bit 不允许加载。
 - 保留旧手的 MuJoCo、RTL、协议、PR 证据作为参考与可回退资产，针对 RoArm 新开独立适配模块，不重命名冒充旧工程验证。
-- 新摄像头走 USB UVC，优先 Z19 PS；如果内核 \`uvcvideo\` 不可用，**最多排障半天**，转 PC 取图并传递带 session/seq/timestamp 的目标数据到 Z19 PS，PL 控制职责保持，报告须注明“PC+Z19 协同”而非“全部单板端侧”。
+- 新摄像头走 USB UVC，优先 Z19 PS；如果内核 `uvcvideo` 不可用，**最多排障半天**，转 PC 取图并传递带 session/seq/timestamp 的目标数据到 Z19 PS，PL 控制职责保持，报告须注明“PC+Z19 协同”而非“全部单板端侧”。
 - 不强制依赖 LLM、云网络或机械臂厂家 ROS2。
 
 ## 5. 项目管理原则
 
-所有新增 Issue、分支和 PR **只能在本仓库**；遵循 \`AGENTS.md\`、\`docs/GIT_WORKFLOW.md\`。新的项目方向是本次用户授权的十天落地调整，不追溯篡改历史论文、旧设计或测试文件。下一轮若改方向，须记录变更理由、证据和用户确认。历史未合并分支按独立审计后选择性 cherry-pick / 移植，禁止批量盲合并。
+所有新增 Issue、分支和 PR **只能在本仓库**；遵循 `AGENTS.md`、`docs/GIT_WORKFLOW.md`。新的项目方向是本次用户授权的十天落地调整，不追溯篡改历史论文、旧设计或测试文件。下一轮若改方向，须记录变更理由、证据和用户确认。历史未合并分支按独立审计后选择性 cherry-pick / 移植，禁止批量盲合并。
 
 本文件属于规划成果；待现场验证后每日日志记录事实，禁止用计划代替完成。
