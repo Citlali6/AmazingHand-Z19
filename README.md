@@ -1,10 +1,14 @@
 # Amazing Hand AI — 人机协作智能辅助手
 
-当前开发仓库：[Citlali6/AmazingHand-Z19](https://github.com/Citlali6/AmazingHand-Z19)。
-迁移阶段与待人工审查事项见 [Issue #1](https://github.com/Citlali6/AmazingHand-Z19/issues/1)。
-迁移检查点 `feature/migration-ready-20261019` 在 PR #2 合并前保持冻结；先按所有者新的无强制审批规则依序合并 PR #2、#3，
-再将默认分支切回 main 并核实。团队成员有写入权限即可自行合并 PR，不必等待他人 Approve。
-旧 Tom 仓库仅作只读出处；归档中的旧地址、作者和证据保持原样。
+**唯一正式开发仓库**：[Citlali6/AmazingHand-Z19](https://github.com/Citlali6/AmazingHand-Z19)（默认分支 `main`）。
+
+2026-10-20 已通过正常 Merge Commit 合入迁移 PR [#2](https://github.com/Citlali6/AmazingHand-Z19/pull/2)、
+[#3](https://github.com/Citlali6/AmazingHand-Z19/pull/3)，完成迁移，现按 `main` 正常开发。
+旧 `Tom-mr33/AmazingHand-based-on-FPGA` **永久只读**，不再在那里投入新的 Issue、Codex 任务、
+代码、PR、评论或管理操作；旧链接及署名仅作为出处。每次写入前必须核对目标仓库，
+详细见 [Codex 规则](AGENTS.md)及[Git 协作规范](docs/GIT_WORKFLOW.md)。
+合并采用 PR 流程，所有者或具有写入权限的队友可自主合并，不强制其他队员 Approve。
+历史迁移与仍需补验事项见 [Issue #1](https://github.com/Citlali6/AmazingHand-Z19/issues/1)。
 
 基于 AMD Zynq UltraScale+ MPSoC（ALINX Z19, XCZU19EG）的人机协作抓取系统。
 目标流程：语音指定目标 → 端侧视觉识别物体并估计尺寸 → 引导人手就位 → FPGA 实时力控完成抓取。

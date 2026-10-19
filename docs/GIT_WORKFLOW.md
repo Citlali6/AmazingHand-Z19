@@ -5,18 +5,37 @@
 
 **2026-10-19 仓库所有者决定：**不再强制其他队员 Review / Approve。仓库所有者 Citlali6 具有最终项目管理决策权；拥有 Write/Maintain/Admin 权限的队友也可直接合并 PR（包括自己的 PR），无需额外审批。可自愿 Review，但不得将不存在的审批记作已完成。规则仍须在 GitHub Settings 实际调整后才生效。
 
-## 迁移过渡期（Issue #1）
+## 唯一仓库与防误投规则（2026-10-20 起长期执行）
 
-日常开发源只有 `Citlali6/AmazingHand-Z19`；旧 Tom 仓库仅作只读出处。
-当前默认分支 `feature/migration-ready-20261019` 是保留不改的迁移检查点。
-先确认 GitHub 的旧“至少 1 人 Approve”保护已按所有者决定取消，再将迁移 PR #2、文档 PR #3 依序合入 main；
-迁移合并前暂停新研发，不因为 clone 默认落在检查点就从它启动功能工作。
-从非 main 起分支的例外须先说明必要性并取得 Citlali6 明确同意。
+**唯一允许写入的开发仓库：`Citlali6/AmazingHand-Z19`；默认开发分支：`main`。**
+迁移 PR #2、#3 已于 2026-10-20 正式合并，默认分支已恢复为 main。
+`feature/migration-ready-20261019` 只作为历史迁移检查点保留，不再作为新任务起点。
 
-迁移 PR #2 和文档 PR #3 **实际合并后**，将默认分支切回 main 并回读核验；
-随后每位成员在自己的干净工作区核对 origin，再按下述 ff-only 流程同步并建新分支。
-不要替其他成员改 remote 或工作区；origin 不符时保留现场、报告，不能自动换址。
-旧记录、归档、模型来源和作者署名中的地址继续保留。
+**旧 `Tom-mr33/AmazingHand-based-on-FPGA` 永久只读。** 只能查阅历史 Issue、PR、提交和实验记录；
+禁止向旧仓库创建/编辑/评论/关闭/标记 Issue 或 PR，禁止 Push、Merge、标签、Release、修改权限/设置，
+也不能在那里部署或执行新的 Codex 任务。即使旧任务链接、迁移档案或历史指令指向 Tom 仓库，
+仍必须先映射到此新仓库的实际 Issue/PR，再继续；不得对旧链接执行写操作。
+
+**每次发 GitHub 任务、执行 Codex 或 Git 写操作前必须校验目标。**
+工具调用的 repository 必须显式为 `Citlali6/AmazingHand-Z19`；本地先核对：
+
+```sh
+git remote get-url origin
+git branch --show-current
+git status
+```
+
+`origin` 必须准确指向新仓库的 HTTPS 或 SSH 地址；如不符或无法判定，立刻停止，
+保留现有工作区并报告，不自动重写其他人的 remote，也不借助重定向向旧仓库写入。
+若配置了 `upstream` 指向原 Tom 仓库，仅允许 fetch/读取。
+任何旧编号（例如旧 Issue #16/#17/#20、PR #18/#19）只用作历史溯源；
+在新仓库继续执行时应引用新编号，不能误认为原生迁移了旧评论或审批。
+
+正常开发继续：同步最新 `main` → 独立工作分支 → 必要测试 → 当前仓库 PR →
+有写权限成员自行决定是否合并。**不强制其他成员 Approve**；
+但不改变不直接推送 main、不强推、不删分支、不过度声称硬件验收的规则。
+Codex 只有收到 Citlali6 当轮明确授权才能提交、推送、创建或合并 PR。
+旧仓库贡献归属和历史 URL 在归档中保留，不做机械替换。
 
 ## 1. 首次获取项目
 
