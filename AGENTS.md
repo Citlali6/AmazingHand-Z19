@@ -13,22 +13,43 @@ Read `docs/GIT_WORKFLOW.md`, the current development log, and relevant design
 files before working. Preserve existing work and do not invent missing hardware
 or software implementation from design documents.
 
-## Migration transition (Issue #1)
+## Exclusive repository policy (owner instruction, 2026-10-20)
 
-The only active development repository is `Citlali6/AmazingHand-Z19`.
-The Tom repository is a read-only historical source; do not write to it.
-Until migration PR #2 and follow-up documentation PR #3 have actually been
-merged into `main`, `feature/migration-ready-20261019` remains a frozen
-download/audit checkpoint, not a substitute development baseline. Preserve
-its existing commits. GitHub protection requirements must be changed through
-authorized repository settings before any blocked merge can proceed.
-New engineering tasks wait for that migration; do not infer permission to
-branch from the checkpoint. Any non-main branch-base exception requires
-Citlali6's explicit consent under Issue #1.
-After both migration PRs are merged, the repository owner sets and verifies
-`main` as the default branch. Then resume the normal main-based workflow.
-GitHub settings changes require the owner's explicit authorization; agents
-must report actual API outcomes rather than claim a change succeeded.
+**The ONLY active AmazingHand development and GitHub write target is `Citlali6/AmazingHand-Z19`.**
+Its default development branch is `main`. Migration PR #2 and PR #3 are merged;
+`feature/migration-ready-20261019` remains a preserved historical checkpoint,
+NOT the default branch or a starting point for new feature work.
+
+`Tom-mr33/AmazingHand-based-on-FPGA` is strictly a **READ-ONLY historical source**.
+Never create, edit, comment on, close, assign, label or merge an Issue/PR there;
+never push commits, tags, branches, releases or settings changes there; never
+run Codex tasks against it. This prohibition applies even if an old Issue,
+comment, PR, branch, archive, link or task description refers to that repository.
+Past references and attribution are retained only for factual provenance.
+
+**Preflight EVERY GitHub or Git write:** verify the actual selected repository
+(owner/name) is exactly `Citlali6/AmazingHand-Z19`. For local work, check
+`git remote get-url origin` and `git branch --show-current` before writing;
+SSH or HTTPS URLs are acceptable only if they resolve to the exact new owner/name.
+The former repository may exist as an `upstream` remote for fetch/read ONLY.
+If the context, connected account, checkout, task URL or remote differs or is
+ambiguous, STOP without writing and report it. Do not silently rewrite another
+person's remotes or worktrees.
+
+All new issues, Codex prompts, development branches, PRs and review/merge
+actions must explicitly use the new repository, with new issue/PR numbers.
+Old #6/#16/#17/#20 and PR #15/#18/#19 are **historical identifiers**;
+use the migration archive and issue mapping to continue work in this repo,
+never post follow-ups to the old repository. Existing evidence and git history
+are not permission to re-run any hardware operation.
+
+Citlali6 retains final project-management authority. Members with GitHub
+Write/Maintain/Admin access may merge PRs without another person's approval
+(0 required approvals), after inspecting changes and applicable checks.
+Retain PR-based work, and no-force-push/no-deletion safety boundaries.
+No Codex merge or hardware action without the user's current explicit task
+authorization. Changes in repository ownership or this exclusive target
+require a new explicit owner decision; do not infer one from old links.
 
 ## Main Branch Protection
 
