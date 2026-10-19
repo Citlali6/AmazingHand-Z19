@@ -53,3 +53,6 @@ desktop.ini
 *.orig.*
 output/
 tmp/
+
+# MJC1 local build/runtime output; validated firmware is in deliverables/mjc1_fpd/.
+fpga/mjc1_fpd/out/

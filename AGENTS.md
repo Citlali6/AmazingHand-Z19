@@ -2,7 +2,8 @@
 
 ## Project
 
-- Repository: Tom-mr33/AmazingHand-based-on-FPGA
+- Repository: xiaomi-he-only/AmazingHand-Z19
+- Upstream source: Tom-mr33/AmazingHand-based-on-FPGA (preserve attribution)
 - Project: AmazingHand based on FPGA
 - Main hardware platform: ALINX Z19
 - Device: Xilinx Zynq UltraScale+ MPSoC XCZU19EG

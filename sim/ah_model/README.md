@@ -1,4 +1,4 @@
-# sim/ah_model — 官方 MuJoCo 手部模型（引用不复制）
+# sim/ah_model — 官方 MuJoCo 手部模型入口
 
 上游模型位于 [`../../AmazingHand/Demo/AHSimulation/`](../../AmazingHand/Demo/AHSimulation/)：
 
@@ -10,11 +10,11 @@ AmazingHand/Demo/AHSimulation/
 ```
 
 **单一事实源原则**：模型与 STL 资产不复制进本目录，`sim/verify_grasp.py`
-直接引用上游相对路径（仓库内随 Git 分发）。理由：
+直接引用 `AmazingHand/` 相对路径。迁移分支已将固定上游版本完整保存为普通文件，无需子模块下载。理由：
 
 1. 上游许可 Apache-2.0（代码）/CC-BY 4.0（机械），引用保持归属清晰；
 2. 避免大体积 STL 双份入库；
-3. 上游模型更新时 `git pull` 即同步。
+3. 固定上游 commit `3e8241074df3436a3044ced4881e3bb2133aa725`，更新必须显式复核，不自动跟随上游变化。来源与逐文件 hash 见 `docs/migration/model-snapshot.json`。
 
 模型要点（已核对 `joints_properties.xml` / `robot.xml`）：
 

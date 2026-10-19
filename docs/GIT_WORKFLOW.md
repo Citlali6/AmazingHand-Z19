@@ -1,6 +1,6 @@
 # AmazingHand 团队 Git 工作流
 
-适用仓库：`Tom-mr33/AmazingHand-based-on-FPGA`。所有成员与 Codex 均遵守：
+适用仓库：`xiaomi-he-only/AmazingHand-Z19`。所有成员与 Codex 均遵守：
 **最新 main → 独立分支 → 开发与验证 → 提交 → 推送当前分支 → PR → 其他队员 Review / Approve → 人工合并。**
 
 ## 1. 首次获取项目
@@ -8,14 +8,14 @@
 先检查目标目录；只在目录不存在或为空时 clone，非空目录不得删除、覆盖或移动。
 
 ```powershell
-git clone https://github.com/Tom-mr33/AmazingHand-based-on-FPGA.git F:\Amazing_Hand
+git clone https://github.com/xiaomi-he-only/AmazingHand-Z19.git F:\Amazing_Hand
 Set-Location F:\Amazing_Hand
 git status
 git remote -v
 git branch -a
 ```
 
-origin 必须是 `https://github.com/Tom-mr33/AmazingHand-based-on-FPGA.git`。
+origin 必须是 `https://github.com/xiaomi-he-only/AmazingHand-Z19.git`。
 认证失败时完成自己的 GitHub 身份认证，不更换地址、不借用他人的 Token。
 
 本规范文件经过 PR 合并后，每位队员在各自 clone 中执行：
@@ -40,7 +40,7 @@ git config --get core.hooksPath
 首次 clone 如需代理，可使用仅本次命令生效的配置（端口须以自己的配置为准）：
 
 ```powershell
-git -c http.proxy=http://127.0.0.1:7897 clone https://github.com/Tom-mr33/AmazingHand-based-on-FPGA.git F:\Amazing_Hand
+git -c http.proxy=http://127.0.0.1:7897 clone https://github.com/xiaomi-he-only/AmazingHand-Z19.git F:\Amazing_Hand
 ```
 
 ## 2. 每次开始工作

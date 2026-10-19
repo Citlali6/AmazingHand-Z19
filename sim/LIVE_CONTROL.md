@@ -10,13 +10,13 @@
 从仓库根目录运行（Windows / Python 3.12）：
 
 ```powershell
-git submodule update --init --depth 1 AmazingHand
+python tools/check_migration.py
 uv venv --python 3.12 .venv
 uv pip install --python .venv/Scripts/python.exe -r sim/requirements-live.txt
 .venv/Scripts/python.exe host/app/main.py --mujoco
 ```
 
-`.gitmodules` 补齐已有模型子模块 URL；版本仍固定在原 gitlink `3e824107`，不改上游模型。
+迁移分支已将原 gitlink `3e824107` 的模型和资产直接保存到 `AmazingHand/`，无需子模块下载；逐文件 hash 见 `docs/migration/model-snapshot.json`，不改上游 XML。
 没有 uv 时可用 `py -3.12 -m venv .venv` 和 `.venv/Scripts/python.exe -m pip install -r sim/requirements-live.txt`。
 不需要安装整个板端 `requirements.txt`。
 

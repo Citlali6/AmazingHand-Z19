@@ -18,3 +18,7 @@
 *.onnx binary
 *.ncnn.bin binary
 *.ncnn.param binary
+
+# Preserve the pinned upstream model and native MMIO provenance byte for byte.
+AmazingHand/** -text
+fpga/mjc1_fpd/mmio.c -text
