@@ -1,7 +1,14 @@
-# xiaomi-he-only：迁移与启动
+# Citlali6：迁移与启动
 
-新仓库：[xiaomi-he-only/AmazingHand-Z19](https://github.com/xiaomi-he-only/AmazingHand-Z19)。
-它是原公开仓库的 Fork，拥有者是 xiaomi-he-only，保留上游关系及版权声明。原仓库和原有同名私库均保留。
+新仓库：[Citlali6/AmazingHand-Z19](https://github.com/Citlali6/AmazingHand-Z19)。
+它仍是原公开仓库的 Fork，当前拥有者为 Citlali6，保留上游关系及版权声明。旧 Tom 仓库仅作只读来源；不更改其它仓库或工作区。
+
+迁移收尾以 [Issue #1](https://github.com/Citlali6/AmazingHand-Z19/issues/1) 为准。
+默认 `feature/migration-ready-20261019` 是冻结的下载/审计检查点，五个已有提交先走迁移 Draft PR。
+他人 Review / Approve、获授权人类合并 main 之后，才由 Citlali6 审批默认分支切回 main 并核验。
+随后各成员在自己的干净工作区核对 origin、ff-only 同步 main，再创建工作分支。
+迁移合并前不从检查点启动新研发；例外须 Citlali6 明确同意。Codex 不合并或改管理设置。
+本页的迁移修正也须在迁移 PR 之后经独立 PR 审查，不改写检查点。
 
 再次逐项核查的结果、补存资料及尚未复制的 GitHub 功能/设置见 [完整性复核报告](audit_20261019/README.md)。
 
@@ -19,7 +26,8 @@
 
 ## 在这台电脑打开虚拟手
 
-本机迁移目录：`D:/Vitis/project_1/amazinghand_migration_20261019`。
+早期迁移记录中的 `D:/Vitis/project_1/amazinghand_migration_20261019` 是历史工作目录，不是所有电脑的前置条件。
+本轮独立审计副本为 `F:/AmazingHand-Z19`；其他成员使用自己的新目录，不覆盖非空目录。
 
 双击根目录 **`start_virtual_hand.bat`**。这是 PC 交互仿真，不需要板卡，初始保持不动。
 按 `O` 张开、`G` 抓取、`H` 保持、`R` 释放、`S` 停止、`E` 复位；关闭窗口退出。
@@ -30,7 +38,7 @@
 首次安装需要联网；不得把 PC 依赖环境复制到 Z19。不要安装根目录混合了 ARM/视觉组件的 `requirements.txt`。
 
 ```powershell
-git clone --branch feature/migration-ready-20261019 https://github.com/xiaomi-he-only/AmazingHand-Z19.git
+git clone --branch feature/migration-ready-20261019 https://github.com/Citlali6/AmazingHand-Z19.git
 cd AmazingHand-Z19
 setup_pc.bat
 start_virtual_hand.bat
@@ -54,7 +62,7 @@ MJC1-only 和相机-only 会替换整片 PL，不能同时加载。相机+控制
 
 ## 功能边界
 
-PC 八执行器模型加载、55 项现有测试和实际 GUI 动作检查通过，见 [迁移日志](../log/2026-10-19.md) 与 [界面](evidence/pc-control-panel.png)。本次没有重新验证上板闭环或相机并发，麦克风仍待到货联调；既有 SD 镜像、板端驱动、端口和时钟配置仍是使用条件。
+历史迁移记录中的 PC 八执行器模型加载、55 项现有测试和实际 GUI 动作检查通过，见 [迁移日志](../log/2026-10-19.md) 与 [界面](evidence/pc-control-panel.png)。本轮迁移收尾不重复该 GUI/功能验收，也没有重新验证上板闭环或相机并发，麦克风仍待到货联调；既有 SD 镜像、板端驱动、端口和时钟配置仍是使用条件。
 
 后续修改继续使用工作分支与人工审查流程，不直接开发/推送/合并 main。
 
@@ -64,4 +72,4 @@ GitHub 官方说明，公开仓库改为私有时，其已有公开 Fork 会保�
 
 本仓库的日常 clone、拉取、提交、构建和既有运行入口使用本仓库内容；模型和已交付固件已保存。讨论正文/评审和补丁也可在上述归档离线查阅，不依赖原 Issue/PR 网页。原始 URL 保留作出处，届时可能无法访问。
 
-原仓库私有后新增加或修改的内容不在这次快照中，也不会绕过访问权限自动同步。后续在 `xiaomi-he-only/AmazingHand-Z19` 上继续工作即可。
+原仓库私有后新增加或修改的内容不在这次快照中，也不会绕过访问权限自动同步。后续在 `Citlali6/AmazingHand-Z19` 上继续工作即可。

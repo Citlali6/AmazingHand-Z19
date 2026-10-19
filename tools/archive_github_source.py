@@ -208,7 +208,7 @@ class Archive:
                           lambda m: names.get(int(m.group(1)), m.group(0)), text)
             for kind in ('blob', 'tree', 'commit', 'commits', 'raw'):
                 text = text.replace(SOURCE_URL + '/' + kind + '/',
-                                    'https://github.com/xiaomi-he-only/AmazingHand-Z19/' + kind + '/')
+                                    'https://github.com/Citlali6/AmazingHand-Z19/' + kind + '/')
             def relative_link(match):
                 target = urllib.parse.urlsplit(match.group(2))
                 repo = Path(__file__).resolve().parents[1]

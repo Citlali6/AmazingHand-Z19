@@ -2,7 +2,7 @@
 
 ## Project
 
-- Repository: xiaomi-he-only/AmazingHand-Z19
+- Repository: Citlali6/AmazingHand-Z19
 - Upstream source: Tom-mr33/AmazingHand-based-on-FPGA (preserve attribution)
 - Project: AmazingHand based on FPGA
 - Main hardware platform: ALINX Z19
@@ -12,6 +12,21 @@ These team rules apply to every future Codex agent working in this repository.
 Read `docs/GIT_WORKFLOW.md`, the current development log, and relevant design
 files before working. Preserve existing work and do not invent missing hardware
 or software implementation from design documents.
+
+## Migration transition (Issue #1)
+
+The only active development repository is `Citlali6/AmazingHand-Z19`.
+The Tom repository is a read-only historical source; do not write to it.
+Until the migration Draft PR has actually received another team member's
+Approve and been merged by an authorized human, the default
+`feature/migration-ready-20261019` is a frozen download/audit checkpoint,
+not a substitute development baseline. Keep its existing commits unchanged.
+New engineering tasks wait for that migration; do not infer permission to
+branch from the checkpoint. Any non-main branch-base exception requires
+Citlali6's explicit consent under Issue #1.
+After the migration is merged, Citlali6 must separately approve changing the
+default branch to `main` and verify the result. Only then resume the normal
+main-based workflow below. Codex must not change settings or merge PRs.
 
 ## Main Branch Protection
 
