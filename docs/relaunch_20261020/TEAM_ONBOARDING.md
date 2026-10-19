@@ -14,18 +14,18 @@
 
 ## 2. 先读什么（约 30–60 分钟）
 
-- 本目录的 \`README.md\`、\`SYSTEM_ARCHITECTURE.md\`、\`TEN_DAY_EXECUTION.md\`、\`ROARM_OPEN_SOURCE_AUDIT.md\`、\`HARDWARE_BRINGUP.md\`；
-- 根目录 \`AGENTS.md\` 和 \`docs/GIT_WORKFLOW.md\`（**唯一新仓库写入目标** \`Citlali6/AmazingHand-Z19\`）；
-- \`docs/migration/README.md\`：迁移证据与不能重做的资产；
-- \`fpga/mjc1_fpd/README.md\`：旧实板 MJC1 反馈与已验证/未验证边界；
-- \`host/camera_linux/README.md\`：真实 IMX214 的独立 profile；对 UVC 不是通用驱动；
-- \`docs/voice/USB_MICROPHONE.md\`：语音包状态。
+- 本目录的 `README.md`、`SYSTEM_ARCHITECTURE.md`、`TEN_DAY_EXECUTION.md`、`ROARM_OPEN_SOURCE_AUDIT.md`、`HARDWARE_BRINGUP.md`；
+- 根目录 `AGENTS.md` 和 `docs/GIT_WORKFLOW.md`（**唯一新仓库写入目标** `Citlali6/AmazingHand-Z19`）；
+- `docs/migration/README.md`：迁移证据与不能重做的资产；
+- `fpga/mjc1_fpd/README.md`：旧实板 MJC1 反馈与已验证/未验证边界；
+- `host/camera_linux/README.md`：真实 IMX214 的独立 profile；对 UVC 不是通用驱动；
+- `docs/voice/USB_MICROPHONE.md`：语音包状态。
 
-旧 \`docs/project_framework.md\` 代表前队长时期的仿生手研究路线，并非当前 10 天目标；不删除/覆盖它，本文档是本轮新主线说明。
+旧 `docs/project_framework.md` 代表前队长时期的仿生手研究路线，并非当前 10 天目标；不删除/覆盖它，本文档是本轮新主线说明。
 
 ## 3. 本轮工作如何执行
 
-\`\`\`text
+```text
 Citlali6 定方向、现场授权、建 Issue / 确认当前 Codex 任务
                ↓
 读 AGENTS + 最新 main + 相关 Issue + 原实现 + 负面证据
@@ -41,7 +41,7 @@ Citlali6/ChatGPT 检查 PR diff、实验日志、风险、是否误宣称实板
 需现场硬件动作：Citlali6 本轮单独授权；队友陪同验证
                ↓
 通过后负责人或写权限队友按仓库规则正常合并（不直推 main）
-\`\`\`
+```
 
 “有权直接写入新仓库”只授权本轮项目规划文档与任务发布，**不是对之后所有 Codex 任务的永久上板/合并许可**。Codex 的每条任务在对应 Issue 明确范围后，由负责人单独启动。ChatGPT 不会自己持续轮询 PR；队友或负责人在下一轮会话提供 PR 链接后再审查。
 
@@ -56,14 +56,14 @@ Citlali6/ChatGPT 检查 PR diff、实验日志、风险、是否误宣称实板
 
 ## 5. 审核状态词与证据等级
 
-- \`PLAN\`: 仅设计，尚无代码；
-- \`CODED\`: 已提交实现，未宣称测试；
-- \`PC TESTED\`: 实际 PC 上运行的测试（注明环境、命令、结果）；
-- \`SIM TESTED\`: XSim/软件仿真（注明工具版本/报告）；
-- \`Z19 TESTED\`: Z19 上真实测试（具体 bit、内核、步骤和日志 hash）；
-- \`ROARM TESTED\`: RoArm 实体动作/关节反馈真实记录；
-- \`E2E TESTED\`: 同一 session 真图→PL授权→实体抓放并观察到结果；
-- \`NOT VERIFIED\` / \`BLOCKED\`: 未通过或缺资源，如实记录。
+- `PLAN`: 仅设计，尚无代码；
+- `CODED`: 已提交实现，未宣称测试；
+- `PC TESTED`: 实际 PC 上运行的测试（注明环境、命令、结果）；
+- `SIM TESTED`: XSim/软件仿真（注明工具版本/报告）；
+- `Z19 TESTED`: Z19 上真实测试（具体 bit、内核、步骤和日志 hash）；
+- `ROARM TESTED`: RoArm 实体动作/关节反馈真实记录；
+- `E2E TESTED`: 同一 session 真图→PL授权→实体抓放并观察到结果；
+- `NOT VERIFIED` / `BLOCKED`: 未通过或缺资源，如实记录。
 
 **绝不把一种等级的证据冒充更高等级。** 之前对苹果、保温瓶检测失败、组合 FPGA bit 不安全、麦克风尚无硬件验收是重要负结果，保留归档；不能换名字继续宣传通过。
 
@@ -82,14 +82,14 @@ Citlali6/ChatGPT 检查 PR diff、实验日志、风险、是否误宣称实板
 ## 7. GitHub 协同
 
 - 本轮新开发应优先看**新仓库新 Issue**；老 Issue #16/#17/#20 和 PR #15/#18/#19 是历史迁移资料，不是新仓库真实编号。
-- 采用 GitHub Issue → 最新 main 独立分支 → Draft PR → 审核 → 正式合并，\`main\` 有分支保护且不直推。
-- 两条任务改同一个配置/入口前，先让 Citlali6 指定集成人员，其他人在独立 helper 模块实现，避免 \`host/app/main.py\` 和 \`docs/log/\` 跨分支冲突。
+- 采用 GitHub Issue → 最新 main 独立分支 → Draft PR → 审核 → 正式合并，`main` 有分支保护且不直推。
+- 两条任务改同一个配置/入口前，先让 Citlali6 指定集成人员，其他人在独立 helper 模块实现，避免 `host/app/main.py` 和 `docs/log/` 跨分支冲突。
 - 同一块板卡以负责人批准的**现场时段**为准。无人主动确认时默认没有板端写入/载入授权。
 - 项目做的是“可信研发过程 + 可落地工程”，不为凑提交数反复创建 Issues、不滥做测试、不浪费最后三天在无关文档排版上。
 
 ## 8. 队友确认模板
 
-\`\`\`text
+```text
 我已阅读 docs/relaunch_20261020/ 的项目定位与技术边界。
 GitHub 用户名：
 我愿承担 A 感知 / B 机械臂集成（或具体子模块）：
@@ -98,4 +98,4 @@ D1-D10 的每天实际可用时间：
 手里已有硬件/依赖：
 预计会阻断交付的一个最大风险：
 承诺不未经 Citlali6 本轮授权重配硬件/刷机/合并他人任务。
-\`\`\`
+```
