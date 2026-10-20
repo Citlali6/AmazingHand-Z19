@@ -1,5 +1,9 @@
 # FPGA辅助视觉抓取系统 — Codex 开发规范
 
+## 2026-10-20 mechanical-arm pre-arrival Codex task order (owner-approved task publishing)
+
+Before working on `#14`, `#7`, `#8` or `#18`, read **`docs/development/PRE_ARRIVAL_EXECUTION.md`** and **`docs/development/PC_MVP_CONTRACT.md`**. The current camera board `SIM1319-HD720P` has displayed live video in the owner's Windows Camera app, but OpenCV capture has NOT yet been verified; RoArm-M2-S is ordered but NOT received. PC implementation is **independent of existing mixed root `requirements.txt`** and legacy `host/app/control/backend_serial.py` (the latter is the old SCS 1 Mbps eight-servo backend, NOT the RoArm ESP32 UART JSON protocol). Use a dedicated `pc/` package and respect exclusive ownership of its shared `pyproject.toml` / `contracts.py` (#14), `robot/` (#7), `vision/` (#8), and `app/` (#18). All tests are mock/synthetic until real hardware tests are explicitly authorized by Citlali6 on site. No serial device opening, motor commands, FPGA image changes or automated real-device control in offline development.
+
 ## 2026-10-20 demo-first scope — mandatory before every Codex task
 
 **Owner's latest decision: THE DEMO MUST NOT WAIT FOR FPGA.** The top priority is a stable real tabletop vision pick-and-place result on **PC + lab USB camera + Waveshare RoArm-M2-S via its stock ESP32 / Python SDK**. Build and test R0 official SDK → R1 physical pick/place → R2 live-image detection, calibration, changing target position, GUI and logs. **Z19 PS/PL work is separate P1 and must never gate R0/R1/R2.**
