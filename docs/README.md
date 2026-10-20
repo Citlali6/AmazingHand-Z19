@@ -4,6 +4,12 @@
 
 > **最新决定：PC USB 视觉 + RoArm 原厂 SDK 真实抓放优先，Z19/FPGA 并行 P1，不阻断演示；** 请第一时间阅读 [Demo-first 决策](relaunch_20261020/DEMO_FIRST_POLICY.md)。旧“PL 授权才能运动”主线已取消，不能据旧文档/任务依赖倒排。
 
+## 机械臂到货前立即执行（2026-10-20）
+
+- [Codex 前期准备总任务令](development/PRE_ARRIVAL_EXECUTION.md)
+- [PC 相机、RoArm 假设备、UI 的共同接口契约](development/PC_MVP_CONTRACT.md)
+- 先跑 [#14 SDK 环境](https://github.com/Citlali6/VisionGrasp-Z19/issues/14)、[#7 FakeRobot](https://github.com/Citlali6/VisionGrasp-Z19/issues/7)、[#8 SIM1319-HD720P 视觉](https://github.com/Citlali6/VisionGrasp-Z19/issues/8)；再整合 [#18 Mock UI](https://github.com/Citlali6/VisionGrasp-Z19/issues/18)。#9 FPGA 不阻断这四项。
+
 ## 当前可执行的项目文档
 - [仓库首页 / 最新项目状态](../README.md)
 - [Demo-first 用户确认的最高优先级](relaunch_20261020/DEMO_FIRST_POLICY.md)
