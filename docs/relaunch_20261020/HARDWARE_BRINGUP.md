@@ -1,123 +1,55 @@
-# 硬件上手、接线、回退、验收指导
+# 设备上手与安全：优先 Windows PC → RoArm + USB 摄像头
 
-> 本文件含真实设备操作风险。任何上板加载 bit、掉电/上电、驱动安装、固件烧录、串口发送**运动**指令，只能在 **Citlali6 当次现场批准并由现场人员实施/陪同** 后进行。Codex 可离线准备程序，但不自动执行。所有命令先确认正在操作的是本仓库对应设备/真实版次。
+> 新用户决策（2026-10-20）：**Z19/FPGA 不再是 R0/R1/R2 实体抓放的先决条件**。下面按最快实际可演示的 PC 链路安排，保留 Z19/PL 作为独立辅助工作包。仍必须由 Citlali6 现场固定台面、检查电源、批准上电与运动，Codex 只离线产出 dry-run 软件。
 
-## 0. 硬件、配件和布局
+## 1. 到货之前立刻可以做的事
 
-- 已知：Z19 XCZU19EG 与对应扩展板；RoArm-M2-S 标准整机已下单（含夹爪、ESP32、独立 12V5A 适配器、USB 通讯线和桌面夹具，具体物品开箱核实）；实验室 USB 摄像头在树莓派使用过，可借；PC Windows + Vivado/Vitis 2020.1；板端旧 PetaLinux 2020.2/Linux 5.4/Python 3.7/OpenCV 3.4，旧平台不得擅自重装。
-- 尚需现场准备：稳固桌面、USB A 数据线（机械臂线与摄像头线不能共用一根）、颜色对比明显的轻质方块 2~3 个、实物标定纸和直尺、固定俯视摄像头支架、可迅速可触及的独立 12V 断电方式，必要时安全眼镜。
-- 摄像头优先**独立固定在桌面上方**，不要装在移动机械臂末端：后者需要动态手眼标定，不适合十日 MVP。
-- 禁止让 Z19 的 USB 给机械臂舵机供电；RoArm 使用独立电源并确认适配器匹配厂商标准。电源周围保持可断开并留出手指安全距离。
+- PC 创建隔离 Python 环境，固定微雪 Python SDK 和 pyserial/requests 版本，并记录操作系统、Python 版本、仓库 SHA 与许可证（交给 #14）。
+- 实验室 USB 摄像头接 **PC**，检查 VideoCapture，显示真实实时图像、曝光/分辨率/帧率，准备彩色小方块、桌面标定纸、相机独立固定支架（#8）。
+- 编写并本机测试 fake RoArm 回路、串口故障、工作空间约束、颜色阈值、标定误差、状态显示与日志；Mock 画面不能自称真实抓放。
+- 准备低重量、不尖锐、不易碎的测试物品与固定投放区，不要第一次抓取就上重物/大幅度长臂姿态。
 
-### 建议物理布局
+## 2. RoArm-M2-S 到货现场上手（需 Citlali6 当次批准）
+
+1. 开箱核查机械臂整机、夹爪、ESP32、底座和夹具、USB 数据线、**原厂独立 12V 5A 适配器**；确认螺丝紧固、额定电源与实际插头极性，不使用 Z19/PC USB 给舵机供电。
+2. 机械臂夹牢桌面，空出所有关节/末端可能扫过的空间，旁边安排可由人及时切断 12V 的电源方式，并评估掉电失力下垂风险。微雪公开固件启动流程包含回初始姿态及任务调用，**不要假设上电绝对静止**。
+3. 现场人员按微雪官方快速上手先用 Web 控制界面做空载、低速、小幅运动；接着在 PC 选择真实 COM 口、115200 串口，用官方 SDK **先查询**，再获明确许可后小幅操作关节和夹爪；根据观察冻结开合方向、实物安全角度/坐标。
+4. 成功后用受限动作与真实反馈实现 R0，再用固定安全坐标与轻质物体完成 R1；每个阶段成功的判定由真实运动/夹取观察，不只看串口返回。禁止当天刷 ESP32、修改电机 ID、中位校准或启用极限速度。
+5. 所有动作程序默认 `--dry-run`，进入真实运动模式需人类现场批准并有独立安全断能。多进程 UI/Web/SDK 不得并发占用同一控制串口。
+
+**官方开源入口**：固件 [roarm_m2](https://github.com/waveshareteam/roarm_m2)；Python SDK [waveshare_roarm_sdk](https://github.com/waveshareteam/waveshare_roarm_sdk)，具体固定版本、API、许可见 [核查](ROARM_OPEN_SOURCE_AUDIT.md)。可使用 `joints_angle_get()` 和 `feedback_get()` 查询，运动 API 按官方实际接口、现场实测方向与限位调用，不能盲发样例极限参数。
+
+## 3. USB 摄像头和桌面标定
+
+- 在 PC 通过 OpenCV 真图检测高对比方块 HSV/轮廓，不声称 YOLO；显示设备名、实际图像尺寸/帧率和最新帧指标，断流时停止启动新任务。
+- 固定摄像头俯视工作平面，测量棋盘/标记点，计算相机像素→桌面毫米、桌面→机械臂基座的映射；确认轻质物体已知高度、末端抓取方向和不碰撞。
+- 将同一物体在**三个位置**依次放置，重新拍实时图/确定抓取位置，确保实际机械目标不同，随后才能记录 R2。
+- 无目标、陈旧帧、目标不在可达区、没有标定或没有操作者确认时不得下发实体动作。
+
+## 4. 任务软件建议结构
 
 ```text
-固定相机（俯视，不随机械臂动）
-            ↓
-  [目标区 A/B]     [投放区]
-            轻量彩色方块
-    <---- 桌面工作区 ---->
-          [机械臂基座，桌夹稳固]
-               |
-     USB-A/TypeC 串口----Z19 PS USB Host
-     独立 12V5A 电源----RoArm
-     USB UVC 摄像头------Z19 PS USB Host 或 PC（明确标注）
-     Z19 PS AXI ↔ Z19 PL FSM（一个经过验收的 bit）
+pc_camera_uvc.py (VideoCapture)   roarm_adapter.py (SDK封装/Mock)
+              \                  /
+                pc_demo_app.py
+          (状态机、限位、标定、UI、日志)
+                       |
+                  USB serial
+                       |
+                 RoArm ESP32
 ```
 
-不得先假设空间/高度可达，必须测安全工作域、机械臂碰撞路径、桌面余量。
+以上仅为**建议模块名称**，并不表示现有仓库已包含这些文件。Codex 可在独立分支选其他命名，接口和 PC 可复现实测优先，不要引入 ROS2、云端模型或新 FPGA bit 才能跑起来。
 
-## 1. D1 只读 Z19 设备检查（无改动）
+## 5. FPGA/Z19 上板指导（独立 P1，不得影响主线）
 
-现场使用板卡原有受信 SSH 登录，不在公开 Issue/日志保存密码、私钥、真实隐私图像。
+- 已验证 MJC1 R2 bin 的 SHA256 为 `8e8b6566a3cdbe0e276852956b1d4c60b4fd74c8e4828e149509527ee0a4a8d4`，实际 PS↔PL HIL 测到至少 17 个 ACK；它不直接驱动 RoArm，且加载会替换 camera-only PL profile。
+- 原 IMX214 相机-only 已有自己的 bit/内核模块、完整 DMA 停用/卸载要求；其与 MJC1-only 不能叠加。组合 MIPI+HIL 诊断 bit 尚有 DRC/外部时序阻断，**禁止上板**。
+- Z19 独立运行实测的 PS/PL 功能、计时或状态观察需要保存实际固件/寄存器/profile/日志；但 PC 视觉→RoArm 演示不能等它。要与机械臂实际联动时必须再设计运行模式隔离和安全回退，不得在未经审核的情况下把 FPGA 插入已经工作的控制链。
+- 用户若额外允许只读检查可运行 `uname -r`、`lsusb`、`ls /dev/video* /dev/ttyUSB*`、`dmesg | tail`；但目前**不要求为 R2 先修复 Z19 UVC/CP210x**，更不要求重编 Linux 或安装 Vivado 2020.2。
 
-```sh
-uname -a
-uname -m
-python3 --version
-lsusb
-ls /dev/video* /dev/ttyUSB* /dev/ttyACM* 2>/dev/null || true
-lsmod | grep -E 'uvcvideo|cp210x|usbserial|videodev' || true
-test -r /proc/config.gz && zcat /proc/config.gz | grep -E 'CONFIG_USB_VIDEO_CLASS|CONFIG_USB_SERIAL_CP210X' || true
-test -r /lib/modules/$(uname -r)/build/.config && \
-  grep -E 'CONFIG_USB_VIDEO_CLASS|CONFIG_USB_SERIAL_CP210X' /lib/modules/$(uname -r)/build/.config || true
-dmesg | tail -50
-```
+## 6. 安全与证据
 
-`/dev/video0` 没出现≠ 摄像头故障；也可能是内核没有 UVC、线材只充电或设备没枚举。先用 `lsusb` / dmesg 区分。设备节点出现也≠能采到正确图像。若 `CONFIG_USB_VIDEO_CLASS` 缺失，保留本机镜像，不强行换内核；走 PC 采集保底。
+**三个不同的事件**：①指令发送；②ESP32/关节反馈；③实际物体被抓住且放好。每次至少根据真实观察给出第三类证据。软件 `STOP` 只可能阻止后续阶段或发送厂商停止指令，**不保证已经在执行的原厂运动物理立即停止**；直接关扭矩也可能导致机械臂掉落或下垂。有人靠近时禁止自动动作。
 
-## 2. USB 摄像头采集验收
-
-1. 室友确认型号、曾用的软件路径；建议先在 PC 上以 OpenCV `VideoCapture` 打开摄像头、保存一张带实际日期/场景的样例和输出尺寸/FPS。
-2. 用户批准后在 Z19 USB 插入，记录 `lsusb` VID/PID、`/dev/videoX`、V4L2 支持的格式/帧率；`v4l2-ctl` 若未安装不是阻断，不要为此全局升级。
-3. 优先 640×480 / MJPEG 或 YUYV，真实测试解码、颜色顺序、丢帧、读取耗时与连续运行；原项目的 `/dev/ah_camera0` IMX214 DMA 用户态接口**不能原样接 UVC**。
-4. 如果摄像头由 PC 接入，PC 的控制权限仅为“传送视觉结果”；将相机 session、frame_seq、PC 收到时刻、目标坐标、标定号带入消息，Z19 以接收时刻+序号做活性检查，要求操作员确认，禁止直接从 PC 控制 RoArm。
-
-## 3. RoArm 开箱和 PC 最小台架验收
-
-**仅现场人员，先不上电：** 拍摄配件清单、检查机械臂/夹爪、12V5A 标识、电源线、USB线和底座，固定桌夹。关节远离人体、障碍和桌沿，断电下确认关节区域无夹手危险（不要擅自硬扳或解除传动）。
-
-**上电**：对照微雪官方《Getting Started Quickly》，检查是否可使用内置网页 UI；不要升级固件或自动中位校准。先做仅一小角度低速动作（例如 5° 量级但以现场机械余量为准），再观察夹爪张合的实际角度方向，保存一份真实串口反馈与固件信息。第一天只在空载/无障碍测试，不进行高速伸展或无人自动执行。
-
-**Python/SDK**（独立 PC 虚拟环境，基于 [官方中文 API](https://github.com/waveshareteam/waveshare_roarm_sdk/blob/d9893632aa7f5a9cb283136ab024faf3143ea7db/doc/roarm_m2_zh.md)）：
-```python
-# 仅用于查询角度；在确认串口、固件和现场许可后再执行
-from roarm_sdk.roarm import roarm
-arm = roarm(roarm_type="roarm_m2", port="COMx", baudrate=115200)
-print(arm.joints_angle_get())
-```
-PC 的 COMx 需换成设备管理器真实端口；不能把 `COM3` 或 `/dev/ttyUSB0` 当作固定值。查询前关掉 Web 串口占用，避免双客户端竞争。
-
-## 4. Z19 机械臂串口
-
-在 PC 官方控制通过后，先只读 `lsusb` / `dmesg` / `/dev/ttyUSB*`，确认 CP2102 和 baudrate115200。串口 Linux 权限要根据实情处理，**不 chmod 666 任意设备**。Z19 现有 Python3.7 没有可信 pip 配置，不直接安装整份 requirements、ROS2、PyTorch 或重装系统。优先独立最小通信 adapter，有限长度 JSON，超时、串口独占、异常后释放文件描述符，单独发送预定义、边界受限的命令。反馈必须校验字段、范围、序号/时间关联，调试器不能偷偷另开控制串口。
-
-## 5. FPGA 新应用测试与旧 profile 隔离
-
-旧已验 `MJC1 R2` 的地址 `0xA0000000`，新固件若更改必须通过版本和 profile ID 明确区分；不能混用 `AHIL` 的 `0xA1000000` 地址。旧 MJC1 R2 不具备真正的舵机输出；仅通过 MMIO 授权接口适配 PS 发送串口命令。新 RTL 的仿真、cdc、DRC、timing/构建和设备兼容报告必须和实际加载的二进制 hash 一致。
-
-**实板加载须另获 Citlali6 明确同意**，先停止所有依赖旧 PL 的用户进程。涉及 IMX214 原相机 profile 时，须按 `host/camera_linux/README.md` 先关闭 DMA、确认设备没有映射、驱动卸载，才可以遵循经过审查的加载步骤。不能用未经签收的 `fpga/camera_hil/` 实验 bit。
-
-记录：
-```text
-板卡内核/PS profile：
-本轮批准人及批准时间：
-原 PL profile/恢复路径：
-新 bit/bin/XSA SHA256 与 build log：
-MMIO 地址和寄存器/协议版本：
-进程PID、日志与唯一运动命令来源：
-加载、读ID、授权/拒绝、STOP、断链真实结果：
-恢复原状态证据：
-```
-
-## 6. 安全测试顺序
-
-分四层，每层未过不得升到下一层。
-
-- L0 mock：离线无物理动作，合法请求授权、跳序号拒绝、过期拒绝、STOP 锁存、复位需人为同意；测试通过不等于实际机械安全。
-- L1 原厂：PC 控制小幅动作+反馈，手动断 RoArm 12V 的风险、重上电安全位置和自检实测；禁止带负载。
-- L2 PS/PL：新固件经过 Vivado2020.1 适配/批准后上板，只允许低速小行程与已冻结坐标；注入网络断开、串口断开、迟到消息，观察**不能产生新命令**。
-- L3 自动：载轻方块抓取，安全工位和人工监督，不允许有人手进入工作区；记录 STOP 时延时区分“禁新发”“原厂减速/停机”“完全断电”，不编造瞬时停止。
-
-如果发现异常发热、夹爪卡住、底座松动、动作超限、控制失联，现场人员优先断开机械臂独立 12V，保留日志和照片；不得由 Codex 擅自连发“恢复动作”。
-
-## 7. 真实验收数据记录
-
-建议新文件 `docs/log/2026-10-2X.md` 和 `data/metrics/roarm_20261020/`（需任务分支审批），每条 trial 记录：
-```text
-trial_id, git_head, fpga_bin_sha, roarm_firmware,
-camera_source, camera_session, image_seq, calibration_id,
-requested_target_table_xy_mm, arm_target_xyz_mm,
-stage_start_monotonic, grant_ack, physical_arm_feedback,
-pickup_observed, placement_observed, status_reason,
-operator, video_log_id
-```
-不要上传包含人脸的真实视频、串口密码或 SSH 密钥；若采集不可匿名化，保留现场并在仓库仅记录匿名元数据/hash。成功率分母覆盖全部启动尝试，不选择性删除失败样本。
-
-## 8. 物理停止的特别边界
-
-本项目采用厂家 ESP32+伺服内环，Z19 PL 只能通过 PS 软件桥授权/拒绝**新**动作。STOP 锁存本身不保证已经向 ESP32 发出的长动作立即停止；厂家 `torque_set(0)` 也可能令机械臂失去支撑而下坠。因此：
-- 将“停止新动作”“停止伺服运动”“切断供电”视为三个独立结果，各自测试；
-- 机械臂底下不摆放人手、易碎物或危险物；
-- 断电优先用厂商匹配的可安全操作的插座/开关，现场评估惯性与失力情况；
-- 缺乏正式急停硬件和安全认证时，仅限实验室受监管的小质量演示，不面向真人辅助应用。
+建议日志：Git HEAD、厂商 SDK/固件版本、串口端口/设备、视觉来源、帧序号/标定文件、抓取物体实际位置、PC 指令与反馈时间、试验成功/失败、现场操作人员、视频片段。任何失败同样保存。汇报时注明 `PC TESTED`、`ROARM TESTED`、`R2 E2E TESTED` 与 `Z19/PL TESTED` 各自证据，不冒充。
