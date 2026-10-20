@@ -1,12 +1,12 @@
 # FPGA辅助视觉抓取系统
 
-**唯一开发仓库：[Citlali6/AmazingHand-Z19](https://github.com/Citlali6/AmazingHand-Z19)** · 项目负责人 Citlali6 · 默认分支 `main`
+**唯一开发仓库：[Citlali6/VisionGrasp-Z19](https://github.com/Citlali6/VisionGrasp-Z19)** · 项目负责人 Citlali6 · 默认分支 `main`
 
-> **名称说明：**「FPGA辅助视觉抓取系统」是当前对外展示及报名建议的作品名；`AmazingHand-Z19` 仅作为沿用的 GitHub 仓库地址与历史代码标识，**不是当前作品名称**。历史 `AmazingHand/` 目录为旧灵巧手项目资源，仍保留用于追溯。
+> **名称说明：** 当前作品正式展示名为「FPGA辅助视觉抓取系统」，新 GitHub 仓库名为 `VisionGrasp-Z19`；`AmazingHand-Z19` 是原仓库名，`AmazingHand/` 是旧灵巧手的历史代码目录。历史源代码、作者署名与实验记录仍予保留。
 
 > **2026-10-20 用户最终决定：演示效果、工程完整度和稳定性是最高优先级。** 先用微雪 **RoArm-M2-S + 原厂 ESP32/Python SDK + 实验室 USB 摄像头 + PC** 做出真实、可重复的抓取分拣作品；**Z19/FPGA 是并行的真实技术加分项，绝不作为机械臂运动、视觉抓取或演示 UI 的前置条件**。项目如需满足比赛关于 FPGA 的正式要求，最终须单独提供有真实证据的 PL 功能，不能仅放置板卡或让 PS 跑 Linux 就称 FPGA 已用。
 
-**第一站：[Demo-first 决策与任务依赖](docs/relaunch_20261020/DEMO_FIRST_POLICY.md)** · [文档导航](docs/README.md) · [团队总控 #6](https://github.com/Citlali6/AmazingHand-Z19/issues/6)
+**第一站：[Demo-first 决策与任务依赖](docs/relaunch_20261020/DEMO_FIRST_POLICY.md)** · [文档导航](docs/README.md) · [团队总控 #6](https://github.com/Citlali6/VisionGrasp-Z19/issues/6)
 
 ## 我们做什么？
 
@@ -50,7 +50,7 @@ ESP32 已有舵机内环及逆运动学。FPGA 可以处理硬件计时/状态�
 - [微雪 Python SDK](https://github.com/waveshareteam/waveshare_roarm_sdk) @ `d9893632aa7f5a9cb283136ab024faf3143ea7db`
 - [微雪 ROS2 工程](https://github.com/waveshareteam/roarm_ws_em0) @ `f06b2ed6c1ddc5b7690975fdbba84aab626a2229`，非第一版依赖。
 
-[详细 API、版本和许可证审计](docs/relaunch_20261020/ROARM_OPEN_SOURCE_AUDIT.md) · [Issue #14：Codex 固定 SDK、依赖和 PC 一键演示](https://github.com/Citlali6/AmazingHand-Z19/issues/14)。官方程序能否在实际到货设备与当前 PC/Z19 环境顺利运行，**尚待实测**。
+[详细 API、版本和许可证审计](docs/relaunch_20261020/ROARM_OPEN_SOURCE_AUDIT.md) · [Issue #14：Codex 固定 SDK、依赖和 PC 一键演示](https://github.com/Citlali6/VisionGrasp-Z19/issues/14)。官方程序能否在实际到货设备与当前 PC/Z19 环境顺利运行，**尚待实测**。
 
 ## 现有成果为什么还保留？
 
@@ -66,7 +66,7 @@ ESP32 已有舵机内环及逆运动学。FPGA 可以处理硬件计时/状态�
 
 [Demo-first 决策](docs/relaunch_20261020/DEMO_FIRST_POLICY.md) → [十天计划](docs/relaunch_20261020/TEN_DAY_EXECUTION.md) → [PC/ESP32/FPGA 架构](docs/relaunch_20261020/SYSTEM_ARCHITECTURE.md) → [RoArm 官方源码](docs/relaunch_20261020/ROARM_OPEN_SOURCE_AUDIT.md) → [操作与安全](docs/relaunch_20261020/HARDWARE_BRINGUP.md) → [团队上手](docs/relaunch_20261020/TEAM_ONBOARDING.md) → [历史隔离规范](docs/relaunch_20261020/DOC_STATUS_AND_RULES.md)。
 
-任务：[总控 #6](https://github.com/Citlali6/AmazingHand-Z19/issues/6)、[#14 厂商 SDK](https://github.com/Citlali6/AmazingHand-Z19/issues/14)、[#7 RoArm 真机](https://github.com/Citlali6/AmazingHand-Z19/issues/7)、[#8 PC 视觉](https://github.com/Citlali6/AmazingHand-Z19/issues/8)、[#10 真实视觉抓放](https://github.com/Citlali6/AmazingHand-Z19/issues/10)、[#11 验收](https://github.com/Citlali6/AmazingHand-Z19/issues/11)。[#9 Z19/FPGA](https://github.com/Citlali6/AmazingHand-Z19/issues/9) 并行 P1，[#12 语音](https://github.com/Citlali6/AmazingHand-Z19/issues/12) 在主线稳定前 HOLD。
+任务：[总控 #6](https://github.com/Citlali6/VisionGrasp-Z19/issues/6)、[#14 厂商 SDK](https://github.com/Citlali6/VisionGrasp-Z19/issues/14)、[#7 RoArm 真机](https://github.com/Citlali6/VisionGrasp-Z19/issues/7)、[#8 PC 视觉](https://github.com/Citlali6/VisionGrasp-Z19/issues/8)、[#10 真实视觉抓放](https://github.com/Citlali6/VisionGrasp-Z19/issues/10)、[#11 验收](https://github.com/Citlali6/VisionGrasp-Z19/issues/11)。[#9 Z19/FPGA](https://github.com/Citlali6/VisionGrasp-Z19/issues/9) 并行 P1，[#12 语音](https://github.com/Citlali6/VisionGrasp-Z19/issues/12) 在主线稳定前 HOLD。
 
 **安全**：实物底座与供电由 Citlali6 现场核验并当次批准；Codex 默认 dry-run，不得擅自下发实际运动、刷 ESP32 或更改 Z19 bit。机械臂断电可能下垂，软件 STOP 不等于物理急停；保留完整失败日志与真实录像，严格区分 PC、仿真、Z19、实物和端到端证据。
 
