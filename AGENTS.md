@@ -8,13 +8,13 @@ Always read `docs/relaunch_20261020/DEMO_FIRST_POLICY.md`, `SYSTEM_ARCHITECTURE.
 
 **Important truth boundary:** PC-only demo is NOT FPGA-controlled; the team should still aim to verify a real PL feature for FPGA-category contest requirements without risking the complete demo. The old MJC1 R2 is virtual-hand HIL only; the old camera+HIL diagnostic bit is NOT DEPLOYABLE. The official firmware/SDK is open-source but NOT yet fully vendored in this repository. Never pretend that link verification is complete local source backup or that factory firmware has been built/tested. Reuse vendor capabilities; PC scripts must default to dry-run, with real physical actions requiring Citlali6's current on-site permission, fixed base, workspace safety checks and accessible independent 12V disconnect.
 
-Retain the existing exclusive-repo rule (`Citlali6/AmazingHand-Z19` only), branch → PR → authorized merge, preservation of historical results, and no direct push to main. The old wearable 8×SCS servo/FMC/force-control project remains a historical asset, not a live milestone.
+Retain the existing exclusive-repo rule (`Citlali6/VisionGrasp-Z19` only), branch → PR → authorized merge, preservation of historical results, and no direct push to main. The old wearable 8×SCS servo/FMC/force-control project remains a historical asset, not a live milestone.
 
 ## Project
 
-- Repository: Citlali6/AmazingHand-Z19
+- Repository: Citlali6/VisionGrasp-Z19
 - Upstream source: Tom-mr33/AmazingHand-based-on-FPGA (preserve attribution)
-- Current project display name: FPGA辅助视觉抓取系统 (the GitHub slug AmazingHand-Z19 is a legacy repository identifier, not the current project title)
+- Current project display name: FPGA辅助视觉抓取系统; current repository slug: VisionGrasp-Z19; former repository slug: AmazingHand-Z19 (historical only).
 - Main hardware platform: ALINX Z19
 - Device: Xilinx Zynq UltraScale+ MPSoC XCZU19EG
 
@@ -25,7 +25,7 @@ or software implementation from design documents.
 
 ## Exclusive repository policy (owner instruction, 2026-10-20)
 
-**The ONLY active project development and GitHub write target is `Citlali6/AmazingHand-Z19`.**
+**The ONLY active project development and GitHub write target is `Citlali6/VisionGrasp-Z19`.**
 Its default development branch is `main`. Migration PR #2 and PR #3 are merged;
 `feature/migration-ready-20261019` remains a preserved historical checkpoint,
 NOT the default branch or a starting point for new feature work.
@@ -38,7 +38,7 @@ comment, PR, branch, archive, link or task description refers to that repository
 Past references and attribution are retained only for factual provenance.
 
 **Preflight EVERY GitHub or Git write:** verify the actual selected repository
-(owner/name) is exactly `Citlali6/AmazingHand-Z19`. For local work, check
+(owner/name) is exactly `Citlali6/VisionGrasp-Z19`. For local work, check
 `git remote get-url origin` and `git branch --show-current` before writing;
 SSH or HTTPS URLs are acceptable only if they resolve to the exact new owner/name.
 The former repository may exist as an `upstream` remote for fetch/read ONLY.

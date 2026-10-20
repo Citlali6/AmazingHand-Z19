@@ -2,12 +2,12 @@
 
 ## 当前工程路线与历史隔离（2026-10-20 生效）
 
-**现行项目是 RoArm-M2-S 桌面机械臂 + Z19 PS/PL + 实验室 USB 摄像头**，十天实物展示优先。正式设计与开发依据：[项目总入口](relaunch_20261020/README.md)、[权威文档与旧路线隔离](relaunch_20261020/DOC_STATUS_AND_RULES.md)、[总控 Issue #6](https://github.com/Citlali6/AmazingHand-Z19/issues/6)。旧可穿戴八舵机、FMC 1.8V/5V 适配、旧队长分工和旧 10-14 时间表为历史，不再依据它们发新的 Codex/采购任务。旧实验结论与负结果仍保留可追溯。
+**现行项目是 RoArm-M2-S 桌面机械臂 + Z19 PS/PL + 实验室 USB 摄像头**，十天实物展示优先。正式设计与开发依据：[项目总入口](relaunch_20261020/README.md)、[权威文档与旧路线隔离](relaunch_20261020/DOC_STATUS_AND_RULES.md)、[总控 Issue #6](https://github.com/Citlali6/VisionGrasp-Z19/issues/6)。旧可穿戴八舵机、FMC 1.8V/5V 适配、旧队长分工和旧 10-14 时间表为历史，不再依据它们发新的 Codex/采购任务。旧实验结论与负结果仍保留可追溯。
 
-开发优先顺序：#7 RoArm 串口、#8 UVC/标定、#9 PL 授权，之后 #10 真机联调、#11 安全验收；#12 语音 HOLD。两个队员先在总控认领，互不覆盖工作区。文档提到历史 Issue/PR 的旧编号均需映射到新仓库真实任务。**每条 Codex 执行、上板写入、机械臂运动及 PR 合并须具备该轮明确授权**。无硬件证据只能报告代码/仿真通过，不能声称实际 RoArm 或系统已验收。
+开发优先顺序：#14 原厂 SDK、#7 PC→RoArm 真机、#8 PC USB 视觉，然后 #10 真实视觉抓放、#11 安全验收；#9 Z19/PL 是并行 P1，不作为 #10 前置；#12 语音 HOLD。两个队员先在总控认领，互不覆盖工作区。文档提到历史 Issue/PR 的旧编号均需映射到新仓库真实任务。**每条 Codex 执行、上板写入、机械臂运动及 PR 合并须具备该轮明确授权**。无硬件证据只能报告代码/仿真通过，不能声称实际 RoArm 或系统已验收。
 
 
-适用仓库：`Citlali6/AmazingHand-Z19`。所有成员与 Codex 均遵守：
+适用仓库：`Citlali6/VisionGrasp-Z19`。所有成员与 Codex 均遵守：
 **本期 2026-10-20 用户最终决定：**先完成 PC+RoArm 官方 SDK 和 USB 摄像头的真实抓放演示，FPGA 并行研发不得成为 #10 的前置条件；现行优先级见 [DEMO_FIRST_POLICY.md](relaunch_20261020/DEMO_FIRST_POLICY.md)。历史技术计划不能覆盖该决定。
 **最新 main → 独立分支 → 开发与验证 → 提交 → 推送当前分支 → PR → 有写入权限的成员自行决定合并。**
 
@@ -15,7 +15,7 @@
 
 ## 唯一仓库与防误投规则（2026-10-20 起长期执行）
 
-**唯一允许写入的开发仓库：`Citlali6/AmazingHand-Z19`；默认开发分支：`main`。**
+**唯一允许写入的开发仓库：`Citlali6/VisionGrasp-Z19`；默认开发分支：`main`。**
 迁移 PR #2、#3 已于 2026-10-20 正式合并，默认分支已恢复为 main。
 `feature/migration-ready-20261019` 只作为历史迁移检查点保留，不再作为新任务起点。
 
@@ -25,7 +25,7 @@
 仍必须先映射到此新仓库的实际 Issue/PR，再继续；不得对旧链接执行写操作。
 
 **每次发 GitHub 任务、执行 Codex 或 Git 写操作前必须校验目标。**
-工具调用的 repository 必须显式为 `Citlali6/AmazingHand-Z19`；本地先核对：
+工具调用的 repository 必须显式为 `Citlali6/VisionGrasp-Z19`；本地先核对：
 
 ```sh
 git remote get-url origin
@@ -50,14 +50,14 @@ Codex 只有收到 Citlali6 当轮明确授权才能提交、推送、创建或�
 先检查目标目录；只在目录不存在或为空时 clone，非空目录不得删除、覆盖或移动。
 
 ```powershell
-git clone https://github.com/Citlali6/AmazingHand-Z19.git F:\AmazingHand-Z19
-Set-Location F:\AmazingHand-Z19
+git clone https://github.com/Citlali6/VisionGrasp-Z19.git F:\VisionGrasp-Z19
+Set-Location F:\VisionGrasp-Z19
 git status
 git remote -v
 git branch -a
 ```
 
-origin 必须是 `https://github.com/Citlali6/AmazingHand-Z19.git`。
+origin 必须是 `https://github.com/Citlali6/VisionGrasp-Z19.git`。
 认证失败时完成自己的 GitHub 身份认证，不更换地址、不借用他人的 Token。
 
 本规范文件经过 PR 合并后，每位队员在各自 clone 中执行：
@@ -82,7 +82,7 @@ git config --get core.hooksPath
 首次 clone 如需代理，可使用仅本次命令生效的配置（端口须以自己的配置为准）：
 
 ```powershell
-git -c http.proxy=http://127.0.0.1:7897 clone https://github.com/Citlali6/AmazingHand-Z19.git F:\AmazingHand-Z19
+git -c http.proxy=http://127.0.0.1:7897 clone https://github.com/Citlali6/VisionGrasp-Z19.git F:\VisionGrasp-Z19
 ```
 
 ## 2. 每次开始工作
