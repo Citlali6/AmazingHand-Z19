@@ -1,4 +1,4 @@
-# AmazingHand Codex Development Rules
+# FPGA辅助视觉抓取系统 — Codex 开发规范
 
 ## 2026-10-20 demo-first scope — mandatory before every Codex task
 
@@ -14,7 +14,7 @@ Retain the existing exclusive-repo rule (`Citlali6/AmazingHand-Z19` only), branc
 
 - Repository: Citlali6/AmazingHand-Z19
 - Upstream source: Tom-mr33/AmazingHand-based-on-FPGA (preserve attribution)
-- Project: AmazingHand based on FPGA
+- Current project display name: FPGA辅助视觉抓取系统 (the GitHub slug AmazingHand-Z19 is a legacy repository identifier, not the current project title)
 - Main hardware platform: ALINX Z19
 - Device: Xilinx Zynq UltraScale+ MPSoC XCZU19EG
 
@@ -25,7 +25,7 @@ or software implementation from design documents.
 
 ## Exclusive repository policy (owner instruction, 2026-10-20)
 
-**The ONLY active AmazingHand development and GitHub write target is `Citlali6/AmazingHand-Z19`.**
+**The ONLY active project development and GitHub write target is `Citlali6/AmazingHand-Z19`.**
 Its default development branch is `main`. Migration PR #2 and PR #3 are merged;
 `feature/migration-ready-20261019` remains a preserved historical checkpoint,
 NOT the default branch or a starting point for new feature work.
