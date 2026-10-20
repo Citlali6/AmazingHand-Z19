@@ -1,6 +1,8 @@
-# AmazingHand-Z19 — 视觉引导桌面机械臂抓取演示
+# FPGA辅助视觉抓取系统
 
 **唯一开发仓库：[Citlali6/AmazingHand-Z19](https://github.com/Citlali6/AmazingHand-Z19)** · 项目负责人 Citlali6 · 默认分支 `main`
+
+> **名称说明：**「FPGA辅助视觉抓取系统」是当前对外展示及报名建议的作品名；`AmazingHand-Z19` 仅作为沿用的 GitHub 仓库地址与历史代码标识，**不是当前作品名称**。历史 `AmazingHand/` 目录为旧灵巧手项目资源，仍保留用于追溯。
 
 > **2026-10-20 用户最终决定：演示效果、工程完整度和稳定性是最高优先级。** 先用微雪 **RoArm-M2-S + 原厂 ESP32/Python SDK + 实验室 USB 摄像头 + PC** 做出真实、可重复的抓取分拣作品；**Z19/FPGA 是并行的真实技术加分项，绝不作为机械臂运动、视觉抓取或演示 UI 的前置条件**。项目如需满足比赛关于 FPGA 的正式要求，最终须单独提供有真实证据的 PL 功能，不能仅放置板卡或让 PS 跑 Linux 就称 FPGA 已用。
 

@@ -1,4 +1,4 @@
-# 队友/Codex 必读：先做成演示，再适度使用 FPGA
+# FPGA辅助视觉抓取系统｜队友与 Codex 必读
 
 > **最新决策 2026-10-20**：项目主线是 PC + USB 相机 + RoArm-M2-S 的实际视觉抓放。先完成 R0/R1/R2，**不需要等 Z19 PL 状态机开发完成才能进行真实机械臂或视觉联调**。详情 [Demo-first 决策](DEMO_FIRST_POLICY.md)。
 
