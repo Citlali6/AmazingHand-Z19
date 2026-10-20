@@ -36,15 +36,15 @@ USB摄像头 → PC OpenCV目标框/位置/标定 → PC 安全任务状态机/�
 
 旧 IMX214 camera-only 在 Linux 上确实有 1080p 和约 25fps PC 接收的验收，但与 MJC1 R2 控制 profile 不可直接叠加，未签收的 MIPI+HIL 组合固件 **NOT DEPLOYABLE**。实验室 USB 摄像头是 PC 主线的快速独立视觉输入，不表示原 MIPI 工作作废；当期不优先在 Z19 修新 UVC 驱动。
 
-**微雪源码状态**：官方 ESP32 固件、Python SDK、ROS2 工程**公开可查**；当前本仓库仅有版本/API/许可证审计，**尚未完整备份源码**。由 [#14](https://github.com/Citlali6/AmazingHand-Z19/issues/14) 将最小 PC 运行依赖锁版本并形成可重复环境，源码快照的许可证与第三方归属需审计。参见 [厂商开源资料](ROARM_OPEN_SOURCE_AUDIT.md)。
+**微雪源码状态**：官方 ESP32 固件、Python SDK、ROS2 工程**公开可查**；当前本仓库仅有版本/API/许可证审计，**尚未完整备份源码**。由 [#14](https://github.com/Citlali6/VisionGrasp-Z19/issues/14) 将最小 PC 运行依赖锁版本并形成可重复环境，源码快照的许可证与第三方归属需审计。参见 [厂商开源资料](ROARM_OPEN_SOURCE_AUDIT.md)。
 
 ## 4. 执行顺序与已有任务
 
-1. [#14 官方代码/SDK版本/PC环境](https://github.com/Citlali6/AmazingHand-Z19/issues/14) 与 [#7 实体机械臂 SDK](https://github.com/Citlali6/AmazingHand-Z19/issues/7) → R0/R1；
-2. [#8 PC USB 相机、色块检测与标定](https://github.com/Citlali6/AmazingHand-Z19/issues/8) 与上面并行；
-3. [#10 真视觉变位抓放、UI](https://github.com/Citlali6/AmazingHand-Z19/issues/10) → R2，**不依赖 #9**；
-4. [#11 现场安全、失败统计、视频与复现](https://github.com/Citlali6/AmazingHand-Z19/issues/11)；
-5. [#9 Z19 FPGA 合理复用](https://github.com/Citlali6/AmazingHand-Z19/issues/9) 单独 P1 并行；[#12 离线语音](https://github.com/Citlali6/AmazingHand-Z19/issues/12) HOLD。
+1. [#14 官方代码/SDK版本/PC环境](https://github.com/Citlali6/VisionGrasp-Z19/issues/14) 与 [#7 实体机械臂 SDK](https://github.com/Citlali6/VisionGrasp-Z19/issues/7) → R0/R1；
+2. [#8 PC USB 相机、色块检测与标定](https://github.com/Citlali6/VisionGrasp-Z19/issues/8) 与上面并行；
+3. [#10 真视觉变位抓放、UI](https://github.com/Citlali6/VisionGrasp-Z19/issues/10) → R2，**不依赖 #9**；
+4. [#11 现场安全、失败统计、视频与复现](https://github.com/Citlali6/VisionGrasp-Z19/issues/11)；
+5. [#9 Z19 FPGA 合理复用](https://github.com/Citlali6/VisionGrasp-Z19/issues/9) 单独 P1 并行；[#12 离线语音](https://github.com/Citlali6/VisionGrasp-Z19/issues/12) HOLD。
 
 ## 5. 必读技术文档
 
@@ -53,7 +53,7 @@ USB摄像头 → PC OpenCV目标框/位置/标定 → PC 安全任务状态机/�
 - [PC 先行的真实设备上手与安全](HARDWARE_BRINGUP.md)
 - [两位队友与 Codex 工作说明](TEAM_ONBOARDING.md)
 - [旧方案隔离与证据级别](DOC_STATUS_AND_RULES.md)
-- [仓库 Git 约束](../GIT_WORKFLOW.md) · [Codex 规则](../../AGENTS.md) · [总控 Issue #6](https://github.com/Citlali6/AmazingHand-Z19/issues/6)
+- [仓库 Git 约束](../GIT_WORKFLOW.md) · [Codex 规则](../../AGENTS.md) · [总控 Issue #6](https://github.com/Citlali6/VisionGrasp-Z19/issues/6)
 
 ## 6. 安全与当前状态
 
