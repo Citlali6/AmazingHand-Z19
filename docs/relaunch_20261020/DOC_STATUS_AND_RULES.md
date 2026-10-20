@@ -2,14 +2,14 @@
 
 > 生效：2026-10-20。此处规定阅读和研发优先级，不重写、删除历史记录或改变既有实验的证据等级。
 
-> **统一命名规则：** 当前展示/报名建议作品名为 **「FPGA辅助视觉抓取系统」**。GitHub 仓库地址仍是 `Citlali6/AmazingHand-Z19`，只是技术历史沿用的固定地址，**不代表当前还以 AmazingHand 灵巧手为研发目标**。任何公开展示页面的新标题、报告首页、队友介绍和后续任务文案应使用当前作品名；**不得批量替换** GitHub URL、原作者署名、历史实验名称、源码 import/资源路径和 Git 历史。若决定修改 GitHub 仓库 slug，必须由负责人另行确认并安排 clone/remote/文档/CI 链接迁移。
+> **统一命名规则：** 当前作品名为 **「FPGA辅助视觉抓取系统」**，GitHub 仓库正式更名为 **`Citlali6/VisionGrasp-Z19`**（仓库 ID 不变）。旧 `AmazingHand-Z19` 是历史仓库名，`AmazingHand/` 是旧版灵巧手源码目录。新人和 Codex 一律使用新 URL 与 remote；旧项目实验、作者、文件路径和原始哈希不得批量重命名。操作指引见 [仓库更名迁移清单](REPOSITORY_RENAME.md)。
 
 > **2026-10-20 后续用户确认：Demo-first 决策拥有优先级。** 必须先执行 [DEMO_FIRST_POLICY.md](DEMO_FIRST_POLICY.md) 中 R0→R1→R2 实体/视觉演示，#9 FPGA 独立 P1 并行，**不再是 #10 真实视觉抓放的前置**。旧计划中“必须 PL 授权才能串口运动”已废止；保留安全限位、现场授权和失效保护。
 
 ## 1. 版本优先级与唯一真相源
 
 1. **现场实际证据**：Z19/机械臂/摄像头真实运行日志、真实固件 SHA 和操作回执；只对测试过的设备/配置有效。
-2. **新仓库最新可用代码和 PR**：以 `Citlali6/AmazingHand-Z19` 当前 `main`、未合并 PR 的准确分支/HEAD 为准；PR 中代码不能直接称 `main` 已实现。
+2. **新仓库最新可用代码和 PR**：以 `Citlali6/VisionGrasp-Z19` 当前 `main`、未合并 PR 的准确分支/HEAD 为准；PR 中代码不能直接称 `main` 已实现。
 3. **本轮已授权目标与执行任务**：`docs/relaunch_20261020/DEMO_FIRST_POLICY.md`、总控 Issue #6 与 #7–#12/#14；计划不是实测。
 4. **现行仓库操作规则**：`AGENTS.md` 与 `docs/GIT_WORKFLOW.md`；不因历史文档的旧审批要求、旧仓库 URL 改变。
 5. **历史技术方案和存档**：旧 `docs/design/`、`docs/fpga/` 内标记为“历史方案”的文件、旧 `docs/log/`、`docs/migration/`、旧模型、旧 PR；仅用于参考/溯源，不得抢占本期任务优先级。
@@ -34,7 +34,7 @@
 
 ## 3. Codex 和队友每个任务必须遵守
 
-- 唯一目标 `Citlali6/AmazingHand-Z19`：写入前确认 origin、当前分支、工作区；旧 Tom 仓库永久只读；所有新 Issue/PR 是**新仓库编号**。
+- 唯一目标 `Citlali6/VisionGrasp-Z19`：写入前确认 origin、当前分支、工作区；旧 Tom 仓库永久只读；所有新 Issue/PR 是**新仓库编号**。
 - 以最新 main 起独立功能分支，最小 diff，原始实验失败和固件 hash 均保留；经实际测试→PR→人类审核/有权限成员按任务授权决定合并。不得直接 push main、强推或删除别人的分支。
 - 先读相关源实现，不准以设计稿断言程序已存在；旧路径不能直接当新 RoArm 已运行代码。任何 SDK 复用标记 GPL/AGPL 边界。
 - 任务证据标准：`PLAN` / `CODED` / `PC TESTED` / `SIM TESTED` / `Z19 TESTED` / `ROARM TESTED` / `E2E TESTED` / `BLOCKED`，每次记录 commit、命令、exit code、设备 profile、报告及失败条件。
