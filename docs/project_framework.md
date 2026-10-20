@@ -20,7 +20,7 @@
 
 ## 现成技术与依赖
 
-机械臂标准整机已下单，未到货验证；实验室已有曾用于树莓派的 USB 摄像头，PC 测试优先，Z19 UVC 未确认不影响 PC。官方 [ESP32 固件](https://github.com/waveshareteam/roarm_m2) 与 [Python SDK](https://github.com/waveshareteam/waveshare_roarm_sdk) 核心源码公开，但本仓库当前**只有 SHA/API/许可证审计，没有全量源码快照**，由 [#14](https://github.com/Citlali6/AmazingHand-Z19/issues/14) 固定版本与 PC 环境。旧 IMX214/MJC1 R2 可借鉴，原未签收组合 bit 不能部署。
+机械臂标准整机已下单，未到货验证；实验室已有曾用于树莓派的 USB 摄像头，PC 测试优先，Z19 UVC 未确认不影响 PC。官方 [ESP32 固件](https://github.com/waveshareteam/roarm_m2) 与 [Python SDK](https://github.com/waveshareteam/waveshare_roarm_sdk) 核心源码公开，但本仓库当前**只有 SHA/API/许可证审计，没有全量源码快照**，由 [#14](https://github.com/Citlali6/VisionGrasp-Z19/issues/14) 固定版本与 PC 环境。旧 IMX214/MJC1 R2 可借鉴，原未签收组合 bit 不能部署。
 
 ## 职责与操作规范
 
@@ -28,4 +28,4 @@ Citlali6 担任负责人及实体硬件唯一现场许可人，队员 A 负责 P
 
 任何实际机械运动必须先固定底座、清空工作区、确认可安全独立断开 12V，人工批准后由现场人员进行。不可凭发送串口指令就宣称抓取成功，软件 STOP 不等于物理制停。禁止擅自升级系统、刷 ESP32 或覆盖已验证 FPGA 镜像。
 
-[唯一现行技术决策](relaunch_20261020/DEMO_FIRST_POLICY.md) · [十天排期](relaunch_20261020/TEN_DAY_EXECUTION.md) · [总控 #6](https://github.com/Citlali6/AmazingHand-Z19/issues/6) · [Git 规范](GIT_WORKFLOW.md)
+[唯一现行技术决策](relaunch_20261020/DEMO_FIRST_POLICY.md) · [十天排期](relaunch_20261020/TEN_DAY_EXECUTION.md) · [总控 #6](https://github.com/Citlali6/VisionGrasp-Z19/issues/6) · [Git 规范](GIT_WORKFLOW.md)
