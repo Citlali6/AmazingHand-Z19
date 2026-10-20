@@ -1,65 +1,60 @@
-# AmazingHand-Z19 | 2026-10-20 十天实物交付总入口
+# AmazingHand-Z19｜十天工程交付入口（2026-10-20）
 
-> 状态：**新方向设计与任务规划，非已完成实物联调**。项目负责人：Citlali6。唯一开发仓库：https://github.com/Citlali6/AmazingHand-Z19 。原仓库不再开展任何读写任务；迁移历史请读本仓库 `docs/migration/`。本文件不代表启动任何实板操作的许可。
+> **当前唯一优先级：真实、完整、稳定、好展示的视觉抓放效果**。用户已明确：FPGA 不是实体抓放的前置条件，任何 PL/驱动/构建难题不允许拖垮已经能正常运行的 PC→RoArm 系统。先读 [Demo-first 决策与任务图](DEMO_FIRST_POLICY.md)，本页所述均为任务目标，**非实物已验收声明**。
 
-## 0. 给新队友一分钟读完的说明
+## 1. 一句话项目简介
 
-我们参加 2026 全国大学生嵌入式芯片与系统设计竞赛 FPGA 赛道 3.3 初级组（最终参赛资格/提交要求按当届官方指南重新确认）。初始目标是可穿戴仿生灵巧手；团队人员和实际机械资源变化后，**将十天内能交付的完整、可重复现场运行的工程置于最高优先级**。
+采用已下单的微雪 **RoArm-M2-S**（原厂 ESP32+舵机+夹爪）和实验室已有 USB 摄像头，通过 **PC Python/OpenCV + 微雪官方 SDK** 完成实时目标检测、桌面标定、真实抓取、搬运投放、反馈显示和互动演示。ALINX Z19 的 ARM PS/FPGA PL 作为**独立并行的实测硬件扩展**尽量利用现有成果，避免十天内从零重构整套控制固件。
 
-新项目暂定名：**基于 Zynq UltraScale+ MPSoC 的多模态视觉引导抓取与 FPGA 实时控制系统**，展示形式为固定桌面“看见目标—选择物体—机械臂抓取—搬运—投放—反馈—安全停止”的工作站。教育演示、固定工位轻量分拣是当前可验证用途；原辅助残障人士的愿景留作长期背景，不将未经验证的样机宣传为医疗或助残产品。
+教育、机器人嵌入式、固定桌面轻量分拣是主要用途；不宣称医疗级、工业安全级、任意目标识别或自制舵机力控。
 
-**当前采购/物资**：已有 ALINX Z19 XCZU19EG；已下单 Waveshare RoArm-M2-S 标准整机（尚未上电验收）；实验室有一只曾接树莓派的 USB 摄像头（用户称可使用，尚未提供在 Z19 采集证据）；麦克风到货情况待确认。不得把“买到”写成“调通”。
+## 2. 分级验收，任何一级都不能冒充下一级
 
-## 1. 演示交付定义（MVP）
-
-评委可以在固定桌面放置 1~2 种轻量目标（首选宽容差、可重复定位的彩色方块/小盒），在屏幕上选择或通过确认过的语音命令指定目标。摄像头取得**真实新鲜帧**，程序在已标定工作区定位，呈现坐标和目标确认；Z19 PS 按工序请求 PL 授权，PL 用可追溯状态机验证动作序号、时限、阶段和 STOP 锁存；PS 根据 PL 的授权决定是否经 USB 串口发送 RoArm 原厂命令；机械臂依次抬升、到达、下降、合爪、抬升、移动至已标定投放区、松爪、返回安全姿态；设备反馈与动作阶段显示在界面并保存日志。
-
-**不可用假成果替代**：①在 PC 上跑的检测不是“Z19 板端模型”；②机械臂预录死动作不能宣称视觉定位；③只读取 PL 寄存器/绘制 PL 页面，不能称 FPGA 主导执行；④机械臂 ESP32 原厂位置控制不等于自己实现了 FPGA 舵机电流/力矩闭环；⑤原 MuJoCo AmazingHand 八执行器模型不是 RoArm 实物数字孪生。
-
-### 必选验收
-
-- M1 实物受控：PC 和（最终）Z19 的控制路径可发送**受限**动作，取得串口真实反馈；能抓放轻质物体，视频与原始日志一致。
-- M2 感知引导：移动物体到至少 3 个工作区位置，重新检测/标定后抓取；记录成功和失败，不通过固定坐标替代。
-- M3 FPGA 实质性参与：串口发送由有效 PL 授权控制；跳阶段、陈旧请求、超时、重复、断链产生可复测拒绝或锁存 STOP；可提供 HDL/仿真/实板日志与只读寄存器记录。
-- M4 故障安全：可靠的**人工物理断电**手段；软件 STOP/关扭矩的实际效果单独测试、记录停止时间与限制；没有测到的保证不写入报告。
-- M5 复现交付：从干净 clone 的源代码、依赖版本、设备连接图、环境复原步骤、实际 bit/bin hash、真实视频和测试记录。未得到硬件数据时明确 NOT VERIFIED。
-
-### 可选，不允许阻塞必选
-
-离线语音、板端 NCNN 多类别识别、RoArm 的 ROS2/MoveIt、MuJoCo 新 RoArm 模型、额外物体、机械精密力控、完全板端视觉。主线禁止为引入 Qwen/ROS2/新内核/DPU 消耗首轮十天。
-
-## 2. 技术文件阅读顺序
-
-1. [本 README](README.md)：项目定位、边界、交付验收；
-2. [工程总体架构、控制和接口](SYSTEM_ARCHITECTURE.md)：PS/PL 真正角色、消息契约、安全；
-3. [RoArm 官方开源审计与移植](ROARM_OPEN_SOURCE_AUDIT.md)：核实源码、具体 SDK、许可证、首日上手；
-4. [10 天排期与责任分配](TEN_DAY_EXECUTION.md)：D1-D10 依赖、止损线、队友如何并行；
-5. [接线 / 测试 / 验收记录](HARDWARE_BRINGUP.md)：授权闸门、分层 bring-up、DoD；
-6. [团队任务与协作入口](TEAM_ONBOARDING.md)：Codex、队友、人类审核与 Issue。
-7. [现行文档与历史旧方案隔离规范](DOC_STATUS_AND_RULES.md)：遇到旧八舵机、FMC、旧截止日期等冲突时以此为准。
-
-## 3. 当前已知真实基础（证据级别）
-
-| 模块 | 现有证据 | 本轮不能声称 |
+| 阶段 | 展示内容 | 核心证据 |
 |---|---|---|
-| Z19 Linux 5.4 / A53 / SSH | 已在真实板卡 SD 启动、网口、SSH 文件传输；见 `docs/fpga/linux_sd_bringup.md` | 新摄像头驱动可用 |
-| IMX214 | 原相机 PL 独占配置下 1080p 视频约 25fps PC 接收，见 `host/camera_linux/README.md` | 可和原 HIL 同一 bit 并发 |
-| MuJoCo & AHIL | 原 `#12/#13` 的历史提交已在 main，PS/PL ↔ MuJoCo HIL 有实板证据 | 控制过真实 RoArm |
-| MJC1 R2 | `fpga/mjc1_fpd/README.md` 与 `deliverables/mjc1_fpd/README.md`：至少 17 个真实周期及 ACK，地址 `0xA0000000`，仅 R2 有效 | 具有物理舵机输出、能和相机 PL profile 同时加载 |
-| NCNN | 分支 `feature/citlali6-z19-live-vision-20261018` 有真实 car 检测；苹果预测 orange、瓶子漏检 | 苹果、瓶子或新的目标已验收 |
-| 组合相机/HIL | 分支 `feature/citlali6-camera-hil-unified-20261018` 已有 Vivado2020.1 构建、内部 CDC/timing 结果 | DRC / 外部时序 signoff / 实板并发合格；当前 **NOT DEPLOYABLE** |
-| 语音 | `docs/voice/USB_MICROPHONE.md` 已归档 Vosk 中文离线模型与入口 | 麦克风实测、语音驱动 RoArm 已实现 |
-| RoArm-S | 官方有开源固件/SDK，S 标准整机已购买 | 已经上电、连通 Z19、完成抓取 |
+| R0 原厂真机 | PC 官方 SDK 查询真实反馈、低速关节与夹爪动作 | 实机日志/视频、设备与固件版本 |
+| R1 固定点抓放 | PC 受限动作，实际轻质方块完整夹取/移动/投放 | 每阶段反馈、视频、失败记录 |
+| **R2 视觉智能抓放（必须优先）** | USB 相机新帧、识别/标定、目标改变位置后仍能抓放、完整 UI | 三位置真机测试、实际任务记录 |
+| R3 Z19/PL（并行争取） | 复用原 PS↔PL 资产或最小独立逻辑，**真实 PL** 计时/反馈/状态展示 | 匹配的 bit/hash、寄存器/日志、真实板端测试 |
+| R4 可选 | 中文语音、NCNN、ROS2、多物体 | 不阻塞 R2 |
 
-## 4. 非目标和旧资产保护
+**不能称 R2 是“已经接入 FPGA 的机械臂”，也不能仅因为开发板上电或 PS 跑 Linux 就宣称完成 R3。** 竞赛 FPGA 类别的实际提交条件由队长依官方通知核对，不能伪造参赛符合性。
 
-- 不改原 `fpga/camera_hw/` 归档、原 SD 根系统、已验证 camera bit 与 MJC1 R2 固件；新组合 bit 不允许加载。
-- 保留旧手的 MuJoCo、RTL、协议、PR 证据作为参考与可回退资产，针对 RoArm 新开独立适配模块，不重命名冒充旧工程验证。
-- 新摄像头走 USB UVC，优先 Z19 PS；如果内核 `uvcvideo` 不可用，**最多排障半天**，转 PC 取图并传递带 session/seq/timestamp 的目标数据到 Z19 PS，PL 控制职责保持，报告须注明“PC+Z19 协同”而非“全部单板端侧”。
-- 不强制依赖 LLM、云网络或机械臂厂家 ROS2。
+## 3. 技术路径与现有成果
 
-## 5. 项目管理原则
+```text
+USB摄像头 → PC OpenCV目标框/位置/标定 → PC 安全任务状态机/界面
+                                                ↓
+                                      微雪 Python SDK/USB
+                                                ↓
+                                      RoArm ESP32→实物夹爪
+                                              ↕真实反馈
 
-所有新增 Issue、分支和 PR **只能在本仓库**；遵循 `AGENTS.md`、`docs/GIT_WORKFLOW.md`。新的项目方向是本次用户授权的十天落地调整，不追溯篡改历史论文、旧设计或测试文件。下一轮若改方向，须记录变更理由、证据和用户确认。历史未合并分支按独立审计后选择性 cherry-pick / 移植，禁止批量盲合并。
+   Z19 PS/PL 是并行路径：已有 MJC1 R2 实板 HIL 验证；
+   先独立展示可复用的真实 FPGA 参与，不串入以上运行前提。
+```
 
-本文件属于规划成果；待现场验证后每日日志记录事实，禁止用计划代替完成。
+旧 IMX214 camera-only 在 Linux 上确实有 1080p 和约 25fps PC 接收的验收，但与 MJC1 R2 控制 profile 不可直接叠加，未签收的 MIPI+HIL 组合固件 **NOT DEPLOYABLE**。实验室 USB 摄像头是 PC 主线的快速独立视觉输入，不表示原 MIPI 工作作废；当期不优先在 Z19 修新 UVC 驱动。
+
+**微雪源码状态**：官方 ESP32 固件、Python SDK、ROS2 工程**公开可查**；当前本仓库仅有版本/API/许可证审计，**尚未完整备份源码**。由 [#14](https://github.com/Citlali6/AmazingHand-Z19/issues/14) 将最小 PC 运行依赖锁版本并形成可重复环境，源码快照的许可证与第三方归属需审计。参见 [厂商开源资料](ROARM_OPEN_SOURCE_AUDIT.md)。
+
+## 4. 执行顺序与已有任务
+
+1. [#14 官方代码/SDK版本/PC环境](https://github.com/Citlali6/AmazingHand-Z19/issues/14) 与 [#7 实体机械臂 SDK](https://github.com/Citlali6/AmazingHand-Z19/issues/7) → R0/R1；
+2. [#8 PC USB 相机、色块检测与标定](https://github.com/Citlali6/AmazingHand-Z19/issues/8) 与上面并行；
+3. [#10 真视觉变位抓放、UI](https://github.com/Citlali6/AmazingHand-Z19/issues/10) → R2，**不依赖 #9**；
+4. [#11 现场安全、失败统计、视频与复现](https://github.com/Citlali6/AmazingHand-Z19/issues/11)；
+5. [#9 Z19 FPGA 合理复用](https://github.com/Citlali6/AmazingHand-Z19/issues/9) 单独 P1 并行；[#12 离线语音](https://github.com/Citlali6/AmazingHand-Z19/issues/12) HOLD。
+
+## 5. 必读技术文档
+
+- [当前最权威决策](DEMO_FIRST_POLICY.md) · [架构](SYSTEM_ARCHITECTURE.md) · [十天排期](TEN_DAY_EXECUTION.md)
+- [微雪固件与 SDK 真实源码核查](ROARM_OPEN_SOURCE_AUDIT.md)
+- [PC 先行的真实设备上手与安全](HARDWARE_BRINGUP.md)
+- [两位队友与 Codex 工作说明](TEAM_ONBOARDING.md)
+- [旧方案隔离与证据级别](DOC_STATUS_AND_RULES.md)
+- [仓库 Git 约束](../GIT_WORKFLOW.md) · [Codex 规则](../../AGENTS.md) · [总控 Issue #6](https://github.com/Citlali6/AmazingHand-Z19/issues/6)
+
+## 6. 安全与当前状态
+
+RoArm-M2-S 已下单，尚未到货验收；实验室 USB 相机曾在树莓派上使用，未必已在 PC/Z19 实测。默认离线 Mock/dry-run。只有 Citlali6 在现场确认独立 12V、电源/底座/可用范围且批准后，才允许真实低速运动。ESP32 固件启动可能包含回初始位姿动作，软件 STOP/关扭矩不能替代人工独立电源断能。所有失败及未验证状态须明确保留。
