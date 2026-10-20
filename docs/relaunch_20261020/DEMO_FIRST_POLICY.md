@@ -47,7 +47,7 @@
 - [Python SDK `waveshareteam/waveshare_roarm_sdk`](https://github.com/waveshareteam/waveshare_roarm_sdk) @ `d9893632aa7f5a9cb283136ab024faf3143ea7db`：源码、中文 API、示例、`setup.py`，仓库 LICENSE 为 AGPL-3.0；固定版本，优先**以外部独立依赖**复现 PC 开发，不擅自用项目 Apache 许可证覆盖其源码。
 - [ROS2 `waveshareteam/roarm_ws_em0`](https://github.com/waveshareteam/roarm_ws_em0) @ `f06b2ed6c1ddc5b7690975fdbba84aab626a2229`：非十天前置，先固定版本/链接，不全量引入庞大 ROS2。
 
-执行 [Issue #14](https://github.com/Citlali6/AmazingHand-Z19/issues/14) 补齐版本锁、合法第三方依赖策略、PC 一键 mock/连接入口和实物到货验证；不要仅把网页链接写成“源代码完整入库”。
+执行 [Issue #14](https://github.com/Citlali6/VisionGrasp-Z19/issues/14) 补齐版本锁、合法第三方依赖策略、PC 一键 mock/连接入口和实物到货验证；不要仅把网页链接写成“源代码完整入库”。
 
 ## 6. Issues 依赖图与决策边界
 
