@@ -6,6 +6,7 @@
 
 ## 机械臂到货前立即执行（2026-10-20）
 
+- [**Windows Anaconda 统一环境安装与摄像头自检**](development/ANACONDA_SETUP_WINDOWS.md)
 - [Codex 前期准备总任务令](development/PRE_ARRIVAL_EXECUTION.md)
 - [PC 相机、RoArm 假设备、UI 的共同接口契约](development/PC_MVP_CONTRACT.md)
 - 先跑 [#14 SDK 环境](https://github.com/Citlali6/VisionGrasp-Z19/issues/14)、[#7 FakeRobot](https://github.com/Citlali6/VisionGrasp-Z19/issues/7)、[#8 SIM1319-HD720P 视觉](https://github.com/Citlali6/VisionGrasp-Z19/issues/8)；再整合 [#18 Mock UI](https://github.com/Citlali6/VisionGrasp-Z19/issues/18)。#9 FPGA 不阻断这四项。
