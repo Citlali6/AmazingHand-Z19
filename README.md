@@ -6,6 +6,8 @@
 
 > **2026-10-20 用户最终决定：演示效果、工程完整度和稳定性是最高优先级。** 先用微雪 **RoArm-M2-S + 原厂 ESP32/Python SDK + 实验室 USB 摄像头 + PC** 做出真实、可重复的抓取分拣作品；**Z19/FPGA 是并行的真实技术加分项，绝不作为机械臂运动、视觉抓取或演示 UI 的前置条件**。项目如需满足比赛关于 FPGA 的正式要求，最终须单独提供有真实证据的 PL 功能，不能仅放置板卡或让 PS 跑 Linux 就称 FPGA 已用。
 
+**开发已启动（机械臂到货前）：[Codex 第一波任务令](docs/development/PRE_ARRIVAL_EXECUTION.md) · [PC 共享接口契约](docs/development/PC_MVP_CONTRACT.md) · [#14 SDK](https://github.com/Citlali6/VisionGrasp-Z19/issues/14) · [#7 RoArm Fake](https://github.com/Citlali6/VisionGrasp-Z19/issues/7) · [#8 USB 视觉](https://github.com/Citlali6/VisionGrasp-Z19/issues/8) · [#18 Mock 集成](https://github.com/Citlali6/VisionGrasp-Z19/issues/18)**
+
 **第一站：[Demo-first 决策与任务依赖](docs/relaunch_20261020/DEMO_FIRST_POLICY.md)** · [更名后 Git/Codex 迁移步骤](docs/relaunch_20261020/REPOSITORY_RENAME.md) · [文档导航](docs/README.md) · [团队总控 #6](https://github.com/Citlali6/VisionGrasp-Z19/issues/6)
 
 ## 我们做什么？
