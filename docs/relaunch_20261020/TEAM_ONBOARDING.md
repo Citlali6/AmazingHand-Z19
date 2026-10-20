@@ -1,101 +1,54 @@
-# 新成员 / Codex 上手及任务审核手册（2026-10-20）
+# 队友/Codex 必读：先做成演示，再适度使用 FPGA
 
-> 这是交给两位新队友阅读的入口。请读完后在项目总 Issue 回复“已读 / 能负责的岗位 / 今日可投入时间 / 硬件时间需求 / 风险”，不要在未获授权时直接操作 Z19 或拆/刷机械臂。
+> **最新决策 2026-10-20**：项目主线是 PC + USB 相机 + RoArm-M2-S 的实际视觉抓放。先完成 R0/R1/R2，**不需要等 Z19 PL 状态机开发完成才能进行真实机械臂或视觉联调**。详情 [Demo-first 决策](DEMO_FIRST_POLICY.md)。
 
-## 1. 我们做什么、为什么有意义
+## 1. 新队员 5 分钟理解项目
 
-项目名称：《基于 Zynq UltraScale+ MPSoC 的多模态视觉引导抓取与 FPGA 实时控制系统》。场景：教育/轻量化固定桌面物品分拣。用户在界面或可选离线中文命令中选择物体，USB 相机定位，Z19 A53 Linux 实施任务决策，Z19 PL 以确定性状态机负责动作授权/超时/异常锁存，原厂 RoArm-M2-S ESP32 控制已采购的桌面机械臂抓取并放置。我们展示的是 **FPGA 实时控制的可验证作用及一套真实运行的系统**，不造新机械结构，不对尚未测试的辅助医疗功能做承诺。
+固定俯视实验室 USB 摄像头在电脑 OpenCV 中检测彩色小方块、转换成桌面/机械臂坐标，PC 运行一个有机械工作域保护的任务程序，通过微雪官方 Python SDK/USB 串口给 RoArm-M2-S 的原厂 ESP32 发送安全运动命令，机械臂真实抓取、搬运、投放。展示实时画面、目标框、反馈、阶段、异常和实验数据。
 
-评审看点：
-- 能否现场从实际视频帧得到位置并**移动目标后继续正确抓**，而不是背动作；
-- FPGA 是否真正阻止了错误步骤/过期命令，是否有实验对比；
-- 真实反馈、恢复与人工断电安全；
-- 可信基线、可重复复现、GitHub/PR/测试日志与硬件二进制可追溯。
+Z19 XCZU19EG 是比赛 FPGA 相关的**并行扩展**：先复用原 MJC1 R2、IMX214 等板端硬件积累，设计和验证有实际效果的简单 PL 功能。若 FPGA 集成未成，PC 视觉真机演示仍按期保留；但不得将 PC-only 演示谎报成 FPGA 实物控制。
 
-## 2. 先读什么（约 30–60 分钟）
+## 2. 人员分工和仓库任务
 
-- 本目录的 `README.md`、`SYSTEM_ARCHITECTURE.md`、`TEN_DAY_EXECUTION.md`、`ROARM_OPEN_SOURCE_AUDIT.md`、`HARDWARE_BRINGUP.md`；
-- 根目录 `AGENTS.md` 和 `docs/GIT_WORKFLOW.md`（**唯一新仓库写入目标** `Citlali6/AmazingHand-Z19`）；
-- `docs/migration/README.md`：迁移证据与不能重做的资产；
-- `fpga/mjc1_fpd/README.md`：旧实板 MJC1 反馈与已验证/未验证边界；
-- `host/camera_linux/README.md`：真实 IMX214 的独立 profile；对 UVC 不是通用驱动；
-- `docs/voice/USB_MICROPHONE.md`：语音包状态。
+| 角色 | 任务 | 起始动作 |
+|---|---|---|
+| Citlali6（负责人） | 接线/上电/唯一硬件许可、工作时段、演示决策和 PR 合并 | 确认设备到货、工位和安全断能 |
+| 队友 A：视觉/UI | USB 摄像头 PC 取图、HSV 识别、固定平面标定、界面与三点位对照 | [#8](https://github.com/Citlali6/AmazingHand-Z19/issues/8)，不等 FPGA |
+| 队友 B：机械臂/SDK | 官方固件与 SDK、PC 依赖、关节反馈/夹爪/动作编排、限制运动范围 | [#14](https://github.com/Citlali6/AmazingHand-Z19/issues/14) + [#7](https://github.com/Citlali6/AmazingHand-Z19/issues/7)，不等 FPGA |
+| 双方联调 | 固定点 R1 → 三位置 R2 → UI/日志 → 安全测试 | [#10](https://github.com/Citlali6/AmazingHand-Z19/issues/10) / [#11](https://github.com/Citlali6/AmazingHand-Z19/issues/11) |
+| FPGA 支线（可单独 Codex） | #9 先审计、选最小独立 PL 真机展示，低成本复用，不能干扰 PC | [#9](https://github.com/Citlali6/AmazingHand-Z19/issues/9)，P1 非阻断 |
+| 语音 | #12 HOLD，等 R2 稳定再考虑 | [#12](https://github.com/Citlali6/AmazingHand-Z19/issues/12) |
 
-旧 `docs/project_framework.md` 代表前队长时期的仿生手研究路线，并非当前 10 天目标；不删除/覆盖它，本文档是本轮新主线说明。
+由于没有两位队友 GitHub 账号，不擅自给真人分配 assignee。先到[总控 #6](https://github.com/Citlali6/AmazingHand-Z19/issues/6) 自报工作角色和可到场时段。
 
-## 3. 本轮工作如何执行
+## 3. Codex 可用什么，不应重写什么
 
-```text
-Citlali6 定方向、现场授权、建 Issue / 确认当前 Codex 任务
-               ↓
-读 AGENTS + 最新 main + 相关 Issue + 原实现 + 负面证据
-               ↓
-Codex 在最新 main 之上开启独立工作分支
-               ↓
-离线最小变更 / 具体测试 / 可回退真实部署方案
-               ↓
-Codex 报真实 diff、commit、push 任务分支、新仓库 Draft PR
-               ↓
-Citlali6/ChatGPT 检查 PR diff、实验日志、风险、是否误宣称实板
-               ↓
-需现场硬件动作：Citlali6 本轮单独授权；队友陪同验证
-               ↓
-通过后负责人或写权限队友按仓库规则正常合并（不直推 main）
-```
+- **用官方开源**：ESP32 固件 [roarm_m2](https://github.com/waveshareteam/roarm_m2)，Python SDK [waveshare_roarm_sdk](https://github.com/waveshareteam/waveshare_roarm_sdk)；现行仓库只有厂商源码版本和 API 审计，未完整 vendoring。#14 负责固定依赖与合法引用。
+- **不造轮子**：机械臂舵机驱动、IK、ROS2、重新设计手指结构都不是 10 天 MVP；只写安全 PC 控制适配、感知和展示。
+- **不要把历史目录当新源码**：老 `SCS0009`、FMC/1.8V、MJC1/ AHIL 的原协议对应旧项目设备；不能用它给 RoArm 下发真实串口包。原相机 profile 与 MJC1-only 也不能同时加载。
+- 视觉先 PC、模型先 HSV 高对比色块；只有实际显示了移动后不同的真实抓取目标才称 R2。
 
-“有权直接写入新仓库”只授权本轮项目规划文档与任务发布，**不是对之后所有 Codex 任务的永久上板/合并许可**。Codex 的每条任务在对应 Issue 明确范围后，由负责人单独启动。ChatGPT 不会自己持续轮询 PR；队友或负责人在下一轮会话提供 PR 链接后再审查。
+## 4. 代码工作流
 
-## 4. 团队分工与接口冻结
+每次运行 Codex 必须先读 `AGENTS.md`、`docs/GIT_WORKFLOW.md`、本目录的 [Demo-first 决策](DEMO_FIRST_POLICY.md) 与对应 Issue。唯一允许写入的 GitHub 仓库是 `Citlali6/AmazingHand-Z19`；旧 Tom 仓库永久只读。**最新 main→独立分支→小范围变更→实际测试→PR→授权人审核决定合并**。Codex 对应 Issue 必须由负责人当轮明确启动，Issue 文本不自动授权独立操作。
 
-- **Citlali6（负责人+现场所有者）**：调度一块 Z19、机械臂与 USB 摄像头；批准 12V 上下电/物理接线、bit 加载、驱动安装、动作实测；指定 A/B 的真实 GitHub 身份；验收回执并维护优先级。
-- **A（感知和可视化）**：摄像头 Z19/PC 视频源、实际帧时间和序号、桌面标定、规则物体检测、框与工位坐标 UI。不得在自己的代码里绕过 PL 驱动机械臂。
-- **B（机械臂/控制集成）**：RoArm SDK 和 ROS2 资源核对（本轮不要求 ROS2）、SDK mock/JSON 串口、动作轨迹、唯一硬件写进程、真实回传；与 FPGA 控制 Issue 的执行 Codex 同步，但不能私自刷 ESP32。
-- **Codex 任务代理**：先确定哪个 Issue 已经被 Citlali6 显式授权。本次禁止多个 Codex 共享硬件时段。每个 Issue 独立分支，若依赖其他 PR，先在 Issue 写当前基线/依赖、不要覆盖同名文件或混入未验证业务逻辑。
+所有脚本默认 `dry-run`；没得到当次现场许可时，不得上电、刷 ESP32、执行关节运动、重配 PL、改内核/SD、安装高风险全局依赖。独立访问信号数据，不能擅自替其他队友 Review 或合并。
 
-如果两位队友实际能力有差异，可以互换 A/B，必须由 Citlali6 在总 Issue 中确定，不自作决定。
+## 5. 审核和证据用语
 
-## 5. 审核状态词与证据等级
+`PLAN` = 设计，`CODED` = 已写，`PC TESTED` = PC 实测，`SIM TESTED` = 模拟，`ROARM TESTED` = 真机械臂控制/反馈，`R1 TESTED` = 实物固定点抓放，`R2 E2E TESTED` = 真相机实时视觉、变位抓放和 UI，`Z19/PL TESTED` = FPGA 实板证据。绝不将一个等级冒充另一个。
 
-- `PLAN`: 仅设计，尚无代码；
-- `CODED`: 已提交实现，未宣称测试；
-- `PC TESTED`: 实际 PC 上运行的测试（注明环境、命令、结果）；
-- `SIM TESTED`: XSim/软件仿真（注明工具版本/报告）；
-- `Z19 TESTED`: Z19 上真实测试（具体 bit、内核、步骤和日志 hash）；
-- `ROARM TESTED`: RoArm 实体动作/关节反馈真实记录；
-- `E2E TESTED`: 同一 session 真图→PL授权→实体抓放并观察到结果；
-- `NOT VERIFIED` / `BLOCKED`: 未通过或缺资源，如实记录。
+PR 至少提供：源 commit/hash、具体操作、依赖安装和运行说明、自动化测试与退出码、实际视频/串口反馈（如有）、失败/风险、可回退路径和下一步现场待执行事项。**物理停止、串口 ACK、成功夹取分开验证**；不得为了快而取消工作空间限制与人工断能。
 
-**绝不把一种等级的证据冒充更高等级。** 之前对苹果、保温瓶检测失败、组合 FPGA bit 不安全、麦克风尚无硬件验收是重要负结果，保留归档；不能换名字继续宣传通过。
-
-## 6. 每个 Codex Issue 的合格回执
-
-必须包含：新仓库 URL、工作分支及 commit SHA、变更文件和接口差异、实际可运行命令/exit code、模拟与板端分离的测试表、日志/照片/视频证据路径、硬件 profile/bit hash（如适用）、安全恢复步骤、未完成项以及下一轮最小阻断。没有实测时禁止使用“验收通过”“部署成功”。
-
-### 审核必须拒绝的情况
-
-- 直接向 main 提交、强推、删除其他分支、写旧仓库、擅自改 AGENTS；
-- 修改原系统盘、相机驱动、PL 加载而没有 Citlali6 当前授权；
-- 为完成任务安装 Vivado 2020.2、ROS2 全套或升级 Linux 造成资源风险；
-- 将 PC OpenCV 输出写成 Z19 NCNN 推理，或将旧 AmazingHand MuJoCo 截图写成 RoArm 真实抓取；
-- 跳过 STOP/超时/过期消息，以空跑计数伪造完整 E2E。
-
-## 7. GitHub 协同
-
-- 本轮新开发应优先看**新仓库新 Issue**；老 Issue #16/#17/#20 和 PR #15/#18/#19 是历史迁移资料，不是新仓库真实编号。
-- 采用 GitHub Issue → 最新 main 独立分支 → Draft PR → 审核 → 正式合并，`main` 有分支保护且不直推。
-- 两条任务改同一个配置/入口前，先让 Citlali6 指定集成人员，其他人在独立 helper 模块实现，避免 `host/app/main.py` 和 `docs/log/` 跨分支冲突。
-- 同一块板卡以负责人批准的**现场时段**为准。无人主动确认时默认没有板端写入/载入授权。
-- 项目做的是“可信研发过程 + 可落地工程”，不为凑提交数反复创建 Issues、不滥做测试、不浪费最后三天在无关文档排版上。
-
-## 8. 队友确认模板
+## 6. 向队友发送的确认格式
 
 ```text
-我已阅读 docs/relaunch_20261020/ 的项目定位与技术边界。
+已阅读 main README、DEMO_FIRST_POLICY、TEAM_ONBOARDING 和 Issue #6。
 GitHub 用户名：
-我愿承担 A 感知 / B 机械臂集成（或具体子模块）：
-D1-D10 的每天实际可用时间：
-能否按计划现场参与 Z19 / RoArm 调试：
-手里已有硬件/依赖：
-预计会阻断交付的一个最大风险：
-承诺不未经 Citlali6 本轮授权重配硬件/刷机/合并他人任务。
+认领队员 A / B（或仅 #9 FPGA 支线）：
+D1-D10 每天可投入时间：
+是否可以到场调机：
+最先准备的 PC 结果（真实/Mock）：
+需要 Citlali6 帮忙的硬件/信息：
+承诺不在无现场批准下发送运动指令、刷固件、重配PL或合并他人任务。
 ```
