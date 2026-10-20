@@ -2,6 +2,8 @@
 
 > **唯一仓库**：`Citlali6/VisionGrasp-Z19`。**交付原则**：Demo-first，先 Windows PC + 已确认可显示画面的 USB 摄像头 + 微雪 RoArm-M2-S 原厂 ESP32/Python SDK。Z19/PL 独立 P1，不阻塞 PC 视觉与真抓放。用户已经拿到板上丝印 `SIM1319-HD720P` 的实验室 USB 摄像头，并确认 **Windows 相机可以显示画面**；OpenCV/帧率/畸变/标定仍未实测。机械臂已经下单，**尚未到货**。以下是操作和代码的准备任务，不是硬件验收。
 
+> **开发机环境更新（用户已确认使用 Anaconda）：** Windows 主开发环境统一为独立 Conda 环境 `visiongrasp`（Python 3.10）。**不要强制另外创建 venv**；先阅读 [Windows Anaconda 环境安装与摄像头自检](ANACONDA_SETUP_WINDOWS.md)。#14 负责落实 `pc/environment.yml` 或等价可复现配置，测试依赖仍必须与 `pc/pyproject.toml` 分工清楚。
+
 ## A. 阶段任务图：并行但不互踩
 
 | 顺序 | GitHub Issue | Codex 工作包 | 独占目录与产物 | 不依赖什么 |
@@ -39,7 +41,7 @@
 ```text
 VisionGrasp-Z19/
   pc/
-    README.md                   # #14 主笔：Windows 3.10/3.11 venv，安装步骤与 mock 命令
+    README.md                   # #14 主笔：Windows Conda Python 3.10 环境，安装步骤与 mock 命令
     pyproject.toml              # #14 主笔：PC 最小依赖与可编辑安装；不要改根 requirements
     visiongrasp/
       __init__.py               # #14 建骨架；#7/#8 避免互改
@@ -94,4 +96,4 @@ VisionGrasp-Z19/
 
 ## G. 在 PC 真机到货前的最低“开箱可演示”状态
 
-`#14` 的 Windows 安装可一条命令完成；`#7` 的 fake 可模拟状态/非法动作/断线；`#8` 的真实摄像头能显示方块检测框和桌面坐标/未标定提示；`#18` 的 `--mode mock` 可串起 UI、真摄像头与 fake 机械臂，**完全不依赖硬件和 Z19**。最终由 Citlali6 实测并认可，再切实体 R0→R1→R2。
+`#14` 的 Windows Conda 环境可按文档独立建立并完成包安装；`#7` 的 fake 可模拟状态/非法动作/断线；`#8` 的真实摄像头能显示方块检测框和桌面坐标/未标定提示；`#18` 的 `--mode mock` 可串起 UI、真摄像头与 fake 机械臂，**完全不依赖硬件和 Z19**。最终由 Citlali6 实测并认可，再切实体 R0→R1→R2。
