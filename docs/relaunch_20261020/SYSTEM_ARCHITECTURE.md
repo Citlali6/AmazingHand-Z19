@@ -1,121 +1,79 @@
-# 系统架构、接口和安全设计 | RoArm-M2-S × Z19
+# 系统技术架构 v0.2：PC 演示先完成，Z19 并行集成
 
-> 2026-10-20 方案 v0.1，所有新接口均为**拟定契约**，尚未实板实测；实施时保留真实证据。不得将此接口文档当作已存在代码。
+> 生效日期 2026-10-20。此版本替代原 v0.1 中“必须先获 PL grant 才允许 RoArm 运动”的默认架构。**所有安全限制仍必须在 PC 端独立实施**。本文件是技术设计，新的控制代码与实物验收尚待 Codex/现场完成。
 
-## 1. PS/PL/执行机构边界
-
-```text
-USB UVC 摄像头（固定俯视）       可选麦克风
-       |                            |
-  Z19 PS Linux (优先)           语音解析或UI选择
-       |                            |
-  图像帧/时戳/目标中心 --确认目标和抓取区域--+
-       |                                    |
-  桌面单应性H、置信区间、工位坐标  ---> 任务计划 (有限预定阶段)
-                                                |
-                                  AXI4-Lite:  request/seq/limits/heartbeat
-                                                |
-                             Z19 PL 任务守卫FSM，STOP latch / watchdog / grant
-                                                |
-                               授权结果+commit状态回PS（唯一控制进程）
-                                                |
-                              USB-serial 115200 → ESP32 原厂控制器
-                                                |
-                                  RoArm-M2-S 舵机/夹爪（12V独立供电）
-                                                |
-                                  串口反馈 → PS → PL状态回报、GUI日志
-```
-
-**必须守住三个事实**：(1) ESP32 原厂负责真实伺服底层，不是 Z19 PL 直接 PWM/总线力控；(2) PL 仅通过 PS 软件桥间接授权 USB 命令，不能宣称其在电气上直接禁止 ESP32 运动；(3) 真实物理急停应为可触及的机械臂独立电源断能措施，软件 stop/torque_off 均只能作为额外安全层，需逐项实测。
-
-### 推荐主链
-
-- 目标从真正 UVC 帧产生；源帧须附会话标识、单调时间戳、图像序号，收到陈旧帧、相机断流或目标未确认时禁止新动作。
-- PS 计算安全范围内的工位目标（机械臂基座坐标系毫米），路线为：HOME → 到物体上方 → 下降 → 闭合 → 抬升 → 到收纳区 → 释放 → HOME。各段限制速度/加速度，必要时可使用 RoArm 厂商 IK / pose_ctrl。
-- Z19 PL 管理动作阶段、序号、心跳、时间限制、提交反馈、STOP 锁存；每次阶段动作前必须重新授权，失败不得发送串口运动指令。
-- RoArm USB 主控为独立 12V 电源，USB 不承担舵机电源。选择 USB 串口（反馈可靠性需测），不把 HTTP 控制 ACK 当成执行完成反馈。
-- PC 可以充当视频源/操作 UI，但最终每次动作必须经 Z19 PS→PL 守卫。PC 直接驱动 RoArm 只允许 D1-D2 **台架 bring-up**，不能替代最终演示的 FPGA 路径。
-
-## 2. 硬件 profile 选择
-
-**路线 A（优先）**：Z19 Linux `/dev/videoX` USB UVC 采集 + 独立已验证 MJC1 R2 PL profile + `/dev/ttyUSBX` RoArm 串口。注意：UVC、CP210x、USB Host 驱动、Python3.7/Opencv3.4、端口并发均未经过本机测试；仅硬件架构可行。
-
-**路线 B（快速保底）**：PC USB 视频采集+HSV/标定 → 有序网络消息到 Z19 PS → PL 动作守卫 → PS串口→机械臂；不需要让相机 PL 与 HIL 同时运行。必须明确展板/报告的视觉在 PC，而非板端。可后续切回路线 A，不得把 A 当成默认已调通。
-
-**禁止**：未经排查直接加载老 `camera_hil` 诊断 bit；原相机-only 与原 MJC1-only profile 不能叠加，载入其一将替换整个 PL；原 MJC1 R2 地址 `0xA0000000` 与 AHIL `0xA1000000` 不可混用。MJC1 R2 不能无源修改就当作 RoArm 完整闭环；其 MCU/执行路径适配须在新工作分支和独立二进制产物上完成。
-
-## 3. PS ↔ PL 的最小协议草案（待控制负责人审查冻结）
-
-建议保留 MJC1 原 MMIO 原语与经过验证的序号/commit/ACK机制，**先审查原 `fpga/mjc1_fpd/`、`fpga/hand_control/`、`docs/design/interface.md` 的真实实现**。不能凭本文杜撰“现有寄存器已支持 grant”。
+## 1. 当前首选架构（R0→R2 真实主线）
 
 ```text
-ActionRequest = {
-  session_id: uint64, seq: uint32, stage: enum,
-  target_xyz_mm: [x,y,z], gripper_angle_deg, speed, acc,
-  source_frame_seq, source_capture_mono_ms,
-  target_validated: bool, operator_confirmed: bool
-}
-ActionDecision = {
-  session_id, seq, state, grant/deny, deny_reason,
-  watchdog_ok, stop_latched, pl_commit_seq
-}
-ArmFeedback = {
-  session_id, seq, monotonic_time, joint_angles,
-  end_xyz_mm, grasp_feedback_kind, comm_status,
-  stage_complete_observed: bool
-}
+            实验室 USB 摄像头（固定俯视）
+                         |
+                  USB → Windows PC
+                         |
+          OpenCV 帧读取/颜色识别/标定映射
+                         |
+               目标选定 + 人类确认 + UI
+                         |
+           PC 安全任务状态机/工作域检查
+                         |
+           Python 原厂 SDK（USB serial 115200）
+                         |
+              RoArm-M2-S 内置 ESP32
+                         |
+          原厂 IK/舵机内环 → 实体关节和夹爪
+                         |
+        真实关节反馈/动作观察 → PC UI 日志
+
+  ALINX Z19 PS/PL：独立并行 P1，不能阻断以上链路。
 ```
 
-这是**逻辑消息接口草案**，不是强制所有字段写在一个 AXI 寄存器，也不是 MCU SDK 已实现字段。PL RTL 可用少数 stage/seq/TTL/stop 寄存器，不承担字符串 JSON、YOLO 或逆运动学。具体 MMIO 地址/32bit 拆分在代码审查后冻结、用 tests 验证，且必须区分老 MJC1 profile 与新 RoArm profile。
+**设计理由**：RoArm 原厂底层驱动/IK 开源、直接通过 PC USB 串口调用最快；实验室摄像头原先能在树莓派使用，不等于已通过 Z19 UVC。本期 PC 是真正负责运行视觉与机械臂的主控，直到明确验收另一种运行模式。不能把 PC 的相机和推理结果说成 Z19 板端推理。
 
-严谨约束：
+## 2. 独立并行的 Z19（R3）路线
 
-1. 一个串口唯一写入者；PC/网页/SDK/SSH 不能并行发控制命令；锁持有者丢失/重启必须产生新 session。
-2. 计划动作先检查笛卡尔安全工作域、速度/角度限制、触发者确认及最新帧，才允许向 PL 提交。
-3. PS 只对匹配 session+seq+stage 的 PL grant 发送**一次**动作，重放/时间过期拒绝；发送串口指令≠机械臂已完成动作。
-4. 机械臂真实反馈到达并符合容差、超时约束，才进入下一状态；原厂反馈是关节位置/末端坐标，**没有证明力传感器/负载检测**。对“抓取成功”需用视觉/人工观察和物体移动证据，不凭夹爪角度臆断抓牢。
-5. STOP / 断链 / 超时后 PL 锁存拒绝新的运动请求；PS 最多尝试厂商支持且经实测有效的停止/关扭矩命令，**不保证物理即时制停**；现场操作员能直接断开 12V 执行电源。软件复位只允许人工确认机械臂安全后操作。
-6. 接入麦克风必须复用语音白名单、reject/STOP 语义，语音高置信度本身不等于动作授权。
+- **第一层：使用现有真实成果**。MJC1 R2 是 2026-10-18 在 Z19 上验证的 PS↔PL MMIO/反馈协议（`0xA0000000`，仅 R2 固件有效），但其执行对象是虚拟手，没有实体 RoArm 舵机输出。这个现成硬件演示可以独立用于展示 FPGA 通讯/状态控制的真实性，不借用来宣传“FPGA 控制过新机械臂”。
+- **第二层：低成本接入**。如果有经审核的最小实现，可把 PC 任务状态送 Z19/PL 进行真实计时、状态记录、阶段校验等旁路辅助，并在 UI 单独展示“FPGA online/offline”。**故障时系统切换为安全停机/人工确认后的 PC 主线**；并行 FPGA 的异常不能自动强迫机械臂失控，也不该阻断 R2 的代码开发或演示。
+- **第三层（非十天硬条件）**：Z19 PS USB 读取 RoArm，或 FPGA PL 自己实现直接 UART 通信、恢复 MIPI/控制同 bit、大规模 DPU 等，均需额外电气/驱动/时序/实机证据，不能为“提升 FPGA 核心地位”抢主线时间。
 
-## 4. 视觉与标定
+**配置区分**：旧 MJC1 R2-only 加载后替换 camera-only PL，AHIL 是另一地址/协议；新旧 bit 不可叠加。历史 `camera_hil` 实验 bit 仍 **NOT DEPLOYABLE**。部署行为由 Citlali6 另行现场批准。
 
-固定俯视相机（优先桌面独立支架），将工作平面限定为单一高度。先用 OpenCV 基本库完成 HSV 彩色块分割 / 轮廓重心、背景/颜色否定样本；图像结果声明 **规则检测**，不能包装成 YOLO 准确率。用桌面棋盘/四角标定点求像素到桌面坐标的单应性矩阵，再测基座相对桌面坐标变换。单应性仅适用于平面，目标顶面高度/夹爪抓取高度按实物标定的尺寸表限定；不能将任意 RGB bbox 直接视作三维坐标。
+**学术诚实**：`PS-only` 不是 `PL`；“有 Z19 实体板卡”不能替代 FPGA 逻辑真实运行证据；纯 PC 路径必须按实标注为“PC+ESP32 的智能抓取演示”。
 
-建议帧处理输出：
+## 3. PC 视觉与抓取模块合同（拟定，可单元测试）
+
+相机输入：`camera_id, frame_seq, capture_time_monotonic, frame_width, frame_height, source='pc_uvc'`；仅使用当前会话新鲜帧，断流/旧帧不得启动新运动。分辨率首测可用 640×480 / 1280×720，按设备实际格式调整，不填保证 FPS。
+
+标定：固定俯视相机 + 桌面 4 点或棋盘格得到像素→桌面平面的变换、机器人基座与桌面相对位置；4 DOF 无万能的任意 3D 姿态求解。目标物体的抓取高度、夹爪朝向与可达包络需以实物测量冻结，不可直接将 `(u,v)` 当作 `(x,y,z)`。
+
+拟定数据：
 ```text
-vision/1 {camera_session, frame_seq, capture_mono_ms,
-  object_id, class_name, source='hsv'|'ncnn',
-  pixel_center, table_xy_mm, coordinate_frame,
-  confidence_or_rule_score, calibrated, stale}
+Detection {frame_seq, local_capture_ms, object_id, target_xy_px,
+           target_xy_table_mm, calibration_id, detection_kind='HSV',
+           in_safe_workspace, fresh, operator_confirmed}
+ActionPlan {session, seq, stage, arm_xyz_mm, gripper_target,
+            speed_limit, acceleration_limit, deadline_ms}
+MotionFeedback {session, seq, source='roarm_serial', angle_or_pose,
+                receive_time_ms, stable_in_tolerance, timed_out}
 ```
-有效期建议从配置开始设定，例如源帧不超过 500ms/结果不超过 1200ms，仅作为初始严格策略，需按实际处理链路量测调整，不是原 camera 800/1600ms 契约“自动迁移”。不可为报出漂亮 FPS 直接放宽过期策略；跨机器 PC ↔ Z19 时用新鲜接收单调时间及 session/seq 判重，不依赖不同机器的绝对 monotonic 数值可比较。最终如启用 NCNN，必须有新 USB 相机的同图基准/类别正负样本重新验收。
+这是我们的上层契约而非微雪原厂类/API 的原名，具体字段可由 #7/#8 首轮 PR 冻结。
 
-## 5. 运动策略与简单可复现环境
+动作顺序：HOME/安全抬起 → 到目标上方 → 下降 → 安全夹爪闭合 → 抬起 → 投放区上方 → 释放 → HOME。先经过 PC mock/空载低速/固定点真实验收，再使用真实视觉位置。控制与视觉的对接**不包含 FPGA 前置 grant**。任何超安全范围、无标定、帧过期、反馈异常、未确认都拒绝开始新动作。
 
-- 最先只支持 1~2 类**轻质、不尖锐、不易碎**演示物；记录物品尺寸与质量、可达位置、抓取方式和放置工位，不尝试随机散乱堆叠或遮挡对象。
-- 机械臂固定在稳定工作台且夹具拧紧，桌面留安全边界和手动断电通道；先测 HOME、抬升高度、机械限位、下探区域，任何未知位置不可盲动。
-- 使用厂家 IK 接口 `pose_ctrl()` 或预定姿态插值；不能直接将 PC 相机像素传给关节驱动。
-- 仅在逐项低速台架验证后开启自动多阶段；每次运动需独立反馈/观察超时。禁止动作过程中有人手伸入工作区。
+## 4. RoArm SDK 能力和限制
 
-## 6. 需要测量的 FPGA 价值
+官方 `waveshare_roarm_sdk` 已有 `joints_angle_get()`、`feedback_get()`、`joint_angle_ctrl()`、`joints_angle_ctrl()`、`gripper_angle_ctrl()`、`pose_ctrl()` 等；串口可读反馈，HTTP 不宜作为第一版反馈来源。当前仓库记录有固定提交和许可证信息，但还没有实际第三方源码快照；由 #14 建环境、#7 做实际控制适配。
 
-- 有 PL grant 的合法阶段成功数 vs 不合法/重复/过期阶段被拒绝数；
-- STOP/heartbeat 断链到“PS 不再发出新的运动指令”延迟分布（注意不等于物理臂停止）；
-- FPGA FSM 的动作状态、错误码、ACK 时序，与 host-only 安全逻辑对照（如果测得才能讨论差异）；
-- 合成/实现资源 LUT/FF/BRAM、时序 WNS/WHS、CDC/DRC、使用的 Vivado 2020.1 版本、真实 bin hash；在新配置实际上板前不能以老配置报告代替；
-- 端到端目标感知→抓取放置耗时、同目标多轮成功率和失败分析。
+**每个实际阶段至少区分三件事**：串口成功写入、查询到厂家关节反馈、真实物体抓取成功。这三者不能互相替代。夹爪开合方向、各关节范围和实际单位必须到货后低速实测。
 
-## 7. 旧代码复用映射
+## 5. 安全及可恢复原则
 
-| 原成果 | 复用方式 | 防误用规则 |
-|---|---|---|
-| `fpga/mjc1_fpd/` | 真实 PS/PL 寄存器、序号和 ACK 的首选模板 | R2 bit 不直接宣称 RoArm/相机组合已验收 |
-| `fpga/hand_control/` | STOP、watchdog、AXI 设计候选、XSim TB | 旧 AHIL 地址和八舵机控制语义不能直接适配 JSON |
-| `host/app/control/` | 控制后端抽象与协议测试模式 | SCS 协议不等于 RoArm 的 ESP32 JSON 协议 |
-| `host/camera_linux/` | 已有 JPEG 同帧绑定、性能诊断与断流处理 | IMX214 DMA 驱动不能用于 UVC 的 /dev/video |
-| `host/app/vision/` | 图像输入抽象/视觉接口 | 新 HSV/USB 源须显式命名和回归 |
-| `host/app/voice/` | 中文指令解析/安全白名单 | 未经实测不能直接发真实动作 |
-| `sim/` | 原系统演示对照、回归测试 | 旧八执行器手模型不得自称 RoArm 仿真 |
-| `docs/migration/` | 历史结果、未合并 PR 和工作区快照依据 | 归档代码不得无审查全量移植 |
+- 机械臂固定在工作台，工作区无人手进入，旁边有可安全、迅速切断原厂独立 12V 电源的方式。厂商固件启动可能有自检/回初始姿态动作，不能假设开机不动。
+- PC 任务控制器**独立**完成参数白名单、机械工作域、速度限值、运动阶段超时、取消下一阶段、真实反馈核对；无 FPGA 时也必须完整有效。
+- 软件 STOP/取消是尝试停止指令/禁止新运动，不意味着已有 ESP32 动作已物理停止；`torque_set(0)` 可能致重力下垂，不能盲用。
+- SDK 串口由单进程独占；掉线、重启、串口设备编号变化须锁住自动动作直到人工确认；运行脚本默认 dry-run、真实动作需当次现场批准。
+- PC 已调通的安全主链不能在 Z19 实验中被覆盖。Z19 固件、驱动或 FPGA 切换需要完整 profile、bin SHA、停 DMA/卸载原驱动和回退方案；不可加载未验实验组合 bit。
 
-本文接口为讨论基线；Codex 第一轮需提交“现有代码接口→最小新接口”的映射表，经负责人确认后才能冻结 ABI 或上板。
+## 6. 实际可展示与证据
+
+R0：真实反馈/低速动作；R1：真固定点抓放；R2：移动方块到三个位置分别由真实新帧定位和抓取、UI/完整运行日志；R3：在独立 Z19 上展示有日志/hash 的真实 PL 功能。R3 如失败也不能虚报成功，R2 仍可按规划进行。对比赛是否满足 FPGA 赛道资格另行依据正式规则核对。
+
+旧 `docs/design/interface.md` 的 8×SCS0009、`0x80000000` 及旧协议是历史手部方案，不能视为 RoArm ESP32 的接口。更详细的边界见 [用户确认决策](DEMO_FIRST_POLICY.md) 和 [原始官方源代码审计](ROARM_OPEN_SOURCE_AUDIT.md)。
