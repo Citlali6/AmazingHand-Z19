@@ -8,6 +8,7 @@
 
 
 适用仓库：`Citlali6/AmazingHand-Z19`。所有成员与 Codex 均遵守：
+**本期 2026-10-20 用户最终决定：**先完成 PC+RoArm 官方 SDK 和 USB 摄像头的真实抓放演示，FPGA 并行研发不得成为 #10 的前置条件；现行优先级见 [DEMO_FIRST_POLICY.md](relaunch_20261020/DEMO_FIRST_POLICY.md)。历史技术计划不能覆盖该决定。
 **最新 main → 独立分支 → 开发与验证 → 提交 → 推送当前分支 → PR → 有写入权限的成员自行决定合并。**
 
 **2026-10-19 仓库所有者决定：**不再强制其他队员 Review / Approve。仓库所有者 Citlali6 具有最终项目管理决策权；拥有 Write/Maintain/Admin 权限的队友也可直接合并 PR（包括自己的 PR），无需额外审批。可自愿 Review，但不得将不存在的审批记作已完成。规则仍须在 GitHub Settings 实际调整后才生效。
