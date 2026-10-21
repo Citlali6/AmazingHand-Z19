@@ -12,6 +12,7 @@
 - 先跑 [#14 SDK 环境](https://github.com/Citlali6/VisionGrasp-Z19/issues/14)、[#7 FakeRobot](https://github.com/Citlali6/VisionGrasp-Z19/issues/7)、[#8 SIM1319-HD720P 视觉](https://github.com/Citlali6/VisionGrasp-Z19/issues/8)；再整合 [#18 Mock UI](https://github.com/Citlali6/VisionGrasp-Z19/issues/18)。#9 FPGA 不阻断这四项。
 
 ## 当前可执行的项目文档
+- [本机工程目录、兼容路径和迁移记录](development/WORKSPACE_LAYOUT.md)
 - [仓库首页 / 最新项目状态](../README.md)
 - [Demo-first 用户确认的最高优先级](relaunch_20261020/DEMO_FIRST_POLICY.md)
 - [十天项目简介、目标与验收](relaunch_20261020/README.md)
@@ -34,9 +35,8 @@
 - [MJC1 R2 实板 HIL 记录](../fpga/mjc1_fpd/README.md)
 - [Vosk USB 离线资料](voice/USB_MICROPHONE.md)
 - [迁移与全部旧 Issue/PR 内容](migration/README.md)
-- [原设计结构（历史）](design/architecture.md)
-- [旧 8 舵机 SCS PS/PL 接口（历史）](design/interface.md)
-- [旧 FPGA 工程计划（历史）](fpga/README.md)
+- [Z19 / FPGA 可复用资产导航](fpga/README.md)
+- [旧灵巧手设计原文与过期草稿索引](history/amazinghand/README.md)
 - [旧相机和整手进度快照（2026-10-10）](fpga/implementation_progress.md)
 
 历史文件的实验结果必须限定到真实测试的旧配置，**不能直接冒充现在的 RoArm 真实联调**。尤其组合 MIPI/HIL 实验 bit **NOT DEPLOYABLE**；旧 AmazingHand MuJoCo 模型不是 RoArm 的模型。新的现场测试请新建日期日志并准确记载 commit/固件/hash。

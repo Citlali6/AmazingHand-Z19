@@ -1,5 +1,16 @@
 # FPGA辅助视觉抓取系统 — Codex 开发规范
 
+## Windows workspace layout (owner instruction, 2026-10-21)
+
+On Citlali6's current Windows PC, work under `F:\嵌入式fpga比赛`.
+All new engineering work belongs under `F:\嵌入式fpga比赛\工程project开发`;
+the active checkout is `F:\嵌入式fpga比赛\工程project开发\VisionGrasp-Z19`.
+Read `docs/development/WORKSPACE_LAYOUT.md` before local setup or directory work.
+Do not create new project/build folders at the root of F:.
+Historical repositories and worktrees are archived, not development entrypoints.
+The old `F:\Amazing_Hand`, `F:\ARM` and `F:\FPGA` paths are compatibility
+entries into the organized tree; preserve them while still referenced.
+
 ## 2026-10-20 mechanical-arm pre-arrival Codex task order (owner-approved task publishing)
 
 The owner's primary Windows development environment is **Anaconda**. Use an isolated **Conda env `visiongrasp` with Python 3.10**, not an additional mandatory `venv`; read **`docs/development/ANACONDA_SETUP_WINDOWS.md`**. #14 owns the reproducible `pc/environment.yml` or equivalent environment specification and must not modify the user's existing base environment. Before working on `#14`, `#7`, `#8` or `#18`, read **`docs/development/PRE_ARRIVAL_EXECUTION.md`** and **`docs/development/PC_MVP_CONTRACT.md`**. The current camera board `SIM1319-HD720P` has displayed live video in the owner's Windows Camera app, but OpenCV capture has NOT yet been verified; RoArm-M2-S is ordered but NOT received. PC implementation is **independent of existing mixed root `requirements.txt`** and legacy `host/app/control/backend_serial.py` (the latter is the old SCS 1 Mbps eight-servo backend, NOT the RoArm ESP32 UART JSON protocol). Use a dedicated `pc/` package and respect exclusive ownership of its shared `pyproject.toml` / `contracts.py` (#14), `robot/` (#7), `vision/` (#8), and `app/` (#18). All tests are mock/synthetic until real hardware tests are explicitly authorized by Citlali6 on site. No serial device opening, motor commands, FPGA image changes or automated real-device control in offline development.
@@ -209,7 +220,10 @@ configuration. Review existing `.gitignore` and suggest changes before broad
 updates. Only obvious logs, caches, and temporary build files may be cautiously
 added without compromising reproducibility.
 
-Read `docs/design/interface.md` before PS/PL interface changes. Record authorized
+Read `docs/relaunch_20261020/SYSTEM_ARCHITECTURE.md` and the applicable current
+source/profile before PS/PL interface changes. For PC integration, also read
+`docs/development/PC_MVP_CONTRACT.md`. The old `docs/design/interface.md` is now
+a historical pointer, not the RoArm contract. Record authorized
 structure, interface, code, or parameter changes in `docs/log/YYYY-MM-DD.md`.
 Distinguish implemented features from planned features in reports. Do not install
 board-targeted dependencies into a PC environment without checking compatibility.

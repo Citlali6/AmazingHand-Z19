@@ -2,6 +2,8 @@
 
 **唯一开发仓库：[Citlali6/VisionGrasp-Z19](https://github.com/Citlali6/VisionGrasp-Z19)** · 项目负责人 Citlali6 · 默认分支 `main`
 
+本机开发目录：`F:\嵌入式fpga比赛\工程project开发\VisionGrasp-Z19`。目录归位、旧路径兼容与归档位置见 [本机工作区说明](docs/development/WORKSPACE_LAYOUT.md)。旧灵巧手设计正文已从开发入口清理，原文可从 [历史索引](docs/history/amazinghand/README.md)找回。
+
 > **名称说明：** 当前作品正式展示名为「FPGA辅助视觉抓取系统」，新 GitHub 仓库名为 `VisionGrasp-Z19`；`AmazingHand-Z19` 是原仓库名，`AmazingHand/` 是旧灵巧手的历史代码目录。历史源代码、作者署名与实验记录仍予保留。
 
 > **2026-10-20 用户最终决定：演示效果、工程完整度和稳定性是最高优先级。** 先用微雪 **RoArm-M2-S + 原厂 ESP32/Python SDK + 实验室 USB 摄像头 + PC** 做出真实、可重复的抓取分拣作品；**Z19/FPGA 是并行的真实技术加分项，绝不作为机械臂运动、视觉抓取或演示 UI 的前置条件**。项目如需满足比赛关于 FPGA 的正式要求，最终须单独提供有真实证据的 PL 功能，不能仅放置板卡或让 PS 跑 Linux 就称 FPGA 已用。
@@ -64,7 +66,7 @@ ESP32 已有舵机内环及逆运动学。FPGA 可以处理硬件计时/状态�
 - **旧组合 MIPI+HIL bit**：仍有 DRC、外部时序/实板验证阻断，**NOT DEPLOYABLE**。
 - **NCNN、Vosk**：有代码/模型与部分板端验证，但新 USB 相机/真实语音→RoArm 尚未签收。
 
-我们不会删掉之前做过的研究；只把“不能直接复用的复杂 FPGA 工作”从实体交付关键路径上移走。旧 AmazingHand 八舵机/FMC/SCS 直接驱动与旧截止日期只是历史文档，不再是现行任务。
+保留可复用源码、固件、实测记录和许可证；旧 AmazingHand 八舵机/FMC/SCS 设计与过期 PR 草稿移出当前开发正文，通过历史索引和 Git 固定版本查阅。旧截止日期不再作为现行任务。
 
 ## 新人阅读与开发入口
 
