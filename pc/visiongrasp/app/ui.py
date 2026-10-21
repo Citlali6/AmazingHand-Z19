@@ -72,12 +72,15 @@ class Dashboard:
         self.text(canvas, state["status"], 824, 417, .8, (245, 245, 245), 2)
         self.text(canvas, f"Stage: {state.get('stage') or '-'}", 824, 455, .58)
         selected = state.get("selected")
-        self.text(canvas, f"Target: {selected.object_label if selected else 'SELECT A BLOCK'}", 824, 493, .54)
+        self.text(canvas, f"Target: {selected.object_label if selected else 'SELECT A BLOCK'}", 824, 490, .54)
+        uv = f"({selected.center_uv_px[0]:.1f}, {selected.center_uv_px[1]:.1f})" if selected else "-"
+        self.text(canvas, f"Pixel uv: {uv}", 824, 522, .51)
         xy = selected.table_xy_mm if selected else None
-        self.text(canvas, f"Table mm: {xy if xy is not None else 'UNCALIBRATED'}", 824, 528, .51)
-        self.text(canvas, "Robot XYZ: UNCALIBRATED / None", 824, 561, .5)
+        xy_text = f"({xy[0]:.1f}, {xy[1]:.1f})" if xy is not None else "UNCALIBRATED"
+        self.text(canvas, f"Table mm: {xy_text}", 824, 553, .51)
+        self.text(canvas, "Robot XYZ: UNCALIBRATED / None", 824, 584, .5)
         feedback = state.get("feedback")
-        self.text(canvas, f"Feedback: {'FAKE' if feedback else 'NO SAMPLE'}", 824, 594, .5)
+        self.text(canvas, f"Feedback: {'FAKE' if feedback else 'NO SAMPLE'}", 824, 614, .5)
         error = state.get("error") or note
         self.text(canvas, str(error)[:48], 824, 640, .46, (100, 175, 255))
         self.text(canvas, "Q: quit   S/SPACE: stop   ENTER: confirm", 824, 679, .42)

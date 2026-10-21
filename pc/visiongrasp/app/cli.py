@@ -25,6 +25,7 @@ def parser():
     p.add_argument("--auto-run", action="store_true", help="Explicit simulated confirmation, synthetic only")
     p.add_argument("--synthetic-calibrated", action="store_true", help="Use a labelled synthetic table fixture")
     p.add_argument("--calibration", type=Path)
+    p.add_argument("--detector-config", type=Path, help="HSV/area/aspect DetectorConfig JSON from camera tuning")
     p.add_argument("--table-width-mm", type=float)
     p.add_argument("--table-height-mm", type=float)
     p.add_argument("--output", type=Path, default=Path("output/pc/demo"))
@@ -46,7 +47,7 @@ def main(argv=None) -> int:
         p.error("frame dimensions must be positive")
     import cv2
     from visiongrasp.robot import FakeRobot
-    from visiongrasp.vision import SyntheticCamera, CameraProvider, BlockDetector, TableCalibrator
+    from visiongrasp.vision import SyntheticCamera, CameraProvider, BlockDetector, DetectorConfig, TableCalibrator
 
     camera = None
     controller = None
@@ -62,14 +63,16 @@ def main(argv=None) -> int:
     dashboard = Dashboard()
     canvas = None
     auto_started = False
+    last_health = None
     try:
         if args.calibration:
             calibrator = TableCalibrator.load(args.calibration)
+        config = DetectorConfig(**json.loads(args.detector_config.read_text(encoding="utf-8"))) if args.detector_config else DetectorConfig()
+        detector = BlockDetector(config, max_age_s=args.max_frame_age_s)
         camera = (SyntheticCamera(args.width, args.height) if args.camera == "synthetic" else
                   CameraProvider(index=args.camera_index, backend=args.backend, width=args.width,
                                  height=args.height, max_age_s=args.max_frame_age_s))
         controller = DemoController(FakeRobot(), args.output / "logs", max_frame_age_s=args.max_frame_age_s)
-        detector = BlockDetector(max_age_s=args.max_frame_age_s)
 
         def fit_table(points, frame):
             if args.table_width_mm is None or args.table_height_mm is None:
@@ -132,6 +135,11 @@ def main(argv=None) -> int:
         while args.frames == 0 or index < args.frames:
             previous = packet
             packet = camera.read_latest()
+            health = camera.health
+            if health["status"] != last_health:
+                controller.log.write("CAMERA_HEALTH", camera_source="SYNTHETIC" if args.camera == "synthetic" else "LIVE_PC_UVC",
+                                     health=health, monotonic_s=time.monotonic())
+                last_health = health["status"]
             if packet is not None and calibrator is None and args.synthetic_calibrated:
                 w, h = packet.frame_wh_px
                 calibrator = TableCalibrator.fit([(0, 0), (w-1, 0), (w-1, h-1), (0, h-1)],
@@ -147,7 +155,8 @@ def main(argv=None) -> int:
                 controller.select(next(i for i, t in enumerate(targets) if t.valid))
                 auto_started = controller.start(operator_confirmed=True)
             state = controller.snapshot()
-            canvas = dashboard.render(packet, targets, state, note=note,
+            camera_note = note if health["status"] == "CAMERA_OK" else f"CAMERA: {health['status']}"
+            canvas = dashboard.render(packet, targets, state, note=camera_note,
                                       calibration_points=calibration_points if calibrating else ())
             if not args.headless:
                 cv2.imshow(window, canvas)
@@ -172,13 +181,15 @@ def main(argv=None) -> int:
         state = controller.snapshot()
         if state["status"] in (TaskStatus.FAULT.value, TaskStatus.STOP_REQUESTED.value):
             exit_code = 2
+        if camera.health["status"] != "CAMERA_OK":
+            exit_code = 2
         if args.auto_run and (not auto_started or state["completed_stages"] != 7 or state["error"]):
             exit_code = 2
         print(json.dumps({"mode": "MOCK", "camera": args.camera, "robot_xyz_mm": None,
                           "status": state["status"], "completed_stages": state["completed_stages"],
                           "error": state["error"], "log": str(controller.log.path),
                           "hardware": "ROARM NOT TESTED; physical camera NOT VERIFIED"}, indent=2))
-    except (ValueError, RuntimeError, OSError, cv2.error) as exc:
+    except (ValueError, TypeError, RuntimeError, OSError, cv2.error) as exc:
         print(json.dumps({"mode": "MOCK", "error": f"{type(exc).__name__}: {exc}"}))
         exit_code = 2
     finally:
