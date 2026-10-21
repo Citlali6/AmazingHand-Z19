@@ -12,7 +12,7 @@
 2. **新仓库最新可用代码和 PR**：以 `Citlali6/VisionGrasp-Z19` 当前 `main`、未合并 PR 的准确分支/HEAD 为准；PR 中代码不能直接称 `main` 已实现。
 3. **本轮已授权目标与执行任务**：`docs/relaunch_20261020/DEMO_FIRST_POLICY.md`、总控 Issue #6 与 #7–#12/#14；计划不是实测。
 4. **现行仓库操作规则**：`AGENTS.md` 与 `docs/GIT_WORKFLOW.md`；不因历史文档的旧审批要求、旧仓库 URL 改变。
-5. **历史技术方案和存档**：旧 `docs/design/`、`docs/fpga/` 内标记为“历史方案”的文件、旧 `docs/log/`、`docs/migration/`、旧模型、旧 PR；仅用于参考/溯源，不得抢占本期任务优先级。
+5. **历史技术方案和存档**：[旧灵巧手设计索引](../history/amazinghand/README.md)、旧 `docs/log/`、`docs/migration/`、旧模型、旧 PR；仅用于参考/溯源，不得抢占本期任务优先级。
 
 当第 1 项真实数据与方案冲突，应记录差异、调查原因；不得悄悄以设计文件覆盖实验事实。对于新版未实现的寄存器、FPGA时序和设备驱动必须标 NOT VERIFIED。
 
@@ -48,9 +48,8 @@
 
 - `docs/project_framework.md`：替换为当前项目概览；旧版本可通过仓库 Git history 检索。
 - `docs/procurement.md`：替换为当前成品 RoArm 的实际购买状态与物料；旧八舵机 BOM 在 Git 历史，**不再执行剪 USB 线取电等旧建议**。
-- `docs/design/architecture.md`：原 AmazingHand 手指工作分解的历史规划，不是当前文件清单。
-- `docs/design/interface.md`：原 SCS/8 舵机协议 v0.2.2，仅历史手链；当前 RoArm 逻辑约定参见 `docs/relaunch_20261020/SYSTEM_ARCHITECTURE.md`。
-- `docs/fpga/README.md` 及 `technical_design.md`、`implementation_guide.md`、`interface_proposal.md`、`verification_acceptance.md`：2026-10 上旬旧手计划，为参考/实验审计；新执行在 #9 和新的 RoArm 专用实现中。
+- 2026-10-21 按负责人要求清理旧设计正文和三份过期 PR 草稿。`docs/design/architecture.md`、`interface.md` 以及旧 `technical_design.md`、`implementation_guide.md`、`interface_proposal.md` 仅保留历史跳转，原文位置见 [历史索引](../history/amazinghand/README.md)。
+- `docs/fpga/README.md` 已改为可复用工程与实测资产导航；`verification_acceptance.md` 含早期审查事实，保留原文。新的 PL 工作依据当前架构、#9 和实际源码/profile。
 - `docs/fpga/implementation_progress.md`：10/10 **历史现场快照**，不能用来说明 10/20 的最新状态。真正过往结果依然保留，后续阶段写新日志/新证据。
 - `docs/voice/`、`fpga/mjc1_fpd/`、`host/camera_linux/`：**真实技术资产**，可能含特定设备路径；复现必须按相应对应 profile，且不代表新系统通过。
 - `docs/migration/`、`deliverables/`、`sim/`、`AmazingHand/`：可追溯历史来源，禁止批量换链接、删许可证或修改原始 hash。
