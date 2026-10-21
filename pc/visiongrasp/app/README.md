@@ -30,7 +30,7 @@ python pc/scripts/demo.py --mode mock --camera live --camera-index 1 --backend d
 
 1 是索引示例，须替换为实测值；无法打开时检查 DSHOW/MSMF、USB 连接和 Windows 隐私权限。实时帧来源显示 LIVE_PC_UVC，机器人仍显示 MOCK，未标定时显示 UNCALIBRATED，不允许启动模拟抓放。
 
-桌面标定：固定相机，测量同一平面矩形的宽和高；启动参数加入 `--table-width-mm` 与 `--table-height-mm` 的**实际测量值**，点击 CALIBRATE 后依序点击左上、右上、右下、左下四角。成功后自动写入 output/pc/demo/table-calibration.json，重新选择色块再确认执行。后续可用 `--calibration` 加载保存文件，图像尺寸/来源变化时失效。桌面单应性不是机械臂基座标定，也不生成真实抓取 Z。
+桌面标定：固定相机，测量同一平面矩形的宽和高；启动参数加入 `--table-width-mm` 与 `--table-height-mm` 的**实际测量值**，点击 CALIBRATE 后依序点击左上、右上、右下、左下四角。成功后以独立版本写入 output/pc/demo/table-<UUID>.json，重新选择色块再确认执行。标定期间不能启动动作。后续可用 `--calibration` 加载保存文件，图像尺寸/来源变化时失效。桌面单应性不是机械臂基座标定，也不生成真实抓取 Z。
 
 ## 操作与日志
 

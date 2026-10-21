@@ -134,6 +134,7 @@ def test_sent_is_not_fake_completion(tmp_path, status):
     assert c.wait()
     assert len(robot.calls) == 1
     assert c.status.value == "FAULT"
+    assert c.snapshot()["completed_stages"] == 0
     c.close()
 
 
@@ -152,6 +153,41 @@ def test_real_robot_is_rejected_before_any_query(tmp_path):
             pytest.fail("real robot queried")
     with pytest.raises(ValueError, match="FAKE"):
         DemoController(Real(), tmp_path)
+
+
+def test_feedback_wait_does_not_block_snapshot_or_stop(tmp_path):
+    class SlowFeedback(BlockingRobot):
+        def __init__(self):
+            super().__init__()
+            self.feedback_entered = threading.Event()
+            self.feedback_release = threading.Event()
+        def query_feedback(self):
+            self.feedback_entered.set()
+            assert self.feedback_release.wait(1)
+            return super().query_feedback()
+        def cancel_future_stages(self):
+            super().cancel_future_stages()
+            self.feedback_release.set()
+    c, robot = prepared(tmp_path, SlowFeedback())
+    assert c.start(operator_confirmed=True)
+    assert robot.feedback_entered.wait(1)
+    started = time.monotonic()
+    assert c.snapshot()["completed_stages"] == 0
+    c.stop()
+    assert time.monotonic() - started < .2
+    assert c.wait()
+    assert len(robot.calls) == 1
+    assert c.snapshot()["completed_stages"] == 0
+    c.close()
+
+
+def test_beginning_calibration_invalidates_previous_selection(tmp_path):
+    c, robot = prepared(tmp_path)
+    c.invalidate_selection()
+    assert c.selected is None
+    assert not c.start(operator_confirmed=True)
+    assert not robot.calls
+    c.close()
 
 
 def test_dashboard_can_render_without_gui(tmp_path):

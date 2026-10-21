@@ -5,6 +5,7 @@ import argparse
 import json
 from pathlib import Path
 import time
+import uuid
 
 from visiongrasp.contracts import TaskStatus, VisionSource
 from .controller import DemoController
@@ -78,7 +79,7 @@ def main(argv=None) -> int:
             return TableCalibrator.fit(points, [(0, 0), (args.table_width_mm, 0),
                                        (args.table_width_mm, args.table_height_mm), (0, args.table_height_mm)],
                                        frame.frame_wh_px, source=frame.source,
-                                       calibration_id=f"table-{controller.session}")
+                                       calibration_id=f"table-{uuid.uuid4()}")
 
         def mouse(event, x, y, flags, userdata):
             nonlocal calibrator, calibrating, calibration_points, note
@@ -86,11 +87,14 @@ def main(argv=None) -> int:
                 return
             action = dashboard.action(x, y)
             if action == "run":
-                controller.start(operator_confirmed=True)
+                if calibrating:
+                    note = "Finish table calibration before confirmation."
+                else:
+                    controller.start(operator_confirmed=True)
             elif action == "stop":
                 controller.stop()
             elif action == "calibrate":
-                controller.stop("CALIBRATION_STARTED")
+                controller.invalidate_selection()
                 calibrating = True
                 calibration_points = []
                 note = "Click TL, TR, BR, BL of measured table."
@@ -103,7 +107,8 @@ def main(argv=None) -> int:
                     if len(calibration_points) == 4:
                         try:
                             calibrator = fit_table(calibration_points, packet)
-                            calibrator.save(args.output / "table-calibration.json")
+                            saved = args.output / f"{calibrator.calibration_id}.json"
+                            calibrator.save(saved)
                             note = "TABLE calibrated. Robot base remains UNCALIBRATED."
                             controller.log.write("TABLE_CALIBRATED", camera_source=packet.source.value,
                                                  calibration_id=calibrator.calibration_id)
@@ -152,7 +157,8 @@ def main(argv=None) -> int:
                 if key in (ord("s"), 32):
                     controller.stop()
                 elif key in (10, 13):
-                    controller.start(operator_confirmed=True)
+                    if not calibrating:
+                        controller.start(operator_confirmed=True)
             if args.headless and auto_started and state["status"] != TaskStatus.RUNNING.value:
                 break
             index += 1
@@ -164,6 +170,8 @@ def main(argv=None) -> int:
                 raise OSError("Could not save requested snapshot")
             args.snapshot.write_bytes(encoded.tobytes())
         state = controller.snapshot()
+        if state["status"] in (TaskStatus.FAULT.value, TaskStatus.STOP_REQUESTED.value):
+            exit_code = 2
         if args.auto_run and (not auto_started or state["completed_stages"] != 7 or state["error"]):
             exit_code = 2
         print(json.dumps({"mode": "MOCK", "camera": args.camera, "robot_xyz_mm": None,

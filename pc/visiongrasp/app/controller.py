@@ -52,6 +52,7 @@ class DemoController:
         self.error: str | None = None
         self.current_stage: str | None = None
         self.results = []
+        self.completed_stages = 0
         self.feedback = None
         self.frame: FramePacket | None = None
         self.targets: list[VisionTarget] = []
@@ -100,6 +101,12 @@ class DemoController:
             self.log.write("TARGET_SELECTED", **self._target_fields(), monotonic_s=self.clock())
             return True
 
+    def invalidate_selection(self, reason: str = "CALIBRATION_STARTED") -> None:
+        self.stop(reason)
+        with self._lock:
+            self.selected = None
+            self.targets = []
+
     def _guard(self) -> str | None:
         if self._closed:
             return "CLOSED"
@@ -133,6 +140,7 @@ class DemoController:
             self._cancel.clear()
             self.error = None
             self.results = []
+            self.completed_stages = 0
             self.current_stage = None
             self.status = TaskStatus.RUNNING
             run_session = str(uuid.uuid4())
@@ -180,14 +188,19 @@ class DemoController:
                         self.robot.cancel_future_stages()
                         self.log.write("TASK_FAULT", error=self.error, run_session=run_session)
                         return
-                    self.feedback = self.robot.query_feedback()
-                    if self.feedback.robot_source != RobotSource.FAKE or not self.feedback.communication_ok:
+                feedback = self.robot.query_feedback()
+                with self._lock:
+                    if self._cancel.is_set():
+                        return
+                    if feedback.robot_source != RobotSource.FAKE or not feedback.communication_ok:
                         raise RuntimeError("INVALID_FAKE_FEEDBACK")
+                    self.feedback = feedback
+                    self.completed_stages += 1
             with self._lock:
                 if not self._cancel.is_set():
                     self.status = TaskStatus.IDLE
                     self.log.write("MOCK_SEQUENCE_COMPLETED", run_session=run_session,
-                                   completed_stages=len(self.results), **self._target_fields())
+                                   completed_stages=self.completed_stages, **self._target_fields())
         except Exception as exc:
             with self._lock:
                 self.status = TaskStatus.FAULT
@@ -209,7 +222,7 @@ class DemoController:
     def snapshot(self) -> dict:
         with self._lock:
             return {"status": self.status.value, "error": self.error,
-                    "stage": self.current_stage, "completed_stages": len(self.results),
+                    "stage": self.current_stage, "completed_stages": self.completed_stages,
                     "selected": self.selected, "feedback": self.feedback,
                     "robot_source": "FAKE", "robot_xyz_mm": None}
 
