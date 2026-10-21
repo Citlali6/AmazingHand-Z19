@@ -106,6 +106,7 @@ class DemoController:
         with self._lock:
             self.selected = None
             self.targets = []
+            self.error = reason
 
     def _guard(self) -> str | None:
         if self._closed:

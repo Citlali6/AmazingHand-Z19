@@ -109,3 +109,123 @@ def test_failed_camera_is_reported_and_released_without_physical_access(tmp_path
     assert camera.closed
     assert any(row["event"] == "CAMERA_HEALTH" and row["health"]["status"] == "OPEN_FAILED"
                for row in read_log(tmp_path))
+
+
+def track_controller(monkeypatch):
+    from visiongrasp.app import cli
+    original = cli.DemoController
+    controllers = []
+    def create(*args, **kwargs):
+        controller = original(*args, **kwargs)
+        controllers.append(controller)
+        return controller
+    monkeypatch.setattr(cli, "DemoController", create)
+    return controllers
+
+
+def click(mouse, x, y):
+    mouse(cv2.EVENT_LBUTTONDOWN, x, y, 0, None)
+
+
+def cache_camera_frame(monkeypatch):
+    from visiongrasp.vision import SyntheticCamera
+    class CachedCamera:
+        def __init__(self, *args, **kwargs):
+            self.camera = SyntheticCamera(*args, **kwargs)
+            self.packet = self.camera.read_latest()
+        @property
+        def health(self):
+            return self.camera.health
+        def read_latest(self):
+            return self.packet
+        def close(self):
+            self.camera.close()
+    monkeypatch.setattr("visiongrasp.vision.SyntheticCamera", CachedCamera)
+
+
+@pytest.mark.parametrize("failure", ["degenerate_points", "missing_dimensions", "save_failed", "cached_frame"])
+def test_failed_recalibration_never_reuses_previous_calibration(tmp_path, monkeypatch, failure):
+    controllers = track_controller(monkeypatch)
+    if failure == "cached_frame":
+        cache_camera_frame(monkeypatch)
+    if failure == "save_failed":
+        def failed_save(self, path):
+            raise OSError("injected calibration persistence failure")
+        monkeypatch.setattr("visiongrasp.vision.TableCalibrator.save", failed_save)
+    shown = []
+    def on_show(mouse):
+        controller = controllers[0]
+        if not shown:
+            assert any(target.valid for target in controller.targets)
+            click(mouse, 250, 345)
+            assert controller.selected.calibration_id == "synthetic-table-fixture"
+            click(mouse, 900, 315)
+            points = [(100, 150)] * 4 if failure in ("degenerate_points", "cached_frame") else [
+                (50, 140), (750, 140), (750, 670), (50, 670)]
+            for point in points:
+                click(mouse, *point)
+        else:
+            # Includes --synthetic-calibrated: startup fixtures must not come back.
+            assert controller.targets
+            assert all(not target.valid and target.rejected_reason == "UNCALIBRATED"
+                       and target.calibration_id is None for target in controller.targets)
+            click(mouse, 250, 345)
+            click(mouse, 900, 185)
+        shown.append(True)
+    virtual_window(monkeypatch, on_show)
+    monkeypatch.setattr(cv2, "waitKey", lambda *args: -1)
+    args = ["--synthetic-calibrated", "--frames", "3", "--output", str(tmp_path)]
+    if failure != "missing_dimensions":
+        args += ["--table-width-mm", "300", "--table-height-mm", "200"]
+    assert main(args) == 2
+    rows = read_log(tmp_path)
+    assert not any(row["event"] == "STAGE_REQUEST" for row in rows)
+    assert any(row["event"] == "TABLE_CALIBRATION_FAILED" for row in rows)
+    assert len([row for row in rows if row["event"] == "SYNTHETIC_TABLE_FIXTURE"]) == 1
+    assert controllers[0].selected is None or not controllers[0].selected.valid
+
+
+@pytest.mark.parametrize("cached, automatic_startup", [(False, False), (True, False), (False, True)])
+def test_successful_recalibration_requires_new_selection_and_confirmation(tmp_path, monkeypatch, cached, automatic_startup):
+    controllers = track_controller(monkeypatch)
+    if cached:
+        cache_camera_frame(monkeypatch)
+    monkeypatch.setattr("visiongrasp.robot.FakeRobot", lambda: FakeRobot(stage_delay_s=0))
+    shown = []
+    calibration_ids = []
+    def on_show(mouse):
+        controller = controllers[0]
+        step = len(shown)
+        if step == 0:
+            click(mouse, 250, 345)
+            calibration_ids.append(controller.selected.calibration_id)
+            click(mouse, 900, 315)
+            for point in [(50, 140), (750, 140), (750, 670), (50, 670)]:
+                click(mouse, *point)
+            assert controller.selected is None
+        elif step == 1:
+            calibration_ids.append(controller.targets[0].calibration_id)
+            assert calibration_ids[1] and calibration_ids[1] != calibration_ids[0]
+            assert controller.selected is None
+            click(mouse, 900, 185)
+            assert controller.snapshot()["completed_stages"] == 0
+            assert not any(row["event"] == "STAGE_REQUEST" for row in read_log(tmp_path))
+        elif step == 2:
+            click(mouse, 250, 345)
+            assert controller.selected.valid
+            assert controller.selected.calibration_id == calibration_ids[1]
+            assert not any(row["event"] == "STAGE_REQUEST" for row in read_log(tmp_path))
+        elif step == 3:
+            click(mouse, 900, 185)
+        shown.append(True)
+    virtual_window(monkeypatch, on_show)
+    monkeypatch.setattr(cv2, "waitKey", lambda *args: -1)
+    args = ["--frames", "8", "--output", str(tmp_path),
+            "--table-width-mm", "300", "--table-height-mm", "200"]
+    args += ["--auto-run"] if automatic_startup else ["--synthetic-calibrated"]
+    assert main(args) == 0
+    rows = read_log(tmp_path)
+    requests = [row for row in rows if row["event"] == "STAGE_REQUEST"]
+    assert len(requests) == 7
+    assert all(row["calibration_id"] == calibration_ids[1] for row in requests)
+    assert all(row["robot_source"] == "FAKE" and row["robot_xyz_mm"] is None for row in requests)

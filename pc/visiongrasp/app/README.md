@@ -32,6 +32,8 @@ python pc/scripts/demo.py --mode mock --camera live --camera-index 1 --backend d
 
 桌面标定：固定相机，测量同一平面矩形的宽和高；启动参数加入 `--table-width-mm` 与 `--table-height-mm` 的**实际测量值**，点击 CALIBRATE 后依序点击左上、右上、右下、左下四角。成功后以独立版本写入 output/pc/demo/table-<UUID>.json，重新选择色块再确认执行。标定期间不能启动动作。后续可用 `--calibration` 加载保存文件，图像尺寸/来源变化时失效。桌面单应性不是机械臂基座标定，也不生成真实抓取 Z。
 
+点击 CALIBRATE 会立即使上一版标定和目标选择失效，并撤销启动时的 `--auto-run` 自动确认。拟合或保存失败后保持 `UNCALIBRATED`，不能沿用旧坐标执行，也不会自动恢复启动时的合成标定；必须重新成功完成标定（或退出后显式加载已核对版本），重新选择目标并确认。新版本只有在拟合和保存均成功后才参与检测。
+
 需要调色时先用 #8 camera_probe 的 `--tune` 检查 HSV/面积参数；主程序可用 `--detector-config 文件.json` 加载 DetectorConfig 字段。参数说明见 [视觉模块](../vision/README.md)。不要把规则检测分数解释为神经网络置信度。
 
 ## 操作与日志

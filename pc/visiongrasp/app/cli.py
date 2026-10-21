@@ -63,6 +63,9 @@ def main(argv=None) -> int:
     dashboard = Dashboard()
     canvas = None
     auto_started = False
+    auto_run_enabled = args.auto_run
+    synthetic_fixture_pending = args.synthetic_calibrated
+    detected_calibration_id = None
     last_health = None
     try:
         if args.calibration:
@@ -85,7 +88,7 @@ def main(argv=None) -> int:
                                        calibration_id=f"table-{uuid.uuid4()}")
 
         def mouse(event, x, y, flags, userdata):
-            nonlocal calibrator, calibrating, calibration_points, note
+            nonlocal calibrator, calibrating, calibration_points, note, targets, synthetic_fixture_pending, auto_run_enabled
             if event != cv2.EVENT_LBUTTONDOWN:
                 return
             action = dashboard.action(x, y)
@@ -98,9 +101,17 @@ def main(argv=None) -> int:
                 controller.stop()
             elif action == "calibrate":
                 controller.invalidate_selection()
+                previous_id = calibrator.calibration_id if calibrator is not None else None
+                calibrator = None
+                targets = []
+                # A startup fixture must not silently replace a failed manual calibration.
+                synthetic_fixture_pending = False
+                auto_run_enabled = False
                 calibrating = True
                 calibration_points = []
                 note = "Click TL, TR, BR, BL of measured table."
+                controller.log.write("TABLE_CALIBRATION_STARTED", previous_calibration_id=previous_id,
+                                     calibration_id=None)
             else:
                 point = dashboard.image_point(x, y)
                 if point is None or packet is None:
@@ -109,14 +120,22 @@ def main(argv=None) -> int:
                     calibration_points.append(point)
                     if len(calibration_points) == 4:
                         try:
-                            calibrator = fit_table(calibration_points, packet)
-                            saved = args.output / f"{calibrator.calibration_id}.json"
-                            calibrator.save(saved)
+                            candidate = fit_table(calibration_points, packet)
+                            saved = args.output / f"{candidate.calibration_id}.json"
+                            candidate.save(saved)
+                            calibrator = candidate
+                            targets = []
+                            controller.invalidate_selection("CALIBRATION_UPDATED")
                             note = "TABLE calibrated. Robot base remains UNCALIBRATED."
                             controller.log.write("TABLE_CALIBRATED", camera_source=packet.source.value,
                                                  calibration_id=calibrator.calibration_id)
-                        except (ValueError, OSError) as exc:
-                            note = str(exc)
+                        except (ValueError, OSError, cv2.error) as exc:
+                            calibrator = None
+                            targets = []
+                            controller.invalidate_selection("UNCALIBRATED")
+                            note = f"UNCALIBRATED: {exc}"
+                            controller.log.write("TABLE_CALIBRATION_FAILED", calibration_id=None,
+                                                 error=str(exc))
                         calibrating = False
                 else:
                     for i, target in enumerate(targets):
@@ -140,18 +159,22 @@ def main(argv=None) -> int:
                 controller.log.write("CAMERA_HEALTH", camera_source="SYNTHETIC" if args.camera == "synthetic" else "LIVE_PC_UVC",
                                      health=health, monotonic_s=time.monotonic())
                 last_health = health["status"]
-            if packet is not None and calibrator is None and args.synthetic_calibrated:
+            if packet is not None and calibrator is None and synthetic_fixture_pending:
                 w, h = packet.frame_wh_px
                 calibrator = TableCalibrator.fit([(0, 0), (w-1, 0), (w-1, h-1), (0, h-1)],
                     [(0, 0), (300, 0), (300, 200), (0, 200)], packet.frame_wh_px,
                     source=VisionSource.SYNTHETIC, calibration_id="synthetic-table-fixture")
                 controller.log.write("SYNTHETIC_TABLE_FIXTURE", calibration_id="synthetic-table-fixture")
+                synthetic_fixture_pending = False
+            current_calibration_id = calibrator.calibration_id if calibrator is not None else None
             if packet is None:
                 targets = []
-            elif previous is None or (packet.camera_session, packet.frame_id) != (previous.camera_session, previous.frame_id):
+            elif (previous is None or (packet.camera_session, packet.frame_id) != (previous.camera_session, previous.frame_id)
+                  or current_calibration_id != detected_calibration_id):
                 targets = detector.detect(packet, calibrator)
+                detected_calibration_id = current_calibration_id
             controller.observe(packet, targets)
-            if args.auto_run and not auto_started and any(t.valid for t in targets):
+            if auto_run_enabled and not auto_started and any(t.valid for t in targets):
                 controller.select(next(i for i, t in enumerate(targets) if t.valid))
                 auto_started = controller.start(operator_confirmed=True)
             state = controller.snapshot()
@@ -183,7 +206,7 @@ def main(argv=None) -> int:
             exit_code = 2
         if camera.health["status"] != "CAMERA_OK":
             exit_code = 2
-        if args.auto_run and (not auto_started or state["completed_stages"] != 7 or state["error"]):
+        if auto_run_enabled and (not auto_started or state["completed_stages"] != 7 or state["error"]):
             exit_code = 2
         print(json.dumps({"mode": "MOCK", "camera": args.camera, "robot_xyz_mm": None,
                           "status": state["status"], "completed_stages": state["completed_stages"],
