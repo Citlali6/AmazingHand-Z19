@@ -14,4 +14,3 @@ def no_physical_io(monkeypatch):
     import cv2
     monkeypatch.setattr(serial.Serial, "open", forbidden)
     monkeypatch.setattr(cv2, "VideoCapture", forbidden)
-

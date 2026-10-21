@@ -17,4 +17,3 @@ include = ["visiongrasp*"]
 testpaths = ["tests"]
 pythonpath = ["."]
 addopts = "-ra"
-
