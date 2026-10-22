@@ -1,0 +1,22 @@
+{
+  "repository": "https://github.com/laperex/image_processing_fpga",
+  "commit": "0a33843ab7dee60cca22082db42e4f8eb4c180e1",
+  "license": "MIT",
+  "files": [
+    {
+      "file": "cv_types.sv",
+      "upstream_path": "srcs/rtl/cv_types.sv",
+      "sha256": "17099c1c34d94c324b1a2c43cbd8b7e0a471e1d67bf7f9a66c2735c42a9e0442"
+    },
+    {
+      "file": "cv_rgb_to_hsv.sv",
+      "upstream_path": "srcs/rtl/cv_rgb_to_hsv.sv",
+      "sha256": "0f04493b5ba848e45eb1566be99483db2e56af53b4418f6d1a8f938555d3ab7d"
+    },
+    {
+      "file": "LICENSE",
+      "upstream_path": "LICENSE",
+      "sha256": "9f7c34a8bbc2d93b0c7edcd503e5e1c1134467c7810bff66b4a8e178f218ec3e"
+    }
+  ]
+}
