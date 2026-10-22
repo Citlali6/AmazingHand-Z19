@@ -1,0 +1,19 @@
+{
+  "design_only": true,
+  "setup": {
+    "geometry_verified": false,
+    "physical_scale_check": "",
+    "grid_pitch_mm": [20.0, 20.0],
+    "board_wh_mm": [500.0, 400.0],
+    "origin_axes": "P1 origin; +X P1->P2; +Y P1->P4; inner calibration ROI 400x300 mm; outer margin 50 mm; DESIGN DIMENSIONS pending physical verification",
+    "camera_mount_crop_focus": "",
+    "distortion_assessment": "",
+    "object_height_parallax": ""
+  },
+  "table_points": [[0.0, 0.0], [400.0, 0.0], [400.0, 300.0], [0.0, 300.0]],
+  "checks": {
+    "table_points": [[40.0, 40.0], [360.0, 40.0], [360.0, 260.0], [40.0, 260.0], [200.0, 140.0]],
+    "mean_limit_mm": 5.0,
+    "max_limit_mm": 10.0
+  }
+}

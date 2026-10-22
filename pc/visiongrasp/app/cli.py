@@ -25,6 +25,8 @@ def parser():
     p.add_argument("--auto-run", action="store_true", help="Explicit simulated confirmation, synthetic only")
     p.add_argument("--synthetic-calibrated", action="store_true", help="Use a labelled synthetic table fixture")
     p.add_argument("--calibration", type=Path)
+    p.add_argument("--confirm-calibration-setup", action="store_true", help="onsite: camera/board/crop/focus unchanged since independent checks")
+    p.add_argument("--base-calibration", type=Path, help="measured table-to-base PLAN PREVIEW only; never drives Fake/real robot")
     p.add_argument("--detector-config", type=Path, help="HSV/area/aspect DetectorConfig JSON from camera tuning")
     p.add_argument("--table-width-mm", type=float)
     p.add_argument("--table-height-mm", type=float)
@@ -66,10 +68,16 @@ def main(argv=None) -> int:
     auto_run_enabled = args.auto_run
     synthetic_fixture_pending = args.synthetic_calibrated
     detected_calibration_id = None
+    setup_bound_session = None
+    logged_frame = None
+    base_calibration = None
     last_health = None
     try:
         if args.calibration:
             calibrator = TableCalibrator.load(args.calibration)
+        if args.base_calibration:
+            from visiongrasp.vision.robot_base import BaseCalibration
+            base_calibration = BaseCalibration.load(args.base_calibration)
         config = DetectorConfig(**json.loads(args.detector_config.read_text(encoding="utf-8"))) if args.detector_config else DetectorConfig()
         detector = BlockDetector(config, max_age_s=args.max_frame_age_s)
         camera = (SyntheticCamera(args.width, args.height) if args.camera == "synthetic" else
@@ -167,6 +175,24 @@ def main(argv=None) -> int:
                 controller.log.write("SYNTHETIC_TABLE_FIXTURE", calibration_id="synthetic-table-fixture")
                 synthetic_fixture_pending = False
             current_calibration_id = calibrator.calibration_id if calibrator is not None else None
+            if packet is not None and args.camera == "live" and calibrator is not None:
+                if (calibrator.measurement is None or not args.confirm_calibration_setup
+                        or not calibrator.measurement["checks"]["passed"]):
+                    controller.invalidate_selection("INDEPENDENT_CHECKS_AND_SETUP_CONFIRMATION_REQUIRED")
+                    calibrator = None
+                    current_calibration_id = None
+                elif setup_bound_session is None:
+                    # A new camera process has a new session. Explicit onsite setup
+                    # confirmation permits binding; source and actual size still checked.
+                    old_session = calibrator.camera_session
+                    calibrator.camera_session = packet.camera_session
+                    setup_bound_session = packet.camera_session
+                    controller.log.write("CALIBRATION_SETUP_CONFIRMED", calibration_id=calibrator.calibration_id,
+                                         previous_camera_session=old_session, camera_session=setup_bound_session)
+                elif setup_bound_session != packet.camera_session:
+                    controller.invalidate_selection("CAMERA_SESSION_CHANGED")
+                    calibrator = None
+                    current_calibration_id = None
             if packet is None:
                 targets = []
             elif (previous is None or (packet.camera_session, packet.frame_id) != (previous.camera_session, previous.frame_id)
@@ -174,13 +200,27 @@ def main(argv=None) -> int:
                 targets = detector.detect(packet, calibrator)
                 detected_calibration_id = current_calibration_id
             controller.observe(packet, targets)
+            frame_identity = (packet.camera_session, packet.frame_id, current_calibration_id) if packet else None
+            if frame_identity is not None and frame_identity != logged_frame:
+                from dataclasses import asdict
+                controller.log.write("VISION_FRAME", source=packet.source.value,
+                    camera_session=packet.camera_session, frame_id=packet.frame_id,
+                    capture_monotonic_s=packet.capture_monotonic_s, frame_wh_px=packet.frame_wh_px,
+                    calibration_id=current_calibration_id, valid=any(t.valid for t in targets),
+                    rejected_reason=None if any(t.valid for t in targets) else "NO_VALID_TARGET",
+                    targets=[asdict(t) for t in targets])
+                logged_frame = frame_identity
             if auto_run_enabled and not auto_started and any(t.valid for t in targets):
                 controller.select(next(i for i, t in enumerate(targets) if t.valid))
                 auto_started = controller.start(operator_confirmed=True)
             state = controller.snapshot()
+            from visiongrasp.vision.robot_base import preview_target
+            state["plan_preview"] = preview_target(state["selected"], calibrator, base_calibration,
+                                                   now=time.monotonic(), max_age_s=args.max_frame_age_s)
             camera_note = note if health["status"] == "CAMERA_OK" else f"CAMERA: {health['status']}"
             canvas = dashboard.render(packet, targets, state, note=camera_note,
-                                      calibration_points=calibration_points if calibrating else ())
+                                      calibration_points=calibration_points if calibrating else (),
+                                      table_calibration=calibrator)
             if not args.headless:
                 cv2.imshow(window, canvas)
                 key = cv2.waitKey(1) & 0xff

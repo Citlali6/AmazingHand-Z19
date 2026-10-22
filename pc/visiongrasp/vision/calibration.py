@@ -21,6 +21,7 @@ class TableCalibrator:
         self.calibration_id = None
         self.source = None
         self.camera_session = None
+        self.measurement = None
 
     @classmethod
     def fit(cls, image_points, table_points, frame_wh_px, max_error_mm=2.0,
@@ -117,6 +118,8 @@ class TableCalibrator:
                    "image_points": self.image_points.tolist(), "table_points": self.table_points.tolist(),
                    "matrix": self.matrix.tolist(), "max_error_mm": self.max_error_mm,
                    "error_mm": self.error_mm, "rms_error_mm": self.rms_error_mm}
+        if self.measurement is not None:
+            payload["measurement"] = self.measurement
         # Caller owns path selection; refuse to replace an existing calibration.
         with Path(path).open("x", encoding="utf-8") as stream:
             json.dump(payload, stream, indent=2, allow_nan=False)
@@ -137,4 +140,7 @@ class TableCalibrator:
                 or not math.isclose(payload["error_mm"], instance.error_mm, abs_tol=1e-5)
                 or not math.isclose(payload["rms_error_mm"], instance.rms_error_mm, abs_tol=1e-5)):
             raise ValueError("stored calibration does not match measured correspondences")
+        if "measurement" in payload:
+            from .measurement import restore_measurement
+            restore_measurement(instance, payload["measurement"])
         return instance
