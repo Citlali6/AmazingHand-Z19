@@ -1,0 +1,140 @@
+{
+  "repository": "Citlali6/VisionGrasp-Z19",
+  "branch": "feature/pl-color-grid-20261022",
+  "baseline_commit": "7b1163ed8ad734f5bf0ba31aaf4ac18291935273",
+  "validation_date": "2026-10-22",
+  "hardware": {
+    "board": "ALINX Z19",
+    "device": "xczu19eg-ffvc1760-2-i",
+    "kernel": "5.4.0-xilinx-v2020.2",
+    "camera_usb_id": "0bda:9143",
+    "capture_node": "/dev/video0",
+    "pl0_hz": 200703980,
+    "pl1_hz": 100351990
+  },
+  "pl": {
+    "register_base": "0xa0000000",
+    "register_range_bytes": 4096,
+    "id": "0x31524c43",
+    "version": "0x00010001",
+    "algorithm_location": "PL",
+    "ps_role": "UVC/JPEG/native32 transport only",
+    "pc_role": "display and parameter controls only"
+  },
+  "implementation": {
+    "tool": "Vivado 2020.1",
+    "lut": 1885,
+    "ff": 1936,
+    "bram": 0,
+    "dsp": 6,
+    "wns_ns": 4.58,
+    "whs_ns": 0.017,
+    "timing_failures": 0,
+    "drc_errors": 0,
+    "drc_warnings": 25
+  },
+  "simulation_markers": [
+    "HSV_PASS vectors=1024 H_tolerance=1 S_tolerance=2 V_exact=1 valid_and_tlast_checked=1",
+    "COLOR_AXIS_PASS beats=2064 source_stalls=3910 held_checks=4108 reset=PASS config_snapshot=PASS",
+    "COLOR_AXI_PASS pixels=64 colors=4 decoupled_AW_W=PASS read_stalls=PASS stats=PASS error_recovery=PASS"
+  ],
+  "board_observed_results": {
+    "source": "Previously observed interactive board session, not rerun during packaging",
+    "selftest_marker": "COLOR_BOARD_SELFTEST_PASS",
+    "bulk_marker": "COLOR_BULK_BENCHMARK_PASS",
+    "bulk_pixels_compared": 4915200,
+    "color_modes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "sizes": [
+      [
+        1280,
+        720
+      ],
+      [
+        640,
+        480
+      ]
+    ],
+    "pixel_or_count_mismatches": 0
+  },
+  "performance": {
+    "smooth": {
+      "width": 640,
+      "height": 480,
+      "distinct_samples": 24,
+      "fps": {
+        "mean": 5.760208333333334,
+        "minimum": 5.75,
+        "maximum": 5.768
+      },
+      "pl_processing_ms": {
+        "mean": 157.418125,
+        "minimum": 157.278,
+        "maximum": 157.743
+      },
+      "capture_to_publish_ms": {
+        "mean": 221.42808333333335,
+        "minimum": 203.803,
+        "maximum": 238.167
+      },
+      "decode_ms": {
+        "mean": 9.312291666666667,
+        "minimum": 9.207,
+        "maximum": 9.554
+      },
+      "encode_ms": {
+        "mean": 6.517916666666667,
+        "minimum": 6.461,
+        "maximum": 6.678
+      }
+    },
+    "hd": {
+      "width": 1280,
+      "height": 720,
+      "distinct_samples": 10,
+      "fps": {
+        "mean": 1.9323000000000001,
+        "minimum": 1.931,
+        "maximum": 1.933
+      },
+      "pl_processing_ms": {
+        "mean": 471.3174,
+        "minimum": 470.353,
+        "maximum": 471.837
+      },
+      "capture_to_publish_ms": {
+        "mean": 561.7571,
+        "minimum": 547.725,
+        "maximum": 573.436
+      },
+      "decode_ms": {
+        "mean": 27.000799999999998,
+        "minimum": 26.568,
+        "maximum": 27.929
+      },
+      "encode_ms": {
+        "mean": 18.6768,
+        "minimum": 18.57,
+        "maximum": 18.982
+      }
+    }
+  },
+  "latency_scope": "Capture timestamp to board publication; network and screen delay additional; not measured glass-to-glass latency.",
+  "limits": [
+    "PIO diagnostic, not 30fps",
+    "Global color bbox merges same-color objects",
+    "No grid/calibration/robot movement or speech",
+    "Independent PL profile, replaces existing image",
+    "Requires validated PS/kernel/clock/driver preconditions; not a universal board image"
+  ],
+  "native_runtime_dependencies": [
+    "libjpeg.so.62",
+    "libpthread.so.0",
+    "libc.so.6",
+    "/lib/ld-linux-aarch64.so.1"
+  ]
+}
