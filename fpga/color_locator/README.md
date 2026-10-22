@@ -4,7 +4,13 @@
 1280×720 USB-camera processing passed.** The PC displays the original and the
 PL-highlighted image at `http://127.0.0.1:8774/` while the bench processes and
 SSH tunnel remain running. This is color segmentation and a global bounding
-rectangle, not completed grid localization, object separation, voice or arm control.
+rectangle. Grid localization, object separation and arm control remain incomplete.
+
+**Optional voice selection (2026-10-22):** real user speech selected red and a later
+board status showed a voice-originated green request with matching camera/PL frame
+IDs and PL coordinates. ASR runs on Z19 ARM using the existing Chinese small model;
+HSV, pixel count and bounding rectangle remain in PL. See [voice setup and evidence](VOICE.md).
+These additions are separate from the frozen r3 firmware/executable bundle below.
 
 See [Chinese integration/audit report](../../docs/fpga/usb_color_module.md).
 The [validated firmware and native executable bundle](../../deliverables/pl_color_z19/README.md)

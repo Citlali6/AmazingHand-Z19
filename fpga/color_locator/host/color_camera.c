@@ -193,8 +193,15 @@ int main(int argc,char **argv){
   size_t jpeg_bytes=latest.bytes;generation=latest.generation;memcpy(frame_jpeg,latest.jpeg,jpeg_bytes);
   pthread_mutex_unlock(&latest.mutex);
   double work_start=now();
-  unsigned frame=published+1,color=1,saturation=100,value=80;FILE *cf=fopen(control,"r");
-  if(cf){unsigned c,s,v;if(fscanf(cf,"%u %u %u",&c,&s,&v)==3&&c<=3&&s<=255&&v<=255){color=c;saturation=s;value=v;}fclose(cf);}
+  unsigned frame=published+1,color=0,saturation=100,value=80;
+  unsigned long long request_id=0;double requested_at=0;FILE *cf=fopen(control,"r");
+  if(cf){unsigned c,s,v;unsigned long long id=0;double stamp=0;
+   int fields=fscanf(cf,"%u %u %u %llu %lf",&c,&s,&v,&id,&stamp);
+   if(fields>=3&&c<=3&&s<=255&&v<=255){color=c;saturation=s;value=v;if(fields==5&&stamp>=0){request_id=id;requested_at=stamp;}}
+   fclose(cf);
+  }
+  // A new command must use a capture made after the request, not an old frame.
+  if(capture_stamp<requested_at)continue;
   if(decode(frame_jpeg,jpeg_bytes,rgb,width,height)){fprintf(stderr,"BAD_MJPEG\n");break;}
   double decode_ms=(now()-work_start)*1000;
   snprintf(path,sizeof path,"%s/frame-%u-source.jpg",dir,frame);save_bytes(path,frame_jpeg,jpeg_bytes);
@@ -204,7 +211,7 @@ int main(int argc,char **argv){
   double published_at=now(),encode_ms=(published_at-encode_start)*1000;
   double display_fps=previous_publish>0?1/(published_at-previous_publish):0;previous_publish=published_at;
   snprintf(path,sizeof path,"%s/status.tmp",dir);FILE *status=fopen(path,"w");if(!status)die("status");
-  fprintf(status,"{\"source\":\"Z19_USB_TO_REAL_PL\",\"frame\":%u,\"capture_sequence\":%u,\"pl_sequence\":%u,\"width\":%u,\"height\":%u,\"color\":%u,\"min_s\":%u,\"min_v\":%u,\"mask_count\":%u,\"bbox\":[%u,%u,%u,%u],\"pl_processing_ms\":%.3f,\"published_monotonic\":%.6f,\"decode_ms\":%.3f,\"encode_ms\":%.3f,\"capture_to_publish_ms\":%.3f,\"fps\":%.3f}\n",frame,capture_sequence,rd(0x40),width,height,color,saturation,value,rd(0x2c),rd(0x30),rd(0x38),rd(0x34),rd(0x3c),elapsed*1000,published_at,decode_ms,encode_ms,(published_at-capture_stamp)*1000,display_fps);
+  fprintf(status,"{\"source\":\"Z19_USB_TO_REAL_PL\",\"frame\":%u,\"capture_sequence\":%u,\"pl_sequence\":%u,\"width\":%u,\"height\":%u,\"color\":%u,\"min_s\":%u,\"min_v\":%u,\"mask_count\":%u,\"bbox\":[%u,%u,%u,%u],\"pl_processing_ms\":%.3f,\"published_monotonic\":%.6f,\"decode_ms\":%.3f,\"encode_ms\":%.3f,\"capture_to_publish_ms\":%.3f,\"fps\":%.3f,\"request_id\":%llu,\"captured_monotonic\":%.9f}\n",frame,capture_sequence,rd(0x40),width,height,color,saturation,value,rd(0x2c),rd(0x30),rd(0x38),rd(0x34),rd(0x3c),elapsed*1000,published_at,decode_ms,encode_ms,(published_at-capture_stamp)*1000,display_fps,request_id,capture_stamp);
   fclose(status);snprintf(status_path,sizeof status_path,"%s/status.json",dir);if(rename(path,status_path))die("status publish");
   printf("FRAME %u CAPTURE %u COLOR %u PL_MATCH %u PL_MS %.1f\n",frame,capture_sequence,color,rd(0x2c),elapsed*1000);published=frame;
   if(frame>4){snprintf(path,sizeof path,"%s/frame-%u-source.jpg",dir,frame-4);unlink(path);snprintf(path,sizeof path,"%s/frame-%u-pl.jpg",dir,frame-4);unlink(path);}
