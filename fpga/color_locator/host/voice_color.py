@@ -10,7 +10,7 @@ import signal
 import threading
 import time
 
-from color_control import ControlStore, atomic_json, parse_command, keyword_grammar
+from color_control import ControlStore, atomic_json, read_json, parse_command, keyword_grammar
 
 
 def main():
@@ -59,6 +59,7 @@ def main():
         previous_partial = ''
         last_accept = ('', 0.0)
         heartbeat = time.monotonic()
+        muted = False
         while not stopping.is_set():
             pcm = capture.read()
             if stopping.is_set():
@@ -67,6 +68,18 @@ def main():
             peak = max((abs(value) for value in samples), default=0)
             rms = math.sqrt(sum(value*value for value in samples)/max(1, len(samples)))
             status.update(peak=peak, rms=round(rms, 1))
+            guard = read_json(args.directory/'speech_guard.json', {})
+            if guard.get('until', 0) > time.monotonic():
+                if not muted:
+                    recognizer.Reset()
+                    previous_partial = ''
+                    publish(phase='speaking', partial='', accepted=False)
+                muted = True
+                continue  # Drain live PCM while discarding speaker output and its echo.
+            if muted:
+                recognizer.Reset()
+                publish(phase='listening', partial='', accepted=False)
+                muted = False
             if recognizer.AcceptWaveform(pcm):
                 result = json.loads(recognizer.Result())
                 text = result.get('text', '').strip()

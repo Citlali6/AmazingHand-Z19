@@ -98,10 +98,10 @@ static void benchmark(void){
 }
 struct jpeg_err{struct jpeg_error_mgr base;jmp_buf jump;};
 static void jpeg_fail(j_common_ptr codec){struct jpeg_err *e=(struct jpeg_err*)codec->err;(*codec->err->output_message)(codec);longjmp(e->jump,1);}
-static int decode(const uint8_t *data,size_t bytes,uint8_t *rgb,unsigned width,unsigned height){
+static int decode(const uint8_t *data,size_t bytes,uint8_t *rgb,unsigned width,unsigned height,unsigned divisor){
  struct jpeg_decompress_struct c;struct jpeg_err e;c.err=jpeg_std_error(&e.base);e.base.error_exit=jpeg_fail;
  if(setjmp(e.jump)){jpeg_destroy_decompress(&c);return -1;}
- jpeg_create_decompress(&c);jpeg_mem_src(&c,data,bytes);jpeg_read_header(&c,TRUE);c.out_color_space=JCS_RGB;
+ jpeg_create_decompress(&c);jpeg_mem_src(&c,data,bytes);jpeg_read_header(&c,TRUE);c.out_color_space=JCS_RGB;c.scale_num=1;c.scale_denom=divisor;
  jpeg_start_decompress(&c);
  if(c.output_width!=width||c.output_height!=height||c.output_components!=3){jpeg_destroy_decompress(&c);return -1;}
  while(c.output_scanline<c.output_height){JSAMPROW row=rgb+c.output_scanline*width*3;jpeg_read_scanlines(&c,&row,1);}
@@ -149,7 +149,7 @@ static void *capture_worker(void *arg){
 }
 int main(int argc,char **argv){
  setbuf(stdout,NULL);signal(SIGTERM,stop);signal(SIGINT,stop);
- if(argc!=2&&argc!=6){fprintf(stderr,"usage: color_camera --selftest | DEVICE WIDTH HEIGHT OUTPUT_DIR MAX_FRAMES\n");return 1;}
+ if(argc!=2&&argc!=6&&argc!=7){fprintf(stderr,"usage: color_camera --selftest | DEVICE WIDTH HEIGHT OUTPUT_DIR MAX_FRAMES [JPEG_DIVISOR=1|2]\n");return 1;}
  if(access("/run/visiongrasp-color-20261022.loaded",R_OK)){fprintf(stderr,"Load/verify the reviewed color bitstream first\n");return 2;}
  int lockfd=open("/run/visiongrasp-color.lock",O_CREAT|O_RDWR,0600);if(lockfd<0||flock(lockfd,LOCK_EX|LOCK_NB))die("exclusive PL owner");
  int mem=open("/dev/mem",O_RDWR|O_SYNC);if(mem<0)die("devmem");
@@ -157,7 +157,9 @@ int main(int argc,char **argv){
  if(rd(0)!=0x31524c43||rd(4)!=0x00010001){fprintf(stderr,"WRONG_PL_PROFILE\n");return 3;}
  if(argc==2){if(!strcmp(argv[1],"--selftest"))selftest();else if(!strcmp(argv[1],"--benchmark"))benchmark();else return 1;return 0;}
  unsigned width=(unsigned)strtoul(argv[2],NULL,10),height=(unsigned)strtoul(argv[3],NULL,10),limit=(unsigned)strtoul(argv[5],NULL,10);
- const char *dir=argv[4];if(!width||width>1280||!height||height>720||!limit||strlen(dir)>1800)return 1;
+ unsigned divisor=argc==7?(unsigned)strtoul(argv[6],NULL,10):1;
+ const char *dir=argv[4];if(!width||width>1280||!height||height>720||!limit||strlen(dir)>1800||(divisor!=1&&divisor!=2)||width%divisor||height%divisor)return 1;
+ const unsigned pl_width=width/divisor,pl_height=height/divisor;
  int cam=open(argv[1],O_RDWR|O_NONBLOCK);if(cam<0)die("camera");
  struct v4l2_capability cap={0};if(xioctl(cam,VIDIOC_QUERYCAP,&cap))die("QUERYCAP");
  if(!(cap.device_caps&V4L2_CAP_VIDEO_CAPTURE)||!(cap.device_caps&V4L2_CAP_STREAMING)){fprintf(stderr,"Not a capture node\n");return 5;}
@@ -202,16 +204,16 @@ int main(int argc,char **argv){
   }
   // A new command must use a capture made after the request, not an old frame.
   if(capture_stamp<requested_at)continue;
-  if(decode(frame_jpeg,jpeg_bytes,rgb,width,height)){fprintf(stderr,"BAD_MJPEG\n");break;}
+  if(decode(frame_jpeg,jpeg_bytes,rgb,pl_width,pl_height,divisor)){fprintf(stderr,"BAD_MJPEG\n");break;}
   double decode_ms=(now()-work_start)*1000;
   snprintf(path,sizeof path,"%s/frame-%u-source.jpg",dir,frame);save_bytes(path,frame_jpeg,jpeg_bytes);
-  double begin=now();if(pl_frame(rgb,processed,width,height,color,saturation,value,capture_sequence))break;double elapsed=now()-begin;
+  double begin=now();if(pl_frame(rgb,processed,pl_width,pl_height,color,saturation,value,capture_sequence))break;double elapsed=now()-begin;
   double encode_start=now();
-  snprintf(path,sizeof path,"%s/frame-%u-pl.jpg",dir,frame);encode(path,processed,width,height);
+  snprintf(path,sizeof path,"%s/frame-%u-pl.jpg",dir,frame);encode(path,processed,pl_width,pl_height);
   double published_at=now(),encode_ms=(published_at-encode_start)*1000;
   double display_fps=previous_publish>0?1/(published_at-previous_publish):0;previous_publish=published_at;
   snprintf(path,sizeof path,"%s/status.tmp",dir);FILE *status=fopen(path,"w");if(!status)die("status");
-  fprintf(status,"{\"source\":\"Z19_USB_TO_REAL_PL\",\"frame\":%u,\"capture_sequence\":%u,\"pl_sequence\":%u,\"width\":%u,\"height\":%u,\"color\":%u,\"min_s\":%u,\"min_v\":%u,\"mask_count\":%u,\"bbox\":[%u,%u,%u,%u],\"pl_processing_ms\":%.3f,\"published_monotonic\":%.6f,\"decode_ms\":%.3f,\"encode_ms\":%.3f,\"capture_to_publish_ms\":%.3f,\"fps\":%.3f,\"request_id\":%llu,\"captured_monotonic\":%.9f}\n",frame,capture_sequence,rd(0x40),width,height,color,saturation,value,rd(0x2c),rd(0x30),rd(0x38),rd(0x34),rd(0x3c),elapsed*1000,published_at,decode_ms,encode_ms,(published_at-capture_stamp)*1000,display_fps,request_id,capture_stamp);
+  fprintf(status,"{\"source\":\"Z19_USB_TO_REAL_PL\",\"frame\":%u,\"capture_sequence\":%u,\"pl_sequence\":%u,\"width\":%u,\"height\":%u,\"color\":%u,\"min_s\":%u,\"min_v\":%u,\"mask_count\":%u,\"bbox\":[%u,%u,%u,%u],\"pl_processing_ms\":%.3f,\"published_monotonic\":%.6f,\"decode_ms\":%.3f,\"encode_ms\":%.3f,\"capture_to_publish_ms\":%.3f,\"fps\":%.3f,\"request_id\":%llu,\"captured_monotonic\":%.9f,\"capture_width\":%u,\"capture_height\":%u,\"jpeg_divisor\":%u}\n",frame,capture_sequence,rd(0x40),pl_width,pl_height,color,saturation,value,rd(0x2c),rd(0x30),rd(0x38),rd(0x34),rd(0x3c),elapsed*1000,published_at,decode_ms,encode_ms,(published_at-capture_stamp)*1000,display_fps,request_id,capture_stamp,width,height,divisor);
   fclose(status);snprintf(status_path,sizeof status_path,"%s/status.json",dir);if(rename(path,status_path))die("status publish");
   printf("FRAME %u CAPTURE %u COLOR %u PL_MATCH %u PL_MS %.1f\n",frame,capture_sequence,color,rd(0x2c),elapsed*1000);published=frame;
   if(frame>4){snprintf(path,sizeof path,"%s/frame-%u-source.jpg",dir,frame-4);unlink(path);snprintf(path,sizeof path,"%s/frame-%u-pl.jpg",dir,frame-4);unlink(path);}
