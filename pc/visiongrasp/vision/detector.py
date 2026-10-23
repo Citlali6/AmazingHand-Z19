@@ -8,7 +8,7 @@ import time
 import cv2
 import numpy as np
 
-from visiongrasp.contracts import FramePacket, VisionTarget
+from visiongrasp.contracts import FramePacket, VisionTarget, VisionSource
 from .calibration import TableCalibrator
 
 
@@ -70,6 +70,10 @@ class BlockDetector:
                 frame_reason = "CALIBRATION_SOURCE_MISMATCH"
             elif calibrator.camera_session is not None and calibrator.camera_session != packet.camera_session:
                 frame_reason = "CALIBRATION_SESSION_MISMATCH"
+            elif packet.source == VisionSource.LIVE_PC_UVC and calibrator.measurement is None:
+                frame_reason = "INDEPENDENT_CHECKS_REQUIRED"
+            elif calibrator.measurement is not None and not calibrator.measurement["checks"]["passed"]:
+                frame_reason = "INDEPENDENT_CHECK_FAILED"
         hsv = cv2.cvtColor(packet.image, cv2.COLOR_BGR2HSV)
         kernel = np.ones((config.morphology_kernel, config.morphology_kernel), np.uint8)
         width, height = packet.frame_wh_px

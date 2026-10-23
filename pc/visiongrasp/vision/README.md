@@ -1,5 +1,13 @@
 # PC tabletop vision — Issue #8
 
+Issue #33 adds independent ≥5-point measurement reports, labelled click input,
+live calibration capture and a separate table→base PLAN PREVIEW. Start with
+[the camera operation card](../../../docs/lab/2026-10-22/ISSUE33_CAMERA_CARD.md).
+Live targets now require passing independent checks; four-point fit residuals
+alone do not establish accuracy. The supplied board design is 500×400 mm with
+a 400×300 mm inner ROI and 20 mm grid; physical scale verification is still required.
+No physical camera calibration or grasp was performed in #33 development.
+
 Implemented: latest-only threaded camera capture, source-labelled synthetic frames,
 HSV red/blue contour candidates, image-to-table-mm calibration and manual tools.
 These are colour/shape rules, not a trained detector or a guarantee of graspability.

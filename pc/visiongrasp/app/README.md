@@ -1,5 +1,12 @@
 # PC 可视化演示（Issue #18）
 
+**#33 更新**：真实相机使用独立五点检查通过的标定文件及 `--confirm-calibration-setup`；
+旧四角按钮的拟合不能独立满足真实相机精度验收。详见
+[现场相机操作卡](../../../docs/lab/2026-10-22/ISSUE33_CAMERA_CARD.md)。
+新增每帧目标 JSONL、ROI/网格点与 mm 叠加，以及可选 `--base-calibration` 的 PLAN PREVIEW。
+候选坐标只供人工审核，机器人 XYZ/动作许可保持空/false；没有 real 模式。
+下面的旧四角流程仍用于合成演示，不能替代 #33 的实拍独立误差验收。
+
 先按 [PC 安装步骤](../../README.md)准备 visiongrasp 环境。以下命令从仓库根目录执行；主程序只提供 mock 机器人模式，不接受串口或 real 机器人参数。
 
 ## 无设备运行
